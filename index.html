@@ -935,9 +935,18 @@
             const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
             const progress = scrollableHeight > 0 ? window.scrollY / scrollableHeight * 100 : 0;
             document.getElementById('scrollProgress').style.width = `${progress}%`;
+            document.getElementById('backToTop').classList.toggle('is-visible', window.scrollY > window.innerHeight * 0.65);
         };
         window.addEventListener('scroll', updateScrollProgress, { passive: true });
         updateScrollProgress();
+
+        const liveClock = document.getElementById('liveClock');
+        const updateLiveClock = () => {
+            liveClock.textContent = `LIVE / ${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
+        };
+        updateLiveClock();
+        setInterval(updateLiveClock, 30000);
+        document.getElementById('backToTop').addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
         document.querySelectorAll('a, button').forEach(button => {
             button.classList.add('magnetic-button');
