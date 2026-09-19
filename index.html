@@ -381,6 +381,43 @@
             margin: 4rem 0;
         }
 
+        #experienceGrid > article:nth-child(2n) {
+            background-color: #E8EEFF;
+        }
+
+        #experienceGrid > article:nth-child(2n + 1) {
+            background-color: #FFF2D8;
+        }
+
+        #skillsGrid > div:nth-child(4n + 1) { background-color: #FFF2D8; }
+        #skillsGrid > div:nth-child(4n + 2) { background-color: #E8EEFF; }
+        #skillsGrid > div:nth-child(4n + 3) { background-color: #E4F7D2; }
+        #skillsGrid > div:nth-child(4n) { background-color: #FFE1E2; }
+
+        #projectsGrid > article,
+        #projectsGrid > div > article {
+            background-color: #FFF2D8;
+        }
+
+        #projectsGrid > article > div:first-child,
+        #projectsGrid > div > article > div:first-child {
+            background-color: #2457D6;
+        }
+
+        #contactForm {
+            background-color: #E8EEFF;
+        }
+
+        body.dark-theme #experienceGrid > article:nth-child(2n),
+        body.dark-theme #skillsGrid > div:nth-child(4n + 2) { background-color: #21415F; }
+        body.dark-theme #experienceGrid > article:nth-child(2n + 1),
+        body.dark-theme #skillsGrid > div:nth-child(4n + 1) { background-color: #594B36; }
+        body.dark-theme #skillsGrid > div:nth-child(4n + 3) { background-color: #31513B; }
+        body.dark-theme #skillsGrid > div:nth-child(4n) { background-color: #663F48; }
+        body.dark-theme #projectsGrid > article,
+        body.dark-theme #projectsGrid > div > article,
+        body.dark-theme #contactForm { background-color: #21415F; }
+
         body.dark-theme {
             background-color: #0D1B2A;
             color: #F4F1EA;
