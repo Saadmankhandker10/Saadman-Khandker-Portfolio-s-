@@ -689,6 +689,50 @@
             });
         });
 
+        const setupMotion = () => {
+            document.querySelectorAll('main > section, [id$="Grid"] > article, #skillsGrid > div, #contactForm').forEach((element, index) => {
+                if (element.dataset.motionReady) return;
+                element.dataset.motionReady = 'true';
+                element.classList.add('reveal-item');
+                element.style.transitionDelay = `${Math.min(index * 70, 350)}ms`;
+                if (element.matches('[id$="Grid"] > article, #skillsGrid > div, #contactForm')) {
+                    element.classList.add('motion-card');
+                    element.addEventListener('pointermove', event => {
+                        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || event.pointerType === 'touch') return;
+                        const bounds = element.getBoundingClientRect();
+                        const rotateX = ((event.clientY - bounds.top) / bounds.height - 0.5) * -4;
+                        const rotateY = ((event.clientX - bounds.left) / bounds.width - 0.5) * 4;
+                        element.style.transform = `perspective(700px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-2px)`;
+                    });
+                    element.addEventListener('pointerleave', () => {
+                        element.style.transform = '';
+                    });
+                }
+            });
+            document.querySelectorAll('main > section h2').forEach(heading => heading.classList.add('live-line'));
+        };
+
+        const motionObserver = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    motionObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.12 });
+
+        setupMotion();
+        document.querySelectorAll('.reveal-item').forEach(element => motionObserver.observe(element));
+        new MutationObserver(() => {
+            setupMotion();
+            document.querySelectorAll('.reveal-item:not(.is-visible)').forEach(element => motionObserver.observe(element));
+        }).observe(document.getElementById('projectsGrid'), { childList: true, subtree: true });
+
+        window.addEventListener('pointermove', event => {
+            document.body.style.setProperty('--pointer-x', `${event.clientX}px`);
+            document.body.style.setProperty('--pointer-y', `${event.clientY}px`);
+        }, { passive: true });
+
         // Form submission simulation
         const contactForm = document.getElementById('contactForm');
         const successMessage = document.getElementById('successMessage');
