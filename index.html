@@ -808,6 +808,90 @@
             }
         }, { passive: true });
 
+        const ambientCanvas = document.getElementById('ambientCanvas');
+        const ambientContext = ambientCanvas.getContext('2d');
+        const ambientPointer = { x: -1000, y: -1000 };
+        let ambientParticles = [];
+        let ambientFrame;
+
+        const resizeAmbientCanvas = () => {
+            const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+            ambientCanvas.width = window.innerWidth * pixelRatio;
+            ambientCanvas.height = window.innerHeight * pixelRatio;
+            ambientContext.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+            const particleCount = window.innerWidth < 640 ? 24 : 52;
+            ambientParticles = Array.from({ length: particleCount }, () => ({
+                x: Math.random() * window.innerWidth,
+                y: Math.random() * window.innerHeight,
+                vx: (Math.random() - 0.5) * 0.28,
+                vy: (Math.random() - 0.5) * 0.28,
+                radius: Math.random() * 1.8 + 0.8
+            }));
+        };
+
+        const animateAmbientCanvas = () => {
+            ambientContext.clearRect(0, 0, window.innerWidth, window.innerHeight);
+            ambientParticles.forEach(particle => {
+                const dx = ambientPointer.x - particle.x;
+                const dy = ambientPointer.y - particle.y;
+                const distance = Math.hypot(dx, dy);
+                if (distance < 150 && distance > 1) {
+                    particle.vx += (dx / distance) * 0.002;
+                    particle.vy += (dy / distance) * 0.002;
+                }
+                particle.x += particle.vx;
+                particle.y += particle.vy;
+                if (particle.x < -20 || particle.x > window.innerWidth + 20) particle.vx *= -1;
+                if (particle.y < -20 || particle.y > window.innerHeight + 20) particle.vy *= -1;
+                ambientContext.beginPath();
+                ambientContext.fillStyle = 'rgba(217, 93, 57, 0.72)';
+                ambientContext.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
+                ambientContext.fill();
+            });
+            ambientParticles.forEach((first, firstIndex) => ambientParticles.slice(firstIndex + 1).forEach(second => {
+                const distance = Math.hypot(first.x - second.x, first.y - second.y);
+                if (distance < 125) {
+                    ambientContext.beginPath();
+                    ambientContext.strokeStyle = `rgba(40, 127, 120, ${0.2 * (1 - distance / 125)})`;
+                    ambientContext.lineWidth = 1;
+                    ambientContext.moveTo(first.x, first.y);
+                    ambientContext.lineTo(second.x, second.y);
+                    ambientContext.stroke();
+                }
+            }));
+            ambientFrame = requestAnimationFrame(animateAmbientCanvas);
+        };
+
+        resizeAmbientCanvas();
+        window.addEventListener('resize', resizeAmbientCanvas);
+        window.addEventListener('pointermove', event => {
+            ambientPointer.x = event.clientX;
+            ambientPointer.y = event.clientY;
+        }, { passive: true });
+        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) animateAmbientCanvas();
+
+        const updateScrollProgress = () => {
+            const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = scrollableHeight > 0 ? window.scrollY / scrollableHeight * 100 : 0;
+            document.getElementById('scrollProgress').style.width = `${progress}%`;
+        };
+        window.addEventListener('scroll', updateScrollProgress, { passive: true });
+        updateScrollProgress();
+
+        document.querySelectorAll('a, button').forEach(button => {
+            button.classList.add('magnetic-button');
+            button.addEventListener('pointermove', event => {
+                if (event.pointerType === 'touch' || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+                const bounds = button.getBoundingClientRect();
+                const x = (event.clientX - bounds.left - bounds.width / 2) * 0.12;
+                const y = (event.clientY - bounds.top - bounds.height / 2) * 0.12;
+                button.style.transform = `translate(${x}px, ${y}px)`;
+            });
+            button.addEventListener('pointerleave', () => {
+                button.style.transform = '';
+            });
+        });
+
         // Form submission simulation
         const contactForm = document.getElementById('contactForm');
         const successMessage = document.getElementById('successMessage');
