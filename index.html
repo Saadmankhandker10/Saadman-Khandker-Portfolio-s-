@@ -872,7 +872,22 @@
                 <div class="bg-retro-card border-2 border-retro-dark shadow-[2px_2px_0_0_rgba(43,43,43,1)] p-6 text-center hover:bg-${index % 2 ? 'retro-secondary' : 'retro-accent'} hover:text-white group transition-colors">
                     <div class="w-12 h-12 mx-auto mb-4 border-2 border-retro-dark rounded-full flex items-center justify-center group-hover:border-white"><span class="font-mono font-bold">${escapeHTML(skill.icon || '★')}</span></div>
                     <h4 class="font-bold font-mono text-sm uppercase">${escapeHTML(skill.name)}</h4>
+                    <div class="skill-meter" style="--skill-level: ${[92, 84, 76, 88][index % 4]}%"><span></span></div>
                 </div>`).join('');
+        };
+
+        const startTyping = () => {
+            const target = document.getElementById('heroName');
+            const text = target.textContent;
+            target.textContent = '';
+            const cursor = document.createElement('span');
+            cursor.className = 'typing-cursor';
+            target.append(cursor);
+            [...text].forEach((character, index) => {
+                setTimeout(() => {
+                    cursor.before(document.createTextNode(character));
+                }, 55 * index);
+            });
         };
 
             const updateLiveMetrics = () => {
@@ -889,6 +904,7 @@
                 document.getElementById('metricsPulse').textContent = `SYNCED / ${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
             };
         applyPortfolio(savedPortfolio);
+        startTyping();
         if (savedPortfolio.email) {
             const emailLink = document.getElementById('emailLink');
             emailLink.textContent = savedPortfolio.email;
@@ -1048,20 +1064,10 @@
 
         const liveClock = document.getElementById('liveClock');
         const heroClock = document.getElementById('heroClock');
-        const hourHand = document.getElementById('hourHand');
-        const minuteHand = document.getElementById('minuteHand');
-        const secondHand = document.getElementById('secondHand');
         const updateLiveClock = () => {
-            const now = new Date();
-            const currentTime = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
             liveClock.textContent = `LIVE / ${currentTime}`;
             heroClock.textContent = currentTime;
-            const secondAngle = now.getSeconds() * 6;
-            const minuteAngle = now.getMinutes() * 6 + now.getSeconds() * 0.1;
-            const hourAngle = (now.getHours() % 12) * 30 + now.getMinutes() * 0.5;
-            secondHand.style.transform = `translateX(-50%) rotate(${secondAngle}deg)`;
-            minuteHand.style.transform = `translateX(-50%) rotate(${minuteAngle}deg)`;
-            hourHand.style.transform = `translateX(-50%) rotate(${hourAngle}deg)`;
         };
         updateLiveClock();
         setInterval(updateLiveClock, 1000);
