@@ -726,7 +726,7 @@
         new MutationObserver(() => {
             setupMotion();
             document.querySelectorAll('.reveal-item:not(.is-visible)').forEach(element => motionObserver.observe(element));
-        }).observe(document.getElementById('projectsGrid'), { childList: true, subtree: true });
+        }).observe(document.querySelector('main'), { childList: true, subtree: true });
 
         window.addEventListener('pointermove', event => {
             document.body.style.setProperty('--pointer-x', `${event.clientX}px`);
