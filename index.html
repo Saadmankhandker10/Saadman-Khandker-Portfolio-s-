@@ -145,6 +145,11 @@
         .skill-meter { height: 0.4rem; margin-top: 1rem; background: rgba(8, 47, 73, 0.16); border: 1px solid var(--ink); overflow: hidden; }
         .skill-meter span { display: block; height: 100%; width: var(--skill-level, 70%); background: var(--secondary); transform-origin: left; animation: meter-fill 900ms ease both; }
 
+        #skillsGrid > div:not(:has(.skill-meter))::after { content: ''; display: block; height: 0.4rem; margin-top: 1rem; background: linear-gradient(90deg, var(--secondary) 0 92%, rgba(8, 47, 73, 0.16) 92%); border: 1px solid var(--ink); }
+        #skillsGrid > div:nth-child(2):not(:has(.skill-meter))::after { background: linear-gradient(90deg, var(--secondary) 0 84%, rgba(8, 47, 73, 0.16) 84%); }
+        #skillsGrid > div:nth-child(3):not(:has(.skill-meter))::after { background: linear-gradient(90deg, var(--secondary) 0 76%, rgba(8, 47, 73, 0.16) 76%); }
+        #skillsGrid > div:nth-child(4):not(:has(.skill-meter))::after { background: linear-gradient(90deg, var(--secondary) 0 88%, rgba(8, 47, 73, 0.16) 88%); }
+
         #liveWidget .live-dot {
             width: 0.65rem;
             height: 0.65rem;
