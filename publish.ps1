@@ -23,4 +23,12 @@ if ($LASTEXITCODE -ne 0) {
     exit $LASTEXITCODE
 }
 
+if ($branch -eq 'master') {
+    git push origin master:main
+    if ($LASTEXITCODE -ne 0) {
+        Write-Error "The master branch was published, but syncing main failed."
+        exit $LASTEXITCODE
+    }
+}
+
 Write-Host "Website published from branch '$branch'."
