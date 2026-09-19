@@ -30,19 +30,20 @@
             theme: {
                 extend: {
                     colors: {
-                        'retro-bg': '#EAF3EF',
-                        'retro-dark': '#15343A',
-                        'retro-accent': '#D95D39',
-                        'retro-secondary': '#287F78',
-                        'retro-card': '#FFFDF7'
+                        'retro-bg': '#F4F1EA',
+                        'retro-dark': '#102A43',
+                        'retro-accent': '#F05D5E',
+                        'retro-secondary': '#2457D6',
+                        'retro-lime': '#D6F36A',
+                        'retro-card': '#FFFDF5'
                     },
                     fontFamily: {
                         sans: ['Manrope', 'sans-serif'],
                         mono: ['"Space Mono"', 'monospace'], // For that retro/typewriter feel
                     },
                     boxShadow: {
-                        'retro': '4px 4px 0px 0px rgba(21, 52, 58, 1)',
-                        'retro-hover': '2px 2px 0px 0px rgba(21, 52, 58, 1)',
+                        'retro': '4px 4px 0px 0px rgba(16, 42, 67, 1)',
+                        'retro-hover': '2px 2px 0px 0px rgba(16, 42, 67, 1)',
                     }
                 }
             }
@@ -51,11 +52,12 @@
 
     <style>
         :root {
-            --page-bg: #EAF3EF;
-            --ink: #15343A;
-            --accent: #D95D39;
-            --secondary: #287F78;
-            --paper: #FFFDF7;
+            --page-bg: #F4F1EA;
+            --ink: #102A43;
+            --accent: #F05D5E;
+            --secondary: #2457D6;
+            --lime: #D6F36A;
+            --paper: #FFFDF5;
         }
 
         body {
@@ -71,9 +73,9 @@
         }
 
         header {
-            background-color: rgba(234, 243, 239, 0.9);
+            background-color: rgba(244, 241, 234, 0.9);
             backdrop-filter: blur(14px);
-            box-shadow: 0 1px 0 rgba(21, 52, 58, 0.08);
+            box-shadow: 0 1px 0 rgba(16, 42, 67, 0.12);
         }
 
         body::before {
@@ -83,7 +85,7 @@
             pointer-events: none;
             z-index: 60;
             opacity: 0.32;
-            background: radial-gradient(circle 260px at var(--pointer-x) var(--pointer-y), rgba(217, 93, 57, 0.13), transparent 72%);
+            background: radial-gradient(circle 260px at var(--pointer-x) var(--pointer-y), rgba(240, 93, 94, 0.18), transparent 72%);
             transition: opacity 300ms ease;
         }
 
@@ -94,7 +96,7 @@
             pointer-events: none;
             z-index: -1;
             opacity: 0.16;
-            background-image: linear-gradient(rgba(21, 52, 58, 0.16) 1px, transparent 1px), linear-gradient(90deg, rgba(21, 52, 58, 0.16) 1px, transparent 1px);
+            background-image: linear-gradient(rgba(16, 42, 67, 0.14) 1px, transparent 1px), linear-gradient(90deg, rgba(16, 42, 67, 0.14) 1px, transparent 1px);
             background-size: 34px 34px;
             animation: grid-drift 18s linear infinite;
         }
@@ -116,8 +118,8 @@
             width: 0;
             height: 4px;
             z-index: 80;
-            background: linear-gradient(90deg, var(--accent), #F4A261, var(--secondary));
-            box-shadow: 0 0 14px rgba(217, 93, 57, 0.65);
+            background: linear-gradient(90deg, var(--accent), var(--lime), var(--secondary));
+            box-shadow: 0 0 14px rgba(240, 93, 94, 0.65);
             transition: width 100ms linear;
         }
 
