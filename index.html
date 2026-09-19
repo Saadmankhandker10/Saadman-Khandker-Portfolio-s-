@@ -63,6 +63,7 @@
             color: var(--ink);
             font-family: 'Manrope', sans-serif;
             letter-spacing: 0;
+            overflow-x: hidden;
             /* Subtle noise texture overlay for vintage feel */
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
         }
@@ -136,6 +137,13 @@
 
         @media (max-width: 640px) {
             #home > div:first-child { padding-left: 1rem; }
+            #siteName { display: block; max-width: 13rem; font-size: 0.9rem; line-height: 1.2; }
+            #heroName { overflow-wrap: anywhere; }
+            #home { padding-top: 3rem; padding-bottom: 3rem; }
+            #home h1 { font-size: clamp(2.25rem, 12vw, 3rem); line-height: 1.08; }
+            #home p.text-xl { font-size: 1.05rem; line-height: 1.6; }
+            #home .flex-wrap a { width: 100%; text-align: center; }
+            section { scroll-margin-top: 4.5rem; }
         }
         
         /* Custom scrollbar */
