@@ -759,6 +759,15 @@
         window.addEventListener('pointermove', event => {
             document.body.style.setProperty('--pointer-x', `${event.clientX}px`);
             document.body.style.setProperty('--pointer-y', `${event.clientY}px`);
+            if (event.pointerType === 'touch' || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+            const xRatio = event.clientX / window.innerWidth - 0.5;
+            const yRatio = event.clientY / window.innerHeight - 0.5;
+            const heroCopy = document.querySelector('#home > div:first-child');
+            const heroVisual = document.querySelector('#home > div:last-child');
+            if (heroCopy && heroVisual) {
+                heroCopy.style.transform = `translate(${xRatio * -8}px, ${yRatio * -5}px)`;
+                heroVisual.style.transform = `translate(${xRatio * 10}px, ${yRatio * 8}px) rotate(${xRatio * 2}deg)`;
+            }
         }, { passive: true });
 
         // Form submission simulation
