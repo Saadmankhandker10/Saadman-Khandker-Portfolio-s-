@@ -140,6 +140,11 @@
             text-transform: uppercase;
         }
 
+        .typing-cursor { display: inline-block; width: 0.08em; height: 0.9em; margin-left: 0.12em; background: var(--accent); animation: cursor-blink 0.8s steps(1) infinite; vertical-align: -0.05em; }
+
+        .skill-meter { height: 0.4rem; margin-top: 1rem; background: rgba(8, 47, 73, 0.16); border: 1px solid var(--ink); overflow: hidden; }
+        .skill-meter span { display: block; height: 100%; width: var(--skill-level, 70%); background: var(--secondary); transform-origin: left; animation: meter-fill 900ms ease both; }
+
         #liveWidget .live-dot {
             width: 0.65rem;
             height: 0.65rem;
@@ -335,6 +340,9 @@
             50% { transform: scale(1.15); opacity: 1; }
         }
 
+        @keyframes cursor-blink { 50% { opacity: 0; } }
+        @keyframes meter-fill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after {
                 animation-duration: 0.01ms !important;
@@ -358,6 +366,7 @@
             #home p.text-xl { font-size: 1.05rem; line-height: 1.6; }
             #home .flex-wrap a { width: 100%; text-align: center; }
             section { scroll-margin-top: 4.5rem; }
+            #liveWidget { right: 0.85rem; bottom: 0.85rem; }
         }
         
         /* Custom scrollbar */
@@ -445,6 +454,10 @@
 <body class="font-sans antialiased flex flex-col min-h-screen">
     <canvas id="ambientCanvas" aria-hidden="true"></canvas>
     <div id="scrollProgress" aria-hidden="true"></div>
+    <div id="analogClock" aria-label="Live analog clock" role="img">
+        <span class="clock-number"></span><span class="clock-number"></span><span class="clock-number"></span><span class="clock-number"></span>
+        <span id="hourHand" class="clock-hand"></span><span id="minuteHand" class="clock-hand"></span><span id="secondHand" class="clock-hand"></span><span id="clockPin"></span>
+    </div>
     <div id="liveWidget" aria-label="Portfolio live status"><span class="live-dot" aria-hidden="true"></span><span id="liveClock">LIVE / 00:00</span></div>
     <button id="backToTop" type="button" aria-label="Back to top" title="Back to top">↑</button>
 
@@ -1039,13 +1052,23 @@
 
         const liveClock = document.getElementById('liveClock');
         const heroClock = document.getElementById('heroClock');
+        const hourHand = document.getElementById('hourHand');
+        const minuteHand = document.getElementById('minuteHand');
+        const secondHand = document.getElementById('secondHand');
         const updateLiveClock = () => {
-            const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            const now = new Date();
+            const currentTime = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
             liveClock.textContent = `LIVE / ${currentTime}`;
             heroClock.textContent = currentTime;
+            const secondAngle = now.getSeconds() * 6;
+            const minuteAngle = now.getMinutes() * 6 + now.getSeconds() * 0.1;
+            const hourAngle = (now.getHours() % 12) * 30 + now.getMinutes() * 0.5;
+            secondHand.style.transform = `translateX(-50%) rotate(${secondAngle}deg)`;
+            minuteHand.style.transform = `translateX(-50%) rotate(${minuteAngle}deg)`;
+            hourHand.style.transform = `translateX(-50%) rotate(${hourAngle}deg)`;
         };
         updateLiveClock();
-        setInterval(updateLiveClock, 30000);
+        setInterval(updateLiveClock, 1000);
         document.getElementById('backToTop').addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
         document.querySelectorAll('a, button').forEach(button => {
