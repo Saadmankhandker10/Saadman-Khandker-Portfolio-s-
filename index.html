@@ -93,6 +93,19 @@
             animation: intro-rise 650ms 120ms ease both;
         }
 
+        main > section:not(#home) {
+            animation: section-reveal 700ms ease both;
+        }
+
+        #experience { animation-delay: 180ms; }
+        #projects { animation-delay: 320ms; }
+        #skills { animation-delay: 460ms; }
+        #contact { animation-delay: 600ms; }
+
+        #profileImage {
+            animation: profile-float 4s ease-in-out 900ms infinite;
+        }
+
         .section-divider {
             opacity: 0.65;
         }
@@ -133,6 +146,24 @@
         @keyframes intro-rise {
             from { opacity: 0; transform: translateY(14px); }
             to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes section-reveal {
+            from { opacity: 0; transform: translateY(18px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes profile-float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                scroll-behavior: auto !important;
+            }
         }
 
         @media (max-width: 640px) {
