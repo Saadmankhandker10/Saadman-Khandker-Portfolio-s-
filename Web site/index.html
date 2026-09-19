@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Khandker Saadman Rafid | Portfolio</title>
+    <meta name="description" content="Khandker Saadman Rafid's professional portfolio featuring operations management, digital content creation, community service, projects, and experience.">
+    <meta name="keywords" content="Khandker Saadman Rafid, portfolio, operations management, digital content, community service">
+    <meta name="author" content="Khandker Saadman Rafid">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Khandker Saadman Rafid | Portfolio">
+    <meta property="og:description" content="Explore Khandker Saadman Rafid's experience, projects, skills, and professional work.">
+    <meta property="og:image" content="./public/img.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Khandker Saadman Rafid | Portfolio">
+    <meta name="twitter:description" content="Explore Khandker Saadman Rafid's experience, projects, skills, and professional work.">
+    
+    <!-- Google Fonts: Space Mono (Retro/Tech) and Manrope (Modern) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Tailwind Configuration for Modern Retro Aesthetic -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'retro-bg': '#DFF8F3',
+                        'retro-dark': '#082F49',
+                        'retro-accent': '#FF5C77',
+                        'retro-secondary': '#0066FF',
+                        'retro-lime': '#D7F75B',
+                        'retro-card': '#FFFFFF'
+                    },
+                    fontFamily: {
+                        sans: ['Manrope', 'sans-serif'],
+                        mono: ['"Space Mono"', 'monospace'], // For that retro/typewriter feel
+                    },
+                    boxShadow: {
+                        'retro': '4px 4px 0px 0px rgba(16, 42, 67, 1)',
+                        'retro-hover': '2px 2px 0px 0px rgba(16, 42, 67, 1)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        :root {
+            --page-bg: #DFF8F3;
+            --ink: #082F49;
+            --accent: #FF5C77;
+            --secondary: #0066FF;
+            --lime: #D7F75B;
+            --paper: #FFFFFF;
+        }
+
+        body {
+            background-color: var(--page-bg);
+            color: var(--ink);
+            font-family: 'Manrope', sans-serif;
+            letter-spacing: 0;
+            overflow-x: hidden;
+            --pointer-x: 50%;
+            --pointer-y: 20%;
+            /* Subtle noise texture overlay for vintage feel */
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+        }
+
+        header {
+            background-color: rgba(223, 248, 243, 0.92);
+            backdrop-filter: blur(14px);
+            box-shadow: 0 1px 0 rgba(8, 47, 73, 0.18);
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 60;
+            opacity: 0.32;
+            background: radial-gradient(circle 260px at var(--pointer-x) var(--pointer-y), rgba(255, 92, 119, 0.2), transparent 72%);
+            transition: opacity 300ms ease;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.16;
+            background-image: linear-gradient(rgba(16, 42, 67, 0.14) 1px, transparent 1px), linear-gradient(90deg, rgba(16, 42, 67, 0.14) 1px, transparent 1px);
+            background-size: 34px 34px;
+            animation: grid-drift 18s linear infinite;
+        }
+
+        #ambientCanvas {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.58;
+        }
+
+        #scrollProgress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 4px;
+            z-index: 80;
+            background: linear-gradient(90deg, var(--accent), var(--lime), var(--secondary));
+            box-shadow: 0 0 14px rgba(255, 92, 119, 0.7);
+            transition: width 100ms linear;
+        }
+
+        #liveWidget {
+            position: fixed;
+            right: 1.25rem;
+            bottom: 1.25rem;
+            z-index: 70;
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            padding: 0.7rem 0.85rem;
+            background: var(--paper);
+            color: var(--ink);
+            border: 2px solid var(--ink);
+            box-shadow: 4px 4px 0 var(--ink);
+            font: 700 0.7rem/1 'Space Mono', monospace;
+            text-transform: uppercase;
+        }
+
+        #analogClock {
+            position: fixed;
+            right: 1.25rem;
+            bottom: 5.4rem;
+            z-index: 70;
+            width: 5.2rem;
+            height: 5.2rem;
+            border: 3px solid var(--ink);
+            border-radius: 50%;
+            background: var(--paper);
+            box-shadow: 4px 4px 0 var(--ink);
+        }
+
+        #analogClock::after {
+            content: '';
+            position: absolute;
+            inset: 0.35rem;
+            border: 1px dashed var(--accent);
+            border-radius: 50%;
+        }
+
+        .clock-number {
+            position: absolute;
+            inset: 0.35rem;
+            display: grid;
+            place-items: start center;
+            font: 700 0.55rem 'Space Mono', monospace;
+            color: var(--ink);
+        }
+
+        .clock-number::before {
+            content: '12';
+        }
+
+        .clock-number:nth-child(2) { transform: rotate(90deg); }
+        .clock-number:nth-child(2)::before { content: '3'; transform: rotate(-90deg); }
+        .clock-number:nth-child(3) { transform: rotate(180deg); }
+        .clock-number:nth-child(3)::before { content: '6'; transform: rotate(-180deg); }
+        .clock-number:nth-child(4) { transform: rotate(270deg); }
+        .clock-number:nth-child(4)::before { content: '9'; transform: rotate(-270deg); }
+
+        .clock-hand {
+            position: absolute;
+            left: 50%;
+            bottom: 50%;
+            width: 2px;
+            border-radius: 99px;
+            transform-origin: 50% 100%;
+            transform: translateX(-50%) rotate(0deg);
+        }
+
+        #hourHand { height: 1.25rem; background: var(--ink); }
+        #minuteHand { height: 1.65rem; background: var(--secondary); }
+        #secondHand { height: 1.9rem; width: 1px; background: var(--accent); }
+        #clockPin { position: absolute; left: 50%; top: 50%; width: 0.45rem; height: 0.45rem; transform: translate(-50%, -50%); border-radius: 50%; background: var(--accent); border: 2px solid var(--ink); z-index: 2; }
+
+        #liveWidget .live-dot {
+            width: 0.65rem;
+            height: 0.65rem;
+            border-radius: 999px;
+            background: var(--lime);
+            border: 2px solid var(--ink);
+            box-shadow: 0 0 0 4px rgba(214, 243, 106, 0.3);
+            animation: live-pulse 1.8s ease-in-out infinite;
+        }
+
+        body.dark-theme #liveWidget {
+            background: #D6F36A;
+            color: #102A43;
+        }
+
+        #backToTop {
+            position: fixed;
+            right: 1.25rem;
+            bottom: 5rem;
+            z-index: 70;
+            width: 2.8rem;
+            height: 2.8rem;
+            display: grid;
+            place-items: center;
+            background: var(--secondary);
+            color: #FFFFFF;
+            border: 2px solid var(--ink);
+            box-shadow: 4px 4px 0 var(--ink);
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(10px);
+            transition: opacity 200ms ease, transform 200ms ease;
+        }
+
+        #backToTop.is-visible {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0);
+        }
+
+        .magnetic-button {
+            will-change: transform;
+        }
+
+        #profileImage {
+            position: relative;
+            transition: filter 300ms ease, transform 300ms ease;
+        }
+
+        #profileImage:hover {
+            filter: saturate(1.2) contrast(1.08) brightness(1.06);
+        }
+
+        .live-line {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .live-line::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -35%;
+            width: 35%;
+            height: 2px;
+            background: var(--accent);
+            animation: scan-line 3.8s ease-in-out infinite;
+        }
+
+        .reveal-item {
+            opacity: 0;
+            transform: translateY(22px) scale(0.98);
+            transition: opacity 700ms ease, transform 700ms cubic-bezier(0.2, 0.75, 0.25, 1);
+        }
+
+        .reveal-item.is-visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .motion-card {
+            transform-style: preserve-3d;
+            will-change: transform;
+        }
+
+        #home > div:first-child,
+        #home > div:last-child {
+            will-change: transform;
+        }
+
+        #profileImage {
+            filter: saturate(1.08) contrast(1.04);
+            transform: scale(1.03);
+        }
+
+        header a,
+        header button {
+            transition: color 180ms ease, background-color 180ms ease, transform 180ms ease;
+        }
+
+        main > section {
+            scroll-margin-top: 5rem;
+        }
+
+        #home > div:first-child {
+            border-left: 6px solid var(--accent);
+            padding-left: 1.5rem;
+            animation: intro-rise 650ms ease both;
+        }
+
+        #home > div:last-child {
+            animation: intro-rise 650ms 120ms ease both;
+        }
+
+        main > section:not(#home) {
+            animation: section-reveal 700ms ease both;
+        }
+
+        #experience { animation-delay: 180ms; }
+        #projects { animation-delay: 320ms; }
+        #skills { animation-delay: 460ms; }
+        #contact { animation-delay: 600ms; }
+
+        #profileImage {
+            animation: profile-float 4s ease-in-out 900ms infinite;
+        }
+
+        .section-divider {
+            opacity: 0.65;
+        }
+
+        [id$="Grid"] > article,
+        [id="skillsGrid"] > div,
+        #contactForm {
+            border-color: var(--ink);
+            box-shadow: 5px 5px 0 var(--ink);
+            transition: transform 180ms ease, box-shadow 180ms ease;
+        }
+
+        [id$="Grid"] > article:hover,
+        [id="skillsGrid"] > div:hover,
+        #contactForm:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 7px 7px 0 var(--ink);
+        }
+
+        input:focus,
+        textarea:focus,
+        button:focus-visible,
+        a:focus-visible {
+            outline: 3px solid var(--accent);
+            outline-offset: 3px;
+        }
+
+        .contact-icon {
+            color: #FFFFFF;
+        }
+
+        .contact-icon-email { background-color: #D44638; }
+        .contact-icon-linkedin { background-color: #0A66C2; }
+        .contact-icon-github { background-color: #181717; }
+        .contact-icon-facebook { background-color: #1877F2; }
+        .contact-icon-instagram { background-color: #E1306C; }
+
+        @keyframes intro-rise {
+            from { opacity: 0; transform: translateY(14px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes section-reveal {
+            from { opacity: 0; transform: translateY(18px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes profile-float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
+        }
+
+        @keyframes scan-line {
+            0% { left: -35%; opacity: 0; }
+            15%, 70% { opacity: 1; }
+            100% { left: 100%; opacity: 0; }
+        }
+
+        @keyframes grid-drift {
+            from { background-position: 0 0; }
+            to { background-position: 34px 34px; }
+        }
+
+        @keyframes live-pulse {
+            0%, 100% { transform: scale(0.9); opacity: 0.7; }
+            50% { transform: scale(1.15); opacity: 1; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                scroll-behavior: auto !important;
+            }
+
+            body::before { display: none; }
+            body::after { opacity: 0.1; animation-duration: 28s; }
+            #ambientCanvas { opacity: 0.3; }
+            #liveWidget { animation: none; }
+            .reveal-item { opacity: 1; transform: none; transition: none; }
+        }
+
+        @media (max-width: 640px) {
+            #home > div:first-child { padding-left: 1rem; }
+            #siteName { display: block; max-width: 13rem; font-size: 0.9rem; line-height: 1.2; }
+            #heroName { overflow-wrap: anywhere; }
+            #home { padding-top: 3rem; padding-bottom: 3rem; }
+            #home h1 { font-size: clamp(2.25rem, 12vw, 3rem); line-height: 1.08; }
+            #home p.text-xl { font-size: 1.05rem; line-height: 1.6; }
+            #home .flex-wrap a { width: 100%; text-align: center; }
+            section { scroll-margin-top: 4.5rem; }
+            #analogClock { right: 0.85rem; bottom: 5.1rem; transform: scale(0.86); transform-origin: bottom right; }
+            #liveWidget { right: 0.85rem; bottom: 0.85rem; }
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #DFF8F3;
+            border-left: 2px solid #082F49;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #FF5C77;
+            border: 2px solid #082F49;
+        }
+        
+        /* Section dividers */
+        .section-divider {
+            border-top: 2px dashed #082F49;
+            width: 100%;
+            height: 1px;
+            margin: 4rem 0;
+        }
+
+        #experienceGrid > article:nth-child(2n) {
+            background-color: #DCEBFF;
+        }
+
+        #home { background-color: #FFF0D6; }
+        #experience { background-color: #DCEBFF; }
+        #projects { background-color: #FFDCE5; }
+        #skills { background-color: #EAF8C8; }
+        #contact { background-color: #CFF5EF; }
+
+        #experienceGrid > article:nth-child(2n + 1) {
+            background-color: #FFF0D6;
+        }
+
+        #skillsGrid > div:nth-child(4n + 1) { background-color: #FFF0D6; }
+        #skillsGrid > div:nth-child(4n + 2) { background-color: #DCEBFF; }
+        #skillsGrid > div:nth-child(4n + 3) { background-color: #EAF8C8; }
+        #skillsGrid > div:nth-child(4n) { background-color: #FFDCE5; }
+
+        #projectsGrid > article,
+        #projectsGrid > div > article {
+            background-color: #FFDCE5;
+        }
+
+        #projectsGrid > article > div:first-child,
+        #projectsGrid > div > article > div:first-child {
+            background-color: #0066FF;
+        }
+
+        #contactForm {
+            background-color: #DCEBFF;
+        }
+
+        body.dark-theme #experienceGrid > article:nth-child(2n),
+        body.dark-theme #skillsGrid > div:nth-child(4n + 2) { background-color: #21415F; }
+        body.dark-theme #experienceGrid > article:nth-child(2n + 1),
+        body.dark-theme #skillsGrid > div:nth-child(4n + 1) { background-color: #594B36; }
+        body.dark-theme #skillsGrid > div:nth-child(4n + 3) { background-color: #31513B; }
+        body.dark-theme #skillsGrid > div:nth-child(4n) { background-color: #663F48; }
+        body.dark-theme #projectsGrid > article,
+        body.dark-theme #projectsGrid > div > article,
+        body.dark-theme #contactForm { background-color: #21415F; }
+
+        body.dark-theme #home,
+        body.dark-theme #experience,
+        body.dark-theme #projects,
+        body.dark-theme #skills,
+        body.dark-theme #contact { background-color: #0D1B2A; }
+
+        body.dark-theme {
+            background-color: #061826;
+            color: #DFF8F3;
+        }
+        body.dark-theme header { background-color: rgba(6, 24, 38, 0.94); }
+        body.dark-theme .bg-retro-bg { background-color: #061826; }
+        body.dark-theme .bg-retro-card { background-color: #123B5D; color: #DFF8F3; }
+        body.dark-theme .text-retro-dark, body.dark-theme .text-gray-700 { color: #DFF8F3; }
+        body.dark-theme .bg-white, body.dark-theme .bg-gray-50, body.dark-theme .bg-gray-200 { background-color: #1A4B70; color: #DFF8F3; }
+        body.dark-theme .border-retro-dark { border-color: #DFF8F3; }
+    </style>
+</head>
+<body class="font-sans antialiased flex flex-col min-h-screen">
+    <canvas id="ambientCanvas" aria-hidden="true"></canvas>
+    <div id="scrollProgress" aria-hidden="true"></div>
+    <div id="analogClock" aria-label="Live analog clock" role="img">
+        <span class="clock-number"></span><span class="clock-number"></span><span class="clock-number"></span><span class="clock-number"></span>
+        <span id="hourHand" class="clock-hand"></span><span id="minuteHand" class="clock-hand"></span><span id="secondHand" class="clock-hand"></span><span id="clockPin"></span>
+    </div>
+    <div id="liveWidget" aria-label="Portfolio live status"><span class="live-dot" aria-hidden="true"></span><span id="liveClock">LIVE / 00:00</span></div>
+    <button id="backToTop" type="button" aria-label="Back to top" title="Back to top">↑</button>
+
+    <header class="fixed top-0 w-full bg-retro-bg border-b-2 border-retro-dark z-50">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo/Name -->
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="#" class="font-mono font-bold text-xl tracking-tighter hover:text-retro-accent transition-colors">
+                        <span id="siteName">Khandker Sadman Rafid Saad</span>
+                    </a>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#home" class="font-mono text-sm font-bold hover:text-retro-accent transition-colors">HOME</a>
+                    <a href="#experience" class="font-mono text-sm font-bold hover:text-retro-accent transition-colors">EXPERIENCE</a>
+                    <a href="#projects" class="font-mono text-sm font-bold hover:text-retro-accent transition-colors">PROJECTS</a>
+                    <a href="#skills" class="font-mono text-sm font-bold hover:text-retro-accent transition-colors">SKILLS</a>
+                    <a href="#contact" class="font-mono text-sm font-bold hover:text-retro-accent transition-colors">CONTACT</a>
+                </nav>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button id="themeToggleMobile" type="button" aria-label="Toggle color theme" class="mr-4 text-retro-dark hover:text-retro-accent focus:outline-none">☾</button>
+                    <button id="mobile-menu-btn" class="text-retro-dark hover:text-retro-accent focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+                <button id="themeToggle" type="button" aria-label="Toggle color theme" class="hidden md:block font-mono font-bold text-sm text-retro-dark hover:text-retro-accent">☾ THEME</button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu (Hidden by default) -->
+        <div id="mobile-menu" class="hidden md:hidden bg-retro-card border-t-2 border-retro-dark">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#home" class="block px-3 py-2 font-mono font-bold hover:bg-retro-accent hover:text-white border-2 border-transparent hover:border-retro-dark transition-all">HOME</a>
+                <a href="#experience" class="block px-3 py-2 font-mono font-bold hover:bg-retro-accent hover:text-white border-2 border-transparent hover:border-retro-dark transition-all">EXPERIENCE</a>
+                <a href="#projects" class="block px-3 py-2 font-mono font-bold hover:bg-retro-accent hover:text-white border-2 border-transparent hover:border-retro-dark transition-all">PROJECTS</a>
+                <a href="#skills" class="block px-3 py-2 font-mono font-bold hover:bg-retro-accent hover:text-white border-2 border-transparent hover:border-retro-dark transition-all">SKILLS</a>
+                <a href="#contact" class="block px-3 py-2 font-mono font-bold hover:bg-retro-accent hover:text-white border-2 border-transparent hover:border-retro-dark transition-all">CONTACT</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow pt-16">
+        <!-- Hero Section -->
+        <section id="home" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32 flex flex-col md:flex-row items-center">
+            <div class="md:w-2/3 pr-0 md:pr-12">
+                <p class="font-mono text-retro-accent font-bold mb-4 uppercase tracking-widest text-sm">Hello, World.</p>
+                <h1 class="text-5xl md:text-7xl font-extrabold mb-6 leading-tight tracking-tight text-retro-dark">
+                    I'm <span id="heroName">Khandker Sadman Rafid Saad</span>.
+                </h1>
+                <p class="text-xl md:text-2xl text-gray-700 mb-8 max-w-2xl font-light">
+                    <span id="heroBio">A dedicated professional blending operations management with a passion for digital content and community service.</span>
+                </p>
+                <div class="flex flex-wrap gap-4">
+                    <a href="#contact" class="bg-retro-accent text-white font-mono font-bold py-3 px-6 border-2 border-retro-dark shadow-retro hover:shadow-retro-hover hover:translate-y-[2px] hover:translate-x-[2px] transition-all">
+                        GET IN TOUCH
+                    </a>
+                    <a href="#projects" class="bg-retro-card text-retro-dark font-mono font-bold py-3 px-6 border-2 border-retro-dark shadow-retro hover:shadow-retro-hover hover:translate-y-[2px] hover:translate-x-[2px] transition-all">
+                        VIEW WORK
+                    </a>
+                    <a id="resumeLink" href="#" target="_blank" rel="noopener" class="hidden bg-retro-secondary text-white font-mono font-bold py-3 px-6 border-2 border-retro-dark shadow-retro hover:shadow-retro-hover hover:translate-y-[2px] hover:translate-x-[2px] transition-all">
+                        DOWNLOAD RESUME
+                    </a>
+                </div>
+                <div class="mt-10 grid grid-cols-2 sm:grid-cols-3 gap-3 max-w-xl" aria-label="Live portfolio widgets">
+                    <div class="bg-retro-card border-2 border-retro-dark p-3 shadow-retro">
+                        <p class="font-mono text-[10px] uppercase opacity-70">Status</p>
+                        <p class="mt-1 font-bold flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-retro-lime border border-retro-dark animate-pulse"></span>Available</p>
+                    </div>
+                    <div class="bg-retro-card border-2 border-retro-dark p-3 shadow-retro">
+                        <p class="font-mono text-[10px] uppercase opacity-70">Local time</p>
+                        <p id="heroClock" class="mt-1 font-bold">00:00</p>
+                    </div>
+                    <div class="bg-retro-card border-2 border-retro-dark p-3 shadow-retro col-span-2 sm:col-span-1">
+                        <p class="font-mono text-[10px] uppercase opacity-70">Build mode</p>
+                        <p class="mt-1 font-bold text-retro-accent">Live / Active</p>
+                    </div>
+                </div>
+                <div id="liveMetrics" class="mt-4 max-w-xl bg-retro-dark text-white border-2 border-retro-dark p-4 shadow-retro" aria-label="Live portfolio metrics">
+                    <div class="flex items-center justify-between gap-4 mb-3">
+                        <p class="font-mono text-xs text-retro-lime uppercase tracking-widest">Live portfolio metrics</p>
+                        <span id="metricsPulse" class="font-mono text-[10px] text-retro-lime">SYNCING...</span>
+                    </div>
+                    <div class="grid grid-cols-3 gap-3 mb-4">
+                        <div><p id="projectCount" class="text-2xl font-extrabold">0</p><p class="font-mono text-[10px] uppercase opacity-70">Projects</p></div>
+                        <div><p id="experienceCount" class="text-2xl font-extrabold">0</p><p class="font-mono text-[10px] uppercase opacity-70">Roles</p></div>
+                        <div><p id="skillCount" class="text-2xl font-extrabold">0</p><p class="font-mono text-[10px] uppercase opacity-70">Skills</p></div>
+                    </div>
+                    <div class="flex items-center justify-between gap-3 font-mono text-[10px] uppercase mb-1"><span>Portfolio complete</span><strong id="completionValue">0%</strong></div>
+                    <div class="h-2 bg-white/20 overflow-hidden"><div id="completionBar" class="h-full bg-retro-lime transition-all duration-700" style="width: 0%"></div></div>
+                </div>
+            </div>
+            
+            <div class="md:w-1/3 mt-12 md:mt-0 relative">
+                <!-- Decorative Retro Image Frame -->
+                <div class="relative w-full aspect-square bg-retro-secondary border-2 border-retro-dark shadow-retro rounded-sm overflow-hidden flex items-center justify-center group">
+                    <div class="absolute inset-0 opacity-20 bg-[url('data:image/svg+xml,%3Csvg width=\'20\' height=\'20\' viewBox=\'0 0 20 20\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'1\' fill-rule=\'evenodd\'%3E%3Ccircle cx=\'3\' cy=\'3\' r=\'3\'/%3E%3Ccircle cx=\'13\' cy=\'13\' r=\'3\'/%3E%3C/g%3E%3C/svg%3E')] z-10 pointer-events-none mix-blend-overlay"></div>
+                    
+                    <!-- PROFILE PICTURE -->
+                    <!-- To use your own photo, change the src="..." link below to your image file, like src="my-photo.jpg" -->
+                    <img id="profileImage" src="./public/img.png" alt="Khandker Saadman Rafid" class="w-full h-full object-cover z-0 transition-all duration-500">
+                </div>
+                <!-- Decorative elements -->
+                <div class="absolute -bottom-4 -right-4 w-24 h-24 bg-retro-accent border-2 border-retro-dark shadow-retro -z-10 hidden md:block"></div>
+                <div class="absolute -top-4 -left-4 w-12 h-12 border-4 border-retro-dark rounded-full -z-10 hidden md:block"></div>
+            </div>
+        </section>
+
+        <div class="max-w-6xl mx-auto px-4"><div class="section-divider"></div></div>
+
+        <section id="experience" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <h2 class="font-mono text-3xl md:text-4xl font-bold mb-12 text-retro-dark flex items-center">
+                <span class="bg-retro-dark text-white px-3 py-1 mr-4 text-xl">01</span> EXPERIENCE
+            </h2>
+            
+            <div id="experienceGrid" class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Job Card 1 -->
+                <div class="bg-retro-card border-2 border-retro-dark shadow-retro p-8 hover:-translate-y-1 transition-transform">
+                    <div class="flex justify-between items-start mb-4 flex-col sm:flex-row">
+                        <div>
+                            <h3 class="text-2xl font-bold text-retro-dark mb-1">Retail & Store Operations</h3>
+                            <p class="font-mono text-retro-accent font-bold">Meena Bazar</p>
+                        </div>
+                        <span class="font-mono text-sm bg-gray-200 border-2 border-retro-dark px-2 py-1 mt-2 sm:mt-0 inline-block">Previous</span>
+                    </div>
+                    <ul class="space-y-3 text-gray-700 mt-6 font-medium">
+                        <li class="flex items-start">
+                            <span class="text-retro-accent mr-2 mt-1">▹</span>
+                            Managed daily store operations, ensuring smooth workflow and high standards of retail presentation.
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-retro-accent mr-2 mt-1">▹</span>
+                            Handled inventory management, stock reconciliation, and quality control of products.
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-retro-accent mr-2 mt-1">▹</span>
+                            Delivered excellent customer service, resolving inquiries and ensuring a positive shopping experience.
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Job Card 2 -->
+                <div class="bg-retro-card border-2 border-retro-dark shadow-retro p-8 hover:-translate-y-1 transition-transform">
+                    <div class="flex justify-between items-start mb-4 flex-col sm:flex-row">
+                        <div>
+                            <h3 class="text-2xl font-bold text-retro-dark mb-1">Volunteer Responder</h3>
+                            <p class="font-mono text-retro-secondary font-bold">Red Crescent Society</p>
+                        </div>
+                        <span class="font-mono text-sm bg-gray-200 border-2 border-retro-dark px-2 py-1 mt-2 sm:mt-0 inline-block">Ongoing</span>
+                    </div>
+                    <ul class="space-y-3 text-gray-700 mt-6 font-medium">
+                        <li class="flex items-start">
+                            <span class="text-retro-secondary mr-2 mt-1">▹</span>
+                            Actively participated in community service initiatives and disaster response operations.
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-retro-secondary mr-2 mt-1">▹</span>
+                            Assisted in organizing local health camps, awareness drives, and blood donation campaigns.
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-retro-secondary mr-2 mt-1">▹</span>
+                            Demonstrated strong teamwork and crisis management skills in high-pressure environments.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <div class="max-w-6xl mx-auto px-4"><div class="section-divider"></div></div>
+
+        <section id="projects" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <h2 class="font-mono text-3xl md:text-4xl font-bold mb-12 text-retro-dark flex items-center">
+                <span class="bg-retro-dark text-white px-3 py-1 mr-4 text-xl">02</span> PROJECTS
+            </h2>
+
+            <div id="projectsGrid">
+            <div class="bg-retro-card border-2 border-retro-dark shadow-retro flex flex-col md:flex-row overflow-hidden">
+                <!-- Project Image/Graphic -->
+                <div class="md:w-1/2 bg-retro-secondary border-b-2 md:border-b-0 md:border-r-2 border-retro-dark p-8 flex items-center justify-center relative overflow-hidden">
+                    <!-- Retro geometric pattern background -->
+                    <div class="absolute inset-0 opacity-10 bg-[url('data:image/svg+xml,%3Csvg width=\'40\' height=\'40\' viewBox=\'0 0 40 40\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cpath d=\'M0 0h40v40H0V0zm20 20h20v20H20V20zM0 20h20v20H0V20z\' fill=\'%23000000\' fill-opacity=\'1\' fill-rule=\'evenodd\'/%3E%3C/svg%3E')]"></div>
+                    
+                    <div class="bg-white border-2 border-retro-dark p-4 shadow-retro z-10 w-full max-w-sm rotate-2 hover:rotate-0 transition-transform duration-300">
+                        <div class="border border-gray-300 h-32 mb-4 p-2 bg-gray-50 flex items-center justify-center">
+                            <span class="font-mono text-gray-400 text-xs text-center">Slide Preview<br>Q: What is the...</span>
+                        </div>
+                        <div class="h-2 bg-gray-200 w-3/4 mb-2"></div>
+                        <div class="h-2 bg-gray-200 w-1/2 mb-2"></div>
+                        <div class="h-2 bg-retro-accent w-1/4"></div>
+                    </div>
+                </div>
+                
+                <!-- Project Details -->
+                <div class="md:w-1/2 p-8 md:p-12 flex flex-col justify-center">
+                    <p id="projectCategory" class="font-mono text-retro-accent font-bold mb-2">Digital Content Creation</p>
+                    <h3 id="projectTitle" class="text-3xl font-bold text-retro-dark mb-4">Educational Digitization</h3>
+                    <p id="projectDescription" class="text-gray-700 mb-6 font-medium leading-relaxed">
+                        Digitized and systematically formatted complex educational questionnaires into high-quality, engaging presentations. This project involved converting raw data into visually digestible formats, ensuring accuracy, and enhancing the learning experience for end-users.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-8">
+                        <span class="bg-gray-200 border border-retro-dark px-3 py-1 font-mono text-xs">MS PowerPoint</span>
+                        <span class="bg-gray-200 border border-retro-dark px-3 py-1 font-mono text-xs">Data Formatting</span>
+                        <span class="bg-gray-200 border border-retro-dark px-3 py-1 font-mono text-xs">Visual Design</span>
+                        <span class="bg-gray-200 border border-retro-dark px-3 py-1 font-mono text-xs">Accuracy Checking</span>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </section>
+
+        <div class="max-w-6xl mx-auto px-4"><div class="section-divider"></div></div>
+
+        <section id="skills" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <h2 class="font-mono text-3xl md:text-4xl font-bold mb-12 text-retro-dark flex items-center">
+                <span class="bg-retro-dark text-white px-3 py-1 mr-4 text-xl">03</span> SKILLS
+            </h2>
+
+            <div id="skillsGrid" class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+                <!-- Skill Item -->
+                <div class="bg-retro-card border-2 border-retro-dark shadow-[2px_2px_0_0_rgba(43,43,43,1)] p-6 text-center hover:bg-retro-accent hover:text-white group transition-colors">
+                    <div class="w-12 h-12 mx-auto mb-4 border-2 border-retro-dark rounded-full flex items-center justify-center group-hover:border-white">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                    </div>
+                    <h4 class="font-bold font-mono text-sm uppercase">MS PowerPoint</h4>
+                </div>
+
+                <!-- Skill Item -->
+                <div class="bg-retro-card border-2 border-retro-dark shadow-[2px_2px_0_0_rgba(43,43,43,1)] p-6 text-center hover:bg-retro-secondary hover:text-white group transition-colors">
+                    <div class="w-12 h-12 mx-auto mb-4 border-2 border-retro-dark rounded-full flex items-center justify-center group-hover:border-white">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                    </div>
+                    <h4 class="font-bold font-mono text-sm uppercase">Image Editing</h4>
+                </div>
+
+                <!-- Skill Item -->
+                <div class="bg-retro-card border-2 border-retro-dark shadow-[2px_2px_0_0_rgba(43,43,43,1)] p-6 text-center hover:bg-retro-accent hover:text-white group transition-colors">
+                    <div class="w-12 h-12 mx-auto mb-4 border-2 border-retro-dark rounded-full flex items-center justify-center group-hover:border-white">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                    </div>
+                    <h4 class="font-bold font-mono text-sm uppercase">Troubleshooting</h4>
+                </div>
+
+                <!-- Skill Item -->
+                <div class="bg-retro-card border-2 border-retro-dark shadow-[2px_2px_0_0_rgba(43,43,43,1)] p-6 text-center hover:bg-retro-secondary hover:text-white group transition-colors">
+                    <div class="w-12 h-12 mx-auto mb-4 border-2 border-retro-dark rounded-full flex items-center justify-center group-hover:border-white">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                    </div>
+                    <h4 class="font-bold font-mono text-sm uppercase">Operations & Teamwork</h4>
+                </div>
+            </div>
+        </section>
+
+        <div class="max-w-6xl mx-auto px-4"><div class="section-divider"></div></div>
+
+        <section id="contact" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 mb-20">
+            <h2 class="font-mono text-3xl md:text-4xl font-bold mb-12 text-retro-dark flex items-center">
+                <span class="bg-retro-dark text-white px-3 py-1 mr-4 text-xl">04</span> CONTACT
+            </h2>
+
+            <div class="flex flex-col md:flex-row gap-12">
+                <div class="md:w-1/2">
+                    <h3 class="text-3xl font-bold mb-4">Let's Connect.</h3>
+                    <p class="text-gray-700 mb-8 font-medium">
+                        Whether you have a question about my experience, want to discuss a potential project, or just want to say hi, my inbox is open.
+                    </p>
+                    
+                    <div class="space-y-4 font-mono">
+                        <div class="flex items-center">
+                            <span class="contact-icon contact-icon-email w-8 h-8 flex items-center justify-center mr-4"><i class="fa-solid fa-envelope" aria-hidden="true"></i></span>
+                            <a id="emailLink" href="mailto:ksrafid@example.com" class="hover:text-retro-accent underline decoration-2 underline-offset-4">ksrafid@example.com</a>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="contact-icon contact-icon-linkedin w-8 h-8 flex items-center justify-center mr-4"><i class="fa-brands fa-linkedin-in" aria-hidden="true"></i></span>
+                            <a id="linkedinLink" href="#" class="hover:text-retro-accent underline decoration-2 underline-offset-4">linkedin.com/in/ksrafid</a>
+                        </div>
+                        <div id="githubRow" class="hidden flex items-center">
+                            <span class="contact-icon contact-icon-github w-8 h-8 flex items-center justify-center mr-4"><i class="fa-brands fa-github" aria-hidden="true"></i></span>
+                            <a id="githubLink" href="#" target="_blank" rel="noopener" class="hover:text-retro-accent underline decoration-2 underline-offset-4">GitHub</a>
+                        </div>
+                        <div id="facebookRow" class="hidden flex items-center">
+                            <span class="contact-icon contact-icon-facebook w-8 h-8 flex items-center justify-center mr-4"><i class="fa-brands fa-facebook-f" aria-hidden="true"></i></span>
+                            <a id="facebookLink" href="#" target="_blank" rel="noopener" class="hover:text-retro-accent underline decoration-2 underline-offset-4">Facebook</a>
+                        </div>
+                        <div id="instagramRow" class="hidden flex items-center">
+                            <span class="contact-icon contact-icon-instagram w-8 h-8 flex items-center justify-center mr-4"><i class="fa-brands fa-instagram" aria-hidden="true"></i></span>
+                            <a id="instagramLink" href="#" target="_blank" rel="noopener" class="hover:text-retro-accent underline decoration-2 underline-offset-4">Instagram</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="md:w-1/2">
+                    <form id="contactForm" class="bg-retro-card border-2 border-retro-dark shadow-retro p-6 md:p-8">
+                        <div class="mb-6">
+                            <label for="name" class="block font-mono font-bold text-sm mb-2 text-retro-dark">NAME</label>
+                            <input type="text" id="name" required class="w-full bg-white border-2 border-retro-dark px-4 py-2 focus:outline-none focus:border-retro-accent focus:ring-0 transition-colors">
+                        </div>
+                        <div class="mb-6">
+                            <label for="email" class="block font-mono font-bold text-sm mb-2 text-retro-dark">EMAIL</label>
+                            <input type="email" id="email" required class="w-full bg-white border-2 border-retro-dark px-4 py-2 focus:outline-none focus:border-retro-accent focus:ring-0 transition-colors">
+                        </div>
+                        <div class="mb-6">
+                            <label for="message" class="block font-mono font-bold text-sm mb-2 text-retro-dark">MESSAGE</label>
+                            <textarea id="message" rows="4" required class="w-full bg-white border-2 border-retro-dark px-4 py-2 focus:outline-none focus:border-retro-accent focus:ring-0 transition-colors resize-none"></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-retro-dark text-white font-mono font-bold py-3 px-6 border-2 border-transparent hover:bg-retro-accent hover:border-retro-dark hover:shadow-retro transition-all">
+                            SEND MESSAGE
+                        </button>
+                    </form>
+                    
+                    <!-- Hidden Success Message -->
+                    <div id="successMessage" class="hidden bg-retro-secondary text-white border-2 border-retro-dark shadow-retro p-6 mt-4 font-mono font-bold text-center">
+                        Message sent successfully! I'll get back to you soon.
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-retro-dark text-white border-t-2 border-retro-dark py-8 mt-auto">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
+            <div class="mb-4 md:mb-0">
+                <span class="font-mono font-bold tracking-widest text-lg">KHANDKER SAADMAN RAFID</span>
+                <p class="text-sm text-gray-400 mt-1">© <span id="year"></span> All rights reserved.</p>
+            </div>
+            <div class="flex space-x-6 font-mono text-sm">
+                <a href="#home" class="hover:text-retro-accent transition-colors">BACK TO TOP ↑</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Set current year in footer
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        const savedTheme = localStorage.getItem('portfolioThemeV2');
+        if (savedTheme === 'dark') document.body.classList.add('dark-theme');
+        const toggleTheme = () => {
+            document.body.classList.toggle('dark-theme');
+            localStorage.setItem('portfolioThemeV2', document.body.classList.contains('dark-theme') ? 'dark' : 'light');
+        };
+        document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+        document.getElementById('themeToggleMobile').addEventListener('click', toggleTheme);
+
+
+        // Load content saved from the browser dashboard.
+        const savedPortfolio = JSON.parse(localStorage.getItem('portfolioData') || '{}');
+        const textFields = ['siteName', 'heroName', 'heroBio', 'projectCategory', 'projectTitle', 'projectDescription'];
+        const applyPortfolio = portfolio => {
+            textFields.forEach(id => {
+                if (portfolio[id]) document.getElementById(id).textContent = portfolio[id];
+            });
+            if (portfolio.email) {
+                const emailLink = document.getElementById('emailLink');
+                emailLink.textContent = portfolio.email;
+                emailLink.href = `mailto:${portfolio.email}`;
+            }
+            if (portfolio.linkedin) {
+                const linkedinLink = document.getElementById('linkedinLink');
+                linkedinLink.textContent = portfolio.linkedin.replace(/^https?:\/\//, '');
+                linkedinLink.href = portfolio.linkedin;
+            }
+            ['github', 'facebook', 'instagram'].forEach(network => {
+                if (!portfolio[network]) return;
+                const link = document.getElementById(`${network}Link`);
+                link.href = portfolio[network];
+                link.textContent = portfolio[network].replace(/^https?:\/\//, '').replace(/\/$/, '');
+                document.getElementById(`${network}Row`).classList.remove('hidden');
+            });
+            if (portfolio.profileImage) document.getElementById('profileImage').src = portfolio.profileImage;
+            if (portfolio.resumeUrl) {
+                const resumeLink = document.getElementById('resumeLink');
+                resumeLink.href = portfolio.resumeUrl;
+                resumeLink.classList.remove('hidden');
+            }
+            if (Array.isArray(portfolio.projects) && portfolio.projects.length) renderProjects(portfolio.projects);
+            if (Array.isArray(portfolio.experiences) && portfolio.experiences.length) renderExperience(portfolio.experiences);
+            if (Array.isArray(portfolio.skills) && portfolio.skills.length) renderSkills(portfolio.skills);
+            updateLiveMetrics();
+        };
+        const escapeHTML = value => String(value || '').replace(/[&<>"']/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[character]));
+        const renderProjects = projects => {
+            document.getElementById('projectsGrid').innerHTML = projects.map(project => `
+                <article class="bg-retro-card border-2 border-retro-dark shadow-retro flex flex-col md:flex-row overflow-hidden">
+                    <div class="md:w-1/2 bg-retro-secondary border-b-2 md:border-b-0 md:border-r-2 border-retro-dark p-8 flex items-center justify-center">
+                        <div class="bg-white border-2 border-retro-dark p-4 shadow-retro w-full max-w-sm">
+                            <div class="border border-gray-300 h-32 p-2 bg-gray-50 flex items-center justify-center">
+                                <span class="font-mono text-gray-400 text-xs text-center">PROJECT<br>${escapeHTML(project.title)}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="md:w-1/2 p-8 md:p-12 flex flex-col justify-center">
+                        <p class="font-mono text-retro-accent font-bold mb-2">${escapeHTML(project.category)}</p>
+                        <h3 class="text-3xl font-bold text-retro-dark mb-4">${escapeHTML(project.title)}</h3>
+                        <p class="text-gray-700 mb-6 font-medium leading-relaxed">${escapeHTML(project.description)}</p>
+                        <div class="flex flex-wrap gap-2">${(project.tags || []).map(tag => `<span class="bg-gray-200 border border-retro-dark px-3 py-1 font-mono text-xs">${escapeHTML(tag)}</span>`).join('')}</div>
+                    </div>
+                </article>`).join('<div class="h-8"></div>');
+        };
+        const renderExperience = experiences => {
+            document.getElementById('experienceGrid').innerHTML = experiences.map(experience => `
+                <article class="bg-retro-card border-2 border-retro-dark shadow-retro p-8 hover:-translate-y-1 transition-transform">
+                    <div class="flex justify-between items-start mb-4 flex-col sm:flex-row">
+                        <div><h3 class="text-2xl font-bold text-retro-dark mb-1">${escapeHTML(experience.title)}</h3><p class="font-mono text-retro-accent font-bold">${escapeHTML(experience.organization)}</p></div>
+                        <span class="font-mono text-sm bg-gray-200 border-2 border-retro-dark px-2 py-1 mt-2 sm:mt-0 inline-block">${escapeHTML(experience.status)}</span>
+                    </div>
+                    <ul class="space-y-3 text-gray-700 mt-6 font-medium">${(experience.points || []).map(point => `<li class="flex items-start"><span class="text-retro-accent mr-2 mt-1">▹</span>${escapeHTML(point)}</li>`).join('')}</ul>
+                </article>`).join('');
+        };
+        const renderSkills = skills => {
+            document.getElementById('skillsGrid').innerHTML = skills.map((skill, index) => `
+                <div class="bg-retro-card border-2 border-retro-dark shadow-[2px_2px_0_0_rgba(43,43,43,1)] p-6 text-center hover:bg-${index % 2 ? 'retro-secondary' : 'retro-accent'} hover:text-white group transition-colors">
+                    <div class="w-12 h-12 mx-auto mb-4 border-2 border-retro-dark rounded-full flex items-center justify-center group-hover:border-white"><span class="font-mono font-bold">${escapeHTML(skill.icon || '★')}</span></div>
+                    <h4 class="font-bold font-mono text-sm uppercase">${escapeHTML(skill.name)}</h4>
+                </div>`).join('');
+        };
+
+            const updateLiveMetrics = () => {
+                const projectTotal = document.querySelectorAll('#projectsGrid article, #projectsGrid > div').length || 1;
+                const experienceTotal = document.querySelectorAll('#experienceGrid article').length || 1;
+                const skillTotal = document.querySelectorAll('#skillsGrid > div').length || 1;
+                const filledFields = ['siteName', 'heroName', 'heroBio', 'email', 'linkedin'].filter(field => savedPortfolio[field]).length;
+                const completion = Math.min(100, Math.round((filledFields / 5) * 60 + Math.min(projectTotal, 3) / 3 * 20 + Math.min(experienceTotal, 3) / 3 * 10 + Math.min(skillTotal, 6) / 6 * 10));
+                document.getElementById('projectCount').textContent = projectTotal;
+                document.getElementById('experienceCount').textContent = experienceTotal;
+                document.getElementById('skillCount').textContent = skillTotal;
+                document.getElementById('completionValue').textContent = `${completion}%`;
+                document.getElementById('completionBar').style.width = `${completion}%`;
+                document.getElementById('metricsPulse').textContent = `SYNCED / ${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
+            };
+        applyPortfolio(savedPortfolio);
+        if (savedPortfolio.email) {
+            const emailLink = document.getElementById('emailLink');
+            emailLink.textContent = savedPortfolio.email;
+            emailLink.href = `mailto:${savedPortfolio.email}`;
+        }
+        if (savedPortfolio.linkedin) {
+            const linkedinLink = document.getElementById('linkedinLink');
+            linkedinLink.textContent = savedPortfolio.linkedin.replace(/^https?:\/\//, '');
+            linkedinLink.href = savedPortfolio.linkedin;
+        }
+        fetch('https://oiruilsgqfqpmhradcrm.supabase.co/rest/v1/portfolio_content?id=eq.1&select=content', {
+            headers: { apikey: 'sb_publishable_eejxo50gMcgeLDFM91a70A_trAfjMPm' }
+        })
+            .then(response => response.ok ? response.json() : [])
+            .then(rows => { if (rows[0]?.content) applyPortfolio({ ...savedPortfolio, ...rows[0].content }); })
+            .catch(() => {});
+
+        // Mobile Menu Toggle
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu on link click
+        const mobileLinks = menu.querySelectorAll('a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                menu.classList.add('hidden');
+            });
+        });
+
+        const setupMotion = () => {
+            document.querySelectorAll('main > section, [id$="Grid"] > article, #skillsGrid > div, #contactForm').forEach((element, index) => {
+                if (element.dataset.motionReady) return;
+                element.dataset.motionReady = 'true';
+                element.classList.add('reveal-item');
+                element.style.transitionDelay = `${Math.min(index * 70, 350)}ms`;
+                if (element.matches('[id$="Grid"] > article, #skillsGrid > div, #contactForm')) {
+                    element.classList.add('motion-card');
+                    element.addEventListener('pointermove', event => {
+                        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || event.pointerType === 'touch') return;
+                        const bounds = element.getBoundingClientRect();
+                        const rotateX = ((event.clientY - bounds.top) / bounds.height - 0.5) * -4;
+                        const rotateY = ((event.clientX - bounds.left) / bounds.width - 0.5) * 4;
+                        element.style.transform = `perspective(700px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-2px)`;
+                    });
+                    element.addEventListener('pointerleave', () => {
+                        element.style.transform = '';
+                    });
+                }
+            });
+            document.querySelectorAll('main > section h2').forEach(heading => heading.classList.add('live-line'));
+        };
+
+        const motionObserver = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    motionObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.12 });
+
+        setupMotion();
+        document.querySelectorAll('.reveal-item').forEach(element => motionObserver.observe(element));
+        new MutationObserver(() => {
+            setupMotion();
+            document.querySelectorAll('.reveal-item:not(.is-visible)').forEach(element => motionObserver.observe(element));
+        }).observe(document.querySelector('main'), { childList: true, subtree: true });
+
+        window.addEventListener('pointermove', event => {
+            document.body.style.setProperty('--pointer-x', `${event.clientX}px`);
+            document.body.style.setProperty('--pointer-y', `${event.clientY}px`);
+            if (event.pointerType === 'touch' || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+            const xRatio = event.clientX / window.innerWidth - 0.5;
+            const yRatio = event.clientY / window.innerHeight - 0.5;
+            const heroCopy = document.querySelector('#home > div:first-child');
+            const heroVisual = document.querySelector('#home > div:last-child');
+            if (heroCopy && heroVisual) {
+                heroCopy.style.transform = `translate(${xRatio * -8}px, ${yRatio * -5}px)`;
+                heroVisual.style.transform = `translate(${xRatio * 10}px, ${yRatio * 8}px) rotate(${xRatio * 2}deg)`;
+            }
+        }, { passive: true });
+
+        const ambientCanvas = document.getElementById('ambientCanvas');
+        const ambientContext = ambientCanvas.getContext('2d');
+        const ambientPointer = { x: -1000, y: -1000 };
+        let ambientParticles = [];
+        let ambientFrame;
+
+        const resizeAmbientCanvas = () => {
+            const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+            ambientCanvas.width = window.innerWidth * pixelRatio;
+            ambientCanvas.height = window.innerHeight * pixelRatio;
+            ambientContext.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+            const particleCount = window.innerWidth < 640 ? 24 : 52;
+            ambientParticles = Array.from({ length: particleCount }, () => ({
+                x: Math.random() * window.innerWidth,
+                y: Math.random() * window.innerHeight,
+                vx: (Math.random() - 0.5) * 0.28,
+                vy: (Math.random() - 0.5) * 0.28,
+                radius: Math.random() * 1.8 + 0.8
+            }));
+        };
+
+        const animateAmbientCanvas = () => {
+            ambientContext.clearRect(0, 0, window.innerWidth, window.innerHeight);
+            ambientParticles.forEach(particle => {
+                const dx = ambientPointer.x - particle.x;
+                const dy = ambientPointer.y - particle.y;
+                const distance = Math.hypot(dx, dy);
+                if (distance < 150 && distance > 1) {
+                    particle.vx += (dx / distance) * 0.002;
+                    particle.vy += (dy / distance) * 0.002;
+                }
+                particle.x += particle.vx;
+                particle.y += particle.vy;
+                if (particle.x < -20 || particle.x > window.innerWidth + 20) particle.vx *= -1;
+                if (particle.y < -20 || particle.y > window.innerHeight + 20) particle.vy *= -1;
+                ambientContext.beginPath();
+                ambientContext.fillStyle = 'rgba(217, 93, 57, 0.72)';
+                ambientContext.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
+                ambientContext.fill();
+            });
+            ambientParticles.forEach((first, firstIndex) => ambientParticles.slice(firstIndex + 1).forEach(second => {
+                const distance = Math.hypot(first.x - second.x, first.y - second.y);
+                if (distance < 125) {
+                    ambientContext.beginPath();
+                    ambientContext.strokeStyle = `rgba(40, 127, 120, ${0.2 * (1 - distance / 125)})`;
+                    ambientContext.lineWidth = 1;
+                    ambientContext.moveTo(first.x, first.y);
+                    ambientContext.lineTo(second.x, second.y);
+                    ambientContext.stroke();
+                }
+            }));
+            ambientFrame = requestAnimationFrame(animateAmbientCanvas);
+        };
+
+        resizeAmbientCanvas();
+        window.addEventListener('resize', resizeAmbientCanvas);
+        window.addEventListener('pointermove', event => {
+            ambientPointer.x = event.clientX;
+            ambientPointer.y = event.clientY;
+        }, { passive: true });
+        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) animateAmbientCanvas();
+
+        const updateScrollProgress = () => {
+            const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = scrollableHeight > 0 ? window.scrollY / scrollableHeight * 100 : 0;
+            document.getElementById('scrollProgress').style.width = `${progress}%`;
+            document.getElementById('backToTop').classList.toggle('is-visible', window.scrollY > window.innerHeight * 0.65);
+        };
+        window.addEventListener('scroll', updateScrollProgress, { passive: true });
+        updateScrollProgress();
+
+        const liveClock = document.getElementById('liveClock');
+        const heroClock = document.getElementById('heroClock');
+        const hourHand = document.getElementById('hourHand');
+        const minuteHand = document.getElementById('minuteHand');
+        const secondHand = document.getElementById('secondHand');
+        const updateLiveClock = () => {
+            const now = new Date();
+            const currentTime = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            liveClock.textContent = `LIVE / ${currentTime}`;
+            heroClock.textContent = currentTime;
+            const secondAngle = now.getSeconds() * 6;
+            const minuteAngle = now.getMinutes() * 6 + now.getSeconds() * 0.1;
+            const hourAngle = (now.getHours() % 12) * 30 + now.getMinutes() * 0.5;
+            secondHand.style.transform = `translateX(-50%) rotate(${secondAngle}deg)`;
+            minuteHand.style.transform = `translateX(-50%) rotate(${minuteAngle}deg)`;
+            hourHand.style.transform = `translateX(-50%) rotate(${hourAngle}deg)`;
+        };
+        updateLiveClock();
+        setInterval(updateLiveClock, 1000);
+        document.getElementById('backToTop').addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+        document.querySelectorAll('a, button').forEach(button => {
+            button.classList.add('magnetic-button');
+            button.addEventListener('pointermove', event => {
+                if (event.pointerType === 'touch' || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+                const bounds = button.getBoundingClientRect();
+                const x = (event.clientX - bounds.left - bounds.width / 2) * 0.12;
+                const y = (event.clientY - bounds.top - bounds.height / 2) * 0.12;
+                button.style.transform = `translate(${x}px, ${y}px)`;
+            });
+            button.addEventListener('pointerleave', () => {
+                button.style.transform = '';
+            });
+        });
+
+        // Form submission simulation
+        const contactForm = document.getElementById('contactForm');
+        const successMessage = document.getElementById('successMessage');
+
+        contactForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Basic visual feedback
+            const btn = this.querySelector('button[type="submit"]');
+            const originalText = btn.textContent;
+            btn.textContent = 'SENDING...';
+            btn.classList.add('opacity-75');
+            
+            const response = await fetch('https://oiruilsgqfqpmhradcrm.supabase.co/rest/v1/contact_messages', {
+                method: 'POST',
+                headers: {
+                    apikey: 'sb_publishable_eejxo50gMcgeLDFM91a70A_trAfjMPm',
+                    'Content-Type': 'application/json',
+                    Prefer: 'return=minimal'
+                },
+                body: JSON.stringify({
+                    name: document.getElementById('name').value.trim(),
+                    email: document.getElementById('email').value.trim(),
+                    message: document.getElementById('message').value.trim()
+                })
+            });
+            if (!response.ok) {
+                btn.textContent = originalText;
+                btn.classList.remove('opacity-75');
+                alert('Message could not be sent. Please try again.');
+                return;
+            }
+            setTimeout(() => {
+                contactForm.reset();
+                contactForm.classList.add('hidden');
+                successMessage.classList.remove('hidden');
+                
+                // Reset form after a few seconds
+                setTimeout(() => {
+                    successMessage.classList.add('hidden');
+                    contactForm.classList.remove('hidden');
+                    btn.textContent = originalText;
+                    btn.classList.remove('opacity-75');
+                }, 5000);
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

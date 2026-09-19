@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saadman Khandker Admin Panel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        body { background: #EAF3EF; color: #15343A; }
+        input, textarea { border: 2px solid #15343A; background: #FFFDF7; }
+        input:focus, textarea:focus { outline: 2px solid #D95D39; }
+        [class*="bg-[#FFFCF0]"] { background-color: #FFFDF7; }
+        [class*="bg-[#2A9D8F]"] { background-color: #287F78; }
+        [class*="bg-[#E76F51]"] { background-color: #D95D39; }
+        [class*="bg-[#2B2B2B]"] { background-color: #15343A; }
+        [class*="border-[#2B2B2B]"] { border-color: #15343A; }
+        [class*="text-[#E76F51]"] { color: #D95D39; }
+        [class*="shadow-[4px_4px_0_#2B2B2B]"] { box-shadow: 4px 4px 0 #15343A; }
+    </style>
+</head>
+<body class="min-h-screen p-4 sm:p-8">
+    <main class="max-w-3xl mx-auto">
+        <header class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b-2 border-[#2B2B2B] pb-6 mb-8">
+            <div>
+                <p class="font-mono text-[#E76F51] font-bold text-sm">SAADMAN KHANDKER ADMIN</p>
+                <h1 class="text-3xl font-bold">Portfolio Dashboard</h1>
+            </div>
+            <a href="./index.html" class="bg-[#2A9D8F] text-white font-bold px-4 py-3 border-2 border-[#2B2B2B] shadow-[4px_4px_0_#2B2B2B]">View portfolio</a>
+        </header>
+
+        <section id="loginPanel" class="bg-[#FFFCF0] border-2 border-[#2B2B2B] p-5 shadow-[4px_4px_0_#2B2B2B] mb-8">
+            <h2 class="font-mono font-bold text-xl mb-4">Admin login</h2>
+            <form id="loginForm" class="space-y-4">
+                <input id="loginEmail" type="email" placeholder="Your email" class="w-full p-3" required>
+                <input id="loginPassword" type="password" placeholder="Password" class="w-full p-3" required>
+                <input id="newPassword" type="password" placeholder="New password (recovery only)" class="w-full p-3 hidden" minlength="6">
+                <div class="flex flex-wrap gap-3 items-center">
+                    <button type="submit" class="bg-[#2B2B2B] text-white font-bold px-5 py-3">Log in</button>
+                    <button type="button" id="updatePasswordButton" class="bg-[#E76F51] text-white font-bold px-5 py-3 hidden">Set new password</button>
+                    <button type="button" id="resetPasswordButton" class="underline font-bold">Forgot password?</button>
+                    <span id="loginStatus" class="font-mono text-sm" aria-live="polite"></span>
+                </div>
+            </form>
+        </section>
+
+        <form id="editor" class="space-y-6 hidden">
+            <section class="bg-[#FFFCF0] border-2 border-[#2B2B2B] p-5 shadow-[4px_4px_0_#2B2B2B] space-y-4">
+                <h2 class="font-mono font-bold text-xl">Profile</h2>
+                <label class="block font-bold">Profile photo<input id="profileImageFile" type="file" accept="image/png,image/jpeg,image/webp" class="w-full mt-2 p-3"></label>
+                <img id="profileImagePreview" src="./public/img.png" alt="Profile preview" class="w-32 h-32 object-cover border-2 border-[#2B2B2B]">
+                <label class="block font-bold">Resume PDF<input id="resumeFile" type="file" accept="application/pdf" class="w-full mt-2 p-3"></label>
+                <a id="resumePreview" href="#" target="_blank" rel="noopener" class="hidden text-[#E76F51] underline font-bold">Open current resume</a>
+                <label class="block font-bold">Name<input id="siteName" class="w-full mt-2 p-3" required></label>
+                <label class="block font-bold">Hero name<input id="heroName" class="w-full mt-2 p-3" required></label>
+                <label class="block font-bold">Short bio<textarea id="heroBio" rows="3" class="w-full mt-2 p-3" required></textarea></label>
+            </section>
+
+            <section class="bg-[#FFFCF0] border-2 border-[#2B2B2B] p-5 shadow-[4px_4px_0_#2B2B2B] space-y-4">
+                <h2 class="font-mono font-bold text-xl">Featured project</h2>
+                <label class="block font-bold">Category<input id="projectCategory" class="w-full mt-2 p-3" required></label>
+                <label class="block font-bold">Title<input id="projectTitle" class="w-full mt-2 p-3" required></label>
+                <label class="block font-bold">Description<textarea id="projectDescription" rows="5" class="w-full mt-2 p-3" required></textarea></label>
+            </section>
+
+            <section class="bg-[#FFFCF0] border-2 border-[#2B2B2B] p-5 shadow-[4px_4px_0_#2B2B2B] space-y-4">
+                <div class="flex items-center justify-between gap-4">
+                    <h2 class="font-mono font-bold text-xl">Projects manager</h2>
+                    <button type="button" id="newProjectButton" class="bg-[#2A9D8F] text-white font-bold px-4 py-2 border-2 border-[#2B2B2B]">New project</button>
+                </div>
+                <div id="projectList" class="space-y-3"></div>
+                <div id="projectEditor" class="hidden border-t-2 border-[#2B2B2B] pt-4 space-y-4">
+                    <input id="editingProjectId" type="hidden">
+                    <label class="block font-bold">Category<input id="managedProjectCategory" class="w-full mt-2 p-3"></label>
+                    <label class="block font-bold">Title<input id="managedProjectTitle" class="w-full mt-2 p-3"></label>
+                    <label class="block font-bold">Description<textarea id="managedProjectDescription" rows="4" class="w-full mt-2 p-3"></textarea></label>
+                    <label class="block font-bold">Tags <span class="font-normal">(comma separated)</span><input id="managedProjectTags" class="w-full mt-2 p-3"></label>
+                    <div class="flex gap-3">
+                        <button type="button" id="saveProjectButton" class="bg-[#E76F51] text-white font-bold px-5 py-3 border-2 border-[#2B2B2B]">Save project</button>
+                        <button type="button" id="cancelProjectButton" class="bg-white font-bold px-5 py-3 border-2 border-[#2B2B2B]">Cancel</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="bg-[#FFFCF0] border-2 border-[#2B2B2B] p-5 shadow-[4px_4px_0_#2B2B2B] space-y-4">
+                <div class="flex items-center justify-between gap-4">
+                    <h2 class="font-mono font-bold text-xl">Experience manager</h2>
+                    <button type="button" id="newExperienceButton" class="bg-[#2A9D8F] text-white font-bold px-4 py-2 border-2 border-[#2B2B2B]">New experience</button>
+                </div>
+                <div id="experienceList" class="space-y-3"></div>
+                <div id="experienceEditor" class="hidden border-t-2 border-[#2B2B2B] pt-4 space-y-4">
+                    <input id="editingExperienceId" type="hidden">
+                    <label class="block font-bold">Job or role title<input id="managedExperienceTitle" class="w-full mt-2 p-3"></label>
+                    <label class="block font-bold">Organization<input id="managedExperienceOrganization" class="w-full mt-2 p-3"></label>
+                    <label class="block font-bold">Status<input id="managedExperienceStatus" placeholder="Previous or Ongoing" class="w-full mt-2 p-3"></label>
+                    <label class="block font-bold">Bullet points <span class="font-normal">(one per line)</span><textarea id="managedExperiencePoints" rows="5" class="w-full mt-2 p-3"></textarea></label>
+                    <div class="flex gap-3">
+                        <button type="button" id="saveExperienceButton" class="bg-[#E76F51] text-white font-bold px-5 py-3 border-2 border-[#2B2B2B]">Save experience</button>
+                        <button type="button" id="cancelExperienceButton" class="bg-white font-bold px-5 py-3 border-2 border-[#2B2B2B]">Cancel</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="bg-[#FFFCF0] border-2 border-[#2B2B2B] p-5 shadow-[4px_4px_0_#2B2B2B] space-y-4">
+                <div class="flex items-center justify-between gap-4">
+                    <h2 class="font-mono font-bold text-xl">Skills manager</h2>
+                    <button type="button" id="newSkillButton" class="bg-[#2A9D8F] text-white font-bold px-4 py-2 border-2 border-[#2B2B2B]">New skill</button>
+                </div>
+                <div id="skillList" class="space-y-3"></div>
+                <div id="skillEditor" class="hidden border-t-2 border-[#2B2B2B] pt-4 space-y-4">
+                    <input id="editingSkillId" type="hidden">
+                    <label class="block font-bold">Skill name<input id="managedSkillName" class="w-full mt-2 p-3"></label>
+                    <label class="block font-bold">Icon or short mark<input id="managedSkillIcon" maxlength="3" placeholder="★" class="w-full mt-2 p-3"></label>
+                    <div class="flex gap-3">
+                        <button type="button" id="saveSkillButton" class="bg-[#E76F51] text-white font-bold px-5 py-3 border-2 border-[#2B2B2B]">Save skill</button>
+                        <button type="button" id="cancelSkillButton" class="bg-white font-bold px-5 py-3 border-2 border-[#2B2B2B]">Cancel</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="bg-[#FFFCF0] border-2 border-[#2B2B2B] p-5 shadow-[4px_4px_0_#2B2B2B] space-y-4">
+                <h2 class="font-mono font-bold text-xl">Contact</h2>
+                <label class="block font-bold">Email<input id="email" type="email" class="w-full mt-2 p-3" required></label>
+                <label class="block font-bold">LinkedIn URL<input id="linkedin" type="url" placeholder="https://linkedin.com/in/your-name" class="w-full mt-2 p-3"></label>
+                <label class="block font-bold">GitHub URL<input id="github" type="url" placeholder="https://github.com/your-name" class="w-full mt-2 p-3"></label>
+                <label class="block font-bold">Facebook URL<input id="facebook" type="url" placeholder="https://facebook.com/your-name" class="w-full mt-2 p-3"></label>
+                <label class="block font-bold">Instagram URL<input id="instagram" type="url" placeholder="https://instagram.com/your-name" class="w-full mt-2 p-3"></label>
+            </section>
+
+            <section class="bg-[#FFFCF0] border-2 border-[#2B2B2B] p-5 shadow-[4px_4px_0_#2B2B2B] space-y-4">
+                <div class="flex items-center justify-between gap-4">
+                    <h2 class="font-mono font-bold text-xl">Messages</h2>
+                    <button type="button" id="refreshMessagesButton" class="bg-[#287F78] text-white font-bold px-4 py-2 border-2 border-[#15343A]">Refresh</button>
+                </div>
+                <div id="messageList" class="space-y-3"><p class="text-sm">Login to load messages.</p></div>
+            </section>
+
+            <div class="flex flex-wrap gap-4 items-center">
+                <button type="submit" class="bg-[#E76F51] text-white font-bold px-6 py-3 border-2 border-[#2B2B2B] shadow-[4px_4px_0_#2B2B2B]">Save changes</button>
+                <button type="button" id="resetButton" class="bg-white font-bold px-6 py-3 border-2 border-[#2B2B2B]">Reset saved data</button>
+                <button type="button" id="logoutButton" class="bg-white font-bold px-6 py-3 border-2 border-[#2B2B2B]">Log out</button>
+                <span id="status" class="font-mono font-bold" aria-live="polite"></span>
+            </div>
+        </form>
+    </main>
+
+    <script>
+        const supabaseUrl = 'https://oiruilsgqfqpmhradcrm.supabase.co';
+        const supabaseKey = 'sb_publishable_eejxo50gMcgeLDFM91a70A_trAfjMPm';
+        const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
+        const fields = ['siteName', 'heroName', 'heroBio', 'projectCategory', 'projectTitle', 'projectDescription', 'email', 'linkedin', 'github', 'facebook', 'instagram'];
+        const defaults = {
+            siteName: 'Khandker Sadman Rafid Saad',
+            heroName: 'Khandker Sadman Rafid Saad',
+            heroBio: 'A dedicated professional blending operations management with a passion for digital content and community service.',
+            projectCategory: 'Digital Content Creation',
+            projectTitle: 'Educational Digitization',
+            projectDescription: 'Digitized and systematically formatted complex educational questionnaires into high-quality, engaging presentations. This project involved converting raw data into visually digestible formats, ensuring accuracy, and enhancing the learning experience for end-users.',
+            email: 'ksrafid@example.com',
+            linkedin: 'https://linkedin.com/in/ksrafid',
+            github: '',
+            facebook: '',
+            instagram: ''
+        };
+        const defaultProjects = [{
+            id: 'default-project',
+            category: defaults.projectCategory,
+            title: defaults.projectTitle,
+            description: defaults.projectDescription,
+            tags: ['MS PowerPoint', 'Data Formatting', 'Visual Design', 'Accuracy Checking']
+        }];
+        const defaultExperiences = [
+            { id: 'retail-operations', title: 'Retail & Store Operations', organization: 'Meena Bazar', status: 'Previous', points: ['Managed daily store operations, ensuring smooth workflow and high standards of retail presentation.', 'Handled inventory management, stock reconciliation, and quality control of products.', 'Delivered excellent customer service, resolving inquiries and ensuring a positive shopping experience.'] },
+            { id: 'volunteer-responder', title: 'Volunteer Responder', organization: 'Red Crescent Society', status: 'Ongoing', points: ['Actively participated in community service initiatives and disaster response operations.', 'Assisted in organizing local health camps, awareness drives, and blood donation campaigns.', 'Demonstrated strong teamwork and crisis management skills in high-pressure environments.'] }
+        ];
+        const defaultSkills = [
+            { id: 'powerpoint', name: 'MS PowerPoint', icon: '▣' },
+            { id: 'image-editing', name: 'Image Editing', icon: '◈' },
+            { id: 'troubleshooting', name: 'Troubleshooting', icon: '⚙' },
+            { id: 'teamwork', name: 'Operations & Teamwork', icon: '◎' }
+        ];
+        const saved = JSON.parse(localStorage.getItem('portfolioData') || '{}');
+        let projects = Array.isArray(saved.projects) && saved.projects.length ? saved.projects : defaultProjects;
+        let experiences = Array.isArray(saved.experiences) && saved.experiences.length ? saved.experiences : defaultExperiences;
+        let skills = Array.isArray(saved.skills) && saved.skills.length ? saved.skills : defaultSkills;
+        const fillEditor = data => fields.forEach(field => document.getElementById(field).value = data[field] || defaults[field]);
+        let profileImage = saved.profileImage || '';
+        let resumeUrl = saved.resumeUrl || '';
+        const profileImagePreview = document.getElementById('profileImagePreview');
+        const profileImageFile = document.getElementById('profileImageFile');
+        const resumeFile = document.getElementById('resumeFile');
+        const resumePreview = document.getElementById('resumePreview');
+        if (profileImage) profileImagePreview.src = profileImage;
+        if (resumeUrl) { resumePreview.href = resumeUrl; resumePreview.classList.remove('hidden'); }
+        const projectList = document.getElementById('projectList');
+        const projectEditor = document.getElementById('projectEditor');
+        const renderProjectList = () => {
+            projectList.innerHTML = projects.map(project => `<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-2 border-[#2B2B2B] p-3"><div><strong>${project.title}</strong><p class="text-sm">${project.category}</p></div><div class="flex gap-2"><button type="button" data-edit-project="${project.id}" class="border-2 border-[#2B2B2B] px-3 py-2 font-bold">Edit</button><button type="button" data-delete-project="${project.id}" class="border-2 border-[#2B2B2B] px-3 py-2 font-bold">Delete</button></div></div>`).join('');
+        };
+        const openProjectEditor = project => {
+            document.getElementById('editingProjectId').value = project?.id || '';
+            document.getElementById('managedProjectCategory').value = project?.category || '';
+            document.getElementById('managedProjectTitle').value = project?.title || '';
+            document.getElementById('managedProjectDescription').value = project?.description || '';
+            document.getElementById('managedProjectTags').value = (project?.tags || []).join(', ');
+            projectEditor.classList.remove('hidden');
+        };
+        renderProjectList();
+        fillEditor(saved);
+
+        const loginPanel = document.getElementById('loginPanel');
+        const editor = document.getElementById('editor');
+        const loginStatus = document.getElementById('loginStatus');
+        const showEditor = () => {
+            loginPanel.classList.add('hidden');
+            editor.classList.remove('hidden');
+        };
+        const recoveryMode = window.location.hash.includes('type=recovery');
+        if (recoveryMode) {
+            document.getElementById('loginPassword').classList.add('hidden');
+            document.getElementById('newPassword').classList.remove('hidden');
+            document.querySelector('#loginForm button[type="submit"]').classList.add('hidden');
+            document.getElementById('resetPasswordButton').classList.add('hidden');
+            document.getElementById('updatePasswordButton').classList.remove('hidden');
+            loginStatus.textContent = 'Enter a new password.';
+        }
+        const escapeMessage = value => String(value || '').replace(/[&<>"']/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[character]));
+        const loadMessages = async () => {
+            const { data, error } = await supabaseClient.from('contact_messages').select('id, name, email, message, created_at').order('created_at', { ascending: false });
+            const messageList = document.getElementById('messageList');
+            if (error) {
+                messageList.innerHTML = '<p class="text-sm">Run the updated supabase-setup.sql first.</p>';
+                return;
+            }
+            if (!data.length) {
+                messageList.innerHTML = '<p class="text-sm">No messages yet.</p>';
+                return;
+            }
+            messageList.innerHTML = data.map(item => `<article class="border-2 border-[#15343A] p-4"><div class="flex flex-wrap justify-between gap-2"><strong>${escapeMessage(item.name)}</strong><time class="text-sm">${new Date(item.created_at).toLocaleString()}</time></div><a class="text-sm underline" href="mailto:${escapeMessage(item.email)}">${escapeMessage(item.email)}</a><p class="mt-3 whitespace-pre-wrap">${escapeMessage(item.message)}</p><button type="button" data-delete-message="${item.id}" class="mt-3 border-2 border-[#15343A] px-3 py-1 font-bold">Delete</button></article>`).join('');
+        };
+        const loadOnlineData = async () => {
+            const { data, error } = await supabaseClient.from('portfolio_content').select('content').eq('id', 1).maybeSingle();
+            if (error) throw error;
+            if (data?.content) {
+                const mergedContent = { ...saved, ...data.content };
+                fillEditor(mergedContent);
+                profileImage = mergedContent.profileImage || '';
+                if (profileImage) profileImagePreview.src = profileImage;
+                resumeUrl = mergedContent.resumeUrl || '';
+                if (resumeUrl) { resumePreview.href = resumeUrl; resumePreview.classList.remove('hidden'); }
+                projects = Array.isArray(data.content.projects) && data.content.projects.length ? data.content.projects : defaultProjects;
+                renderProjectList();
+                experiences = Array.isArray(data.content.experiences) && data.content.experiences.length ? data.content.experiences : defaultExperiences;
+                renderExperienceList();
+                skills = Array.isArray(data.content.skills) && data.content.skills.length ? data.content.skills : defaultSkills;
+                renderSkillList();
+            }
+            await loadMessages();
+        };
+        const checkSession = async () => {
+            const { data } = await supabaseClient.auth.getSession();
+            if (data.session && !recoveryMode) {
+                showEditor();
+                try { await loadOnlineData(); } catch (error) { document.getElementById('status').textContent = 'Create the database table first.'; }
+            }
+        };
+        checkSession();
+
+        document.getElementById('loginForm').addEventListener('submit', async event => {
+            event.preventDefault();
+            loginStatus.textContent = 'Logging in...';
+            const { error } = await supabaseClient.auth.signInWithPassword({
+                email: document.getElementById('loginEmail').value.trim(),
+                password: document.getElementById('loginPassword').value
+            });
+            if (error) {
+                loginStatus.textContent = error.message === 'Invalid login credentials'
+                    ? 'Email or password is incorrect. Use Forgot password if needed.'
+                    : error.message;
+                return;
+            }
+            loginStatus.textContent = '';
+            showEditor();
+            try { await loadOnlineData(); } catch (loadError) { document.getElementById('status').textContent = 'Create the database table first.'; }
+        });
+
+        document.getElementById('resetPasswordButton').addEventListener('click', async () => {
+            const email = document.getElementById('loginEmail').value.trim();
+            if (!email) {
+                loginStatus.textContent = 'Enter your email first.';
+                return;
+            }
+            const { error } = await supabaseClient.auth.resetPasswordForEmail(email, {
+                redirectTo: 'https://saadmankhandker.netlify.app/saadman_khandker.html'
+            });
+            loginStatus.textContent = error ? error.message : 'Password reset email sent. Check your inbox.';
+        });
+
+        document.getElementById('updatePasswordButton').addEventListener('click', async () => {
+            const password = document.getElementById('newPassword').value;
+            if (password.length < 6) {
+                loginStatus.textContent = 'Password must be at least 6 characters.';
+                return;
+            }
+            const { error } = await supabaseClient.auth.updateUser({ password });
+            if (error) {
+                loginStatus.textContent = error.message;
+                return;
+            }
+            loginStatus.textContent = 'Password updated. You can now log in.';
+            await supabaseClient.auth.signOut();
+            window.history.replaceState({}, document.title, window.location.pathname);
+            window.location.reload();
+        });
+
+        document.getElementById('editor').addEventListener('submit', async event => {
+            event.preventDefault();
+            const data = {};
+            fields.forEach(field => data[field] = document.getElementById(field).value.trim());
+            data.profileImage = profileImage;
+            data.resumeUrl = resumeUrl;
+            data.projects = projects;
+            data.experiences = experiences;
+            data.skills = skills;
+            ['linkedin', 'github', 'facebook', 'instagram'].forEach(network => {
+                if (data[network] && !/^https?:\/\//i.test(data[network])) data[network] = `https://${data[network]}`;
+            });
+            fields.forEach(field => document.getElementById(field).value = data[field] || '');
+            localStorage.setItem('portfolioData', JSON.stringify(data));
+            const { error } = await supabaseClient.from('portfolio_content').upsert({ id: 1, content: data, updated_at: new Date().toISOString() });
+            document.getElementById('status').textContent = error ? 'Online save failed. Check your table and policies.' : 'Saved online.';
+        });
+
+        profileImageFile.addEventListener('change', async () => {
+            const file = profileImageFile.files[0];
+            if (!file) return;
+            if (file.size > 5 * 1024 * 1024) {
+                document.getElementById('status').textContent = 'Image must be smaller than 5 MB.';
+                return;
+            }
+            document.getElementById('status').textContent = 'Uploading image...';
+            const extension = file.name.split('.').pop().toLowerCase();
+            const filePath = `profile.${extension}`;
+            const { error: uploadError } = await supabaseClient.storage.from('portfolio-assets').upload(filePath, file, { upsert: true, contentType: file.type });
+            if (uploadError) {
+                document.getElementById('status').textContent = `Image upload failed: ${uploadError.message}`;
+                return;
+            }
+            const { data } = supabaseClient.storage.from('portfolio-assets').getPublicUrl(filePath);
+            profileImage = `${data.publicUrl}?v=${Date.now()}`;
+            profileImagePreview.src = profileImage;
+            document.getElementById('status').textContent = 'Image uploaded. Press Save changes to publish it.';
+        });
+
+        resumeFile.addEventListener('change', async () => {
+            const file = resumeFile.files[0];
+            if (!file) return;
+            if (file.size > 10 * 1024 * 1024) {
+                document.getElementById('status').textContent = 'Resume must be smaller than 10 MB.';
+                return;
+            }
+            document.getElementById('status').textContent = 'Uploading resume...';
+            const { error: uploadError } = await supabaseClient.storage.from('portfolio-assets').upload('resume.pdf', file, { upsert: true, contentType: 'application/pdf' });
+            if (uploadError) {
+                document.getElementById('status').textContent = `Resume upload failed: ${uploadError.message}`;
+                return;
+            }
+            const { data } = supabaseClient.storage.from('portfolio-assets').getPublicUrl('resume.pdf');
+            resumeUrl = `${data.publicUrl}?v=${Date.now()}`;
+            resumePreview.href = resumeUrl;
+            resumePreview.classList.remove('hidden');
+            document.getElementById('status').textContent = 'Resume uploaded. Press Save changes to publish it.';
+        });
+
+        document.getElementById('newProjectButton').addEventListener('click', () => openProjectEditor());
+        document.getElementById('cancelProjectButton').addEventListener('click', () => projectEditor.classList.add('hidden'));
+        document.getElementById('saveProjectButton').addEventListener('click', () => {
+            const project = {
+                id: document.getElementById('editingProjectId').value || `project-${Date.now()}`,
+                category: document.getElementById('managedProjectCategory').value.trim(),
+                title: document.getElementById('managedProjectTitle').value.trim(),
+                description: document.getElementById('managedProjectDescription').value.trim(),
+                tags: document.getElementById('managedProjectTags').value.split(',').map(tag => tag.trim()).filter(Boolean)
+            };
+            if (!project.category || !project.title || !project.description) return;
+            const existingIndex = projects.findIndex(item => item.id === project.id);
+            if (existingIndex === -1) projects.push(project); else projects[existingIndex] = project;
+            renderProjectList();
+            projectEditor.classList.add('hidden');
+            document.getElementById('status').textContent = 'Project ready. Press Save changes to publish it.';
+        });
+        projectList.addEventListener('click', event => {
+            const editId = event.target.dataset.editProject;
+            const deleteId = event.target.dataset.deleteProject;
+            if (editId) openProjectEditor(projects.find(project => project.id === editId));
+            if (deleteId) {
+                projects = projects.filter(project => project.id !== deleteId);
+                renderProjectList();
+                document.getElementById('status').textContent = 'Project removed. Press Save changes to publish it.';
+            }
+        });
+
+        const experienceList = document.getElementById('experienceList');
+        const experienceEditor = document.getElementById('experienceEditor');
+        const renderExperienceList = () => {
+            experienceList.innerHTML = experiences.map(experience => `<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-2 border-[#2B2B2B] p-3"><div><strong>${experience.title}</strong><p class="text-sm">${experience.organization} · ${experience.status}</p></div><div class="flex gap-2"><button type="button" data-edit-experience="${experience.id}" class="border-2 border-[#2B2B2B] px-3 py-2 font-bold">Edit</button><button type="button" data-delete-experience="${experience.id}" class="border-2 border-[#2B2B2B] px-3 py-2 font-bold">Delete</button></div></div>`).join('');
+        };
+        const openExperienceEditor = experience => {
+            document.getElementById('editingExperienceId').value = experience?.id || '';
+            document.getElementById('managedExperienceTitle').value = experience?.title || '';
+            document.getElementById('managedExperienceOrganization').value = experience?.organization || '';
+            document.getElementById('managedExperienceStatus').value = experience?.status || '';
+            document.getElementById('managedExperiencePoints').value = (experience?.points || []).join('\n');
+            experienceEditor.classList.remove('hidden');
+        };
+        renderExperienceList();
+        document.getElementById('newExperienceButton').addEventListener('click', () => openExperienceEditor());
+        document.getElementById('cancelExperienceButton').addEventListener('click', () => experienceEditor.classList.add('hidden'));
+        document.getElementById('saveExperienceButton').addEventListener('click', () => {
+            const experience = {
+                id: document.getElementById('editingExperienceId').value || `experience-${Date.now()}`,
+                title: document.getElementById('managedExperienceTitle').value.trim(),
+                organization: document.getElementById('managedExperienceOrganization').value.trim(),
+                status: document.getElementById('managedExperienceStatus').value.trim(),
+                points: document.getElementById('managedExperiencePoints').value.split('\n').map(point => point.trim()).filter(Boolean)
+            };
+            if (!experience.title || !experience.organization || !experience.status || !experience.points.length) return;
+            const existingIndex = experiences.findIndex(item => item.id === experience.id);
+            if (existingIndex === -1) experiences.push(experience); else experiences[existingIndex] = experience;
+            renderExperienceList();
+            experienceEditor.classList.add('hidden');
+            document.getElementById('status').textContent = 'Experience ready. Press Save changes to publish it.';
+        });
+        experienceList.addEventListener('click', event => {
+            const editId = event.target.dataset.editExperience;
+            const deleteId = event.target.dataset.deleteExperience;
+            if (editId) openExperienceEditor(experiences.find(experience => experience.id === editId));
+            if (deleteId) {
+                experiences = experiences.filter(experience => experience.id !== deleteId);
+                renderExperienceList();
+                document.getElementById('status').textContent = 'Experience removed. Press Save changes to publish it.';
+            }
+        });
+
+        const skillList = document.getElementById('skillList');
+        const skillEditor = document.getElementById('skillEditor');
+        const renderSkillList = () => {
+            skillList.innerHTML = skills.map(skill => `<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-2 border-[#2B2B2B] p-3"><div><strong>${skill.name}</strong><p class="text-sm">Icon: ${skill.icon || '★'}</p></div><div class="flex gap-2"><button type="button" data-edit-skill="${skill.id}" class="border-2 border-[#2B2B2B] px-3 py-2 font-bold">Edit</button><button type="button" data-delete-skill="${skill.id}" class="border-2 border-[#2B2B2B] px-3 py-2 font-bold">Delete</button></div></div>`).join('');
+        };
+        const openSkillEditor = skill => {
+            document.getElementById('editingSkillId').value = skill?.id || '';
+            document.getElementById('managedSkillName').value = skill?.name || '';
+            document.getElementById('managedSkillIcon').value = skill?.icon || '';
+            skillEditor.classList.remove('hidden');
+        };
+        renderSkillList();
+        document.getElementById('newSkillButton').addEventListener('click', () => openSkillEditor());
+        document.getElementById('cancelSkillButton').addEventListener('click', () => skillEditor.classList.add('hidden'));
+        document.getElementById('saveSkillButton').addEventListener('click', () => {
+            const skill = {
+                id: document.getElementById('editingSkillId').value || `skill-${Date.now()}`,
+                name: document.getElementById('managedSkillName').value.trim(),
+                icon: document.getElementById('managedSkillIcon').value.trim() || '★'
+            };
+            if (!skill.name) return;
+            const existingIndex = skills.findIndex(item => item.id === skill.id);
+            if (existingIndex === -1) skills.push(skill); else skills[existingIndex] = skill;
+            renderSkillList();
+            skillEditor.classList.add('hidden');
+            document.getElementById('status').textContent = 'Skill ready. Press Save changes to publish it.';
+        });
+        skillList.addEventListener('click', event => {
+            const editId = event.target.dataset.editSkill;
+            const deleteId = event.target.dataset.deleteSkill;
+            if (editId) openSkillEditor(skills.find(skill => skill.id === editId));
+            if (deleteId) {
+                skills = skills.filter(skill => skill.id !== deleteId);
+                renderSkillList();
+                document.getElementById('status').textContent = 'Skill removed. Press Save changes to publish it.';
+            }
+        });
+
+        document.getElementById('resetButton').addEventListener('click', () => {
+            localStorage.removeItem('portfolioData');
+            fields.forEach(field => document.getElementById(field).value = defaults[field]);
+            projects = defaultProjects;
+            renderProjectList();
+            profileImage = '';
+            profileImagePreview.src = './public/img.png';
+            resumeUrl = '';
+            resumePreview.classList.add('hidden');
+            experiences = defaultExperiences;
+            renderExperienceList();
+            skills = defaultSkills;
+            renderSkillList();
+            document.getElementById('status').textContent = 'Saved data reset.';
+        });
+
+        document.getElementById('logoutButton').addEventListener('click', async () => {
+            await supabaseClient.auth.signOut();
+            editor.classList.add('hidden');
+            loginPanel.classList.remove('hidden');
+            document.getElementById('status').textContent = '';
+        });
+
+        document.getElementById('refreshMessagesButton').addEventListener('click', loadMessages);
+        document.getElementById('messageList').addEventListener('click', async event => {
+            const messageId = event.target.dataset.deleteMessage;
+            if (!messageId) return;
+            const { error } = await supabaseClient.from('contact_messages').delete().eq('id', messageId);
+            document.getElementById('status').textContent = error ? 'Message could not be deleted.' : 'Message deleted.';
+            if (!error) await loadMessages();
+        });
+    </script>
+</body>
+</html>
