@@ -30,12 +30,12 @@
             theme: {
                 extend: {
                     colors: {
-                        'retro-bg': '#F4F1EA',
-                        'retro-dark': '#102A43',
-                        'retro-accent': '#F05D5E',
-                        'retro-secondary': '#2457D6',
-                        'retro-lime': '#D6F36A',
-                        'retro-card': '#FFFDF5'
+                        'retro-bg': '#DFF8F3',
+                        'retro-dark': '#082F49',
+                        'retro-accent': '#FF5C77',
+                        'retro-secondary': '#0066FF',
+                        'retro-lime': '#D7F75B',
+                        'retro-card': '#FFFFFF'
                     },
                     fontFamily: {
                         sans: ['Manrope', 'sans-serif'],
@@ -52,12 +52,12 @@
 
     <style>
         :root {
-            --page-bg: #F4F1EA;
-            --ink: #102A43;
-            --accent: #F05D5E;
-            --secondary: #2457D6;
-            --lime: #D6F36A;
-            --paper: #FFFDF5;
+            --page-bg: #DFF8F3;
+            --ink: #082F49;
+            --accent: #FF5C77;
+            --secondary: #0066FF;
+            --lime: #D7F75B;
+            --paper: #FFFFFF;
         }
 
         body {
@@ -73,9 +73,9 @@
         }
 
         header {
-            background-color: rgba(244, 241, 234, 0.9);
+            background-color: rgba(223, 248, 243, 0.92);
             backdrop-filter: blur(14px);
-            box-shadow: 0 1px 0 rgba(16, 42, 67, 0.12);
+            box-shadow: 0 1px 0 rgba(8, 47, 73, 0.18);
         }
 
         body::before {
@@ -85,7 +85,7 @@
             pointer-events: none;
             z-index: 60;
             opacity: 0.32;
-            background: radial-gradient(circle 260px at var(--pointer-x) var(--pointer-y), rgba(240, 93, 94, 0.18), transparent 72%);
+            background: radial-gradient(circle 260px at var(--pointer-x) var(--pointer-y), rgba(255, 92, 119, 0.2), transparent 72%);
             transition: opacity 300ms ease;
         }
 
@@ -119,7 +119,7 @@
             height: 4px;
             z-index: 80;
             background: linear-gradient(90deg, var(--accent), var(--lime), var(--secondary));
-            box-shadow: 0 0 14px rgba(240, 93, 94, 0.65);
+            box-shadow: 0 0 14px rgba(255, 92, 119, 0.7);
             transition: width 100ms linear;
         }
 
