@@ -87,6 +87,18 @@
             transition: opacity 300ms ease;
         }
 
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.16;
+            background-image: linear-gradient(rgba(21, 52, 58, 0.16) 1px, transparent 1px), linear-gradient(90deg, rgba(21, 52, 58, 0.16) 1px, transparent 1px);
+            background-size: 34px 34px;
+            animation: grid-drift 18s linear infinite;
+        }
+
         .live-line {
             position: relative;
             overflow: hidden;
@@ -117,6 +129,16 @@
         .motion-card {
             transform-style: preserve-3d;
             will-change: transform;
+        }
+
+        #home > div:first-child,
+        #home > div:last-child {
+            will-change: transform;
+        }
+
+        #profileImage {
+            filter: saturate(1.08) contrast(1.04);
+            transform: scale(1.03);
         }
 
         header a,
@@ -209,6 +231,11 @@
             100% { left: 100%; opacity: 0; }
         }
 
+        @keyframes grid-drift {
+            from { background-position: 0 0; }
+            to { background-position: 34px 34px; }
+        }
+
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after {
                 animation-duration: 0.01ms !important;
@@ -217,6 +244,7 @@
             }
 
             body::before { display: none; }
+            body::after { opacity: 0.1; animation-duration: 28s; }
             .reveal-item { opacity: 1; transform: none; transition: none; }
         }
 
