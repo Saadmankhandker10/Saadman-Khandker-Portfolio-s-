@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /saadman_khandker.html
 
-Sitemap: https://saadmankhandker.netlify.app/sitemap.xml
+Sitemap: https://saadmankhandker10.github.io/Saadman-Khandker-Portfolio-s-/sitemap.xml
