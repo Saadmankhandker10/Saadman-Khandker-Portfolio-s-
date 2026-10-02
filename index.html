@@ -475,6 +475,84 @@
             background-color: #6366f1;
         }
 
+        .project-gallery {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 0.75rem;
+            width: 100%;
+        }
+
+        .project-gallery img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            border: 2px solid #0b0f19;
+            border-radius: 0.75rem;
+            background: #e2e8f0;
+            display: block;
+            box-shadow: 3px 3px 0 rgba(11, 15, 25, 1);
+        }
+
+        .bdrcs-slideshow {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 8;
+            min-height: 250px;
+            max-height: 560px;
+            overflow: hidden;
+            background: #101820;
+            border: 2px solid var(--ink);
+            box-shadow: 5px 5px 0 var(--ink);
+        }
+
+        .bdrcs-slideshow img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            opacity: 1;
+            transform: scale(1);
+            transition: opacity 220ms ease, transform 520ms cubic-bezier(0.2, 0.7, 0.2, 1);
+        }
+
+        .bdrcs-slideshow img.is-fading {
+            opacity: 0;
+            transform: scale(1.025);
+        }
+
+        .bdrcs-slide-control {
+            position: absolute;
+            top: 50%;
+            display: grid;
+            place-items: center;
+            width: 2.75rem;
+            height: 2.75rem;
+            transform: translateY(-50%);
+            border: 2px solid #fff;
+            background: rgba(11, 15, 25, 0.76);
+            color: #fff;
+            font-size: 1.75rem;
+            line-height: 1;
+        }
+
+        .bdrcs-slide-control.previous { left: 0.75rem; }
+        .bdrcs-slide-control.next { right: 0.75rem; }
+
+        .bdrcs-slide-count {
+            position: absolute;
+            right: 0.75rem;
+            bottom: 0.75rem;
+            padding: 0.4rem 0.65rem;
+            background: rgba(11, 15, 25, 0.8);
+            color: #fff;
+            font: 700 0.75rem 'Space Mono', monospace;
+        }
+
+        @media (max-width: 640px) {
+            .bdrcs-slideshow { aspect-ratio: 4 / 3; min-height: 220px; }
+            .bdrcs-slide-control { width: 2.4rem; height: 2.4rem; }
+        }
+
         #contactForm {
             background-color: #ffffff;
         }
@@ -958,37 +1036,35 @@
             </h2>
 
             <div id="projectsGrid">
-            <div class="project-card tilt-card bg-retro-card border-2 border-retro-dark shadow-retro flex flex-col md:flex-row overflow-hidden" data-tilt data-tilt-max="15" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.2">
-                <!-- Project Image/Graphic -->
-                <div class="md:w-1/2 bg-retro-secondary border-b-2 md:border-b-0 md:border-r-2 border-retro-dark p-8 flex items-center justify-center relative overflow-hidden">
-                    <!-- Retro geometric pattern background -->
-                    <div class="absolute inset-0 opacity-10 bg-[url('data:image/svg+xml,%3Csvg width=\'40\' height=\'40\' viewBox=\'0 0 40 40\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cpath d=\'M0 0h40v40H0V0zm20 20h20v20H20V20zM0 20h20v20H0V20z\' fill=\'%23000000\' fill-opacity=\'1\' fill-rule=\'evenodd\'/%3E%3C/svg%3E')]"></div>
-                    
-                    <div class="bg-white border-2 border-retro-dark p-4 shadow-retro z-10 w-full max-w-sm rotate-2 hover:rotate-0 transition-transform duration-300">
-                        <div class="border border-gray-300 h-32 mb-4 p-2 bg-gray-50 flex items-center justify-center">
-                            <span class="font-mono text-gray-400 text-xs text-center">Slide Preview<br>Q: What is the...</span>
+
+                <article class="project-card tilt-card bg-retro-card border-2 border-retro-dark shadow-retro flex flex-col md:flex-row overflow-hidden" data-tilt data-tilt-max="15" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.2">
+                    <div class="md:w-1/2 bg-retro-secondary border-b-2 md:border-b-0 md:border-r-2 border-retro-dark p-8 flex items-center justify-center relative overflow-hidden">
+                        <div class="absolute inset-0 opacity-10 bg-[url('data:image/svg+xml,%3Csvg width=\'40\' height=\'40\' viewBox=\'0 0 40 40\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cpath d=\'M0 0h40v40H0V0zm20 20h20v20H20V20zM0 20h20v20H0V20z\' fill=\'%23000000\' fill-opacity=\'1\' fill-rule=\'evenodd\'/%3E%3C/svg%3E')]"></div>
+                        
+                        <div class="bg-white border-2 border-retro-dark p-4 shadow-retro z-10 w-full max-w-sm rotate-2 hover:rotate-0 transition-transform duration-300">
+                            <div class="border border-gray-300 h-32 mb-4 p-2 bg-gray-50 flex items-center justify-center">
+                                <span class="font-mono text-gray-400 text-xs text-center">Slide Preview<br>Q: What is the...</span>
+                            </div>
+                            <div class="h-2 bg-gray-200 w-3/4 mb-2"></div>
+                            <div class="h-2 bg-gray-200 w-1/2 mb-2"></div>
+                            <div class="h-2 bg-retro-accent w-1/4"></div>
                         </div>
-                        <div class="h-2 bg-gray-200 w-3/4 mb-2"></div>
-                        <div class="h-2 bg-gray-200 w-1/2 mb-2"></div>
-                        <div class="h-2 bg-retro-accent w-1/4"></div>
                     </div>
-                </div>
-                
-                <!-- Project Details -->
-                <div class="md:w-1/2 p-8 md:p-12 flex flex-col justify-center">
-                    <p id="projectCategory" class="font-mono text-retro-accent font-bold mb-2">Digital Content Creation</p>
-                    <h3 id="projectTitle" class="text-3xl font-bold text-retro-dark mb-4">Educational Digitization</h3>
-                    <p id="projectDescription" class="text-gray-700 mb-6 font-medium leading-relaxed">
-                        Digitized and systematically formatted complex educational questionnaires into high-quality, engaging presentations. This project involved converting raw data into visually digestible formats, ensuring accuracy, and enhancing the learning experience for end-users.
-                    </p>
-                    <div class="flex flex-wrap gap-2 mb-8">
-                        <span class="bg-gray-200 border border-retro-dark px-3 py-1 font-mono text-xs">MS PowerPoint</span>
-                        <span class="bg-gray-200 border border-retro-dark px-3 py-1 font-mono text-xs">Data Formatting</span>
-                        <span class="bg-gray-200 border border-retro-dark px-3 py-1 font-mono text-xs">Visual Design</span>
-                        <span class="bg-gray-200 border border-retro-dark px-3 py-1 font-mono text-xs">Accuracy Checking</span>
+                    
+                    <div class="md:w-1/2 p-8 md:p-12 flex flex-col justify-center">
+                        <p class="font-mono text-retro-accent font-bold mb-2">Digital Content Creation</p>
+                        <h3 class="text-3xl font-bold text-retro-dark mb-4">Educational Digitization</h3>
+                        <p class="text-gray-700 mb-6 font-medium leading-relaxed">
+                            Digitized and systematically formatted complex educational questionnaires into high-quality, engaging presentations. This project involved converting raw data into visually digestible formats, ensuring accuracy, and enhancing the learning experience for end-users.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-8">
+                            <span class="bg-gray-200 border border-retro-dark px-3 py-1 font-mono text-xs">MS PowerPoint</span>
+                            <span class="bg-gray-200 border border-retro-dark px-3 py-1 font-mono text-xs">Data Formatting</span>
+                            <span class="bg-gray-200 border border-retro-dark px-3 py-1 font-mono text-xs">Visual Design</span>
+                            <span class="bg-gray-200 border border-retro-dark px-3 py-1 font-mono text-xs">Accuracy Checking</span>
+                        </div>
                     </div>
-                </div>
-            </div>
+                </article>
             </div>
         </section>
 
@@ -1214,23 +1290,49 @@
             updateLiveMetrics(safePortfolio);
         };
         const escapeHTML = value => String(value || '').replace(/[&<>"']/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[character]));
+        const bdrcsSlideSources = [
+            './public/FB_IMG_1711641936781.jpg',
+            './public/FB_IMG_1733546681910.jpg',
+            './public/IMG-20241216-WA0053.jpg',
+            './public/received_746920023816042.jpeg',
+            './public/received_3625859141035826.jpeg',
+            './public/IMG_20240209_195403_739.webp',
+            './public/IMG-20240209-WA0057.jpg',
+            './public/FB_IMG_1711473777649.jpg',
+            './public/1707486322179.jpg',
+            './public/received_1040871893666925.jpeg'
+        ];
         const renderProjects = projects => {
-            document.getElementById('projectsGrid').innerHTML = projects.map(project => `
-                <article class="tilt-card bg-retro-card border-2 border-retro-dark shadow-retro flex flex-col md:flex-row overflow-hidden" data-tilt data-tilt-max="16" data-tilt-speed="400" data-tilt-glare="true" data-tilt-max-glare="0.18">
-                    <div class="md:w-1/2 bg-retro-secondary border-b-2 md:border-b-0 md:border-r-2 border-retro-dark p-8 flex items-center justify-center">
+            const isBdrcsProject = project => /bdrcs|red crescent|humanitarian/i.test(`${project.title || ''} ${project.category || ''}`);
+            const orderedProjects = [...projects].sort((first, second) => Number(isBdrcsProject(second)) - Number(isBdrcsProject(first)));
+            document.getElementById('projectsGrid').innerHTML = orderedProjects.map(project => {
+                const projectImageArea = isBdrcsProject(project)
+                    ? `<div class="md:w-1/2 bg-retro-secondary border-b-2 md:border-b-0 md:border-r-2 border-retro-dark p-4 flex items-center justify-center">
+                        <div class="bdrcs-slideshow" aria-label="BDRCS project photo slideshow" aria-roledescription="carousel">
+                            <img id="bdrcsSlideImage" src="${bdrcsSlideSources[0]}" alt="BDRCS activity photo 1 of ${bdrcsSlideSources.length}" fetchpriority="high" decoding="async">
+                            <button class="bdrcs-slide-control previous" type="button" data-bdrcs-slide="previous" aria-label="Previous photo" title="Previous photo">‹</button>
+                            <button class="bdrcs-slide-control next" type="button" data-bdrcs-slide="next" aria-label="Next photo" title="Next photo">›</button>
+                            <span id="bdrcsSlideCount" class="bdrcs-slide-count" aria-live="polite">1 / ${bdrcsSlideSources.length}</span>
+                        </div>
+                    </div>`
+                    : `<div class="md:w-1/2 bg-retro-secondary border-b-2 md:border-b-0 md:border-r-2 border-retro-dark p-8 flex items-center justify-center">
                         <div class="bg-white border-2 border-retro-dark p-4 shadow-retro w-full max-w-sm">
                             <div class="border border-gray-300 h-32 p-2 bg-gray-50 flex items-center justify-center">
                                 <span class="font-mono text-gray-400 text-xs text-center">PROJECT<br>${escapeHTML(project.title)}</span>
                             </div>
                         </div>
-                    </div>
-                    <div class="md:w-1/2 p-8 md:p-12 flex flex-col justify-center">
-                        <p class="font-mono text-retro-accent font-bold mb-2">${escapeHTML(project.category)}</p>
-                        <h3 class="text-3xl font-bold text-retro-dark mb-4">${escapeHTML(project.title)}</h3>
-                        <p class="text-gray-700 mb-6 font-medium leading-relaxed">${escapeHTML(project.description)}</p>
-                        <div class="flex flex-wrap gap-2">${(project.tags || []).map(tag => `<span class="bg-gray-200 border border-retro-dark px-3 py-1 font-mono text-xs">${escapeHTML(tag)}</span>`).join('')}</div>
-                    </div>
-                </article>`).join('<div class="h-8"></div>');
+                    </div>`;
+                return `
+                    <article class="tilt-card bg-retro-card border-2 border-retro-dark shadow-retro flex flex-col md:flex-row overflow-hidden" data-tilt data-tilt-max="16" data-tilt-speed="400" data-tilt-glare="true" data-tilt-max-glare="0.18">
+                        ${projectImageArea}
+                        <div class="md:w-1/2 p-8 md:p-12 flex flex-col justify-center">
+                            <p class="font-mono text-retro-accent font-bold mb-2">${escapeHTML(project.category)}</p>
+                            <h3 class="text-3xl font-bold text-retro-dark mb-4">${escapeHTML(project.title)}</h3>
+                            <p class="text-gray-700 mb-6 font-medium leading-relaxed">${escapeHTML(project.description)}</p>
+                            <div class="flex flex-wrap gap-2">${(project.tags || []).map(tag => `<span class="bg-gray-200 border border-retro-dark px-3 py-1 font-mono text-xs">${escapeHTML(tag)}</span>`).join('')}</div>
+                        </div>
+                    </article>`;
+            }).join('<div class="h-8"></div>');
         };
         const renderExperience = experiences => {
             document.getElementById('experienceGrid').innerHTML = experiences.map(experience => `
@@ -1354,6 +1456,54 @@
                 heroVisual.style.transform = `translateY(-50%) translate(${xRatio * 10}px, ${yRatio * 8}px) rotate(${xRatio * 2}deg)`;
             }
         }, { passive: true });
+
+        const bdrcsSlideCache = new Map();
+        let currentBdrcsSlide = 0;
+        let slideRequestId = 0;
+
+        const preloadBdrcsSlide = index => {
+            const normalizedIndex = (index + bdrcsSlideSources.length) % bdrcsSlideSources.length;
+            if (!bdrcsSlideCache.has(normalizedIndex)) {
+                const image = new Image();
+                const loadedImage = new Promise(resolve => {
+                    image.onload = () => image.decode().then(() => resolve(image)).catch(() => resolve(null));
+                    image.onerror = () => resolve(null);
+                });
+                image.src = bdrcsSlideSources[normalizedIndex];
+                bdrcsSlideCache.set(normalizedIndex, loadedImage);
+            }
+            return bdrcsSlideCache.get(normalizedIndex);
+        };
+
+        const showBdrcsSlide = async index => {
+            const requestId = ++slideRequestId;
+            const nextIndex = (index + bdrcsSlideSources.length) % bdrcsSlideSources.length;
+            const nextImage = await preloadBdrcsSlide(nextIndex);
+            if (!nextImage || requestId !== slideRequestId) return;
+            const slideImage = document.getElementById('bdrcsSlideImage');
+            const slideCount = document.getElementById('bdrcsSlideCount');
+            if (!slideImage || !slideCount) return;
+            slideImage.classList.add('is-fading');
+            window.setTimeout(() => {
+                if (requestId !== slideRequestId) return;
+                currentBdrcsSlide = nextIndex;
+                slideImage.src = bdrcsSlideSources[currentBdrcsSlide];
+                slideImage.alt = `BDRCS activity photo ${currentBdrcsSlide + 1} of ${bdrcsSlideSources.length}`;
+                slideCount.textContent = `${currentBdrcsSlide + 1} / ${bdrcsSlideSources.length}`;
+                slideImage.classList.remove('is-fading');
+                preloadBdrcsSlide(currentBdrcsSlide + 1);
+            }, 220);
+        };
+
+        preloadBdrcsSlide(currentBdrcsSlide + 1);
+        document.getElementById('projectsGrid').addEventListener('click', event => {
+            const control = event.target.closest('[data-bdrcs-slide]');
+            if (!control) return;
+            showBdrcsSlide(currentBdrcsSlide + (control.dataset.bdrcsSlide === 'next' ? 1 : -1));
+        });
+        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            setInterval(() => showBdrcsSlide(currentBdrcsSlide + 1), 5000);
+        }
 
         const ambientCanvas = document.getElementById('ambientCanvas');
         const ambientContext = ambientCanvas.getContext('2d');
