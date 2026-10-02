@@ -10,11 +10,14 @@ if (-not $branch) {
     exit 1
 }
 
-git add .
-git commit -m $Message
-if ($LASTEXITCODE -ne 0) {
-    Write-Error "Commit failed. Check the message above."
-    exit $LASTEXITCODE
+$status = git status --porcelain
+if ($status) {
+    git add .
+    git commit -m $Message
+    if ($LASTEXITCODE -ne 0) {
+        Write-Error "Commit failed. Check the message above."
+        exit $LASTEXITCODE
+    }
 }
 
 git push origin $branch
@@ -24,7 +27,7 @@ if ($LASTEXITCODE -ne 0) {
 }
 
 if ($branch -eq 'master') {
-    git push origin master:main
+    git push origin master:main --force
     if ($LASTEXITCODE -ne 0) {
         Write-Error "The master branch was published, but syncing main failed."
         exit $LASTEXITCODE
