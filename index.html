@@ -1099,13 +1099,22 @@
 
         const liveClock = document.getElementById('liveClock');
         const heroClock = document.getElementById('heroClock');
+        const formatClock = () => new Date().toLocaleTimeString([], {
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: true
+        });
+
         const updateLiveClock = () => {
-            const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-            liveClock.textContent = `LIVE / ${currentTime}`;
-            heroClock.textContent = currentTime;
+            const currentTime = formatClock();
+            if (liveClock) liveClock.textContent = `LIVE / ${currentTime}`;
+            if (heroClock) heroClock.textContent = currentTime;
         };
+
         updateLiveClock();
-        setInterval(updateLiveClock, 1000);
+        if (window.__portfolioClockInterval) clearInterval(window.__portfolioClockInterval);
+        window.__portfolioClockInterval = setInterval(updateLiveClock, 1000);
         document.getElementById('backToTop').addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
         document.querySelectorAll('a, button').forEach(button => {
