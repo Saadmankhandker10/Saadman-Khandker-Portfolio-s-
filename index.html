@@ -30,20 +30,20 @@
             theme: {
                 extend: {
                     colors: {
-                        'retro-bg': '#DFF8F3',
-                        'retro-dark': '#082F49',
-                        'retro-accent': '#FF5C77',
-                        'retro-secondary': '#0066FF',
-                        'retro-lime': '#D7F75B',
-                        'retro-card': '#FFFFFF'
+                        'retro-bg': '#f8fafc',
+                        'retro-dark': '#0b0f19',
+                        'retro-accent': '#4f46e5',
+                        'retro-secondary': '#6366f1',
+                        'retro-lime': '#c7d2fe',
+                        'retro-card': '#ffffff'
                     },
                     fontFamily: {
                         sans: ['Manrope', 'sans-serif'],
                         mono: ['"Space Mono"', 'monospace'], // For that retro/typewriter feel
                     },
                     boxShadow: {
-                        'retro': '4px 4px 0px 0px rgba(16, 42, 67, 1)',
-                        'retro-hover': '2px 2px 0px 0px rgba(16, 42, 67, 1)',
+                        'retro': '4px 4px 0px 0px rgba(11, 15, 25, 1)',
+                        'retro-hover': '2px 2px 0px 0px rgba(11, 15, 25, 1)',
                     }
                 }
             }
@@ -52,30 +52,29 @@
 
     <style>
         :root {
-            --page-bg: #DFF8F3;
-            --ink: #082F49;
-            --accent: #FF5C77;
-            --secondary: #0066FF;
-            --lime: #D7F75B;
-            --paper: #FFFFFF;
+            --page-bg: #f5f7ff;
+            --ink: #0b0f19;
+            --accent: #4f46e5;
+            --secondary: #6366f1;
+            --lime: #e0e7ff;
+            --paper: #ffffff;
         }
 
         body {
-            background-color: var(--page-bg);
+            background: linear-gradient(180deg, #f5f7ff 0%, #eef2ff 100%);
             color: var(--ink);
             font-family: 'Manrope', sans-serif;
             letter-spacing: 0;
             overflow-x: hidden;
             --pointer-x: 50%;
             --pointer-y: 20%;
-            /* Subtle noise texture overlay for vintage feel */
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
         }
 
         header {
-            background-color: rgba(223, 248, 243, 0.92);
+            background: rgba(255, 255, 255, 0.8);
             backdrop-filter: blur(14px);
-            box-shadow: 0 1px 0 rgba(8, 47, 73, 0.18);
+            box-shadow: 0 1px 0 rgba(148, 163, 184, 0.35);
         }
 
         body::before {
@@ -379,81 +378,81 @@
             width: 10px;
         }
         ::-webkit-scrollbar-track {
-            background: #DFF8F3;
-            border-left: 2px solid #082F49;
+            background: #f8fafc;
+            border-left: 2px solid #0b0f19;
         }
         ::-webkit-scrollbar-thumb {
-            background: #FF5C77;
-            border: 2px solid #082F49;
+            background: #4f46e5;
+            border: 2px solid #0b0f19;
         }
         
         /* Section dividers */
         .section-divider {
-            border-top: 2px dashed #082F49;
+            border-top: 2px dashed #0b0f19;
             width: 100%;
             height: 1px;
             margin: 4rem 0;
         }
 
         #experienceGrid > article:nth-child(2n) {
-            background-color: #DCEBFF;
+            background-color: #eef2ff;
         }
 
-        #home { background-color: #FFF0D6; }
-        #experience { background-color: #DCEBFF; }
-        #projects { background-color: #FFDCE5; }
-        #skills { background-color: #EAF8C8; }
-        #contact { background-color: #CFF5EF; }
+        #home { background: linear-gradient(180deg, #f8faff 0%, #eef2ff 100%); }
+        #experience { background: linear-gradient(180deg, #f8fafc 0%, #eef2ff 100%); }
+        #projects { background: linear-gradient(180deg, #f6f7ff 0%, #eef2ff 100%); }
+        #skills { background: linear-gradient(180deg, #f8fafc 0%, #eef2ff 100%); }
+        #contact { background: linear-gradient(180deg, #f3f6ff 0%, #eef2ff 100%); }
 
         #experienceGrid > article:nth-child(2n + 1) {
-            background-color: #FFF0D6;
+            background-color: #ffffff;
         }
 
-        #skillsGrid > div:nth-child(4n + 1) { background-color: #FFF0D6; }
-        #skillsGrid > div:nth-child(4n + 2) { background-color: #DCEBFF; }
-        #skillsGrid > div:nth-child(4n + 3) { background-color: #EAF8C8; }
-        #skillsGrid > div:nth-child(4n) { background-color: #FFDCE5; }
+        #skillsGrid > div:nth-child(4n + 1) { background-color: #eef2ff; }
+        #skillsGrid > div:nth-child(4n + 2) { background-color: #f8fafc; }
+        #skillsGrid > div:nth-child(4n + 3) { background-color: #e0e7ff; }
+        #skillsGrid > div:nth-child(4n) { background-color: #f5f3ff; }
 
         #projectsGrid > article,
         #projectsGrid > div > article {
-            background-color: #FFDCE5;
+            background-color: #ffffff;
         }
 
         #projectsGrid > article > div:first-child,
         #projectsGrid > div > article > div:first-child {
-            background-color: #0066FF;
+            background-color: #6366f1;
         }
 
         #contactForm {
-            background-color: #DCEBFF;
+            background-color: #ffffff;
         }
 
         body.dark-theme #experienceGrid > article:nth-child(2n),
-        body.dark-theme #skillsGrid > div:nth-child(4n + 2) { background-color: #21415F; }
+        body.dark-theme #skillsGrid > div:nth-child(4n + 2) { background-color: #1f2937; }
         body.dark-theme #experienceGrid > article:nth-child(2n + 1),
-        body.dark-theme #skillsGrid > div:nth-child(4n + 1) { background-color: #594B36; }
-        body.dark-theme #skillsGrid > div:nth-child(4n + 3) { background-color: #31513B; }
-        body.dark-theme #skillsGrid > div:nth-child(4n) { background-color: #663F48; }
+        body.dark-theme #skillsGrid > div:nth-child(4n + 1) { background-color: #111827; }
+        body.dark-theme #skillsGrid > div:nth-child(4n + 3) { background-color: #1e1b4b; }
+        body.dark-theme #skillsGrid > div:nth-child(4n) { background-color: #312e81; }
         body.dark-theme #projectsGrid > article,
         body.dark-theme #projectsGrid > div > article,
-        body.dark-theme #contactForm { background-color: #21415F; }
+        body.dark-theme #contactForm { background-color: #111827; }
 
         body.dark-theme #home,
         body.dark-theme #experience,
         body.dark-theme #projects,
         body.dark-theme #skills,
-        body.dark-theme #contact { background-color: #0D1B2A; }
+        body.dark-theme #contact { background-color: #0b0f19; }
 
         body.dark-theme {
-            background-color: #061826;
-            color: #DFF8F3;
+            background-color: #0b0f19;
+            color: #e2e8f0;
         }
-        body.dark-theme header { background-color: rgba(6, 24, 38, 0.94); }
-        body.dark-theme .bg-retro-bg { background-color: #061826; }
-        body.dark-theme .bg-retro-card { background-color: #123B5D; color: #DFF8F3; }
-        body.dark-theme .text-retro-dark, body.dark-theme .text-gray-700 { color: #DFF8F3; }
-        body.dark-theme .bg-white, body.dark-theme .bg-gray-50, body.dark-theme .bg-gray-200 { background-color: #1A4B70; color: #DFF8F3; }
-        body.dark-theme .border-retro-dark { border-color: #DFF8F3; }
+        body.dark-theme header { background-color: rgba(11, 15, 25, 0.94); }
+        body.dark-theme .bg-retro-bg { background-color: #0b0f19; }
+        body.dark-theme .bg-retro-card { background-color: #111827; color: #e2e8f0; }
+        body.dark-theme .text-retro-dark, body.dark-theme .text-gray-700 { color: #e2e8f0; }
+        body.dark-theme .bg-white, body.dark-theme .bg-gray-50, body.dark-theme .bg-gray-200 { background-color: #1f2937; color: #e2e8f0; }
+        body.dark-theme .border-retro-dark { border-color: #e2e8f0; }
     </style>
 </head>
 <body class="font-sans antialiased flex flex-col min-h-screen">

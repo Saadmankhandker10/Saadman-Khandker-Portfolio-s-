@@ -66,12 +66,26 @@
             backdrop-filter: blur(16px);
             border: 1px solid rgba(55, 65, 81, 0.6);
         }
+        .quick-action-btn {
+            box-shadow: 0 14px 30px rgba(79, 70, 229, 0.22);
+        }
     </style>
 </head>
 <body class="bg-slate-50 dark:bg-dark-900 text-slate-800 dark:text-slate-100 min-h-screen flex flex-col font-sans transition-colors duration-200">
 
     <!-- Toast Notification Container -->
     <div id="toastContainer" class="fixed top-5 right-5 z-50 flex flex-col gap-3 pointer-events-none"></div>
+
+    <!-- Floating Quick Actions -->
+    <div id="quickActions" class="fixed right-4 bottom-4 z-40 hidden md:flex flex-col gap-2">
+        <button id="quickLiveSiteBtn" type="button" class="quick-action-btn inline-flex items-center gap-2 px-4 py-3 rounded-2xl bg-brand-600 hover:bg-brand-700 text-white text-xs font-semibold transition">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            <span>Live Site</span>
+        </button>
+        <button id="quickScrollTopBtn" type="button" class="quick-action-btn inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-slate-900 dark:bg-slate-700 text-white hover:bg-slate-800 dark:hover:bg-slate-600 transition" title="Scroll to top">
+            <i class="fa-solid fa-arrow-up"></i>
+        </button>
+    </div>
 
     <!-- ==================== LOGIN VIEW ==================== -->
     <div id="loginView" class="min-h-screen flex items-center justify-center p-4 sm:p-6">
@@ -853,6 +867,19 @@
             applyTheme(!document.documentElement.classList.contains('dark'));
         });
 
+        const quickActions = document.getElementById('quickActions');
+        document.getElementById('quickLiveSiteBtn').addEventListener('click', () => {
+            window.open('./index.html', '_blank', 'noopener,noreferrer');
+        });
+        document.getElementById('quickScrollTopBtn').addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+        const toggleQuickActions = () => {
+            if (quickActions) {
+                quickActions.classList.toggle('hidden', !document.getElementById('dashboardView') || document.getElementById('dashboardView').classList.contains('hidden'));
+            }
+        };
+
         // Tab Navigation
         window.switchTab = function(tabId) {
             document.querySelectorAll('.tab-btn').forEach(btn => {
@@ -1421,6 +1448,7 @@
         function unlockDashboard() {
             loginView.classList.add('hidden');
             dashboardView.classList.remove('hidden');
+            toggleQuickActions();
             const syncBadge = document.getElementById('syncStatusBadge');
             syncBadge.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Cloud Synced`;
             syncBadge.className = 'inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400';
@@ -1654,6 +1682,7 @@
             if (supabase) await supabase.auth.signOut();
             dashboardView.classList.add('hidden');
             loginView.classList.remove('hidden');
+            toggleQuickActions();
             showToast('Signed out successfully.');
         });
 
