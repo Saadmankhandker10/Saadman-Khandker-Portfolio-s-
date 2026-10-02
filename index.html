@@ -365,6 +365,70 @@
         .contact-icon-facebook { background-color: #1877F2; }
         .contact-icon-instagram { background-color: #E1306C; }
 
+        #heroName {
+            animation: heroGlow 3.5s ease-in-out infinite;
+        }
+
+        section h2 span {
+            animation: sectionTitleGlow 4s ease-in-out infinite;
+        }
+
+        #experienceGrid h3,
+        #projectsGrid h3 {
+            animation: cardTitleLight 3s ease-in-out 0.5s infinite;
+        }
+
+        #skillsGrid h4,
+        #projectsGrid article span:not(.bdrcs-slide-count) {
+            animation: badgeLightPulse 2.8s ease-in-out infinite;
+        }
+
+        @keyframes heroGlow {
+            0%, 100% {
+                color: #ffffff;
+                text-shadow: 0 0 5px rgba(255, 255, 255, 0.2), 0 0 10px rgba(56, 189, 248, 0.3);
+            }
+            50% {
+                color: #38bdf8;
+                text-shadow: 0 0 10px #38bdf8, 0 0 25px #38bdf8, 0 0 45px rgba(56, 189, 248, 0.8), 0 0 70px rgba(56, 189, 248, 0.5);
+            }
+        }
+
+        @keyframes sectionTitleGlow {
+            0%, 100% {
+                color: #a1a1aa;
+                text-shadow: none;
+                opacity: 0.7;
+            }
+            45%, 55% {
+                color: #10b981;
+                text-shadow: 0 0 8px #10b981, 0 0 20px #10b981, 0 0 35px rgba(16, 185, 129, 0.6);
+                opacity: 1;
+            }
+        }
+
+        @keyframes cardTitleLight {
+            0%, 100% {
+                color: #e4e4e7;
+                text-shadow: 0 0 2px rgba(255, 255, 255, 0.1);
+            }
+            50% {
+                color: #ffffff;
+                text-shadow: 0 0 8px rgba(255, 255, 255, 0.9), 0 0 18px #38bdf8, 0 0 30px #38bdf8;
+            }
+        }
+
+        @keyframes badgeLightPulse {
+            0%, 100% {
+                color: #9ca3af;
+                text-shadow: none;
+            }
+            50% {
+                color: #60a5fa;
+                text-shadow: 0 0 6px #60a5fa, 0 0 15px rgba(96, 165, 250, 0.8);
+            }
+        }
+
         @keyframes intro-rise {
             from { opacity: 0; transform: translateY(14px); }
             to { opacity: 1; transform: translateY(0); }
