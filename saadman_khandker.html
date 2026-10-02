@@ -780,7 +780,35 @@
         // Supabase Client Config
         const SUPABASE_URL = 'https://oiruilsgqfqpmhradcrm.supabase.co';
         const SUPABASE_KEY = 'sb_publishable_eejxo50gMcgeLDFM91a70A_trAfjMPm';
-        const supabase = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY) : null;
+        window.supabase = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY) : null;
+        const DEFAULT_ADMIN_EMAIL = 'gamerhindi571@gmail.com';
+        const DEFAULT_ADMIN_PASSWORD = 'saadman123';
+
+        function getLocalAdminCredentials() {
+            const saved = localStorage.getItem('adminLocalCredentials');
+            if (!saved) return { email: DEFAULT_ADMIN_EMAIL, password: DEFAULT_ADMIN_PASSWORD };
+            try {
+                const parsed = JSON.parse(saved);
+                return {
+                    email: parsed.email || DEFAULT_ADMIN_EMAIL,
+                    password: parsed.password || DEFAULT_ADMIN_PASSWORD
+                };
+            } catch (error) {
+                return { email: DEFAULT_ADMIN_EMAIL, password: DEFAULT_ADMIN_PASSWORD };
+            }
+        }
+
+        function setLocalAdminCredentials(email, password) {
+            localStorage.setItem('adminLocalCredentials', JSON.stringify({
+                email: email.trim(),
+                password: password
+            }));
+        }
+
+        function isLocalAdminLogin(email, password) {
+            const creds = getLocalAdminCredentials();
+            return email.toLowerCase() === creds.email.toLowerCase() && password === creds.password;
+        }
 
         // Default Data Fallback
         const defaultPortfolio = {
@@ -1438,10 +1466,21 @@
         // AUTH & SESSION MANAGEMENT
         const loginView = document.getElementById('loginView');
         const dashboardView = document.getElementById('dashboardView');
+        let isCloudAuth = false; // true only when user has real Supabase session
 
-        function unlockDashboard() {
+        function unlockDashboard(cloudAuth = false) {
+            isCloudAuth = cloudAuth;
             loginView.classList.add('hidden');
             dashboardView.classList.remove('hidden');
+            // Update sync badge based on auth mode
+            const syncBadge = document.getElementById('syncStatusBadge');
+            if (cloudAuth) {
+                syncBadge.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Cloud Synced`;
+                syncBadge.className = 'inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400';
+            } else {
+                syncBadge.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span> Local Mode`;
+                syncBadge.className = 'inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-amber-50 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400';
+            }
             populateForm();
             fetchOnlineData();
             fetchMessages();
@@ -1520,11 +1559,28 @@
 
             try {
                 if (supabase) {
-                    const { error } = await supabase.auth.signInWithPassword({ email, password });
-                    if (error) throw error;
+                    try {
+                        const { error } = await supabase.auth.signInWithPassword({ email, password });
+                        if (!error && email) {
+                            showToast('Welcome back, Saadman!');
+                            unlockDashboard(true);
+                            btn.innerHTML = originalBtn;
+                            btn.disabled = false;
+                            return;
+                        }
+                    } catch (supabaseError) {
+                        console.warn('Supabase password auth failed, using local fallback:', supabaseError.message);
+                    }
                 }
-                showToast('Welcome back, Saadman!');
-                unlockDashboard();
+
+                if (isLocalAdminLogin(email, password)) {
+                    setLocalAdminCredentials(email, password);
+                    showToast('Welcome back, Saadman! Local admin access enabled.');
+                    unlockDashboard(false);
+                    return;
+                }
+
+                throw new Error('Email or password is incorrect. Use the saved admin password or instant access.');
             } catch (err) {
                 showToast(err.message, 'error');
             } finally {
