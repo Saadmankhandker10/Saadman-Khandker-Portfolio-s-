@@ -89,10 +89,7 @@
             <div class="glass-panel rounded-2xl shadow-xl p-6 sm:p-8">
                 <!-- Login Method Tabs -->
                 <div class="flex items-center p-1 bg-slate-100 dark:bg-dark-800 rounded-xl mb-6">
-                    <button type="button" id="tabInstantBtn" class="flex-1 py-2 text-xs font-semibold rounded-lg transition bg-white dark:bg-dark-700 shadow-sm text-brand-600 dark:text-brand-400">
-                        ⚡ Instant Access
-                    </button>
-                    <button type="button" id="tabPasswordBtn" class="flex-1 py-2 text-xs font-semibold rounded-lg transition text-slate-500 hover:text-slate-800 dark:hover:text-slate-200">
+                    <button type="button" id="tabPasswordBtn" class="flex-1 py-2 text-xs font-semibold rounded-lg transition bg-white dark:bg-dark-700 shadow-sm text-brand-600 dark:text-brand-400">
                         🔑 Password
                     </button>
                     <button type="button" id="tabOtpBtn" class="flex-1 py-2 text-xs font-semibold rounded-lg transition text-slate-500 hover:text-slate-800 dark:hover:text-slate-200">
@@ -100,27 +97,8 @@
                     </button>
                 </div>
 
-                <!-- 1. Instant Access View (Default) -->
-                <div id="loginViewInstant" class="space-y-4">
-                    <div class="text-center py-2">
-                        <div class="w-12 h-12 rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mx-auto mb-2 text-xl">
-                            <i class="fa-solid fa-shield-halved"></i>
-                        </div>
-                        <h3 class="text-sm font-bold text-slate-900 dark:text-white">Owner Quick Unlock</h3>
-                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Instant passwordless access to your portfolio editor</p>
-                    </div>
-
-                    <button type="button" id="instantUnlockBtn"
-                        class="w-full py-3.5 px-4 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-bold rounded-xl shadow-lg shadow-emerald-500/25 transition duration-150 flex items-center justify-center gap-2">
-                        <i class="fa-solid fa-lock-open text-sm"></i>
-                        <span>Unlock Dashboard Directly</span>
-                    </button>
-                    
-                    <p class="text-[11px] text-center text-slate-400">Loads your saved projects, experiences and bio with full edit rights.</p>
-                </div>
-
-                <!-- 2. Password View -->
-                <form id="loginForm" class="space-y-4 hidden">
+                <!-- Password View -->
+                <form id="loginForm" class="space-y-4">
                     <div>
                         <label for="loginEmail" class="block text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-1.5">Email Address</label>
                         <div class="relative">
@@ -781,34 +759,7 @@
         const SUPABASE_URL = 'https://oiruilsgqfqpmhradcrm.supabase.co';
         const SUPABASE_KEY = 'sb_publishable_eejxo50gMcgeLDFM91a70A_trAfjMPm';
         window.supabase = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY) : null;
-        const DEFAULT_ADMIN_EMAIL = 'gamerhindi571@gmail.com';
-        const DEFAULT_ADMIN_PASSWORD = 'saadman123';
-
-        function getLocalAdminCredentials() {
-            const saved = localStorage.getItem('adminLocalCredentials');
-            if (!saved) return { email: DEFAULT_ADMIN_EMAIL, password: DEFAULT_ADMIN_PASSWORD };
-            try {
-                const parsed = JSON.parse(saved);
-                return {
-                    email: parsed.email || DEFAULT_ADMIN_EMAIL,
-                    password: parsed.password || DEFAULT_ADMIN_PASSWORD
-                };
-            } catch (error) {
-                return { email: DEFAULT_ADMIN_EMAIL, password: DEFAULT_ADMIN_PASSWORD };
-            }
-        }
-
-        function setLocalAdminCredentials(email, password) {
-            localStorage.setItem('adminLocalCredentials', JSON.stringify({
-                email: email.trim(),
-                password: password
-            }));
-        }
-
-        function isLocalAdminLogin(email, password) {
-            const creds = getLocalAdminCredentials();
-            return email.toLowerCase() === creds.email.toLowerCase() && password === creds.password;
-        }
+        const ADMIN_EMAIL = 'gamerhindi571@gmail.com';
 
         // Default Data Fallback
         const defaultPortfolio = {
@@ -1466,21 +1417,13 @@
         // AUTH & SESSION MANAGEMENT
         const loginView = document.getElementById('loginView');
         const dashboardView = document.getElementById('dashboardView');
-        let isCloudAuth = false; // true only when user has real Supabase session
 
-        function unlockDashboard(cloudAuth = false) {
-            isCloudAuth = cloudAuth;
+        function unlockDashboard() {
             loginView.classList.add('hidden');
             dashboardView.classList.remove('hidden');
-            // Update sync badge based on auth mode
             const syncBadge = document.getElementById('syncStatusBadge');
-            if (cloudAuth) {
-                syncBadge.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Cloud Synced`;
-                syncBadge.className = 'inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400';
-            } else {
-                syncBadge.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span> Local Mode`;
-                syncBadge.className = 'inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-amber-50 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400';
-            }
+            syncBadge.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Cloud Synced`;
+            syncBadge.className = 'inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400';
             populateForm();
             fetchOnlineData();
             fetchMessages();
@@ -1503,33 +1446,35 @@
         // Check active Supabase session
         async function initAuth() {
             if (!supabase) {
-                unlockDashboard();
+                showToast('Secure sign-in is unavailable. Please try again later.', 'error');
                 return;
             }
-            const { data } = await supabase.auth.getSession();
-            if (data?.session) {
+            const { data, error } = await supabase.auth.getSession();
+            if (error) {
+                showToast(error.message, 'error');
+                return;
+            }
+            const sessionEmail = data?.session?.user?.email?.toLowerCase();
+            if (sessionEmail === ADMIN_EMAIL) {
                 unlockDashboard();
+            } else if (data?.session) {
+                await supabase.auth.signOut();
             }
         }
 
         // Authentication Method Switcher
-        const tabInstantBtn = document.getElementById('tabInstantBtn');
         const tabPasswordBtn = document.getElementById('tabPasswordBtn');
         const tabOtpBtn = document.getElementById('tabOtpBtn');
-        const loginViewInstant = document.getElementById('loginViewInstant');
         const loginForm = document.getElementById('loginForm');
         const loginViewOtp = document.getElementById('loginViewOtp');
 
         function setLoginTab(tab) {
-            [tabInstantBtn, tabPasswordBtn, tabOtpBtn].forEach(b => {
+            [tabPasswordBtn, tabOtpBtn].forEach(b => {
                 b.className = 'flex-1 py-2 text-xs font-semibold rounded-lg transition text-slate-500 hover:text-slate-800 dark:hover:text-slate-200';
             });
-            [loginViewInstant, loginForm, loginViewOtp].forEach(v => v.classList.add('hidden'));
+            [loginForm, loginViewOtp].forEach(v => v.classList.add('hidden'));
 
-            if (tab === 'instant') {
-                tabInstantBtn.className = 'flex-1 py-2 text-xs font-semibold rounded-lg transition bg-white dark:bg-dark-700 shadow-sm text-brand-600 dark:text-brand-400';
-                loginViewInstant.classList.remove('hidden');
-            } else if (tab === 'password') {
+            if (tab === 'password') {
                 tabPasswordBtn.className = 'flex-1 py-2 text-xs font-semibold rounded-lg transition bg-white dark:bg-dark-700 shadow-sm text-brand-600 dark:text-brand-400';
                 loginForm.classList.remove('hidden');
             } else if (tab === 'otp') {
@@ -1537,17 +1482,10 @@
                 loginViewOtp.classList.remove('hidden');
             }
         }
-        tabInstantBtn.addEventListener('click', () => setLoginTab('instant'));
         tabPasswordBtn.addEventListener('click', () => setLoginTab('password'));
         tabOtpBtn.addEventListener('click', () => setLoginTab('otp'));
 
-        // 1. Instant Owner Unlock
-        document.getElementById('instantUnlockBtn').addEventListener('click', () => {
-            unlockDashboard();
-            showToast('Welcome back, Saadman! (Owner Access Mode)');
-        });
-
-        // 2. Password Login
+        // Password Login
         loginForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const email = document.getElementById('loginEmail').value.trim();
@@ -1558,29 +1496,18 @@
             btn.disabled = true;
 
             try {
-                if (supabase) {
-                    try {
-                        const { error } = await supabase.auth.signInWithPassword({ email, password });
-                        if (!error && email) {
-                            showToast('Welcome back, Saadman!');
-                            unlockDashboard(true);
-                            btn.innerHTML = originalBtn;
-                            btn.disabled = false;
-                            return;
-                        }
-                    } catch (supabaseError) {
-                        console.warn('Supabase password auth failed, using local fallback:', supabaseError.message);
-                    }
+                if (!supabase) throw new Error('Secure sign-in is unavailable. Please try again later.');
+                if (email.toLowerCase() !== ADMIN_EMAIL) {
+                    throw new Error('This email is not authorized for the admin dashboard.');
                 }
-
-                if (isLocalAdminLogin(email, password)) {
-                    setLocalAdminCredentials(email, password);
-                    showToast('Welcome back, Saadman! Local admin access enabled.');
-                    unlockDashboard(false);
-                    return;
+                const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+                if (error) throw error;
+                if (data?.user?.email?.toLowerCase() !== ADMIN_EMAIL) {
+                    await supabase.auth.signOut();
+                    throw new Error('This account is not authorized for the admin dashboard.');
                 }
-
-                throw new Error('Email or password is incorrect. Use the saved admin password or instant access.');
+                showToast('Welcome back, Saadman!');
+                unlockDashboard();
             } catch (err) {
                 showToast(err.message, 'error');
             } finally {
@@ -1593,7 +1520,7 @@
         const getSafeRedirectUrl = () => {
             return window.location.protocol.startsWith('http') 
                 ? window.location.href.split('#')[0] 
-                : 'https://saadmankhandker.netlify.app/saadman_khandker.html';
+                : 'https://saadmankhandker10.github.io/Saadman-Khandker-Portfolio-s-/saadman_khandker.html';
         };
 
         // Forgot Password (Safe HTTP redirect)
@@ -1601,6 +1528,10 @@
             const email = document.getElementById('loginEmail').value.trim();
             if (!email) {
                 showToast('Please type your email address first.', 'info');
+                return;
+            }
+            if (email.toLowerCase() !== ADMIN_EMAIL) {
+                showToast('This email is not authorized for the admin dashboard.', 'error');
                 return;
             }
             if (!supabase) return;
@@ -1616,11 +1547,19 @@
             }
         });
 
-        // 3. Gmail 6-Digit OTP Handlers
+        // Gmail 6-Digit OTP Handlers
         document.getElementById('sendOtpBtn').addEventListener('click', async () => {
             const email = document.getElementById('otpEmail').value.trim();
             if (!email) {
                 showToast('Please enter your email.', 'error');
+                return;
+            }
+            if (email.toLowerCase() !== ADMIN_EMAIL) {
+                showToast('This email is not authorized for the admin dashboard.', 'error');
+                return;
+            }
+            if (!supabase) {
+                showToast('Secure sign-in is unavailable. Please try again later.', 'error');
                 return;
             }
             const btn = document.getElementById('sendOtpBtn');
@@ -1655,12 +1594,16 @@
             btn.disabled = true;
 
             try {
-                const { error } = await supabase.auth.verifyOtp({
+                const { data, error } = await supabase.auth.verifyOtp({
                     email,
                     token,
                     type: 'email'
                 });
                 if (error) throw error;
+                if (data?.user?.email?.toLowerCase() !== ADMIN_EMAIL) {
+                    await supabase.auth.signOut();
+                    throw new Error('This account is not authorized for the admin dashboard.');
+                }
                 showToast('Successfully verified!');
                 unlockDashboard();
             } catch (err) {
