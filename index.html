@@ -10,7 +10,7 @@
     <meta property="og:type" content="website">
     <meta property="og:title" content="Khandker Saadman Rafid | Portfolio">
     <meta property="og:description" content="Explore Khandker Saadman Rafid's experience, projects, skills, and professional work.">
-    <meta property="og:image" content="./public/img.png">
+    <meta property="og:image" content="./public/img.jpg">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Khandker Saadman Rafid | Portfolio">
     <meta name="twitter:description" content="Explore Khandker Saadman Rafid's experience, projects, skills, and professional work.">
@@ -564,7 +564,7 @@
                     
                     <!-- PROFILE PICTURE -->
                     <!-- To use your own photo, change the src="..." link below to your image file, like src="my-photo.jpg" -->
-                    <img id="profileImage" src="./public/img.png" alt="Khandker Saadman Rafid" class="w-full h-full object-cover z-0 transition-all duration-500">
+                    <img id="profileImage" src="./public/img.jpg" alt="Khandker Saadman Rafid" width="800" height="1000" fetchpriority="high" class="w-full h-full object-cover z-0 transition-all duration-500">
                 </div>
                 <!-- Decorative elements -->
                 <div class="absolute -bottom-4 -right-4 w-24 h-24 bg-retro-accent border-2 border-retro-dark shadow-retro -z-10 hidden md:block"></div>
@@ -1138,44 +1138,78 @@
         contactForm.addEventListener('submit', async function(e) {
             e.preventDefault();
             
-            // Basic visual feedback
             const btn = this.querySelector('button[type="submit"]');
             const originalText = btn.textContent;
             btn.textContent = 'SENDING...';
             btn.classList.add('opacity-75');
-            
-            const response = await fetch('https://oiruilsgqfqpmhradcrm.supabase.co/rest/v1/contact_messages', {
+            btn.disabled = true;
+
+            const nameVal = document.getElementById('name').value.trim();
+            const emailVal = document.getElementById('email').value.trim();
+            const msgVal = document.getElementById('message').value.trim();
+
+            const alertRecipient = (savedPortfolio.email && !savedPortfolio.email.includes('example.com')) 
+                ? savedPortfolio.email 
+                : 'gamerhindi571@gmail.com';
+
+            const payload = {
+                name: nameVal,
+                email: emailVal,
+                message: msgVal
+            };
+
+            // Send to both Supabase (database storage) and FormSubmit (direct Gmail alert)
+            const supabasePromise = fetch('https://oiruilsgqfqpmhradcrm.supabase.co/rest/v1/contact_messages', {
                 method: 'POST',
                 headers: {
                     apikey: 'sb_publishable_eejxo50gMcgeLDFM91a70A_trAfjMPm',
                     'Content-Type': 'application/json',
                     Prefer: 'return=minimal'
                 },
+                body: JSON.stringify(payload)
+            });
+
+            const emailPromise = fetch(`https://formsubmit.co/ajax/${alertRecipient}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
                 body: JSON.stringify({
-                    name: document.getElementById('name').value.trim(),
-                    email: document.getElementById('email').value.trim(),
-                    message: document.getElementById('message').value.trim()
+                    name: nameVal,
+                    email: emailVal,
+                    message: msgVal,
+                    _subject: `Portfolio Message from ${nameVal}`,
+                    _template: 'box'
                 })
             });
-            if (!response.ok) {
-                btn.textContent = originalText;
-                btn.classList.remove('opacity-75');
-                alert('Message could not be sent. Please try again.');
-                return;
-            }
-            setTimeout(() => {
+
+            try {
+                const results = await Promise.allSettled([supabasePromise, emailPromise]);
+                const atLeastOneSuccess = results.some(r => r.status === 'fulfilled' && r.value.ok);
+
+                if (!atLeastOneSuccess) {
+                    throw new Error('Submission attempts failed.');
+                }
+
                 contactForm.reset();
                 contactForm.classList.add('hidden');
                 successMessage.classList.remove('hidden');
-                
+
                 // Reset form after a few seconds
                 setTimeout(() => {
                     successMessage.classList.add('hidden');
                     contactForm.classList.remove('hidden');
                     btn.textContent = originalText;
                     btn.classList.remove('opacity-75');
+                    btn.disabled = false;
                 }, 5000);
-            }, 1000);
+            } catch (err) {
+                btn.textContent = originalText;
+                btn.classList.remove('opacity-75');
+                btn.disabled = false;
+                alert('Message could not be sent. Please try again or reach out directly via email.');
+            }
         });
     </script>
 </body>

@@ -48,7 +48,7 @@
             <section class="bg-[#FFFCF0] border-2 border-[#2B2B2B] p-5 shadow-[4px_4px_0_#2B2B2B] space-y-4">
                 <h2 class="font-mono font-bold text-xl">Profile</h2>
                 <label class="block font-bold">Profile photo<input id="profileImageFile" type="file" accept="image/png,image/jpeg,image/webp" class="w-full mt-2 p-3"></label>
-                <img id="profileImagePreview" src="./public/img.png" alt="Profile preview" class="w-32 h-32 object-cover border-2 border-[#2B2B2B]">
+                <img id="profileImagePreview" src="./public/img.jpg" alt="Profile preview" class="w-32 h-32 object-cover border-2 border-[#2B2B2B]">
                 <label class="block font-bold">Resume PDF<input id="resumeFile" type="file" accept="application/pdf" class="w-full mt-2 p-3"></label>
                 <a id="resumePreview" href="#" target="_blank" rel="noopener" class="hidden text-[#E76F51] underline font-bold">Open current resume</a>
                 <label class="block font-bold">Name<input id="siteName" class="w-full mt-2 p-3" required></label>
@@ -486,7 +486,7 @@
             projects = defaultProjects;
             renderProjectList();
             profileImage = '';
-            profileImagePreview.src = './public/img.png';
+            profileImagePreview.src = './public/img.jpg';
             resumeUrl = '';
             resumePreview.classList.add('hidden');
             experiences = defaultExperiences;
