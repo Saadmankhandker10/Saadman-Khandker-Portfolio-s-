@@ -1428,7 +1428,10 @@
             }).join('<div class="h-8"></div>');
         };
         const renderExperience = experiences => {
-            document.getElementById('experienceGrid').innerHTML = experiences.map(experience => `
+            const orderedExperiences = [...experiences].sort((first, second) =>
+                Number(/classvel/i.test(second.organization || '')) - Number(/classvel/i.test(first.organization || ''))
+            );
+            document.getElementById('experienceGrid').innerHTML = orderedExperiences.map(experience => `
                 <article class="bg-retro-card border-2 border-retro-dark shadow-retro p-8 hover:-translate-y-1 transition-transform">
                     <div class="flex justify-between items-start mb-4 flex-col sm:flex-row">
                         <div><h3 class="text-2xl font-bold text-retro-dark mb-1">${escapeHTML(experience.title)}</h3><p class="font-mono text-retro-accent font-bold">${escapeHTML(experience.organization)}</p></div>
