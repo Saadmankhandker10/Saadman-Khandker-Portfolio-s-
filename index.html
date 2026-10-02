@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Khandker Saadman Rafid | Portfolio</title>
+    <title>Khandker's| Portfolio</title>
     <meta name="description" content="Khandker Saadman Rafid's professional portfolio featuring operations management, digital content creation, community service, projects, and experience.">
     <meta name="keywords" content="Khandker Saadman Rafid, portfolio, operations management, digital content, community service">
     <meta name="author" content="Khandker Saadman Rafid">
@@ -798,50 +798,76 @@
         // Set current year in footer
         document.getElementById('year').textContent = new Date().getFullYear();
 
-        const savedTheme = localStorage.getItem('portfolioThemeV2');
+        const safeStorage = {
+            getItem(key) {
+                try {
+                    return localStorage.getItem(key);
+                } catch (error) {
+                    return null;
+                }
+            },
+            setItem(key, value) {
+                try {
+                    localStorage.setItem(key, value);
+                } catch (error) {
+                    // Ignore storage failures in private browsing or restricted contexts.
+                }
+            }
+        };
+
+        const savedTheme = safeStorage.getItem('portfolioThemeV2');
         if (savedTheme === 'dark') document.body.classList.add('dark-theme');
         const toggleTheme = () => {
             document.body.classList.toggle('dark-theme');
-            localStorage.setItem('portfolioThemeV2', document.body.classList.contains('dark-theme') ? 'dark' : 'light');
+            safeStorage.setItem('portfolioThemeV2', document.body.classList.contains('dark-theme') ? 'dark' : 'light');
         };
         document.getElementById('themeToggle').addEventListener('click', toggleTheme);
         document.getElementById('themeToggleMobile').addEventListener('click', toggleTheme);
 
+        const readStorageJson = (key, fallback = {}) => {
+            try {
+                const rawValue = safeStorage.getItem(key);
+                return rawValue ? JSON.parse(rawValue) : fallback;
+            } catch (error) {
+                return fallback;
+            }
+        };
 
         // Load content saved from the browser dashboard.
-        const savedPortfolio = JSON.parse(localStorage.getItem('portfolioData') || '{}');
+        const savedPortfolio = readStorageJson('portfolioData', {});
         const textFields = ['siteName', 'heroName', 'heroBio', 'projectCategory', 'projectTitle', 'projectDescription'];
         const applyPortfolio = portfolio => {
+            const safePortfolio = portfolio || {};
             textFields.forEach(id => {
-                if (portfolio[id]) document.getElementById(id).textContent = portfolio[id];
+                if (safePortfolio[id]) document.getElementById(id).textContent = safePortfolio[id];
             });
-            if (portfolio.email) {
+            if (safePortfolio.email) {
                 const emailLink = document.getElementById('emailLink');
-                emailLink.textContent = portfolio.email;
-                emailLink.href = `mailto:${portfolio.email}`;
+                emailLink.textContent = safePortfolio.email;
+                emailLink.href = `mailto:${safePortfolio.email}`;
             }
-            if (portfolio.linkedin) {
+            if (safePortfolio.linkedin) {
                 const linkedinLink = document.getElementById('linkedinLink');
-                linkedinLink.textContent = portfolio.linkedin.replace(/^https?:\/\//, '');
-                linkedinLink.href = portfolio.linkedin;
+                linkedinLink.textContent = safePortfolio.linkedin.replace(/^https?:\/\//, '');
+                linkedinLink.href = safePortfolio.linkedin;
             }
             ['github', 'facebook', 'instagram'].forEach(network => {
-                if (!portfolio[network]) return;
+                if (!safePortfolio[network]) return;
                 const link = document.getElementById(`${network}Link`);
-                link.href = portfolio[network];
-                link.textContent = portfolio[network].replace(/^https?:\/\//, '').replace(/\/$/, '');
+                link.href = safePortfolio[network];
+                link.textContent = safePortfolio[network].replace(/^https?:\/\//, '').replace(/\/$/, '');
                 document.getElementById(`${network}Row`).classList.remove('hidden');
             });
-            if (portfolio.profileImage) document.getElementById('profileImage').src = portfolio.profileImage;
-            if (portfolio.resumeUrl) {
+            if (safePortfolio.profileImage) document.getElementById('profileImage').src = safePortfolio.profileImage;
+            if (safePortfolio.resumeUrl) {
                 const resumeLink = document.getElementById('resumeLink');
-                resumeLink.href = portfolio.resumeUrl;
+                resumeLink.href = safePortfolio.resumeUrl;
                 resumeLink.classList.remove('hidden');
             }
-            if (Array.isArray(portfolio.projects) && portfolio.projects.length) renderProjects(portfolio.projects);
-            if (Array.isArray(portfolio.experiences) && portfolio.experiences.length) renderExperience(portfolio.experiences);
-            if (Array.isArray(portfolio.skills) && portfolio.skills.length) renderSkills(portfolio.skills);
-            updateLiveMetrics();
+            if (Array.isArray(safePortfolio.projects) && safePortfolio.projects.length) renderProjects(safePortfolio.projects);
+            if (Array.isArray(safePortfolio.experiences) && safePortfolio.experiences.length) renderExperience(safePortfolio.experiences);
+            if (Array.isArray(safePortfolio.skills) && safePortfolio.skills.length) renderSkills(safePortfolio.skills);
+            updateLiveMetrics(safePortfolio);
         };
         const escapeHTML = value => String(value || '').replace(/[&<>"']/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[character]));
         const renderProjects = projects => {
@@ -873,12 +899,16 @@
                 </article>`).join('');
         };
         const renderSkills = skills => {
-            document.getElementById('skillsGrid').innerHTML = skills.map((skill, index) => `
-                <div class="bg-retro-card border-2 border-retro-dark shadow-[2px_2px_0_0_rgba(43,43,43,1)] p-6 text-center hover:bg-${index % 2 ? 'retro-secondary' : 'retro-accent'} hover:text-white group transition-colors">
-                    <div class="w-12 h-12 mx-auto mb-4 border-2 border-retro-dark rounded-full flex items-center justify-center group-hover:border-white"><span class="font-mono font-bold">${escapeHTML(skill.icon || '★')}</span></div>
-                    <h4 class="font-bold font-mono text-sm uppercase">${escapeHTML(skill.name)}</h4>
-                    <div class="skill-meter" style="--skill-level: ${[92, 84, 76, 88][index % 4]}%"><span></span></div>
-                </div>`).join('');
+            document.getElementById('skillsGrid').innerHTML = skills.map((skill, index) => {
+                const accentClass = index % 2 === 0 ? 'hover:bg-retro-accent' : 'hover:bg-retro-secondary';
+                const skillMeter = [92, 84, 76, 88][index % 4];
+                return `
+                    <div class="bg-retro-card border-2 border-retro-dark shadow-[2px_2px_0_0_rgba(43,43,43,1)] p-6 text-center ${accentClass} hover:text-white group transition-colors">
+                        <div class="w-12 h-12 mx-auto mb-4 border-2 border-retro-dark rounded-full flex items-center justify-center group-hover:border-white"><span class="font-mono font-bold">${escapeHTML(skill.icon || '★')}</span></div>
+                        <h4 class="font-bold font-mono text-sm uppercase">${escapeHTML(skill.name)}</h4>
+                        <div class="skill-meter" style="--skill-level: ${skillMeter}%"><span></span></div>
+                    </div>`;
+            }).join('');
         };
 
         const startTyping = () => {
@@ -895,11 +925,11 @@
             });
         };
 
-            const updateLiveMetrics = () => {
+            const updateLiveMetrics = (portfolio = savedPortfolio) => {
                 const projectTotal = document.querySelectorAll('#projectsGrid article, #projectsGrid > div').length || 1;
                 const experienceTotal = document.querySelectorAll('#experienceGrid article').length || 1;
                 const skillTotal = document.querySelectorAll('#skillsGrid > div').length || 1;
-                const filledFields = ['siteName', 'heroName', 'heroBio', 'email', 'linkedin'].filter(field => savedPortfolio[field]).length;
+                const filledFields = ['siteName', 'heroName', 'heroBio', 'email', 'linkedin'].filter(field => portfolio[field]).length;
                 const completion = Math.min(100, Math.round((filledFields / 5) * 60 + Math.min(projectTotal, 3) / 3 * 20 + Math.min(experienceTotal, 3) / 3 * 10 + Math.min(skillTotal, 6) / 6 * 10));
                 document.getElementById('projectCount').textContent = projectTotal;
                 document.getElementById('experienceCount').textContent = experienceTotal;
