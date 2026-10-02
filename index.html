@@ -569,6 +569,7 @@
             transition: opacity 700ms ease;
         }
         body header.bg-retro-bg {
+            top: 5vh !important;
             background: rgba(4, 6, 12, 0.92) !important;
             border: 0 !important;
         }
@@ -748,20 +749,12 @@
         footer a:hover { color: #e8a24c; }
         #liveWidget { top: calc(5vh + 3.75rem + env(safe-area-inset-top, 0px)); right: 5vw; bottom: auto; border: 1px solid #27383f; background: #080d13; color: #ece6d8; box-shadow: none; }
         #liveWidget .live-dot { border: 0; background: #2a8a94; box-shadow: 0 0 0 4px rgba(42, 138, 148, 0.18); }
-        #runtimeCounter, #ambientSound { position: fixed; z-index: 55; color: #ece6d8; font: 300 0.85rem 'Libre Franklin', sans-serif; }
-        #runtimeCounter { top: calc(5vh + 3.75rem + env(safe-area-inset-top, 0px)); left: 5vw; opacity: 0; transition: opacity 700ms ease; }
-        body.play #runtimeCounter { opacity: 0.8; }
-        #runtimeCounter::before { content: ''; display: inline-block; width: 8px; height: 8px; margin-right: 0.5rem; border-radius: 50%; background: #ff3b4d; }
-        #ambientSound { right: 1rem; bottom: 1rem; padding: 0.4rem 0.9rem; border: 1px solid #8d9aa0; background: #080d13; }
-        #ambientSound:hover { border-color: #e8a24c; color: #e8a24c; }
         #backToTop { border: 1px solid #e8a24c; background: #080d13; color: #e8a24c; box-shadow: none; }
         .reveal-item { transform: translateY(18px); }
         .reveal-item.is-visible { transform: none; }
 
         @media (max-width: 767px) {
-            header { top: 3vh; }
             header nav { display: none !important; }
-            #runtimeCounter { display: none; }
             #liveWidget { top: auto; right: 1rem; bottom: 8.5rem; }
             main > section { padding: 6rem 1.25rem; }
             #home { min-height: 100svh; padding-top: 14vh; padding-bottom: 8vh; align-items: flex-start; }
@@ -786,8 +779,6 @@
     <div id="cinemaIntro" aria-label="Opening title sequence"><div><div id="cinemaCount">3</div><p>Opening title sequence</p><button id="cinemaSkip" type="button">Skip intro</button></div></div>
     <div id="scrollProgress" aria-hidden="true"></div>
     <div id="liveWidget" aria-label="Portfolio live status"><span class="live-dot" aria-hidden="true"></span><span id="liveClock">LIVE / 00:00</span></div>
-    <div id="runtimeCounter" aria-live="off">Runtime 00:00</div>
-    <button id="ambientSound" type="button" aria-pressed="false">Sound off</button>
     <button id="backToTop" type="button" aria-label="Back to top" title="Back to top">↑</button>
 
     <header class="fixed top-0 w-full bg-retro-bg border-b-2 border-retro-dark z-50">
@@ -1482,78 +1473,6 @@
         updateLiveClock();
         if (window.__portfolioClockInterval) clearInterval(window.__portfolioClockInterval);
         window.__portfolioClockInterval = setInterval(updateLiveClock, 1000);
-
-        const runtimeCounter = document.getElementById('runtimeCounter');
-        const runtimeStartedAt = Date.now();
-        const updateRuntimeCounter = () => {
-            const elapsedSeconds = Math.floor((Date.now() - runtimeStartedAt) / 1000);
-            const minutes = String(Math.floor(elapsedSeconds / 60)).padStart(2, '0');
-            const seconds = String(elapsedSeconds % 60).padStart(2, '0');
-            runtimeCounter.textContent = `Runtime ${minutes}:${seconds}`;
-        };
-        updateRuntimeCounter();
-        window.setInterval(updateRuntimeCounter, 1000);
-
-        const soundButton = document.getElementById('ambientSound');
-        let soundEnabled = false;
-        let soundContext;
-        let soundGain;
-        let soundNodes = [];
-        soundButton.addEventListener('click', async () => {
-            if (!soundEnabled) {
-                const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-                if (!AudioContextClass) {
-                    soundButton.textContent = 'Sound unavailable';
-                    soundButton.disabled = true;
-                    return;
-                }
-                try {
-                    soundContext = soundContext || new AudioContextClass();
-                    await soundContext.resume();
-                    const filter = soundContext.createBiquadFilter();
-                    filter.type = 'lowpass';
-                    filter.frequency.value = 260;
-                    soundGain = soundContext.createGain();
-                    soundGain.gain.setValueAtTime(0, soundContext.currentTime);
-                    soundGain.gain.linearRampToValueAtTime(0.045, soundContext.currentTime + 1.5);
-                    filter.connect(soundGain);
-                    soundGain.connect(soundContext.destination);
-
-                    const modulation = soundContext.createOscillator();
-                    const modulationGain = soundContext.createGain();
-                    modulation.frequency.value = 0.07;
-                    modulationGain.gain.value = 140;
-                    modulation.connect(modulationGain);
-                    modulationGain.connect(filter.frequency);
-                    modulation.start();
-                    soundNodes = [modulation];
-
-                    [55, 82.4, 110.5].forEach((frequency, index) => {
-                        const oscillator = soundContext.createOscillator();
-                        oscillator.type = index ? 'triangle' : 'sawtooth';
-                        oscillator.frequency.value = frequency;
-                        oscillator.connect(filter);
-                        oscillator.start();
-                        soundNodes.push(oscillator);
-                    });
-                    soundEnabled = true;
-                    soundButton.textContent = 'Sound on';
-                } catch (error) {
-                    soundButton.textContent = 'Sound unavailable';
-                    soundButton.disabled = true;
-                }
-            } else {
-                soundGain.gain.cancelScheduledValues(soundContext.currentTime);
-                soundGain.gain.setValueAtTime(soundGain.gain.value, soundContext.currentTime);
-                soundGain.gain.linearRampToValueAtTime(0, soundContext.currentTime + 0.8);
-                const nodesToStop = soundNodes;
-                soundNodes = [];
-                window.setTimeout(() => nodesToStop.forEach(node => node.stop()), 900);
-                soundEnabled = false;
-                soundButton.textContent = 'Sound off';
-            }
-            soundButton.setAttribute('aria-pressed', String(soundEnabled));
-        });
 
         document.getElementById('backToTop').addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
