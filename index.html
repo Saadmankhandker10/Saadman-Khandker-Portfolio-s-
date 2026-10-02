@@ -234,6 +234,58 @@
             will-change: transform;
         }
 
+        .tilt-card {
+            transform-style: preserve-3d;
+            transition: transform 220ms ease, box-shadow 220ms ease;
+            will-change: transform;
+        }
+
+        .spline-shell {
+            position: relative;
+            min-height: 360px;
+            border: 2px solid var(--ink);
+            background: linear-gradient(135deg, rgba(79, 70, 229, 0.08), rgba(99, 102, 241, 0.14));
+            box-shadow: 5px 5px 0 var(--ink);
+            overflow: hidden;
+        }
+
+        .spline-shell spline-viewer {
+            display: block;
+            width: 100%;
+            height: 360px;
+            background: transparent;
+        }
+
+        .spline-fallback {
+            position: absolute;
+            inset: 0;
+            display: grid;
+            place-items: center;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.78rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.94), rgba(79, 70, 229, 0.9));
+            color: white;
+            pointer-events: none;
+        }
+
+        .spline-container {
+            width: 100%;
+            height: 420px;
+            border: 2px solid var(--ink);
+            background: linear-gradient(135deg, rgba(79, 70, 229, 0.18), rgba(99, 102, 241, 0.1));
+            box-shadow: 5px 5px 0 var(--ink);
+            overflow: hidden;
+            border-radius: 0.25rem;
+        }
+
+        .spline-container spline-viewer {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
         #home > div:first-child,
         #home > div:last-child {
             will-change: transform;
@@ -453,12 +505,289 @@
         body.dark-theme .text-retro-dark, body.dark-theme .text-gray-700 { color: #e2e8f0; }
         body.dark-theme .bg-white, body.dark-theme .bg-gray-50, body.dark-theme .bg-gray-200 { background-color: #1f2937; color: #e2e8f0; }
         body.dark-theme .border-retro-dark { border-color: #e2e8f0; }
+
+        :root {
+            --page-bg: #04060c;
+            --ink: #ece6d8;
+            --accent: #e8a24c;
+            --secondary: #2a8a94;
+            --lime: #2a8a94;
+            --paper: #0b1118;
+            color-scheme: dark;
+        }
+
+        html { scroll-padding-top: 5rem; }
+        body {
+            position: relative;
+            background: #04060c;
+            color: #ece6d8;
+            font-family: 'Libre Franklin', 'Helvetica Neue', Arial, sans-serif;
+            font-weight: 300;
+        }
+        body::before {
+            z-index: 2;
+            background: radial-gradient(circle 320px at var(--pointer-x) var(--pointer-y), rgba(232, 162, 76, 0.12), transparent 72%);
+        }
+        body::after { z-index: 0; opacity: 0.12; background-size: 42px 42px; }
+        #ambientCanvas { z-index: 1; opacity: 0.68; }
+        #scrollProgress { z-index: 75; height: 2px; background: linear-gradient(90deg, #2a8a94, #e8a24c); box-shadow: 0 0 12px rgba(232, 162, 76, 0.35); }
+
+        .letterbox {
+            position: fixed;
+            left: 0;
+            right: 0;
+            height: 50vh;
+            z-index: 80;
+            background: #000;
+            transition: height 1.5s cubic-bezier(0.7, 0, 0.2, 1);
+            pointer-events: none;
+        }
+        .letterbox.top { top: 0; }
+        .letterbox.bottom { bottom: 0; }
+        body.play .letterbox { height: 5vh; }
+        #cinemaIntro {
+            position: fixed;
+            inset: 0;
+            z-index: 90;
+            display: grid;
+            place-items: center;
+            background: #04060c;
+            text-align: center;
+            transition: opacity 800ms ease;
+        }
+        #cinemaIntro.gone { opacity: 0; pointer-events: none; }
+        #cinemaCount { color: #e8a24c; font: 12rem/1 'Bebas Neue', Impact, sans-serif; }
+        #cinemaIntro p { margin: 0; color: #8d9aa0; }
+        #cinemaSkip { margin-top: 1.5rem; padding: 0.6rem 1.4rem; border: 1px solid #8d9aa0; background: transparent; color: #ece6d8; font: inherit; }
+
+        header {
+            top: 5vh;
+            background: rgba(4, 6, 12, 0.82);
+            border: 0;
+            box-shadow: none;
+            backdrop-filter: blur(12px);
+            transition: opacity 700ms ease;
+        }
+        body header.bg-retro-bg {
+            background: rgba(4, 6, 12, 0.92) !important;
+            border: 0 !important;
+        }
+        header > div { max-width: 1100px; }
+        header .h-16 { height: 3.5rem; }
+        #siteName { color: #ece6d8 !important; font: 1rem 'Libre Franklin', sans-serif; letter-spacing: 0; }
+        header nav {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            gap: clamp(1rem, 4vw, 2.5rem);
+        }
+        header nav a, #themeToggle, #themeToggleMobile { color: #ece6d8 !important; font: 300 0.82rem 'Libre Franklin', sans-serif; text-decoration: none; }
+        header nav a:hover, #themeToggle:hover, #themeToggleMobile:hover { color: #e8a24c; }
+        #mobile-menu.bg-retro-card { background: #080d13 !important; border-color: #27383f; }
+        #mobile-menu a { color: #ece6d8; border-color: transparent; }
+        #mobile-menu a:hover { background: #2a8a94; }
+        #mobile-menu-btn { color: #ece6d8 !important; }
+        #themeToggle { padding: 0.4rem 0.7rem; border: 1px solid #8d9aa0; }
+
+        main { position: relative; z-index: 5; padding-top: 0 !important; }
+        main > section {
+            width: 100%;
+            max-width: 1100px;
+            margin-inline: auto;
+            padding: 7rem 1.5rem;
+            scroll-margin-top: 5rem;
+            background: transparent !important;
+        }
+        #home {
+            position: relative;
+            display: flex;
+            min-height: 100vh;
+            padding-top: 16vh;
+            padding-bottom: 12vh;
+            align-items: center;
+            overflow: hidden;
+        }
+        #home > div:first-child {
+            z-index: 2;
+            width: 68%;
+            padding-left: 0;
+            border: 0;
+            animation: none;
+        }
+        #home > div:last-child {
+            position: absolute;
+            top: 50%;
+            right: 2rem;
+            width: min(32vw, 340px);
+            margin: 0;
+            transform: translateY(-50%);
+            z-index: 1;
+            animation: none;
+        }
+        #home > div:last-child > div:first-child {
+            aspect-ratio: 3 / 4;
+            border: 0;
+            border-radius: 0;
+            background: radial-gradient(ellipse at 50% 30%, #2a8a94, #0b1a20 58%, #04060c 100%);
+            box-shadow: inset 0 0 90px 35px #04060c, 0 0 65px rgba(42, 138, 148, 0.22);
+        }
+        #home > div:last-child > div:first-child > div { display: none; }
+        #home > div:last-child > div:not(:first-child) { display: none !important; }
+        #profileImage { filter: saturate(0.86) contrast(1.08); transform: none; animation: none; }
+        #home .font-mono.text-retro-accent {
+            color: #2a8a94;
+            font: 300 0.95rem 'Libre Franklin', sans-serif;
+            letter-spacing: 0.04em;
+            text-transform: none;
+        }
+        #home h1 {
+            max-width: 10ch;
+            margin: 0.3em 0;
+            color: #ece6d8;
+            font: clamp(4rem, 8vw, 7rem)/0.92 'Bebas Neue', Impact, sans-serif;
+            letter-spacing: 0;
+            text-wrap: balance;
+        }
+        #home h1 span { color: #e8a24c; }
+        #home p.text-xl { max-width: 34ch; color: #ece6d8; font-size: 1.1rem; }
+        #home .hero-cta { gap: 0.8rem; }
+        #home .hero-cta a {
+            padding: 0.75rem 1.35rem;
+            border: 1px solid #e8a24c;
+            background: transparent;
+            color: #e8a24c;
+            box-shadow: none;
+            font: 400 0.8rem 'Libre Franklin', sans-serif;
+            text-decoration: none;
+        }
+        #home .hero-cta a:first-child, #home .hero-cta a:hover { background: #e8a24c; color: #04060c; }
+        #home .mt-10, #liveMetrics { display: none; }
+
+        .section-divider { width: calc(100% - 3rem); max-width: 1100px; margin: 0 auto; border-color: #18252b; opacity: 1; }
+        main > section h2 {
+            display: block;
+            margin: 0 0 2.5rem;
+            color: #2a8a94;
+            font: clamp(2.7rem, 6vw, 5rem)/1 'Bebas Neue', Impact, sans-serif;
+            letter-spacing: 0;
+        }
+        main > section h2 span {
+            display: block;
+            margin: 0 0 0.5rem;
+            padding: 0;
+            background: none;
+            color: #8d9aa0;
+            font: 300 0.82rem 'Libre Franklin', sans-serif;
+        }
+        #experienceGrid { display: block; border-left: 2px solid #18252b; }
+        #experienceGrid > article {
+            position: relative;
+            margin: 0 0 2.5rem 1.5rem;
+            padding: 0 0 0 1.5rem;
+            border: 0;
+            border-left: 2px solid #e8a24c;
+            background: transparent !important;
+            box-shadow: none;
+            color: #ece6d8;
+        }
+        #experienceGrid h3 { color: #ece6d8; font: 2rem/1.1 'Bebas Neue', Impact, sans-serif; }
+        #experienceGrid p, #experienceGrid li { color: #c0c5c5; font-weight: 300; }
+        #experienceGrid article span { border: 0; background: transparent; color: #8d9aa0; }
+        #projectsGrid > article, #projectsGrid > div > article {
+            border: 1px solid #1d2a30;
+            background: #080d13 !important;
+            box-shadow: none;
+        }
+        #projectsGrid > article > div:first-child, #projectsGrid > div > article > div:first-child {
+            min-height: 300px;
+            background: linear-gradient(135deg, #0b1a20, #1a1208) !important;
+            border-color: #1d2a30;
+        }
+        #projectsGrid .bg-white { background: transparent; border-color: rgba(236, 230, 216, 0.22); box-shadow: none; }
+        #projectsGrid .bg-gray-50 { background: rgba(4, 6, 12, 0.45); border-color: #27383f; }
+        #projectsGrid .text-gray-400, #projectsGrid .text-gray-300 { color: #8d9aa0; }
+        #projectsGrid h3 { color: #ece6d8; font: 2.5rem/1 'Bebas Neue', Impact, sans-serif; }
+        #projectsGrid p { color: #c0c5c5; }
+        #projectsGrid .font-mono.text-retro-accent { color: #2a8a94; }
+        #projectsGrid .bg-gray-200 { border-color: #27383f; background: #0b1118; color: #aab4b6; }
+        #skillsGrid { grid-template-columns: 1fr; gap: 0; }
+        #skillsGrid > div {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 1rem;
+            padding: 1rem 0;
+            border: 0;
+            border-bottom: 1px solid #16222a;
+            background: transparent !important;
+            box-shadow: none;
+            color: #3a4a50;
+            text-align: left;
+        }
+        #skillsGrid > div:hover { color: #e8a24c; background: transparent !important; }
+        #skillsGrid > div > div:first-child { display: none; }
+        #skillsGrid h4 { color: inherit; font: clamp(2rem, 6vw, 4rem)/1.1 'Bebas Neue', Impact, sans-serif; }
+        #skillsGrid .skill-meter, #skillsGrid > div::after { display: none !important; }
+        #contact h3 { color: #ece6d8; font: 2.4rem 'Bebas Neue', Impact, sans-serif; }
+        #contact p, #contact a, #contact label { color: #c0c5c5; }
+        #contact .contact-icon { flex: 0 0 2rem; }
+        #contact .contact-icon-email { background: #b34b3b; }
+        #contact .contact-icon-linkedin { background: #176a78; }
+        #contact .contact-icon-github { background: #252a2c; }
+        #contact .contact-icon-facebook { background: #246a83; }
+        #contact .contact-icon-instagram { background: #a34a58; }
+        #contact .space-y-4 > div { min-width: 0; }
+        #contact .space-y-4 a { min-width: 0; overflow-wrap: anywhere; }
+        #contactForm, #successMessage { border: 1px solid #27383f; background: #080d13; color: #ece6d8; box-shadow: none; }
+        #contactForm input, #contactForm textarea { border: 1px solid #27383f; background: #04060c; color: #ece6d8; }
+        #contactForm button { background: #e8a24c; color: #04060c; }
+        #contactForm button:hover { background: #2a8a94; }
+        #successMessage { background: #10272b; }
+        footer { position: relative; z-index: 5; background: #04060c; border-color: #18252b; color: #8d9aa0; }
+        footer .text-white, footer .text-gray-400 { color: #8d9aa0; }
+        footer a:hover { color: #e8a24c; }
+        #liveWidget { top: calc(5vh + 3.75rem + env(safe-area-inset-top, 0px)); right: 5vw; bottom: auto; border: 1px solid #27383f; background: #080d13; color: #ece6d8; box-shadow: none; }
+        #liveWidget .live-dot { border: 0; background: #2a8a94; box-shadow: 0 0 0 4px rgba(42, 138, 148, 0.18); }
+        #runtimeCounter, #ambientSound { position: fixed; z-index: 55; color: #ece6d8; font: 300 0.85rem 'Libre Franklin', sans-serif; }
+        #runtimeCounter { top: calc(5vh + 3.75rem + env(safe-area-inset-top, 0px)); left: 5vw; opacity: 0; transition: opacity 700ms ease; }
+        body.play #runtimeCounter { opacity: 0.8; }
+        #runtimeCounter::before { content: ''; display: inline-block; width: 8px; height: 8px; margin-right: 0.5rem; border-radius: 50%; background: #ff3b4d; }
+        #ambientSound { right: 1rem; bottom: 1rem; padding: 0.4rem 0.9rem; border: 1px solid #8d9aa0; background: #080d13; }
+        #ambientSound:hover { border-color: #e8a24c; color: #e8a24c; }
+        #backToTop { border: 1px solid #e8a24c; background: #080d13; color: #e8a24c; box-shadow: none; }
+        .reveal-item { transform: translateY(18px); }
+        .reveal-item.is-visible { transform: none; }
+
+        @media (max-width: 767px) {
+            header { top: 3vh; }
+            header nav { display: none !important; }
+            #runtimeCounter { display: none; }
+            #liveWidget { top: auto; right: 1rem; bottom: 8.5rem; }
+            main > section { padding: 6rem 1.25rem; }
+            #home { min-height: 100svh; padding-top: 14vh; padding-bottom: 8vh; align-items: flex-start; }
+            #home > div:first-child { width: 100%; flex: none; }
+            #home > div:last-child { position: relative; top: auto; right: auto; align-self: center; width: min(62vw, 250px); margin-top: 2rem; opacity: 1; transform: none !important; }
+            #home h1 { max-width: 9ch; font-size: clamp(3.8rem, 15vw, 6.5rem); }
+            #home .hero-cta a { width: auto; }
+            #experienceGrid > article { margin-left: 1rem; padding-left: 1rem; }
+            #projectsGrid > article, #projectsGrid > div > article { flex-direction: column; }
+            #projectsGrid > article > div:first-child, #projectsGrid > div > article > div:first-child { border-right: 0; border-bottom: 1px solid #1d2a30; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .letterbox { transition: none; }
+            #cinemaIntro { transition: none; }
+        }
     </style>
 </head>
 <body class="font-sans antialiased flex flex-col min-h-screen">
     <canvas id="ambientCanvas" aria-hidden="true"></canvas>
+    <div class="letterbox top" aria-hidden="true"></div>
+    <div class="letterbox bottom" aria-hidden="true"></div>
+    <div id="cinemaIntro" aria-label="Opening title sequence"><div><div id="cinemaCount">3</div><p>Opening title sequence</p><button id="cinemaSkip" type="button">Skip intro</button></div></div>
     <div id="scrollProgress" aria-hidden="true"></div>
     <div id="liveWidget" aria-label="Portfolio live status"><span class="live-dot" aria-hidden="true"></span><span id="liveClock">LIVE / 00:00</span></div>
+    <div id="runtimeCounter" aria-live="off">Runtime 00:00</div>
+    <button id="ambientSound" type="button" aria-pressed="false">Sound off</button>
     <button id="backToTop" type="button" aria-label="Back to top" title="Back to top">↑</button>
 
     <header class="fixed top-0 w-full bg-retro-bg border-b-2 border-retro-dark z-50">
@@ -514,9 +843,9 @@
                     I'm <span id="heroName">Khandker Sadman Rafid Saad</span>.
                 </h1>
                 <p class="text-xl md:text-2xl text-gray-700 mb-8 max-w-2xl font-light">
-                    <span id="heroBio">A dedicated professional blending operations management with a passion for digital content and community service.</span>
+                    Operations-driven professional with a focus on presentation, service, and team execution.
                 </p>
-                <div class="flex flex-wrap gap-4">
+                <div class="flex flex-wrap gap-4 hero-cta">
                     <a href="#contact" class="bg-retro-accent text-white font-mono font-bold py-3 px-6 border-2 border-retro-dark shadow-retro hover:shadow-retro-hover hover:translate-y-[2px] hover:translate-x-[2px] transition-all">
                         GET IN TOUCH
                     </a>
@@ -562,7 +891,6 @@
                     <div class="absolute inset-0 opacity-20 bg-[url('data:image/svg+xml,%3Csvg width=\'20\' height=\'20\' viewBox=\'0 0 20 20\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'1\' fill-rule=\'evenodd\'%3E%3Ccircle cx=\'3\' cy=\'3\' r=\'3\'/%3E%3Ccircle cx=\'13\' cy=\'13\' r=\'3\'/%3E%3C/g%3E%3C/svg%3E')] z-10 pointer-events-none mix-blend-overlay"></div>
                     
                     <!-- PROFILE PICTURE -->
-                    <!-- To use your own photo, change the src="..." link below to your image file, like src="my-photo.jpg" -->
                     <img id="profileImage" src="./public/img.jpg" alt="Khandker Saadman Rafid" width="800" height="1000" fetchpriority="high" class="w-full h-full object-cover z-0 transition-all duration-500">
                 </div>
                 <!-- Decorative elements -->
@@ -639,7 +967,7 @@
             </h2>
 
             <div id="projectsGrid">
-            <div class="bg-retro-card border-2 border-retro-dark shadow-retro flex flex-col md:flex-row overflow-hidden">
+            <div class="project-card tilt-card bg-retro-card border-2 border-retro-dark shadow-retro flex flex-col md:flex-row overflow-hidden" data-tilt data-tilt-max="15" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.2">
                 <!-- Project Image/Graphic -->
                 <div class="md:w-1/2 bg-retro-secondary border-b-2 md:border-b-0 md:border-r-2 border-retro-dark p-8 flex items-center justify-center relative overflow-hidden">
                     <!-- Retro geometric pattern background -->
@@ -794,6 +1122,31 @@
     </footer>
 
     <script>
+        const introReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const cinemaIntro = document.getElementById('cinemaIntro');
+        const cinemaCount = document.getElementById('cinemaCount');
+        let cinemaNumber = 3;
+        let introFinished = false;
+        const finishIntro = () => {
+            if (introFinished) return;
+            introFinished = true;
+            cinemaIntro.classList.add('gone');
+            document.body.classList.add('play');
+        };
+        const introTimer = setInterval(() => {
+            cinemaNumber -= 1;
+            if (cinemaNumber < 1) {
+                clearInterval(introTimer);
+                finishIntro();
+            } else {
+                cinemaCount.textContent = cinemaNumber;
+            }
+        }, introReducedMotion ? 150 : 800);
+        document.getElementById('cinemaSkip').addEventListener('click', () => {
+            clearInterval(introTimer);
+            finishIntro();
+        });
+
         // Set current year in footer
         document.getElementById('year').textContent = new Date().getFullYear();
 
@@ -838,7 +1191,8 @@
         const applyPortfolio = portfolio => {
             const safePortfolio = portfolio || {};
             textFields.forEach(id => {
-                if (safePortfolio[id]) document.getElementById(id).textContent = safePortfolio[id];
+                const element = document.getElementById(id);
+                if (safePortfolio[id] && element) element.textContent = safePortfolio[id];
             });
             if (safePortfolio.email) {
                 const emailLink = document.getElementById('emailLink');
@@ -871,7 +1225,7 @@
         const escapeHTML = value => String(value || '').replace(/[&<>"']/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[character]));
         const renderProjects = projects => {
             document.getElementById('projectsGrid').innerHTML = projects.map(project => `
-                <article class="bg-retro-card border-2 border-retro-dark shadow-retro flex flex-col md:flex-row overflow-hidden">
+                <article class="tilt-card bg-retro-card border-2 border-retro-dark shadow-retro flex flex-col md:flex-row overflow-hidden" data-tilt data-tilt-max="16" data-tilt-speed="400" data-tilt-glare="true" data-tilt-max-glare="0.18">
                     <div class="md:w-1/2 bg-retro-secondary border-b-2 md:border-b-0 md:border-r-2 border-retro-dark p-8 flex items-center justify-center">
                         <div class="bg-white border-2 border-retro-dark p-4 shadow-retro w-full max-w-sm">
                             <div class="border border-gray-300 h-32 p-2 bg-gray-50 flex items-center justify-center">
@@ -910,20 +1264,6 @@
             }).join('');
         };
 
-        const startTyping = () => {
-            const target = document.getElementById('heroName');
-            const text = target.textContent;
-            target.textContent = '';
-            const cursor = document.createElement('span');
-            cursor.className = 'typing-cursor';
-            target.append(cursor);
-            [...text].forEach((character, index) => {
-                setTimeout(() => {
-                    cursor.before(document.createTextNode(character));
-                }, 55 * index);
-            });
-        };
-
             const updateLiveMetrics = (portfolio = savedPortfolio) => {
                 const projectTotal = document.querySelectorAll('#projectsGrid article, #projectsGrid > div').length || 1;
                 const experienceTotal = document.querySelectorAll('#experienceGrid article').length || 1;
@@ -938,7 +1278,6 @@
                 document.getElementById('metricsPulse').textContent = `SYNCED / ${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
             };
         applyPortfolio(savedPortfolio);
-        startTyping();
         if (savedPortfolio.email) {
             const emailLink = document.getElementById('emailLink');
             emailLink.textContent = savedPortfolio.email;
@@ -1021,62 +1360,91 @@
             const heroVisual = document.querySelector('#home > div:last-child');
             if (heroCopy && heroVisual) {
                 heroCopy.style.transform = `translate(${xRatio * -8}px, ${yRatio * -5}px)`;
-                heroVisual.style.transform = `translate(${xRatio * 10}px, ${yRatio * 8}px) rotate(${xRatio * 2}deg)`;
+                heroVisual.style.transform = `translateY(-50%) translate(${xRatio * 10}px, ${yRatio * 8}px) rotate(${xRatio * 2}deg)`;
             }
         }, { passive: true });
 
         const ambientCanvas = document.getElementById('ambientCanvas');
         const ambientContext = ambientCanvas.getContext('2d');
         const ambientPointer = { x: -1000, y: -1000 };
+        const ambientReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         let ambientParticles = [];
         let ambientFrame;
+
+        const createAmbientParticle = kind => ({
+            kind,
+            x: Math.random() * window.innerWidth,
+            y: Math.random() * window.innerHeight,
+            radius: kind === 'crescent' ? Math.random() * 28 + 18 : kind === 'label' ? Math.random() * 9 + 13 : Math.random() * 1.5 + 0.3,
+            speed: kind === 'dust' ? Math.random() * 0.2 + 0.05 : Math.random() * 0.3 + 0.12,
+            rotation: Math.random() * Math.PI * 2,
+            rotationSpeed: (Math.random() - 0.5) * 0.006,
+            opacity: kind === 'dust' ? Math.random() * 0.4 + 0.1 : Math.random() * 0.25 + 0.14,
+            phase: Math.random() * Math.PI * 2
+        });
 
         const resizeAmbientCanvas = () => {
             const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
             ambientCanvas.width = window.innerWidth * pixelRatio;
             ambientCanvas.height = window.innerHeight * pixelRatio;
             ambientContext.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
-            const particleCount = window.innerWidth < 640 ? 24 : 52;
-            ambientParticles = Array.from({ length: particleCount }, () => ({
-                x: Math.random() * window.innerWidth,
-                y: Math.random() * window.innerHeight,
-                vx: (Math.random() - 0.5) * 0.28,
-                vy: (Math.random() - 0.5) * 0.28,
-                radius: Math.random() * 1.8 + 0.8
-            }));
+            const compact = window.innerWidth < 640;
+            ambientParticles = [
+                ...Array.from({ length: compact ? 9 : 19 }, () => createAmbientParticle('crescent')),
+                ...Array.from({ length: compact ? 3 : 6 }, () => createAmbientParticle('label')),
+                ...Array.from({ length: compact ? 24 : 45 }, () => createAmbientParticle('dust'))
+            ];
         };
 
         const animateAmbientCanvas = () => {
             ambientContext.clearRect(0, 0, window.innerWidth, window.innerHeight);
             ambientParticles.forEach(particle => {
-                const dx = ambientPointer.x - particle.x;
-                const dy = ambientPointer.y - particle.y;
+                const dx = particle.x - ambientPointer.x;
+                const dy = particle.y - ambientPointer.y;
                 const distance = Math.hypot(dx, dy);
                 if (distance < 150 && distance > 1) {
-                    particle.vx += (dx / distance) * 0.002;
-                    particle.vy += (dy / distance) * 0.002;
+                    const push = (150 - distance) * 0.025;
+                    particle.x += (dx / distance) * push;
+                    particle.y += (dy / distance) * push;
                 }
-                particle.x += particle.vx;
-                particle.y += particle.vy;
-                if (particle.x < -20 || particle.x > window.innerWidth + 20) particle.vx *= -1;
-                if (particle.y < -20 || particle.y > window.innerHeight + 20) particle.vy *= -1;
-                ambientContext.beginPath();
-                ambientContext.fillStyle = 'rgba(217, 93, 57, 0.72)';
-                ambientContext.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
-                ambientContext.fill();
-            });
-            ambientParticles.forEach((first, firstIndex) => ambientParticles.slice(firstIndex + 1).forEach(second => {
-                const distance = Math.hypot(first.x - second.x, first.y - second.y);
-                if (distance < 125) {
+                particle.y -= particle.speed;
+                particle.x += Math.sin(particle.y / 70 + particle.phase) * 0.25;
+                particle.rotation += particle.rotationSpeed;
+                if (particle.y < -60) {
+                    particle.y = window.innerHeight + 60;
+                    particle.x = Math.random() * window.innerWidth;
+                }
+                if (particle.x < -80) particle.x = window.innerWidth + 60;
+                if (particle.x > window.innerWidth + 80) particle.x = -60;
+
+                ambientContext.save();
+                ambientContext.translate(particle.x, particle.y);
+                if (particle.kind === 'crescent') {
+                    ambientContext.rotate(particle.rotation);
+                    ambientContext.shadowColor = 'rgba(220, 35, 52, 0.8)';
+                    ambientContext.shadowBlur = 22;
+                    ambientContext.fillStyle = `rgba(220, 35, 52, ${particle.opacity})`;
                     ambientContext.beginPath();
-                    ambientContext.strokeStyle = `rgba(40, 127, 120, ${0.2 * (1 - distance / 125)})`;
-                    ambientContext.lineWidth = 1;
-                    ambientContext.moveTo(first.x, first.y);
-                    ambientContext.lineTo(second.x, second.y);
-                    ambientContext.stroke();
+                    ambientContext.arc(0, 0, particle.radius, 0.8455, -0.8455, false);
+                    ambientContext.arc(particle.radius * 0.38, 0, particle.radius * 0.8, -1.21, 1.21, true);
+                    ambientContext.closePath();
+                    ambientContext.fill();
+                } else if (particle.kind === 'label') {
+                    ambientContext.font = `${particle.radius}px 'Bebas Neue', Impact, sans-serif`;
+                    ambientContext.textAlign = 'center';
+                    ambientContext.shadowColor = 'rgba(220, 35, 52, 0.6)';
+                    ambientContext.shadowBlur = 14;
+                    ambientContext.fillStyle = `rgba(236, 230, 216, ${particle.opacity + 0.08})`;
+                    ambientContext.fillText('BDRCS', 0, 0);
+                } else {
+                    ambientContext.beginPath();
+                    ambientContext.arc(0, 0, particle.radius, 0, Math.PI * 2);
+                    ambientContext.fillStyle = `rgba(236, 230, 216, ${particle.opacity})`;
+                    ambientContext.fill();
                 }
-            }));
-            ambientFrame = requestAnimationFrame(animateAmbientCanvas);
+                ambientContext.restore();
+            });
+            if (!ambientReducedMotion) ambientFrame = requestAnimationFrame(animateAmbientCanvas);
         };
 
         resizeAmbientCanvas();
@@ -1085,7 +1453,7 @@
             ambientPointer.x = event.clientX;
             ambientPointer.y = event.clientY;
         }, { passive: true });
-        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) animateAmbientCanvas();
+        animateAmbientCanvas();
 
         const updateScrollProgress = () => {
             const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
@@ -1114,6 +1482,79 @@
         updateLiveClock();
         if (window.__portfolioClockInterval) clearInterval(window.__portfolioClockInterval);
         window.__portfolioClockInterval = setInterval(updateLiveClock, 1000);
+
+        const runtimeCounter = document.getElementById('runtimeCounter');
+        const runtimeStartedAt = Date.now();
+        const updateRuntimeCounter = () => {
+            const elapsedSeconds = Math.floor((Date.now() - runtimeStartedAt) / 1000);
+            const minutes = String(Math.floor(elapsedSeconds / 60)).padStart(2, '0');
+            const seconds = String(elapsedSeconds % 60).padStart(2, '0');
+            runtimeCounter.textContent = `Runtime ${minutes}:${seconds}`;
+        };
+        updateRuntimeCounter();
+        window.setInterval(updateRuntimeCounter, 1000);
+
+        const soundButton = document.getElementById('ambientSound');
+        let soundEnabled = false;
+        let soundContext;
+        let soundGain;
+        let soundNodes = [];
+        soundButton.addEventListener('click', async () => {
+            if (!soundEnabled) {
+                const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+                if (!AudioContextClass) {
+                    soundButton.textContent = 'Sound unavailable';
+                    soundButton.disabled = true;
+                    return;
+                }
+                try {
+                    soundContext = soundContext || new AudioContextClass();
+                    await soundContext.resume();
+                    const filter = soundContext.createBiquadFilter();
+                    filter.type = 'lowpass';
+                    filter.frequency.value = 260;
+                    soundGain = soundContext.createGain();
+                    soundGain.gain.setValueAtTime(0, soundContext.currentTime);
+                    soundGain.gain.linearRampToValueAtTime(0.045, soundContext.currentTime + 1.5);
+                    filter.connect(soundGain);
+                    soundGain.connect(soundContext.destination);
+
+                    const modulation = soundContext.createOscillator();
+                    const modulationGain = soundContext.createGain();
+                    modulation.frequency.value = 0.07;
+                    modulationGain.gain.value = 140;
+                    modulation.connect(modulationGain);
+                    modulationGain.connect(filter.frequency);
+                    modulation.start();
+                    soundNodes = [modulation];
+
+                    [55, 82.4, 110.5].forEach((frequency, index) => {
+                        const oscillator = soundContext.createOscillator();
+                        oscillator.type = index ? 'triangle' : 'sawtooth';
+                        oscillator.frequency.value = frequency;
+                        oscillator.connect(filter);
+                        oscillator.start();
+                        soundNodes.push(oscillator);
+                    });
+                    soundEnabled = true;
+                    soundButton.textContent = 'Sound on';
+                } catch (error) {
+                    soundButton.textContent = 'Sound unavailable';
+                    soundButton.disabled = true;
+                }
+            } else {
+                soundGain.gain.cancelScheduledValues(soundContext.currentTime);
+                soundGain.gain.setValueAtTime(soundGain.gain.value, soundContext.currentTime);
+                soundGain.gain.linearRampToValueAtTime(0, soundContext.currentTime + 0.8);
+                const nodesToStop = soundNodes;
+                soundNodes = [];
+                window.setTimeout(() => nodesToStop.forEach(node => node.stop()), 900);
+                soundEnabled = false;
+                soundButton.textContent = 'Sound off';
+            }
+            soundButton.setAttribute('aria-pressed', String(soundEnabled));
+        });
+
         document.getElementById('backToTop').addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
         document.querySelectorAll('a, button').forEach(button => {
