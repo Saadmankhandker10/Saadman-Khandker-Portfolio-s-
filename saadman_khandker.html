@@ -1,516 +1,1530 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-full">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Saadman Khandker Admin Panel</title>
+    <title>Saadman Khandker | Admin Dashboard</title>
+    <!-- Google Fonts: Plus Jakarta Sans & Space Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        mono: ['"Space Mono"', 'monospace'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                        },
+                        dark: {
+                            900: '#0b0f19',
+                            800: '#111827',
+                            700: '#1f2937',
+                            600: '#374151',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        body { background: #EAF3EF; color: #15343A; }
-        input, textarea { border: 2px solid #15343A; background: #FFFDF7; }
-        input:focus, textarea:focus { outline: 2px solid #D95D39; }
-        [class*="bg-[#FFFCF0]"] { background-color: #FFFDF7; }
-        [class*="bg-[#2A9D8F]"] { background-color: #287F78; }
-        [class*="bg-[#E76F51]"] { background-color: #D95D39; }
-        [class*="bg-[#2B2B2B]"] { background-color: #15343A; }
-        [class*="border-[#2B2B2B]"] { border-color: #15343A; }
-        [class*="text-[#E76F51]"] { color: #D95D39; }
-        [class*="shadow-[4px_4px_0_#2B2B2B]"] { box-shadow: 4px 4px 0 #15343A; }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
+        .dark ::-webkit-scrollbar-thumb { background: #374151; }
+        
+        .tab-btn.active {
+            background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
+            color: #ffffff;
+            font-weight: 600;
+            box-shadow: 0 4px 14px 0 rgba(79, 70, 229, 0.35);
+        }
+        .tab-btn.active i {
+            color: #ffffff !important;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+        .dark .glass-panel {
+            background: rgba(17, 24, 39, 0.85);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(55, 65, 81, 0.6);
+        }
     </style>
 </head>
-<body class="min-h-screen p-4 sm:p-8">
-    <main class="max-w-3xl mx-auto">
-        <header class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b-2 border-[#2B2B2B] pb-6 mb-8">
-            <div>
-                <p class="font-mono text-[#E76F51] font-bold text-sm">SAADMAN KHANDKER ADMIN</p>
-                <h1 class="text-3xl font-bold">Portfolio Dashboard</h1>
+<body class="bg-slate-50 dark:bg-dark-900 text-slate-800 dark:text-slate-100 min-h-screen flex flex-col font-sans transition-colors duration-200">
+
+    <!-- Toast Notification Container -->
+    <div id="toastContainer" class="fixed top-5 right-5 z-50 flex flex-col gap-3 pointer-events-none"></div>
+
+    <!-- ==================== LOGIN VIEW ==================== -->
+    <div id="loginView" class="min-h-screen flex items-center justify-center p-4 sm:p-6">
+        <div class="w-full max-w-md">
+            <!-- Brand header -->
+            <div class="text-center mb-8">
+                <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-tr from-brand-600 to-indigo-400 text-white shadow-xl shadow-brand-500/25 mb-4">
+                    <i class="fa-solid fa-bolt text-2xl"></i>
+                </div>
+                <h1 class="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 dark:text-white">Saadman's Admin Hub</h1>
+                <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Manage your live portfolio, projects & incoming messages</p>
             </div>
-            <a href="./index.html" class="bg-[#2A9D8F] text-white font-bold px-4 py-3 border-2 border-[#2B2B2B] shadow-[4px_4px_0_#2B2B2B]">View portfolio</a>
+
+            <!-- Login Card -->
+            <div class="glass-panel rounded-2xl shadow-xl p-6 sm:p-8">
+                <form id="loginForm" class="space-y-5">
+                    <div>
+                        <label for="loginEmail" class="block text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-2">Email Address</label>
+                        <div class="relative">
+                            <i class="fa-regular fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                            <input id="loginEmail" type="email" value="gamerhindi571@gmail.com" required placeholder="name@domain.com"
+                                class="w-full pl-11 pr-4 py-3 bg-white dark:bg-dark-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 dark:text-white transition">
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <label for="loginPassword" class="block text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300">Password</label>
+                            <button type="button" id="forgotPasswordBtn" class="text-xs text-brand-600 hover:text-brand-500 font-medium">Forgot password?</button>
+                        </div>
+                        <div class="relative">
+                            <i class="fa-solid fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                            <input id="loginPassword" type="password" required placeholder="••••••••"
+                                class="w-full pl-11 pr-11 py-3 bg-white dark:bg-dark-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 dark:text-white transition">
+                            <button type="button" id="togglePasswordBtn" class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
+                                <i class="fa-regular fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="newPasswordGroup" class="hidden">
+                        <label for="newPassword" class="block text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-2">New Password (Recovery)</label>
+                        <input id="newPassword" type="password" minlength="6" placeholder="At least 6 characters"
+                            class="w-full px-4 py-3 bg-white dark:bg-dark-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 dark:text-white transition">
+                    </div>
+
+                    <button type="submit" id="submitLoginBtn"
+                        class="w-full py-3 px-4 bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-700 hover:to-indigo-700 text-white font-semibold rounded-xl shadow-lg shadow-brand-500/25 transition duration-150 flex items-center justify-center gap-2">
+                        <span>Sign In</span>
+                        <i class="fa-solid fa-arrow-right text-xs"></i>
+                    </button>
+
+                    <button type="button" id="updatePasswordBtn" class="hidden w-full py-3 px-4 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl shadow-lg transition">
+                        Set New Password & Log In
+                    </button>
+                </form>
+
+                <div class="mt-6 pt-6 border-t border-slate-200 dark:border-slate-700 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
+                    <a href="./index.html" class="flex items-center gap-1.5 hover:text-brand-600 dark:hover:text-brand-400 font-medium transition">
+                        <i class="fa-solid fa-arrow-left"></i>
+                        <span>Back to Website</span>
+                    </a>
+                    <button type="button" id="guestModeBtn" class="underline hover:text-slate-800 dark:hover:text-slate-200">
+                        Local Demo Mode
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== DASHBOARD VIEW ==================== -->
+    <div id="dashboardView" class="hidden flex-1 flex flex-col min-h-screen">
+        <!-- Top App Navbar -->
+        <header class="glass-panel sticky top-0 z-40 border-b border-slate-200 dark:border-slate-800">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+                <div class="flex items-center gap-3">
+                    <button id="mobileSidebarToggle" class="md:hidden p-2 rounded-lg text-slate-500 hover:bg-slate-100 dark:hover:bg-dark-800">
+                        <i class="fa-solid fa-bars text-lg"></i>
+                    </button>
+                    <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-brand-600 to-indigo-400 text-white flex items-center justify-center font-bold text-sm shadow-md shadow-brand-500/20">
+                        SK
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <span class="font-bold text-slate-900 dark:text-white text-sm sm:text-base">Saadman's Hub</span>
+                            <span id="syncStatusBadge" class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-mono uppercase bg-emerald-100 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-400 border border-emerald-300 dark:border-emerald-800">
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                                Synced
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-2 sm:gap-3">
+                    <!-- Dark mode toggle -->
+                    <button id="themeToggleBtn" type="button" class="p-2 rounded-xl text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-dark-800 transition" title="Toggle Theme">
+                        <i class="fa-solid fa-moon dark:hidden"></i>
+                        <i class="fa-solid fa-sun hidden dark:inline"></i>
+                    </button>
+
+                    <!-- View live site button -->
+                    <a href="./index.html" target="_blank" rel="noopener" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-dark-800 dark:hover:bg-dark-700 text-slate-700 dark:text-slate-200 transition">
+                        <span>Live Site</span>
+                        <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                    </a>
+
+                    <!-- Save All Button -->
+                    <button id="topSaveBtn" type="button" class="inline-flex items-center gap-2 px-4 py-2 text-xs sm:text-sm font-semibold rounded-xl bg-brand-600 hover:bg-brand-700 text-white shadow-md shadow-brand-500/20 transition">
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                        <span>Save All</span>
+                    </button>
+
+                    <!-- Logout Button -->
+                    <button id="logoutBtn" type="button" class="p-2 sm:px-3 sm:py-2 text-xs font-semibold rounded-xl text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/30 transition flex items-center gap-1.5" title="Sign Out">
+                        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                        <span class="hidden sm:inline">Logout</span>
+                    </button>
+                </div>
+            </div>
         </header>
 
-        <section id="loginPanel" class="bg-[#FFFCF0] border-2 border-[#2B2B2B] p-5 shadow-[4px_4px_0_#2B2B2B] mb-8">
-            <h2 class="font-mono font-bold text-xl mb-4">Admin login</h2>
-            <form id="loginForm" class="space-y-4">
-                <input id="loginEmail" type="email" placeholder="Your email" class="w-full p-3" required>
-                <input id="loginPassword" type="password" placeholder="Password" class="w-full p-3" required>
-                <input id="newPassword" type="password" placeholder="New password (recovery only)" class="w-full p-3 hidden" minlength="6">
-                <div class="flex flex-wrap gap-3 items-center">
-                    <button type="submit" class="bg-[#2B2B2B] text-white font-bold px-5 py-3">Log in</button>
-                    <button type="button" id="updatePasswordButton" class="bg-[#E76F51] text-white font-bold px-5 py-3 hidden">Set new password</button>
-                    <button type="button" id="resetPasswordButton" class="underline font-bold">Forgot password?</button>
-                    <span id="loginStatus" class="font-mono text-sm" aria-live="polite"></span>
-                </div>
-            </form>
-        </section>
+        <!-- Main Body: Sidebar + Tab Content -->
+        <div class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 flex gap-6">
+            
+            <!-- Sidebar Navigation -->
+            <aside id="sidebarNav" class="w-64 flex-shrink-0 hidden md:flex flex-col gap-1.5 glass-panel p-3 rounded-2xl h-fit sticky top-24">
+                <p class="px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider text-slate-400 font-mono">Navigation</p>
+                
+                <button type="button" data-tab="overview" class="tab-btn active flex items-center gap-3 w-full px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-dark-800 transition">
+                    <i class="fa-solid fa-chart-pie text-slate-400 text-sm w-4"></i>
+                    <span>Overview</span>
+                </button>
 
-        <form id="editor" class="space-y-6 hidden">
-            <section class="bg-[#FFFCF0] border-2 border-[#2B2B2B] p-5 shadow-[4px_4px_0_#2B2B2B] space-y-4">
-                <h2 class="font-mono font-bold text-xl">Profile</h2>
-                <label class="block font-bold">Profile photo<input id="profileImageFile" type="file" accept="image/png,image/jpeg,image/webp" class="w-full mt-2 p-3"></label>
-                <img id="profileImagePreview" src="./public/img.jpg" alt="Profile preview" class="w-32 h-32 object-cover border-2 border-[#2B2B2B]">
-                <label class="block font-bold">Resume PDF<input id="resumeFile" type="file" accept="application/pdf" class="w-full mt-2 p-3"></label>
-                <a id="resumePreview" href="#" target="_blank" rel="noopener" class="hidden text-[#E76F51] underline font-bold">Open current resume</a>
-                <label class="block font-bold">Name<input id="siteName" class="w-full mt-2 p-3" required></label>
-                <label class="block font-bold">Hero name<input id="heroName" class="w-full mt-2 p-3" required></label>
-                <label class="block font-bold">Short bio<textarea id="heroBio" rows="3" class="w-full mt-2 p-3" required></textarea></label>
-            </section>
+                <button type="button" data-tab="profile" class="tab-btn flex items-center gap-3 w-full px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-dark-800 transition">
+                    <i class="fa-solid fa-user text-slate-400 text-sm w-4"></i>
+                    <span>Profile & Hero</span>
+                </button>
 
-            <section class="bg-[#FFFCF0] border-2 border-[#2B2B2B] p-5 shadow-[4px_4px_0_#2B2B2B] space-y-4">
-                <h2 class="font-mono font-bold text-xl">Featured project</h2>
-                <label class="block font-bold">Category<input id="projectCategory" class="w-full mt-2 p-3" required></label>
-                <label class="block font-bold">Title<input id="projectTitle" class="w-full mt-2 p-3" required></label>
-                <label class="block font-bold">Description<textarea id="projectDescription" rows="5" class="w-full mt-2 p-3" required></textarea></label>
-            </section>
+                <button type="button" data-tab="projects" class="tab-btn flex items-center justify-between w-full px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-dark-800 transition">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-folder-open text-slate-400 text-sm w-4"></i>
+                        <span>Projects</span>
+                    </div>
+                    <span id="sidebarProjectBadge" class="text-[11px] font-mono px-2 py-0.5 rounded-full bg-slate-200 dark:bg-dark-700 text-slate-600 dark:text-slate-300">1</span>
+                </button>
 
-            <section class="bg-[#FFFCF0] border-2 border-[#2B2B2B] p-5 shadow-[4px_4px_0_#2B2B2B] space-y-4">
-                <div class="flex items-center justify-between gap-4">
-                    <h2 class="font-mono font-bold text-xl">Projects manager</h2>
-                    <button type="button" id="newProjectButton" class="bg-[#2A9D8F] text-white font-bold px-4 py-2 border-2 border-[#2B2B2B]">New project</button>
-                </div>
-                <div id="projectList" class="space-y-3"></div>
-                <div id="projectEditor" class="hidden border-t-2 border-[#2B2B2B] pt-4 space-y-4">
-                    <input id="editingProjectId" type="hidden">
-                    <label class="block font-bold">Category<input id="managedProjectCategory" class="w-full mt-2 p-3"></label>
-                    <label class="block font-bold">Title<input id="managedProjectTitle" class="w-full mt-2 p-3"></label>
-                    <label class="block font-bold">Description<textarea id="managedProjectDescription" rows="4" class="w-full mt-2 p-3"></textarea></label>
-                    <label class="block font-bold">Tags <span class="font-normal">(comma separated)</span><input id="managedProjectTags" class="w-full mt-2 p-3"></label>
-                    <div class="flex gap-3">
-                        <button type="button" id="saveProjectButton" class="bg-[#E76F51] text-white font-bold px-5 py-3 border-2 border-[#2B2B2B]">Save project</button>
-                        <button type="button" id="cancelProjectButton" class="bg-white font-bold px-5 py-3 border-2 border-[#2B2B2B]">Cancel</button>
+                <button type="button" data-tab="experience" class="tab-btn flex items-center justify-between w-full px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-dark-800 transition">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-briefcase text-slate-400 text-sm w-4"></i>
+                        <span>Experience</span>
+                    </div>
+                    <span id="sidebarExpBadge" class="text-[11px] font-mono px-2 py-0.5 rounded-full bg-slate-200 dark:bg-dark-700 text-slate-600 dark:text-slate-300">2</span>
+                </button>
+
+                <button type="button" data-tab="skills" class="tab-btn flex items-center justify-between w-full px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-dark-800 transition">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-wand-magic-sparkles text-slate-400 text-sm w-4"></i>
+                        <span>Skills</span>
+                    </div>
+                    <span id="sidebarSkillBadge" class="text-[11px] font-mono px-2 py-0.5 rounded-full bg-slate-200 dark:bg-dark-700 text-slate-600 dark:text-slate-300">4</span>
+                </button>
+
+                <button type="button" data-tab="contact" class="tab-btn flex items-center gap-3 w-full px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-dark-800 transition">
+                    <i class="fa-solid fa-share-nodes text-slate-400 text-sm w-4"></i>
+                    <span>Contact & Socials</span>
+                </button>
+
+                <button type="button" data-tab="messages" class="tab-btn flex items-center justify-between w-full px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-dark-800 transition">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-inbox text-slate-400 text-sm w-4"></i>
+                        <span>Messages</span>
+                    </div>
+                    <span id="sidebarMessageBadge" class="text-[11px] font-mono px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-700 dark:bg-indigo-950 dark:text-indigo-400 font-bold">0</span>
+                </button>
+
+                <p class="px-3 pt-3 pb-1 text-[11px] font-bold uppercase tracking-wider text-slate-400 font-mono">System</p>
+
+                <button type="button" data-tab="settings" class="tab-btn flex items-center gap-3 w-full px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-dark-800 transition">
+                    <i class="fa-solid fa-sliders text-slate-400 text-sm w-4"></i>
+                    <span>Backup & Settings</span>
+                </button>
+            </aside>
+
+            <!-- Main Content Area -->
+            <main class="flex-1 min-w-0">
+
+                <!-- 1. OVERVIEW TAB -->
+                <div id="tab-overview" class="tab-content space-y-6">
+                    <!-- Metrics Row -->
+                    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div class="glass-panel p-5 rounded-2xl">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">Total Projects</span>
+                                <div class="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-950/50 text-blue-600 dark:text-blue-400 flex items-center justify-center text-sm">
+                                    <i class="fa-solid fa-folder"></i>
+                                </div>
+                            </div>
+                            <p id="statProjects" class="text-3xl font-extrabold text-slate-900 dark:text-white mt-2">0</p>
+                            <p class="text-xs text-slate-400 mt-1">Showcased in portfolio</p>
+                        </div>
+
+                        <div class="glass-panel p-5 rounded-2xl">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">Experiences</span>
+                                <div class="w-8 h-8 rounded-lg bg-purple-50 dark:bg-purple-950/50 text-purple-600 dark:text-purple-400 flex items-center justify-center text-sm">
+                                    <i class="fa-solid fa-briefcase"></i>
+                                </div>
+                            </div>
+                            <p id="statExperiences" class="text-3xl font-extrabold text-slate-900 dark:text-white mt-2">0</p>
+                            <p class="text-xs text-slate-400 mt-1">Work roles recorded</p>
+                        </div>
+
+                        <div class="glass-panel p-5 rounded-2xl">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">Skills</span>
+                                <div class="w-8 h-8 rounded-lg bg-amber-50 dark:bg-amber-950/50 text-amber-600 dark:text-amber-400 flex items-center justify-center text-sm">
+                                    <i class="fa-solid fa-star"></i>
+                                </div>
+                            </div>
+                            <p id="statSkills" class="text-3xl font-extrabold text-slate-900 dark:text-white mt-2">0</p>
+                            <p class="text-xs text-slate-400 mt-1">Active competencies</p>
+                        </div>
+
+                        <div class="glass-panel p-5 rounded-2xl">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">Messages</span>
+                                <div class="w-8 h-8 rounded-lg bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-sm">
+                                    <i class="fa-solid fa-envelope"></i>
+                                </div>
+                            </div>
+                            <p id="statMessages" class="text-3xl font-extrabold text-slate-900 dark:text-white mt-2">0</p>
+                            <p class="text-xs text-slate-400 mt-1">Inquiries received</p>
+                        </div>
+                    </div>
+
+                    <!-- Hero Quick Status -->
+                    <div class="glass-panel p-6 rounded-2xl">
+                        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-6 border-b border-slate-200 dark:border-slate-800">
+                            <div class="flex items-center gap-4">
+                                <img id="overviewAvatar" src="./public/img.jpg" alt="Profile" class="w-16 h-16 rounded-2xl object-cover border-2 border-brand-500 shadow-md">
+                                <div>
+                                    <h2 id="overviewName" class="text-xl font-bold text-slate-900 dark:text-white">Khandker Sadman Rafid Saad</h2>
+                                    <p id="overviewBioPreview" class="text-sm text-slate-500 dark:text-slate-400 line-clamp-1 max-w-md">Operations & Digital Media Specialist</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <button type="button" onclick="switchTab('profile')" class="px-4 py-2 text-xs font-semibold rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-dark-800 dark:hover:bg-dark-700 text-slate-700 dark:text-slate-200 transition">
+                                    Edit Profile
+                                </button>
+                                <a href="./index.html" target="_blank" class="px-4 py-2 text-xs font-semibold rounded-xl bg-brand-600 hover:bg-brand-700 text-white transition">
+                                    View Live
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="p-4 rounded-xl bg-slate-50 dark:bg-dark-800/60 border border-slate-200/80 dark:border-slate-800">
+                                <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Fast Publish</p>
+                                <p class="text-sm font-medium mt-1 text-slate-700 dark:text-slate-300">Any save automatically updates your online Supabase and local cache.</p>
+                            </div>
+                            <div class="p-4 rounded-xl bg-slate-50 dark:bg-dark-800/60 border border-slate-200/80 dark:border-slate-800">
+                                <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Instant Email Alert</p>
+                                <p class="text-sm font-medium mt-1 text-slate-700 dark:text-slate-300">Form submissions go directly to <span class="text-brand-600 font-mono">gamerhindi571@gmail.com</span>.</p>
+                            </div>
+                            <div class="p-4 rounded-xl bg-slate-50 dark:bg-dark-800/60 border border-slate-200/80 dark:border-slate-800">
+                                <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Resume PDF</p>
+                                <div class="flex items-center gap-2 mt-1">
+                                    <span id="resumeStatusBadge" class="text-xs text-slate-500">Not set</span>
+                                    <a id="overviewResumeBtn" href="#" target="_blank" class="hidden text-xs text-brand-600 underline font-medium">Open file</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Messages Preview -->
+                    <div class="glass-panel p-6 rounded-2xl">
+                        <div class="flex items-center justify-between mb-4">
+                            <div>
+                                <h3 class="text-base font-bold text-slate-900 dark:text-white">Recent Messages</h3>
+                                <p class="text-xs text-slate-500">Submitted through the website contact form</p>
+                            </div>
+                            <button type="button" onclick="switchTab('messages')" class="text-xs font-semibold text-brand-600 hover:text-brand-500">
+                                View all messages →
+                            </button>
+                        </div>
+                        <div id="overviewMessagesList" class="space-y-3">
+                            <p class="text-xs text-slate-400">Loading messages...</p>
+                        </div>
                     </div>
                 </div>
-            </section>
 
-            <section class="bg-[#FFFCF0] border-2 border-[#2B2B2B] p-5 shadow-[4px_4px_0_#2B2B2B] space-y-4">
-                <div class="flex items-center justify-between gap-4">
-                    <h2 class="font-mono font-bold text-xl">Experience manager</h2>
-                    <button type="button" id="newExperienceButton" class="bg-[#2A9D8F] text-white font-bold px-4 py-2 border-2 border-[#2B2B2B]">New experience</button>
-                </div>
-                <div id="experienceList" class="space-y-3"></div>
-                <div id="experienceEditor" class="hidden border-t-2 border-[#2B2B2B] pt-4 space-y-4">
-                    <input id="editingExperienceId" type="hidden">
-                    <label class="block font-bold">Job or role title<input id="managedExperienceTitle" class="w-full mt-2 p-3"></label>
-                    <label class="block font-bold">Organization<input id="managedExperienceOrganization" class="w-full mt-2 p-3"></label>
-                    <label class="block font-bold">Status<input id="managedExperienceStatus" placeholder="Previous or Ongoing" class="w-full mt-2 p-3"></label>
-                    <label class="block font-bold">Bullet points <span class="font-normal">(one per line)</span><textarea id="managedExperiencePoints" rows="5" class="w-full mt-2 p-3"></textarea></label>
-                    <div class="flex gap-3">
-                        <button type="button" id="saveExperienceButton" class="bg-[#E76F51] text-white font-bold px-5 py-3 border-2 border-[#2B2B2B]">Save experience</button>
-                        <button type="button" id="cancelExperienceButton" class="bg-white font-bold px-5 py-3 border-2 border-[#2B2B2B]">Cancel</button>
+                <!-- 2. PROFILE & HERO TAB -->
+                <div id="tab-profile" class="tab-content hidden space-y-6">
+                    <div class="glass-panel p-6 rounded-2xl space-y-6">
+                        <div>
+                            <h2 class="text-lg font-bold text-slate-900 dark:text-white">Profile & Hero Section</h2>
+                            <p class="text-xs text-slate-500">Customize your display name, headline, biography, and photos</p>
+                        </div>
+
+                        <!-- Profile Images & Resume Row -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 p-5 rounded-2xl bg-slate-50 dark:bg-dark-800/50 border border-slate-200/80 dark:border-slate-800">
+                            <!-- Photo Uploader -->
+                            <div>
+                                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-2">Profile Picture</label>
+                                <div class="flex items-center gap-4">
+                                    <img id="formProfileImagePreview" src="./public/img.jpg" alt="Preview" class="w-20 h-20 rounded-2xl object-cover border-2 border-slate-300 dark:border-slate-700 shadow-sm">
+                                    <div class="space-y-2 flex-1">
+                                        <label class="cursor-pointer inline-flex items-center gap-2 px-3 py-2 bg-white dark:bg-dark-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium hover:bg-slate-50 dark:hover:bg-dark-700 transition">
+                                            <i class="fa-solid fa-cloud-arrow-up text-brand-500"></i>
+                                            <span>Upload New Photo</span>
+                                            <input id="inputProfileImageFile" type="file" accept="image/png,image/jpeg,image/webp" class="hidden">
+                                        </label>
+                                        <p class="text-[11px] text-slate-400">PNG, JPG or WebP (max 5 MB)</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Resume PDF Uploader -->
+                            <div>
+                                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-2">Resume / CV Document</label>
+                                <div class="space-y-2">
+                                    <label class="cursor-pointer inline-flex items-center gap-2 px-3 py-2 bg-white dark:bg-dark-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium hover:bg-slate-50 dark:hover:bg-dark-700 transition">
+                                        <i class="fa-solid fa-file-pdf text-rose-500"></i>
+                                        <span>Upload PDF Resume</span>
+                                        <input id="inputResumeFile" type="file" accept="application/pdf" class="hidden">
+                                    </label>
+                                    <div class="flex items-center gap-2">
+                                        <a id="formResumePreviewLink" href="#" target="_blank" rel="noopener" class="hidden text-xs text-brand-600 hover:underline font-semibold flex items-center gap-1">
+                                            <i class="fa-solid fa-external-link-alt text-[10px]"></i>
+                                            <span>Preview current resume</span>
+                                        </a>
+                                    </div>
+                                    <p class="text-[11px] text-slate-400">PDF format (max 10 MB)</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Text Inputs -->
+                        <div class="space-y-4">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label for="inputSiteName" class="block text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-2">Website Logo / Brand Name</label>
+                                    <input id="inputSiteName" type="text" class="w-full px-4 py-2.5 bg-white dark:bg-dark-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 dark:text-white transition">
+                                </div>
+                                <div>
+                                    <label for="inputHeroName" class="block text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-2">Hero Headline Name</label>
+                                    <input id="inputHeroName" type="text" class="w-full px-4 py-2.5 bg-white dark:bg-dark-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 dark:text-white transition">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label for="inputHeroBio" class="block text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-2">Short Introduction / Bio</label>
+                                <textarea id="inputHeroBio" rows="4" class="w-full px-4 py-2.5 bg-white dark:bg-dark-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 dark:text-white transition resize-none"></textarea>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </section>
 
-            <section class="bg-[#FFFCF0] border-2 border-[#2B2B2B] p-5 shadow-[4px_4px_0_#2B2B2B] space-y-4">
-                <div class="flex items-center justify-between gap-4">
-                    <h2 class="font-mono font-bold text-xl">Skills manager</h2>
-                    <button type="button" id="newSkillButton" class="bg-[#2A9D8F] text-white font-bold px-4 py-2 border-2 border-[#2B2B2B]">New skill</button>
-                </div>
-                <div id="skillList" class="space-y-3"></div>
-                <div id="skillEditor" class="hidden border-t-2 border-[#2B2B2B] pt-4 space-y-4">
-                    <input id="editingSkillId" type="hidden">
-                    <label class="block font-bold">Skill name<input id="managedSkillName" class="w-full mt-2 p-3"></label>
-                    <label class="block font-bold">Icon or short mark<input id="managedSkillIcon" maxlength="3" placeholder="★" class="w-full mt-2 p-3"></label>
-                    <div class="flex gap-3">
-                        <button type="button" id="saveSkillButton" class="bg-[#E76F51] text-white font-bold px-5 py-3 border-2 border-[#2B2B2B]">Save skill</button>
-                        <button type="button" id="cancelSkillButton" class="bg-white font-bold px-5 py-3 border-2 border-[#2B2B2B]">Cancel</button>
+                <!-- 3. PROJECTS TAB -->
+                <div id="tab-projects" class="tab-content hidden space-y-6">
+                    <div class="glass-panel p-6 rounded-2xl space-y-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h2 class="text-lg font-bold text-slate-900 dark:text-white">Projects Manager</h2>
+                                <p class="text-xs text-slate-500">Showcase your best projects, case studies and presentations</p>
+                            </div>
+                            <button type="button" id="openNewProjectModalBtn" class="inline-flex items-center gap-1.5 px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white text-xs font-semibold rounded-xl shadow-md shadow-brand-500/20 transition">
+                                <i class="fa-solid fa-plus"></i>
+                                <span>Add Project</span>
+                            </button>
+                        </div>
+
+                        <!-- Projects List Container -->
+                        <div id="projectsContainer" class="grid grid-cols-1 gap-4">
+                            <!-- Injected dynamically -->
+                        </div>
                     </div>
                 </div>
-            </section>
 
-            <section class="bg-[#FFFCF0] border-2 border-[#2B2B2B] p-5 shadow-[4px_4px_0_#2B2B2B] space-y-4">
-                <h2 class="font-mono font-bold text-xl">Contact</h2>
-                <label class="block font-bold">Email<input id="email" type="email" class="w-full mt-2 p-3" required></label>
-                <label class="block font-bold">LinkedIn URL<input id="linkedin" type="url" placeholder="https://linkedin.com/in/your-name" class="w-full mt-2 p-3"></label>
-                <label class="block font-bold">GitHub URL<input id="github" type="url" placeholder="https://github.com/your-name" class="w-full mt-2 p-3"></label>
-                <label class="block font-bold">Facebook URL<input id="facebook" type="url" placeholder="https://facebook.com/your-name" class="w-full mt-2 p-3"></label>
-                <label class="block font-bold">Instagram URL<input id="instagram" type="url" placeholder="https://instagram.com/your-name" class="w-full mt-2 p-3"></label>
-            </section>
+                <!-- 4. EXPERIENCE TAB -->
+                <div id="tab-experience" class="tab-content hidden space-y-6">
+                    <div class="glass-panel p-6 rounded-2xl space-y-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h2 class="text-lg font-bold text-slate-900 dark:text-white">Work Experience</h2>
+                                <p class="text-xs text-slate-500">Manage your past and present professional and volunteer roles</p>
+                            </div>
+                            <button type="button" id="openNewExpModalBtn" class="inline-flex items-center gap-1.5 px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white text-xs font-semibold rounded-xl shadow-md shadow-brand-500/20 transition">
+                                <i class="fa-solid fa-plus"></i>
+                                <span>Add Experience</span>
+                            </button>
+                        </div>
 
-            <section class="bg-[#FFFCF0] border-2 border-[#2B2B2B] p-5 shadow-[4px_4px_0_#2B2B2B] space-y-4">
-                <div class="flex items-center justify-between gap-4">
-                    <h2 class="font-mono font-bold text-xl">Messages</h2>
-                    <button type="button" id="refreshMessagesButton" class="bg-[#287F78] text-white font-bold px-4 py-2 border-2 border-[#15343A]">Refresh</button>
+                        <!-- Experience List Container -->
+                        <div id="experienceContainer" class="space-y-4">
+                            <!-- Injected dynamically -->
+                        </div>
+                    </div>
                 </div>
-                <div id="messageList" class="space-y-3"><p class="text-sm">Login to load messages.</p></div>
-            </section>
 
-            <div class="flex flex-wrap gap-4 items-center">
-                <button type="submit" class="bg-[#E76F51] text-white font-bold px-6 py-3 border-2 border-[#2B2B2B] shadow-[4px_4px_0_#2B2B2B]">Save changes</button>
-                <button type="button" id="resetButton" class="bg-white font-bold px-6 py-3 border-2 border-[#2B2B2B]">Reset saved data</button>
-                <button type="button" id="logoutButton" class="bg-white font-bold px-6 py-3 border-2 border-[#2B2B2B]">Log out</button>
-                <span id="status" class="font-mono font-bold" aria-live="polite"></span>
+                <!-- 5. SKILLS TAB -->
+                <div id="tab-skills" class="tab-content hidden space-y-6">
+                    <div class="glass-panel p-6 rounded-2xl space-y-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h2 class="text-lg font-bold text-slate-900 dark:text-white">Skills & Competencies</h2>
+                                <p class="text-xs text-slate-500">Add or edit key technical and managerial skills</p>
+                            </div>
+                            <button type="button" id="openNewSkillModalBtn" class="inline-flex items-center gap-1.5 px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white text-xs font-semibold rounded-xl shadow-md shadow-brand-500/20 transition">
+                                <i class="fa-solid fa-plus"></i>
+                                <span>Add Skill</span>
+                            </button>
+                        </div>
+
+                        <!-- Skills Grid -->
+                        <div id="skillsContainer" class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                            <!-- Injected dynamically -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6. CONTACT & SOCIALS TAB -->
+                <div id="tab-contact" class="tab-content hidden space-y-6">
+                    <div class="glass-panel p-6 rounded-2xl space-y-6">
+                        <div>
+                            <h2 class="text-lg font-bold text-slate-900 dark:text-white">Contact & Social Networks</h2>
+                            <p class="text-xs text-slate-500">Social channels and contact details displayed on your portfolio</p>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div class="sm:col-span-2">
+                                <label for="inputEmail" class="block text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-2">Primary Email Address</label>
+                                <div class="relative">
+                                    <i class="fa-solid fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                                    <input id="inputEmail" type="email" class="w-full pl-11 pr-4 py-2.5 bg-white dark:bg-dark-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 dark:text-white transition">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label for="inputLinkedin" class="block text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-2">LinkedIn Profile URL</label>
+                                <div class="relative">
+                                    <i class="fa-brands fa-linkedin absolute left-4 top-1/2 -translate-y-1/2 text-blue-600"></i>
+                                    <input id="inputLinkedin" type="url" placeholder="https://linkedin.com/in/username" class="w-full pl-11 pr-4 py-2.5 bg-white dark:bg-dark-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 dark:text-white transition">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label for="inputGithub" class="block text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-2">GitHub Profile URL</label>
+                                <div class="relative">
+                                    <i class="fa-brands fa-github absolute left-4 top-1/2 -translate-y-1/2 text-slate-700 dark:text-white"></i>
+                                    <input id="inputGithub" type="url" placeholder="https://github.com/username" class="w-full pl-11 pr-4 py-2.5 bg-white dark:bg-dark-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 dark:text-white transition">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label for="inputFacebook" class="block text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-2">Facebook Profile URL</label>
+                                <div class="relative">
+                                    <i class="fa-brands fa-facebook absolute left-4 top-1/2 -translate-y-1/2 text-blue-500"></i>
+                                    <input id="inputFacebook" type="url" placeholder="https://facebook.com/username" class="w-full pl-11 pr-4 py-2.5 bg-white dark:bg-dark-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 dark:text-white transition">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label for="inputInstagram" class="block text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-2">Instagram Profile URL</label>
+                                <div class="relative">
+                                    <i class="fa-brands fa-instagram absolute left-4 top-1/2 -translate-y-1/2 text-pink-600"></i>
+                                    <input id="inputInstagram" type="url" placeholder="https://instagram.com/username" class="w-full pl-11 pr-4 py-2.5 bg-white dark:bg-dark-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 dark:text-white transition">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 7. MESSAGES TAB -->
+                <div id="tab-messages" class="tab-content hidden space-y-6">
+                    <div class="glass-panel p-6 rounded-2xl space-y-6">
+                        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                            <div>
+                                <h2 class="text-lg font-bold text-slate-900 dark:text-white">Messages Inbox</h2>
+                                <p class="text-xs text-slate-500">Direct inquiries received via your portfolio contact form</p>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <button type="button" id="refreshMessagesBtn" class="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-dark-800 dark:hover:bg-dark-700 text-slate-700 dark:text-slate-200 transition">
+                                    <i class="fa-solid fa-arrows-rotate"></i>
+                                    <span>Refresh</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Messages List -->
+                        <div id="messagesContainer" class="space-y-3">
+                            <p class="text-xs text-slate-400">Loading inbox messages...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 8. BACKUP & SETTINGS TAB -->
+                <div id="tab-settings" class="tab-content hidden space-y-6">
+                    <div class="glass-panel p-6 rounded-2xl space-y-6">
+                        <div>
+                            <h2 class="text-lg font-bold text-slate-900 dark:text-white">Backup & Settings</h2>
+                            <p class="text-xs text-slate-500">Export, import, or reset your entire portfolio database</p>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <!-- Export JSON -->
+                            <div class="p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-dark-800/40 space-y-3">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-xl bg-brand-50 dark:bg-brand-950/60 text-brand-600 dark:text-brand-400 flex items-center justify-center">
+                                        <i class="fa-solid fa-download"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-sm font-bold text-slate-900 dark:text-white">Export Backup</h3>
+                                        <p class="text-xs text-slate-400">Download all your settings and data as a JSON file</p>
+                                    </div>
+                                </div>
+                                <button type="button" id="exportBackupBtn" class="w-full py-2.5 px-4 bg-brand-600 hover:bg-brand-700 text-white text-xs font-semibold rounded-xl transition">
+                                    Download Backup JSON
+                                </button>
+                            </div>
+
+                            <!-- Import JSON -->
+                            <div class="p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-dark-800/40 space-y-3">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-xl bg-purple-50 dark:bg-purple-950/60 text-purple-600 dark:text-purple-400 flex items-center justify-center">
+                                        <i class="fa-solid fa-upload"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-sm font-bold text-slate-900 dark:text-white">Restore from Backup</h3>
+                                        <p class="text-xs text-slate-400">Upload a previously exported JSON backup</p>
+                                    </div>
+                                </div>
+                                <label class="cursor-pointer block text-center w-full py-2.5 px-4 bg-white dark:bg-dark-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-dark-700 text-slate-700 dark:text-slate-200 text-xs font-semibold rounded-xl transition">
+                                    Choose JSON File
+                                    <input id="importBackupFile" type="file" accept=".json,application/json" class="hidden">
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Reset Data -->
+                        <div class="pt-6 border-t border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                            <div>
+                                <h3 class="text-sm font-bold text-rose-600 dark:text-rose-400">Reset to Defaults</h3>
+                                <p class="text-xs text-slate-400">Restore factory sample projects, experiences and skills.</p>
+                            </div>
+                            <button type="button" id="resetDefaultsBtn" class="px-4 py-2 text-xs font-semibold rounded-xl border border-rose-200 dark:border-rose-900/60 text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/30 transition">
+                                Reset Everything
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </main>
+        </div>
+    </div>
+
+    <!-- ==================== MODALS ==================== -->
+
+    <!-- Project Modal -->
+    <div id="projectModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
+        <div class="glass-panel w-full max-w-lg rounded-2xl shadow-2xl p-6 space-y-4 max-h-[90vh] overflow-y-auto">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-700">
+                <h3 id="projectModalTitle" class="text-base font-bold text-slate-900 dark:text-white">Edit Project</h3>
+                <button type="button" class="close-modal-btn text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
             </div>
-        </form>
-    </main>
+            <input id="modalProjectId" type="hidden">
+            <div>
+                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-1.5">Project Title</label>
+                <input id="modalProjectTitle" type="text" placeholder="e.g. Educational Digitization" class="w-full px-4 py-2.5 bg-white dark:bg-dark-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 dark:text-white">
+            </div>
+            <div>
+                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-1.5">Category</label>
+                <input id="modalProjectCategory" type="text" placeholder="e.g. Digital Content Creation" class="w-full px-4 py-2.5 bg-white dark:bg-dark-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 dark:text-white">
+            </div>
+            <div>
+                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-1.5">Description</label>
+                <textarea id="modalProjectDescription" rows="4" placeholder="Describe the problem, solution, and impact..." class="w-full px-4 py-2.5 bg-white dark:bg-dark-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 dark:text-white resize-none"></textarea>
+            </div>
+            <div>
+                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-1.5">Tags (Comma Separated)</label>
+                <input id="modalProjectTags" type="text" placeholder="MS PowerPoint, Visual Design, Analytics" class="w-full px-4 py-2.5 bg-white dark:bg-dark-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 dark:text-white">
+            </div>
+            <div class="flex items-center justify-end gap-2 pt-3 border-t border-slate-200 dark:border-slate-700">
+                <button type="button" class="close-modal-btn px-4 py-2 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-dark-800 rounded-xl transition">Cancel</button>
+                <button type="button" id="saveProjectModalBtn" class="px-5 py-2 bg-brand-600 hover:bg-brand-700 text-white text-xs font-semibold rounded-xl shadow-md transition">Save Project</button>
+            </div>
+        </div>
+    </div>
 
+    <!-- Experience Modal -->
+    <div id="experienceModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
+        <div class="glass-panel w-full max-w-lg rounded-2xl shadow-2xl p-6 space-y-4 max-h-[90vh] overflow-y-auto">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-700">
+                <h3 id="expModalTitle" class="text-base font-bold text-slate-900 dark:text-white">Edit Work Experience</h3>
+                <button type="button" class="close-modal-btn text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+            <input id="modalExpId" type="hidden">
+            <div>
+                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-1.5">Role / Position Title</label>
+                <input id="modalExpRole" type="text" placeholder="e.g. Retail & Store Operations" class="w-full px-4 py-2.5 bg-white dark:bg-dark-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 dark:text-white">
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-1.5">Company / Organization</label>
+                    <input id="modalExpOrg" type="text" placeholder="e.g. Meena Bazar" class="w-full px-4 py-2.5 bg-white dark:bg-dark-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 dark:text-white">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-1.5">Status / Timing</label>
+                    <input id="modalExpStatus" type="text" placeholder="e.g. Ongoing or Previous" class="w-full px-4 py-2.5 bg-white dark:bg-dark-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 dark:text-white">
+                </div>
+            </div>
+            <div>
+                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-1.5">Key Responsibilities / Bullet Points (One per line)</label>
+                <textarea id="modalExpPoints" rows="5" placeholder="Managed daily operations...&#10;Handled inventory and stock reconciliation..." class="w-full px-4 py-2.5 bg-white dark:bg-dark-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 dark:text-white resize-none"></textarea>
+            </div>
+            <div class="flex items-center justify-end gap-2 pt-3 border-t border-slate-200 dark:border-slate-700">
+                <button type="button" class="close-modal-btn px-4 py-2 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-dark-800 rounded-xl transition">Cancel</button>
+                <button type="button" id="saveExpModalBtn" class="px-5 py-2 bg-brand-600 hover:bg-brand-700 text-white text-xs font-semibold rounded-xl shadow-md transition">Save Experience</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Skill Modal -->
+    <div id="skillModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
+        <div class="glass-panel w-full max-w-sm rounded-2xl shadow-2xl p-6 space-y-4">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-700">
+                <h3 id="skillModalTitle" class="text-base font-bold text-slate-900 dark:text-white">Edit Skill</h3>
+                <button type="button" class="close-modal-btn text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+            <input id="modalSkillId" type="hidden">
+            <div>
+                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-1.5">Skill Name</label>
+                <input id="modalSkillName" type="text" placeholder="e.g. MS PowerPoint" class="w-full px-4 py-2.5 bg-white dark:bg-dark-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 dark:text-white">
+            </div>
+            <div>
+                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-1.5">Icon / Symbol Mark</label>
+                <input id="modalSkillIcon" type="text" maxlength="4" placeholder="★ or ⚙ or ▣" class="w-full px-4 py-2.5 bg-white dark:bg-dark-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 dark:text-white">
+            </div>
+            <div class="flex items-center justify-end gap-2 pt-3 border-t border-slate-200 dark:border-slate-700">
+                <button type="button" class="close-modal-btn px-4 py-2 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-dark-800 rounded-xl transition">Cancel</button>
+                <button type="button" id="saveSkillModalBtn" class="px-5 py-2 bg-brand-600 hover:bg-brand-700 text-white text-xs font-semibold rounded-xl shadow-md transition">Save Skill</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== JAVASCRIPT LOGIC ==================== -->
     <script>
-        const supabaseUrl = 'https://oiruilsgqfqpmhradcrm.supabase.co';
-        const supabaseKey = 'sb_publishable_eejxo50gMcgeLDFM91a70A_trAfjMPm';
-        const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
-        const fields = ['siteName', 'heroName', 'heroBio', 'projectCategory', 'projectTitle', 'projectDescription', 'email', 'linkedin', 'github', 'facebook', 'instagram'];
-        const defaults = {
+        // Supabase Client Config
+        const SUPABASE_URL = 'https://oiruilsgqfqpmhradcrm.supabase.co';
+        const SUPABASE_KEY = 'sb_publishable_eejxo50gMcgeLDFM91a70A_trAfjMPm';
+        const supabase = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY) : null;
+
+        // Default Data Fallback
+        const defaultPortfolio = {
             siteName: 'Khandker Sadman Rafid Saad',
             heroName: 'Khandker Sadman Rafid Saad',
             heroBio: 'A dedicated professional blending operations management with a passion for digital content and community service.',
-            projectCategory: 'Digital Content Creation',
-            projectTitle: 'Educational Digitization',
-            projectDescription: 'Digitized and systematically formatted complex educational questionnaires into high-quality, engaging presentations. This project involved converting raw data into visually digestible formats, ensuring accuracy, and enhancing the learning experience for end-users.',
-            email: 'ksrafid@example.com',
+            email: 'gamerhindi571@gmail.com',
             linkedin: 'https://linkedin.com/in/ksrafid',
             github: '',
             facebook: '',
-            instagram: ''
+            instagram: '',
+            profileImage: './public/img.jpg',
+            resumeUrl: '',
+            projects: [
+                {
+                    id: 'proj-1',
+                    category: 'Digital Content Creation',
+                    title: 'Educational Digitization',
+                    description: 'Digitized and systematically formatted complex educational questionnaires into high-quality, engaging presentations. This project involved converting raw data into visually digestible formats, ensuring accuracy, and enhancing the learning experience for end-users.',
+                    tags: ['MS PowerPoint', 'Data Formatting', 'Visual Design', 'Accuracy Checking']
+                }
+            ],
+            experiences: [
+                {
+                    id: 'exp-1',
+                    title: 'Retail & Store Operations',
+                    organization: 'Meena Bazar',
+                    status: 'Previous',
+                    points: [
+                        'Managed daily store operations, ensuring smooth workflow and high standards of retail presentation.',
+                        'Handled inventory management, stock reconciliation, and quality control of products.',
+                        'Delivered excellent customer service, resolving inquiries and ensuring a positive shopping experience.'
+                    ]
+                },
+                {
+                    id: 'exp-2',
+                    title: 'Volunteer Responder',
+                    organization: 'Red Crescent Society',
+                    status: 'Ongoing',
+                    points: [
+                        'Actively participated in community service initiatives and disaster response operations.',
+                        'Assisted in organizing local health camps, awareness drives, and blood donation campaigns.',
+                        'Demonstrated strong teamwork and crisis management skills in high-pressure environments.'
+                    ]
+                }
+            ],
+            skills: [
+                { id: 'sk-1', name: 'MS PowerPoint', icon: '▣' },
+                { id: 'sk-2', name: 'Image Editing', icon: '◈' },
+                { id: 'sk-3', name: 'Troubleshooting', icon: '⚙' },
+                { id: 'sk-4', name: 'Operations & Teamwork', icon: '◎' }
+            ]
         };
-        const defaultProjects = [{
-            id: 'default-project',
-            category: defaults.projectCategory,
-            title: defaults.projectTitle,
-            description: defaults.projectDescription,
-            tags: ['MS PowerPoint', 'Data Formatting', 'Visual Design', 'Accuracy Checking']
-        }];
-        const defaultExperiences = [
-            { id: 'retail-operations', title: 'Retail & Store Operations', organization: 'Meena Bazar', status: 'Previous', points: ['Managed daily store operations, ensuring smooth workflow and high standards of retail presentation.', 'Handled inventory management, stock reconciliation, and quality control of products.', 'Delivered excellent customer service, resolving inquiries and ensuring a positive shopping experience.'] },
-            { id: 'volunteer-responder', title: 'Volunteer Responder', organization: 'Red Crescent Society', status: 'Ongoing', points: ['Actively participated in community service initiatives and disaster response operations.', 'Assisted in organizing local health camps, awareness drives, and blood donation campaigns.', 'Demonstrated strong teamwork and crisis management skills in high-pressure environments.'] }
-        ];
-        const defaultSkills = [
-            { id: 'powerpoint', name: 'MS PowerPoint', icon: '▣' },
-            { id: 'image-editing', name: 'Image Editing', icon: '◈' },
-            { id: 'troubleshooting', name: 'Troubleshooting', icon: '⚙' },
-            { id: 'teamwork', name: 'Operations & Teamwork', icon: '◎' }
-        ];
-        const saved = JSON.parse(localStorage.getItem('portfolioData') || '{}');
-        let projects = Array.isArray(saved.projects) && saved.projects.length ? saved.projects : defaultProjects;
-        let experiences = Array.isArray(saved.experiences) && saved.experiences.length ? saved.experiences : defaultExperiences;
-        let skills = Array.isArray(saved.skills) && saved.skills.length ? saved.skills : defaultSkills;
-        const fillEditor = data => fields.forEach(field => document.getElementById(field).value = data[field] || defaults[field]);
-        let profileImage = saved.profileImage || '';
-        let resumeUrl = saved.resumeUrl || '';
-        const profileImagePreview = document.getElementById('profileImagePreview');
-        const profileImageFile = document.getElementById('profileImageFile');
-        const resumeFile = document.getElementById('resumeFile');
-        const resumePreview = document.getElementById('resumePreview');
-        if (profileImage) profileImagePreview.src = profileImage;
-        if (resumeUrl) { resumePreview.href = resumeUrl; resumePreview.classList.remove('hidden'); }
-        const projectList = document.getElementById('projectList');
-        const projectEditor = document.getElementById('projectEditor');
-        const renderProjectList = () => {
-            projectList.innerHTML = projects.map(project => `<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-2 border-[#2B2B2B] p-3"><div><strong>${project.title}</strong><p class="text-sm">${project.category}</p></div><div class="flex gap-2"><button type="button" data-edit-project="${project.id}" class="border-2 border-[#2B2B2B] px-3 py-2 font-bold">Edit</button><button type="button" data-delete-project="${project.id}" class="border-2 border-[#2B2B2B] px-3 py-2 font-bold">Delete</button></div></div>`).join('');
-        };
-        const openProjectEditor = project => {
-            document.getElementById('editingProjectId').value = project?.id || '';
-            document.getElementById('managedProjectCategory').value = project?.category || '';
-            document.getElementById('managedProjectTitle').value = project?.title || '';
-            document.getElementById('managedProjectDescription').value = project?.description || '';
-            document.getElementById('managedProjectTags').value = (project?.tags || []).join(', ');
-            projectEditor.classList.remove('hidden');
-        };
-        renderProjectList();
-        fillEditor(saved);
 
-        const loginPanel = document.getElementById('loginPanel');
-        const editor = document.getElementById('editor');
-        const loginStatus = document.getElementById('loginStatus');
-        const showEditor = () => {
-            loginPanel.classList.add('hidden');
-            editor.classList.remove('hidden');
+        // State Store
+        let state = {
+            ...defaultPortfolio,
+            ...JSON.parse(localStorage.getItem('portfolioData') || '{}')
         };
-        const recoveryMode = window.location.hash.includes('type=recovery');
-        if (recoveryMode) {
-            document.getElementById('loginPassword').classList.add('hidden');
-            document.getElementById('newPassword').classList.remove('hidden');
-            document.querySelector('#loginForm button[type="submit"]').classList.add('hidden');
-            document.getElementById('resetPasswordButton').classList.add('hidden');
-            document.getElementById('updatePasswordButton').classList.remove('hidden');
-            loginStatus.textContent = 'Enter a new password.';
+        let messages = [];
+
+        // Toast Helper
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            const icons = {
+                success: 'fa-circle-check text-emerald-500',
+                error: 'fa-circle-xmark text-rose-500',
+                info: 'fa-circle-info text-blue-500'
+            };
+            toast.className = 'pointer-events-auto flex items-center gap-3 px-4 py-3 bg-white dark:bg-dark-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-xl text-sm font-medium text-slate-800 dark:text-slate-100 transform transition-all duration-300 translate-y-[-10px] opacity-0';
+            toast.innerHTML = `<i class="fa-solid ${icons[type] || icons.info} text-base"></i><span>${message}</span>`;
+            container.appendChild(toast);
+            requestAnimationFrame(() => {
+                toast.classList.remove('translate-y-[-10px]', 'opacity-0');
+            });
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-[-10px]');
+                setTimeout(() => toast.remove(), 300);
+            }, 3500);
         }
-        const escapeMessage = value => String(value || '').replace(/[&<>"']/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[character]));
-        const loadMessages = async () => {
-            const { data, error } = await supabaseClient.from('contact_messages').select('id, name, email, message, created_at').order('created_at', { ascending: false });
-            const messageList = document.getElementById('messageList');
-            if (error) {
-                messageList.innerHTML = '<p class="text-sm">Run the updated supabase-setup.sql first.</p>';
-                return;
-            }
-            if (!data.length) {
-                messageList.innerHTML = '<p class="text-sm">No messages yet.</p>';
-                return;
-            }
-            messageList.innerHTML = data.map(item => `<article class="border-2 border-[#15343A] p-4"><div class="flex flex-wrap justify-between gap-2"><strong>${escapeMessage(item.name)}</strong><time class="text-sm">${new Date(item.created_at).toLocaleString()}</time></div><a class="text-sm underline" href="mailto:${escapeMessage(item.email)}">${escapeMessage(item.email)}</a><p class="mt-3 whitespace-pre-wrap">${escapeMessage(item.message)}</p><button type="button" data-delete-message="${item.id}" class="mt-3 border-2 border-[#15343A] px-3 py-1 font-bold">Delete</button></article>`).join('');
+
+        // Theme management
+        const applyTheme = (isDark) => {
+            document.documentElement.classList.toggle('dark', isDark);
+            localStorage.setItem('adminTheme', isDark ? 'dark' : 'light');
         };
-        const loadOnlineData = async () => {
-            const { data, error } = await supabaseClient.from('portfolio_content').select('content').eq('id', 1).maybeSingle();
-            if (error) throw error;
-            if (data?.content) {
-                const mergedContent = { ...saved, ...data.content };
-                fillEditor(mergedContent);
-                profileImage = mergedContent.profileImage || '';
-                if (profileImage) profileImagePreview.src = profileImage;
-                resumeUrl = mergedContent.resumeUrl || '';
-                if (resumeUrl) { resumePreview.href = resumeUrl; resumePreview.classList.remove('hidden'); }
-                projects = Array.isArray(data.content.projects) && data.content.projects.length ? data.content.projects : defaultProjects;
-                renderProjectList();
-                experiences = Array.isArray(data.content.experiences) && data.content.experiences.length ? data.content.experiences : defaultExperiences;
-                renderExperienceList();
-                skills = Array.isArray(data.content.skills) && data.content.skills.length ? data.content.skills : defaultSkills;
-                renderSkillList();
-            }
-            await loadMessages();
+        const currentTheme = localStorage.getItem('adminTheme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        applyTheme(currentTheme === 'dark');
+        document.getElementById('themeToggleBtn').addEventListener('click', () => {
+            applyTheme(!document.documentElement.classList.contains('dark'));
+        });
+
+        // Tab Navigation
+        window.switchTab = function(tabId) {
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.tab === tabId);
+            });
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.toggle('hidden', content.id !== `tab-${tabId}`);
+            });
         };
-        const checkSession = async () => {
-            const { data } = await supabaseClient.auth.getSession();
-            if (data.session && !recoveryMode) {
-                showEditor();
-                try { await loadOnlineData(); } catch (error) { document.getElementById('status').textContent = 'Create the database table first.'; }
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => switchTab(btn.dataset.tab));
+        });
+
+        // Populate Forms
+        function populateForm() {
+            document.getElementById('inputSiteName').value = state.siteName || '';
+            document.getElementById('inputHeroName').value = state.heroName || '';
+            document.getElementById('inputHeroBio').value = state.heroBio || '';
+            document.getElementById('inputEmail').value = state.email || '';
+            document.getElementById('inputLinkedin').value = state.linkedin || '';
+            document.getElementById('inputGithub').value = state.github || '';
+            document.getElementById('inputFacebook').value = state.facebook || '';
+            document.getElementById('inputInstagram').value = state.instagram || '';
+
+            // Overview quick view
+            document.getElementById('overviewName').textContent = state.heroName || state.siteName;
+            document.getElementById('overviewBioPreview').textContent = state.heroBio;
+            if (state.profileImage) {
+                document.getElementById('overviewAvatar').src = state.profileImage;
+                document.getElementById('formProfileImagePreview').src = state.profileImage;
             }
+
+            if (state.resumeUrl) {
+                const previewLink = document.getElementById('formResumePreviewLink');
+                previewLink.href = state.resumeUrl;
+                previewLink.classList.remove('hidden');
+
+                const overviewResume = document.getElementById('overviewResumeBtn');
+                overviewResume.href = state.resumeUrl;
+                overviewResume.classList.remove('hidden');
+                document.getElementById('resumeStatusBadge').textContent = 'Attached';
+            } else {
+                document.getElementById('formResumePreviewLink').classList.add('hidden');
+                document.getElementById('overviewResumeBtn').classList.add('hidden');
+                document.getElementById('resumeStatusBadge').textContent = 'Not uploaded';
+            }
+
+            renderProjects();
+            renderExperiences();
+            renderSkills();
+            updateMetrics();
+        }
+
+        // Render Projects
+        function renderProjects() {
+            const container = document.getElementById('projectsContainer');
+            const projects = state.projects || [];
+            document.getElementById('statProjects').textContent = projects.length;
+            document.getElementById('sidebarProjectBadge').textContent = projects.length;
+
+            if (!projects.length) {
+                container.innerHTML = `<div class="p-8 text-center border-2 border-dashed border-slate-200 dark:border-slate-800 rounded-2xl"><p class="text-xs text-slate-400">No projects added yet.</p></div>`;
+                return;
+            }
+
+            container.innerHTML = projects.map(proj => `
+                <div class="glass-panel p-5 rounded-2xl flex flex-col sm:flex-row justify-between items-start gap-4">
+                    <div class="space-y-1.5 flex-1">
+                        <div class="flex items-center gap-2">
+                            <span class="px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-brand-50 text-brand-600 dark:bg-brand-950/60 dark:text-brand-400">${escapeHtml(proj.category)}</span>
+                            <h3 class="text-base font-bold text-slate-900 dark:text-white">${escapeHtml(proj.title)}</h3>
+                        </div>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2">${escapeHtml(proj.description)}</p>
+                        <div class="flex flex-wrap gap-1.5 pt-1">
+                            ${(proj.tags || []).map(t => `<span class="px-2 py-0.5 rounded-md text-[10px] font-mono bg-slate-100 dark:bg-dark-800 text-slate-600 dark:text-slate-300 border border-slate-200/60 dark:border-slate-700">${escapeHtml(t)}</span>`).join('')}
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2 flex-shrink-0 self-end sm:self-center">
+                        <button type="button" onclick="editProject('${proj.id}')" class="p-2 text-xs font-semibold rounded-lg bg-slate-100 dark:bg-dark-800 hover:bg-slate-200 text-slate-700 dark:text-slate-200 transition" title="Edit">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </button>
+                        <button type="button" onclick="deleteProject('${proj.id}')" class="p-2 text-xs font-semibold rounded-lg bg-rose-50 dark:bg-rose-950/40 hover:bg-rose-100 text-rose-600 transition" title="Delete">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Render Experiences
+        function renderExperiences() {
+            const container = document.getElementById('experienceContainer');
+            const exps = state.experiences || [];
+            document.getElementById('statExperiences').textContent = exps.length;
+            document.getElementById('sidebarExpBadge').textContent = exps.length;
+
+            if (!exps.length) {
+                container.innerHTML = `<div class="p-8 text-center border-2 border-dashed border-slate-200 dark:border-slate-800 rounded-2xl"><p class="text-xs text-slate-400">No experiences listed yet.</p></div>`;
+                return;
+            }
+
+            container.innerHTML = exps.map(exp => `
+                <div class="glass-panel p-5 rounded-2xl flex flex-col sm:flex-row justify-between items-start gap-4">
+                    <div class="space-y-2 flex-1">
+                        <div class="flex flex-wrap items-center gap-2">
+                            <h3 class="text-base font-bold text-slate-900 dark:text-white">${escapeHtml(exp.title)}</h3>
+                            <span class="text-xs font-semibold text-brand-600">@ ${escapeHtml(exp.organization)}</span>
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-mono uppercase bg-slate-100 dark:bg-dark-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300">${escapeHtml(exp.status)}</span>
+                        </div>
+                        <ul class="space-y-1 text-xs text-slate-500 dark:text-slate-400">
+                            ${(exp.points || []).map(p => `<li class="flex items-start gap-1.5"><span class="text-brand-500 mt-0.5">▹</span><span>${escapeHtml(p)}</span></li>`).join('')}
+                        </ul>
+                    </div>
+                    <div class="flex items-center gap-2 flex-shrink-0 self-end sm:self-center">
+                        <button type="button" onclick="editExperience('${exp.id}')" class="p-2 text-xs font-semibold rounded-lg bg-slate-100 dark:bg-dark-800 hover:bg-slate-200 text-slate-700 dark:text-slate-200 transition" title="Edit">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </button>
+                        <button type="button" onclick="deleteExperience('${exp.id}')" class="p-2 text-xs font-semibold rounded-lg bg-rose-50 dark:bg-rose-950/40 hover:bg-rose-100 text-rose-600 transition" title="Delete">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Render Skills
+        function renderSkills() {
+            const container = document.getElementById('skillsContainer');
+            const skills = state.skills || [];
+            document.getElementById('statSkills').textContent = skills.length;
+            document.getElementById('sidebarSkillBadge').textContent = skills.length;
+
+            if (!skills.length) {
+                container.innerHTML = `<div class="col-span-full p-8 text-center border-2 border-dashed border-slate-200 dark:border-slate-800 rounded-2xl"><p class="text-xs text-slate-400">No skills added yet.</p></div>`;
+                return;
+            }
+
+            container.innerHTML = skills.map(skill => `
+                <div class="glass-panel p-4 rounded-2xl text-center relative group">
+                    <button type="button" onclick="deleteSkill('${skill.id}')" class="absolute top-2 right-2 text-slate-300 hover:text-rose-500 text-xs opacity-0 group-hover:opacity-100 transition">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                    <div class="w-12 h-12 mx-auto mb-2 rounded-xl bg-gradient-to-tr from-brand-50 to-indigo-50 dark:from-dark-800 dark:to-dark-700 border border-slate-200/80 dark:border-slate-700 flex items-center justify-center text-lg font-mono font-bold text-brand-600 dark:text-brand-400">
+                        ${escapeHtml(skill.icon || '★')}
+                    </div>
+                    <h4 class="text-xs font-bold text-slate-900 dark:text-white truncate">${escapeHtml(skill.name)}</h4>
+                    <button type="button" onclick="editSkill('${skill.id}')" class="mt-2 text-[10px] text-brand-600 hover:underline">Edit</button>
+                </div>
+            `).join('');
+        }
+
+        function updateMetrics() {
+            // Update stats
+            document.getElementById('statProjects').textContent = (state.projects || []).length;
+            document.getElementById('statExperiences').textContent = (state.experiences || []).length;
+            document.getElementById('statSkills').textContent = (state.skills || []).length;
+            document.getElementById('statMessages').textContent = messages.length;
+            document.getElementById('sidebarMessageBadge').textContent = messages.length;
+        }
+
+        // Project Actions
+        document.getElementById('openNewProjectModalBtn').addEventListener('click', () => {
+            document.getElementById('modalProjectId').value = '';
+            document.getElementById('modalProjectTitle').value = '';
+            document.getElementById('modalProjectCategory').value = '';
+            document.getElementById('modalProjectDescription').value = '';
+            document.getElementById('modalProjectTags').value = '';
+            document.getElementById('projectModalTitle').textContent = 'Add New Project';
+            document.getElementById('projectModal').classList.remove('hidden');
+        });
+
+        window.editProject = function(id) {
+            const project = state.projects.find(p => p.id === id);
+            if (!project) return;
+            document.getElementById('modalProjectId').value = project.id;
+            document.getElementById('modalProjectTitle').value = project.title;
+            document.getElementById('modalProjectCategory').value = project.category;
+            document.getElementById('modalProjectDescription').value = project.description;
+            document.getElementById('modalProjectTags').value = (project.tags || []).join(', ');
+            document.getElementById('projectModalTitle').textContent = 'Edit Project';
+            document.getElementById('projectModal').classList.remove('hidden');
         };
-        checkSession();
 
-        document.getElementById('loginForm').addEventListener('submit', async event => {
-            event.preventDefault();
-            loginStatus.textContent = 'Logging in...';
-            const { error } = await supabaseClient.auth.signInWithPassword({
-                email: document.getElementById('loginEmail').value.trim(),
-                password: document.getElementById('loginPassword').value
+        window.deleteProject = function(id) {
+            if (!confirm('Are you sure you want to delete this project?')) return;
+            state.projects = state.projects.filter(p => p.id !== id);
+            renderProjects();
+            showToast('Project removed. Click Save All to make it live.');
+        };
+
+        document.getElementById('saveProjectModalBtn').addEventListener('click', () => {
+            const id = document.getElementById('modalProjectId').value || `proj-${Date.now()}`;
+            const title = document.getElementById('modalProjectTitle').value.trim();
+            const category = document.getElementById('modalProjectCategory').value.trim();
+            const description = document.getElementById('modalProjectDescription').value.trim();
+            const tags = document.getElementById('modalProjectTags').value.split(',').map(t => t.trim()).filter(Boolean);
+
+            if (!title || !category || !description) {
+                alert('Please provide project title, category and description.');
+                return;
+            }
+
+            const item = { id, title, category, description, tags };
+            const existingIdx = state.projects.findIndex(p => p.id === id);
+            if (existingIdx !== -1) {
+                state.projects[existingIdx] = item;
+            } else {
+                state.projects.push(item);
+            }
+
+            document.getElementById('projectModal').classList.add('hidden');
+            renderProjects();
+            showToast('Project saved to state.');
+        });
+
+        // Experience Actions
+        document.getElementById('openNewExpModalBtn').addEventListener('click', () => {
+            document.getElementById('modalExpId').value = '';
+            document.getElementById('modalExpRole').value = '';
+            document.getElementById('modalExpOrg').value = '';
+            document.getElementById('modalExpStatus').value = 'Ongoing';
+            document.getElementById('modalExpPoints').value = '';
+            document.getElementById('expModalTitle').textContent = 'Add Work Experience';
+            document.getElementById('experienceModal').classList.remove('hidden');
+        });
+
+        window.editExperience = function(id) {
+            const exp = state.experiences.find(e => e.id === id);
+            if (!exp) return;
+            document.getElementById('modalExpId').value = exp.id;
+            document.getElementById('modalExpRole').value = exp.title;
+            document.getElementById('modalExpOrg').value = exp.organization;
+            document.getElementById('modalExpStatus').value = exp.status;
+            document.getElementById('modalExpPoints').value = (exp.points || []).join('\n');
+            document.getElementById('expModalTitle').textContent = 'Edit Work Experience';
+            document.getElementById('experienceModal').classList.remove('hidden');
+        };
+
+        window.deleteExperience = function(id) {
+            if (!confirm('Are you sure you want to delete this experience entry?')) return;
+            state.experiences = state.experiences.filter(e => e.id !== id);
+            renderExperiences();
+            showToast('Experience entry removed.');
+        };
+
+        document.getElementById('saveExpModalBtn').addEventListener('click', () => {
+            const id = document.getElementById('modalExpId').value || `exp-${Date.now()}`;
+            const title = document.getElementById('modalExpRole').value.trim();
+            const organization = document.getElementById('modalExpOrg').value.trim();
+            const status = document.getElementById('modalExpStatus').value.trim() || 'Ongoing';
+            const points = document.getElementById('modalExpPoints').value.split('\n').map(p => p.trim()).filter(Boolean);
+
+            if (!title || !organization || !points.length) {
+                alert('Please provide title, organization, and at least one bullet point.');
+                return;
+            }
+
+            const item = { id, title, organization, status, points };
+            const existingIdx = state.experiences.findIndex(e => e.id === id);
+            if (existingIdx !== -1) {
+                state.experiences[existingIdx] = item;
+            } else {
+                state.experiences.push(item);
+            }
+
+            document.getElementById('experienceModal').classList.add('hidden');
+            renderExperiences();
+            showToast('Experience updated.');
+        });
+
+        // Skill Actions
+        document.getElementById('openNewSkillModalBtn').addEventListener('click', () => {
+            document.getElementById('modalSkillId').value = '';
+            document.getElementById('modalSkillName').value = '';
+            document.getElementById('modalSkillIcon').value = '★';
+            document.getElementById('skillModalTitle').textContent = 'Add Skill';
+            document.getElementById('skillModal').classList.remove('hidden');
+        });
+
+        window.editSkill = function(id) {
+            const skill = state.skills.find(s => s.id === id);
+            if (!skill) return;
+            document.getElementById('modalSkillId').value = skill.id;
+            document.getElementById('modalSkillName').value = skill.name;
+            document.getElementById('modalSkillIcon').value = skill.icon;
+            document.getElementById('skillModalTitle').textContent = 'Edit Skill';
+            document.getElementById('skillModal').classList.remove('hidden');
+        };
+
+        window.deleteSkill = function(id) {
+            state.skills = state.skills.filter(s => s.id !== id);
+            renderSkills();
+            showToast('Skill removed.');
+        };
+
+        document.getElementById('saveSkillModalBtn').addEventListener('click', () => {
+            const id = document.getElementById('modalSkillId').value || `sk-${Date.now()}`;
+            const name = document.getElementById('modalSkillName').value.trim();
+            const icon = document.getElementById('modalSkillIcon').value.trim() || '★';
+
+            if (!name) {
+                alert('Please enter a skill name.');
+                return;
+            }
+
+            const item = { id, name, icon };
+            const existingIdx = state.skills.findIndex(s => s.id === id);
+            if (existingIdx !== -1) {
+                state.skills[existingIdx] = item;
+            } else {
+                state.skills.push(item);
+            }
+
+            document.getElementById('skillModal').classList.add('hidden');
+            renderSkills();
+            showToast('Skill saved.');
+        });
+
+        // Modal Close helper
+        document.querySelectorAll('.close-modal-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.getElementById('projectModal').classList.add('hidden');
+                document.getElementById('experienceModal').classList.add('hidden');
+                document.getElementById('skillModal').classList.add('hidden');
             });
-            if (error) {
-                loginStatus.textContent = error.message === 'Invalid login credentials'
-                    ? 'Email or password is incorrect. Use Forgot password if needed.'
-                    : error.message;
-                return;
-            }
-            loginStatus.textContent = '';
-            showEditor();
-            try { await loadOnlineData(); } catch (loadError) { document.getElementById('status').textContent = 'Create the database table first.'; }
         });
 
-        document.getElementById('resetPasswordButton').addEventListener('click', async () => {
-            const email = document.getElementById('loginEmail').value.trim();
-            if (!email) {
-                loginStatus.textContent = 'Enter your email first.';
-                return;
-            }
-            const { error } = await supabaseClient.auth.resetPasswordForEmail(email, {
-                redirectTo: 'https://saadmankhandker.netlify.app/saadman_khandker.html'
-            });
-            loginStatus.textContent = error ? error.message : 'Password reset email sent. Check your inbox.';
-        });
-
-        document.getElementById('updatePasswordButton').addEventListener('click', async () => {
-            const password = document.getElementById('newPassword').value;
-            if (password.length < 6) {
-                loginStatus.textContent = 'Password must be at least 6 characters.';
-                return;
-            }
-            const { error } = await supabaseClient.auth.updateUser({ password });
-            if (error) {
-                loginStatus.textContent = error.message;
-                return;
-            }
-            loginStatus.textContent = 'Password updated. You can now log in.';
-            await supabaseClient.auth.signOut();
-            window.history.replaceState({}, document.title, window.location.pathname);
-            window.location.reload();
-        });
-
-        document.getElementById('editor').addEventListener('submit', async event => {
-            event.preventDefault();
-            const data = {};
-            fields.forEach(field => data[field] = document.getElementById(field).value.trim());
-            data.profileImage = profileImage;
-            data.resumeUrl = resumeUrl;
-            data.projects = projects;
-            data.experiences = experiences;
-            data.skills = skills;
-            ['linkedin', 'github', 'facebook', 'instagram'].forEach(network => {
-                if (data[network] && !/^https?:\/\//i.test(data[network])) data[network] = `https://${data[network]}`;
-            });
-            fields.forEach(field => document.getElementById(field).value = data[field] || '');
-            localStorage.setItem('portfolioData', JSON.stringify(data));
-            const { error } = await supabaseClient.from('portfolio_content').upsert({ id: 1, content: data, updated_at: new Date().toISOString() });
-            document.getElementById('status').textContent = error ? 'Online save failed. Check your table and policies.' : 'Saved online.';
-        });
-
-        profileImageFile.addEventListener('change', async () => {
-            const file = profileImageFile.files[0];
+        // File Uploads
+        document.getElementById('inputProfileImageFile').addEventListener('change', async (e) => {
+            const file = e.target.files[0];
             if (!file) return;
             if (file.size > 5 * 1024 * 1024) {
-                document.getElementById('status').textContent = 'Image must be smaller than 5 MB.';
+                showToast('Image must be under 5 MB.', 'error');
                 return;
             }
-            document.getElementById('status').textContent = 'Uploading image...';
-            const extension = file.name.split('.').pop().toLowerCase();
-            const filePath = `profile.${extension}`;
-            const { error: uploadError } = await supabaseClient.storage.from('portfolio-assets').upload(filePath, file, { upsert: true, contentType: file.type });
-            if (uploadError) {
-                document.getElementById('status').textContent = `Image upload failed: ${uploadError.message}`;
-                return;
+            showToast('Uploading profile image...', 'info');
+            try {
+                if (supabase) {
+                    const ext = file.name.split('.').pop().toLowerCase();
+                    const filePath = `profile.${ext}`;
+                    const { error } = await supabase.storage.from('portfolio-assets').upload(filePath, file, { upsert: true, contentType: file.type });
+                    if (error) throw error;
+                    const { data } = supabase.storage.from('portfolio-assets').getPublicUrl(filePath);
+                    state.profileImage = `${data.publicUrl}?v=${Date.now()}`;
+                } else {
+                    state.profileImage = URL.createObjectURL(file);
+                }
+                document.getElementById('formProfileImagePreview').src = state.profileImage;
+                document.getElementById('overviewAvatar').src = state.profileImage;
+                showToast('Profile image uploaded! Click Save All to publish.');
+            } catch (err) {
+                showToast(`Upload failed: ${err.message}`, 'error');
             }
-            const { data } = supabaseClient.storage.from('portfolio-assets').getPublicUrl(filePath);
-            profileImage = `${data.publicUrl}?v=${Date.now()}`;
-            profileImagePreview.src = profileImage;
-            document.getElementById('status').textContent = 'Image uploaded. Press Save changes to publish it.';
         });
 
-        resumeFile.addEventListener('change', async () => {
-            const file = resumeFile.files[0];
+        document.getElementById('inputResumeFile').addEventListener('change', async (e) => {
+            const file = e.target.files[0];
             if (!file) return;
             if (file.size > 10 * 1024 * 1024) {
-                document.getElementById('status').textContent = 'Resume must be smaller than 10 MB.';
+                showToast('Resume must be under 10 MB.', 'error');
                 return;
             }
-            document.getElementById('status').textContent = 'Uploading resume...';
-            const { error: uploadError } = await supabaseClient.storage.from('portfolio-assets').upload('resume.pdf', file, { upsert: true, contentType: 'application/pdf' });
-            if (uploadError) {
-                document.getElementById('status').textContent = `Resume upload failed: ${uploadError.message}`;
+            showToast('Uploading resume PDF...', 'info');
+            try {
+                if (supabase) {
+                    const { error } = await supabase.storage.from('portfolio-assets').upload('resume.pdf', file, { upsert: true, contentType: 'application/pdf' });
+                    if (error) throw error;
+                    const { data } = supabase.storage.from('portfolio-assets').getPublicUrl('resume.pdf');
+                    state.resumeUrl = `${data.publicUrl}?v=${Date.now()}`;
+                } else {
+                    state.resumeUrl = URL.createObjectURL(file);
+                }
+                document.getElementById('formResumePreviewLink').href = state.resumeUrl;
+                document.getElementById('formResumePreviewLink').classList.remove('hidden');
+                document.getElementById('overviewResumeBtn').href = state.resumeUrl;
+                document.getElementById('overviewResumeBtn').classList.remove('hidden');
+                document.getElementById('resumeStatusBadge').textContent = 'Attached';
+                showToast('Resume PDF uploaded! Click Save All to publish.');
+            } catch (err) {
+                showToast(`Resume upload failed: ${err.message}`, 'error');
+            }
+        });
+
+        // Collect Form into State
+        function harvestForm() {
+            state.siteName = document.getElementById('inputSiteName').value.trim();
+            state.heroName = document.getElementById('inputHeroName').value.trim();
+            state.heroBio = document.getElementById('inputHeroBio').value.trim();
+            state.email = document.getElementById('inputEmail').value.trim();
+            state.linkedin = document.getElementById('inputLinkedin').value.trim();
+            state.github = document.getElementById('inputGithub').value.trim();
+            state.facebook = document.getElementById('inputFacebook').value.trim();
+            state.instagram = document.getElementById('inputInstagram').value.trim();
+
+            ['linkedin', 'github', 'facebook', 'instagram'].forEach(net => {
+                if (state[net] && !/^https?:\/\//i.test(state[net])) {
+                    state[net] = `https://${state[net]}`;
+                }
+            });
+        }
+
+        // SAVE ALL DATA (Supabase + localStorage)
+        async function saveAllData() {
+            harvestForm();
+            const topSaveBtn = document.getElementById('topSaveBtn');
+            const originalText = topSaveBtn.innerHTML;
+            topSaveBtn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i><span>Saving...</span>`;
+            topSaveBtn.disabled = true;
+
+            try {
+                // Save locally
+                localStorage.setItem('portfolioData', JSON.stringify(state));
+
+                // Save to Supabase
+                if (supabase) {
+                    const { error } = await supabase.from('portfolio_content').upsert({
+                        id: 1,
+                        content: state,
+                        updated_at: new Date().toISOString()
+                    });
+                    if (error) throw error;
+                }
+
+                showToast('🎉 All portfolio changes published online!');
+                document.getElementById('syncStatusBadge').innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Synced`;
+            } catch (err) {
+                console.error(err);
+                showToast(`Saved locally, but cloud sync failed: ${err.message}`, 'info');
+            } finally {
+                topSaveBtn.innerHTML = originalText;
+                topSaveBtn.disabled = false;
+                populateForm();
+            }
+        }
+        document.getElementById('topSaveBtn').addEventListener('click', saveAllData);
+
+        // Fetch Messages
+        async function fetchMessages() {
+            const container = document.getElementById('messagesContainer');
+            const overviewContainer = document.getElementById('overviewMessagesList');
+            if (!supabase) {
+                container.innerHTML = `<p class="text-xs text-slate-400">Database offline or not connected.</p>`;
+                overviewContainer.innerHTML = `<p class="text-xs text-slate-400">Database offline.</p>`;
                 return;
             }
-            const { data } = supabaseClient.storage.from('portfolio-assets').getPublicUrl('resume.pdf');
-            resumeUrl = `${data.publicUrl}?v=${Date.now()}`;
-            resumePreview.href = resumeUrl;
-            resumePreview.classList.remove('hidden');
-            document.getElementById('status').textContent = 'Resume uploaded. Press Save changes to publish it.';
+
+            try {
+                const { data, error } = await supabase.from('contact_messages').select('*').order('created_at', { ascending: false });
+                if (error) throw error;
+
+                messages = data || [];
+                updateMetrics();
+
+                if (!messages.length) {
+                    container.innerHTML = `<div class="p-8 text-center border-2 border-dashed border-slate-200 dark:border-slate-800 rounded-2xl"><p class="text-xs text-slate-400">No incoming messages yet.</p></div>`;
+                    overviewContainer.innerHTML = `<p class="text-xs text-slate-400">No incoming messages yet.</p>`;
+                    return;
+                }
+
+                container.innerHTML = messages.map(msg => `
+                    <div class="glass-panel p-5 rounded-2xl space-y-3">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                            <div class="flex items-center gap-3">
+                                <div class="w-9 h-9 rounded-full bg-brand-100 dark:bg-brand-950 text-brand-600 dark:text-brand-400 font-bold flex items-center justify-center text-sm">
+                                    ${escapeHtml((msg.name || 'U')[0].toUpperCase())}
+                                </div>
+                                <div>
+                                    <h4 class="text-sm font-bold text-slate-900 dark:text-white">${escapeHtml(msg.name)}</h4>
+                                    <a href="mailto:${escapeHtml(msg.email)}" class="text-xs text-brand-600 hover:underline flex items-center gap-1">
+                                        <i class="fa-solid fa-envelope text-[10px]"></i>
+                                        <span>${escapeHtml(msg.email)}</span>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <time class="text-[11px] font-mono text-slate-400">${new Date(msg.created_at).toLocaleString()}</time>
+                                <button type="button" onclick="deleteMessage(${msg.id})" class="p-1.5 text-slate-400 hover:text-rose-500 rounded-lg hover:bg-slate-100 dark:hover:bg-dark-800 transition" title="Delete">
+                                    <i class="fa-solid fa-trash-can text-xs"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="p-3 bg-slate-50 dark:bg-dark-800/60 rounded-xl text-xs text-slate-700 dark:text-slate-300 whitespace-pre-wrap leading-relaxed">
+                            ${escapeHtml(msg.message)}
+                        </div>
+                    </div>
+                `).join('');
+
+                overviewContainer.innerHTML = messages.slice(0, 3).map(msg => `
+                    <div class="p-3 bg-slate-50 dark:bg-dark-800/60 rounded-xl flex items-center justify-between gap-3 text-xs">
+                        <div class="truncate">
+                            <strong class="text-slate-900 dark:text-white">${escapeHtml(msg.name)}</strong>
+                            <span class="text-slate-400 text-[11px] ml-1">(${escapeHtml(msg.email)})</span>
+                            <p class="text-slate-500 dark:text-slate-400 truncate mt-0.5">${escapeHtml(msg.message)}</p>
+                        </div>
+                        <time class="text-[10px] text-slate-400 flex-shrink-0 font-mono">${new Date(msg.created_at).toLocaleDateString()}</time>
+                    </div>
+                `).join('');
+            } catch (err) {
+                console.error(err);
+                container.innerHTML = `<p class="text-xs text-rose-500">Failed to load messages: ${err.message}</p>`;
+            }
+        }
+        document.getElementById('refreshMessagesBtn').addEventListener('click', () => {
+            fetchMessages();
+            showToast('Messages refreshed.');
         });
 
-        document.getElementById('newProjectButton').addEventListener('click', () => openProjectEditor());
-        document.getElementById('cancelProjectButton').addEventListener('click', () => projectEditor.classList.add('hidden'));
-        document.getElementById('saveProjectButton').addEventListener('click', () => {
-            const project = {
-                id: document.getElementById('editingProjectId').value || `project-${Date.now()}`,
-                category: document.getElementById('managedProjectCategory').value.trim(),
-                title: document.getElementById('managedProjectTitle').value.trim(),
-                description: document.getElementById('managedProjectDescription').value.trim(),
-                tags: document.getElementById('managedProjectTags').value.split(',').map(tag => tag.trim()).filter(Boolean)
-            };
-            if (!project.category || !project.title || !project.description) return;
-            const existingIndex = projects.findIndex(item => item.id === project.id);
-            if (existingIndex === -1) projects.push(project); else projects[existingIndex] = project;
-            renderProjectList();
-            projectEditor.classList.add('hidden');
-            document.getElementById('status').textContent = 'Project ready. Press Save changes to publish it.';
+        window.deleteMessage = async function(id) {
+            if (!confirm('Are you sure you want to delete this message?')) return;
+            try {
+                if (supabase) {
+                    const { error } = await supabase.from('contact_messages').delete().eq('id', id);
+                    if (error) throw error;
+                }
+                messages = messages.filter(m => m.id !== id);
+                fetchMessages();
+                showToast('Message deleted.');
+            } catch (err) {
+                showToast(`Failed to delete: ${err.message}`, 'error');
+            }
+        };
+
+        // Export Backup JSON
+        document.getElementById('exportBackupBtn').addEventListener('click', () => {
+            harvestForm();
+            const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `portfolio-backup-${new Date().toISOString().slice(0,10)}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+            showToast('Backup downloaded!');
         });
-        projectList.addEventListener('click', event => {
-            const editId = event.target.dataset.editProject;
-            const deleteId = event.target.dataset.deleteProject;
-            if (editId) openProjectEditor(projects.find(project => project.id === editId));
-            if (deleteId) {
-                projects = projects.filter(project => project.id !== deleteId);
-                renderProjectList();
-                document.getElementById('status').textContent = 'Project removed. Press Save changes to publish it.';
+
+        // Import Backup JSON
+        document.getElementById('importBackupFile').addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                try {
+                    const parsed = JSON.parse(event.target.result);
+                    state = { ...defaultPortfolio, ...parsed };
+                    populateForm();
+                    showToast('Backup loaded! Click Save All to sync online.');
+                } catch (err) {
+                    showToast('Invalid JSON backup file.', 'error');
+                }
+            };
+            reader.readAsText(file);
+        });
+
+        // Reset to Defaults
+        document.getElementById('resetDefaultsBtn').addEventListener('click', () => {
+            if (!confirm('Warning: This will reset all current settings to default demo values. Proceed?')) return;
+            state = { ...defaultPortfolio };
+            populateForm();
+            showToast('Reset to defaults completed.');
+        });
+
+        // AUTH & SESSION MANAGEMENT
+        const loginView = document.getElementById('loginView');
+        const dashboardView = document.getElementById('dashboardView');
+
+        function unlockDashboard() {
+            loginView.classList.add('hidden');
+            dashboardView.classList.remove('hidden');
+            populateForm();
+            fetchOnlineData();
+            fetchMessages();
+        }
+
+        async function fetchOnlineData() {
+            if (!supabase) return;
+            try {
+                const { data, error } = await supabase.from('portfolio_content').select('content').eq('id', 1).maybeSingle();
+                if (error) throw error;
+                if (data?.content) {
+                    state = { ...defaultPortfolio, ...state, ...data.content };
+                    populateForm();
+                }
+            } catch (err) {
+                console.warn('Could not pull online portfolio table:', err.message);
+            }
+        }
+
+        // Check active Supabase session
+        async function initAuth() {
+            if (!supabase) {
+                unlockDashboard();
+                return;
+            }
+            const { data } = await supabase.auth.getSession();
+            if (data?.session) {
+                unlockDashboard();
+            }
+        }
+
+        // Login Handler
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value.trim();
+            const password = document.getElementById('loginPassword').value;
+            const btn = document.getElementById('submitLoginBtn');
+            const originalBtn = btn.innerHTML;
+            btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i><span>Signing in...</span>`;
+            btn.disabled = true;
+
+            try {
+                if (supabase) {
+                    const { error } = await supabase.auth.signInWithPassword({ email, password });
+                    if (error) throw error;
+                }
+                showToast('Welcome back, Saadman!');
+                unlockDashboard();
+            } catch (err) {
+                showToast(err.message, 'error');
+            } finally {
+                btn.innerHTML = originalBtn;
+                btn.disabled = false;
             }
         });
 
-        const experienceList = document.getElementById('experienceList');
-        const experienceEditor = document.getElementById('experienceEditor');
-        const renderExperienceList = () => {
-            experienceList.innerHTML = experiences.map(experience => `<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-2 border-[#2B2B2B] p-3"><div><strong>${experience.title}</strong><p class="text-sm">${experience.organization} · ${experience.status}</p></div><div class="flex gap-2"><button type="button" data-edit-experience="${experience.id}" class="border-2 border-[#2B2B2B] px-3 py-2 font-bold">Edit</button><button type="button" data-delete-experience="${experience.id}" class="border-2 border-[#2B2B2B] px-3 py-2 font-bold">Delete</button></div></div>`).join('');
-        };
-        const openExperienceEditor = experience => {
-            document.getElementById('editingExperienceId').value = experience?.id || '';
-            document.getElementById('managedExperienceTitle').value = experience?.title || '';
-            document.getElementById('managedExperienceOrganization').value = experience?.organization || '';
-            document.getElementById('managedExperienceStatus').value = experience?.status || '';
-            document.getElementById('managedExperiencePoints').value = (experience?.points || []).join('\n');
-            experienceEditor.classList.remove('hidden');
-        };
-        renderExperienceList();
-        document.getElementById('newExperienceButton').addEventListener('click', () => openExperienceEditor());
-        document.getElementById('cancelExperienceButton').addEventListener('click', () => experienceEditor.classList.add('hidden'));
-        document.getElementById('saveExperienceButton').addEventListener('click', () => {
-            const experience = {
-                id: document.getElementById('editingExperienceId').value || `experience-${Date.now()}`,
-                title: document.getElementById('managedExperienceTitle').value.trim(),
-                organization: document.getElementById('managedExperienceOrganization').value.trim(),
-                status: document.getElementById('managedExperienceStatus').value.trim(),
-                points: document.getElementById('managedExperiencePoints').value.split('\n').map(point => point.trim()).filter(Boolean)
-            };
-            if (!experience.title || !experience.organization || !experience.status || !experience.points.length) return;
-            const existingIndex = experiences.findIndex(item => item.id === experience.id);
-            if (existingIndex === -1) experiences.push(experience); else experiences[existingIndex] = experience;
-            renderExperienceList();
-            experienceEditor.classList.add('hidden');
-            document.getElementById('status').textContent = 'Experience ready. Press Save changes to publish it.';
-        });
-        experienceList.addEventListener('click', event => {
-            const editId = event.target.dataset.editExperience;
-            const deleteId = event.target.dataset.deleteExperience;
-            if (editId) openExperienceEditor(experiences.find(experience => experience.id === editId));
-            if (deleteId) {
-                experiences = experiences.filter(experience => experience.id !== deleteId);
-                renderExperienceList();
-                document.getElementById('status').textContent = 'Experience removed. Press Save changes to publish it.';
+        // Forgot password
+        document.getElementById('forgotPasswordBtn').addEventListener('click', async () => {
+            const email = document.getElementById('loginEmail').value.trim();
+            if (!email) {
+                showToast('Please type your email address first.', 'info');
+                return;
+            }
+            if (!supabase) return;
+            const { error } = await supabase.auth.resetPasswordForEmail(email, {
+                redirectTo: window.location.href
+            });
+            if (error) {
+                showToast(error.message, 'error');
+            } else {
+                showToast('Password reset link sent to your inbox!');
             }
         });
 
-        const skillList = document.getElementById('skillList');
-        const skillEditor = document.getElementById('skillEditor');
-        const renderSkillList = () => {
-            skillList.innerHTML = skills.map(skill => `<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-2 border-[#2B2B2B] p-3"><div><strong>${skill.name}</strong><p class="text-sm">Icon: ${skill.icon || '★'}</p></div><div class="flex gap-2"><button type="button" data-edit-skill="${skill.id}" class="border-2 border-[#2B2B2B] px-3 py-2 font-bold">Edit</button><button type="button" data-delete-skill="${skill.id}" class="border-2 border-[#2B2B2B] px-3 py-2 font-bold">Delete</button></div></div>`).join('');
-        };
-        const openSkillEditor = skill => {
-            document.getElementById('editingSkillId').value = skill?.id || '';
-            document.getElementById('managedSkillName').value = skill?.name || '';
-            document.getElementById('managedSkillIcon').value = skill?.icon || '';
-            skillEditor.classList.remove('hidden');
-        };
-        renderSkillList();
-        document.getElementById('newSkillButton').addEventListener('click', () => openSkillEditor());
-        document.getElementById('cancelSkillButton').addEventListener('click', () => skillEditor.classList.add('hidden'));
-        document.getElementById('saveSkillButton').addEventListener('click', () => {
-            const skill = {
-                id: document.getElementById('editingSkillId').value || `skill-${Date.now()}`,
-                name: document.getElementById('managedSkillName').value.trim(),
-                icon: document.getElementById('managedSkillIcon').value.trim() || '★'
-            };
-            if (!skill.name) return;
-            const existingIndex = skills.findIndex(item => item.id === skill.id);
-            if (existingIndex === -1) skills.push(skill); else skills[existingIndex] = skill;
-            renderSkillList();
-            skillEditor.classList.add('hidden');
-            document.getElementById('status').textContent = 'Skill ready. Press Save changes to publish it.';
-        });
-        skillList.addEventListener('click', event => {
-            const editId = event.target.dataset.editSkill;
-            const deleteId = event.target.dataset.deleteSkill;
-            if (editId) openSkillEditor(skills.find(skill => skill.id === editId));
-            if (deleteId) {
-                skills = skills.filter(skill => skill.id !== deleteId);
-                renderSkillList();
-                document.getElementById('status').textContent = 'Skill removed. Press Save changes to publish it.';
+        // Password Recovery from URL
+        if (window.location.hash.includes('type=recovery')) {
+            document.getElementById('loginPassword').parentElement.classList.add('hidden');
+            document.getElementById('newPasswordGroup').classList.remove('hidden');
+            document.getElementById('submitLoginBtn').classList.add('hidden');
+            document.getElementById('updatePasswordBtn').classList.remove('hidden');
+            showToast('Enter your new password below.', 'info');
+        }
+
+        document.getElementById('updatePasswordBtn').addEventListener('click', async () => {
+            const newPassword = document.getElementById('newPassword').value;
+            if (newPassword.length < 6) {
+                showToast('Password must be at least 6 characters.', 'error');
+                return;
+            }
+            if (!supabase) return;
+            const { error } = await supabase.auth.updateUser({ password: newPassword });
+            if (error) {
+                showToast(error.message, 'error');
+            } else {
+                showToast('Password successfully updated!');
+                window.location.hash = '';
+                window.location.reload();
             }
         });
 
-        document.getElementById('resetButton').addEventListener('click', () => {
-            localStorage.removeItem('portfolioData');
-            fields.forEach(field => document.getElementById(field).value = defaults[field]);
-            projects = defaultProjects;
-            renderProjectList();
-            profileImage = '';
-            profileImagePreview.src = './public/img.jpg';
-            resumeUrl = '';
-            resumePreview.classList.add('hidden');
-            experiences = defaultExperiences;
-            renderExperienceList();
-            skills = defaultSkills;
-            renderSkillList();
-            document.getElementById('status').textContent = 'Saved data reset.';
+        // Guest / Demo Mode
+        document.getElementById('guestModeBtn').addEventListener('click', () => {
+            unlockDashboard();
+            showToast('Logged in under local mode.');
         });
 
-        document.getElementById('logoutButton').addEventListener('click', async () => {
-            await supabaseClient.auth.signOut();
-            editor.classList.add('hidden');
-            loginPanel.classList.remove('hidden');
-            document.getElementById('status').textContent = '';
+        // Password toggle
+        document.getElementById('togglePasswordBtn').addEventListener('click', () => {
+            const pwd = document.getElementById('loginPassword');
+            const isText = pwd.type === 'text';
+            pwd.type = isText ? 'password' : 'text';
+            document.getElementById('togglePasswordBtn').innerHTML = isText ? '<i class="fa-regular fa-eye"></i>' : '<i class="fa-regular fa-eye-slash"></i>';
         });
 
-        document.getElementById('refreshMessagesButton').addEventListener('click', loadMessages);
-        document.getElementById('messageList').addEventListener('click', async event => {
-            const messageId = event.target.dataset.deleteMessage;
-            if (!messageId) return;
-            const { error } = await supabaseClient.from('contact_messages').delete().eq('id', messageId);
-            document.getElementById('status').textContent = error ? 'Message could not be deleted.' : 'Message deleted.';
-            if (!error) await loadMessages();
+        // Logout
+        document.getElementById('logoutBtn').addEventListener('click', async () => {
+            if (supabase) await supabase.auth.signOut();
+            dashboardView.classList.add('hidden');
+            loginView.classList.remove('hidden');
+            showToast('Signed out successfully.');
         });
+
+        // Escape HTML
+        function escapeHtml(str) {
+            return String(str || '').replace(/[&<>"']/g, c => ({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            }[c]));
+        }
+
+        // Init
+        initAuth();
     </script>
 </body>
 </html>
