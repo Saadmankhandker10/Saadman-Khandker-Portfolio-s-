@@ -85,27 +85,60 @@
                 <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Manage your live portfolio, projects & incoming messages</p>
             </div>
 
-            <!-- Login Card -->
+            <!-- Multi-Method Login Card -->
             <div class="glass-panel rounded-2xl shadow-xl p-6 sm:p-8">
-                <form id="loginForm" class="space-y-5">
+                <!-- Login Method Tabs -->
+                <div class="flex items-center p-1 bg-slate-100 dark:bg-dark-800 rounded-xl mb-6">
+                    <button type="button" id="tabInstantBtn" class="flex-1 py-2 text-xs font-semibold rounded-lg transition bg-white dark:bg-dark-700 shadow-sm text-brand-600 dark:text-brand-400">
+                        ⚡ Instant Access
+                    </button>
+                    <button type="button" id="tabPasswordBtn" class="flex-1 py-2 text-xs font-semibold rounded-lg transition text-slate-500 hover:text-slate-800 dark:hover:text-slate-200">
+                        🔑 Password
+                    </button>
+                    <button type="button" id="tabOtpBtn" class="flex-1 py-2 text-xs font-semibold rounded-lg transition text-slate-500 hover:text-slate-800 dark:hover:text-slate-200">
+                        📬 Gmail Code
+                    </button>
+                </div>
+
+                <!-- 1. Instant Access View (Default) -->
+                <div id="loginViewInstant" class="space-y-4">
+                    <div class="text-center py-2">
+                        <div class="w-12 h-12 rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mx-auto mb-2 text-xl">
+                            <i class="fa-solid fa-shield-halved"></i>
+                        </div>
+                        <h3 class="text-sm font-bold text-slate-900 dark:text-white">Owner Quick Unlock</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Instant passwordless access to your portfolio editor</p>
+                    </div>
+
+                    <button type="button" id="instantUnlockBtn"
+                        class="w-full py-3.5 px-4 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-bold rounded-xl shadow-lg shadow-emerald-500/25 transition duration-150 flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-lock-open text-sm"></i>
+                        <span>Unlock Dashboard Directly</span>
+                    </button>
+                    
+                    <p class="text-[11px] text-center text-slate-400">Loads your saved projects, experiences and bio with full edit rights.</p>
+                </div>
+
+                <!-- 2. Password View -->
+                <form id="loginForm" class="space-y-4 hidden">
                     <div>
-                        <label for="loginEmail" class="block text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-2">Email Address</label>
+                        <label for="loginEmail" class="block text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-1.5">Email Address</label>
                         <div class="relative">
                             <i class="fa-regular fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
                             <input id="loginEmail" type="email" value="gamerhindi571@gmail.com" required placeholder="name@domain.com"
-                                class="w-full pl-11 pr-4 py-3 bg-white dark:bg-dark-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 dark:text-white transition">
+                                class="w-full pl-11 pr-4 py-2.5 bg-white dark:bg-dark-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 dark:text-white transition">
                         </div>
                     </div>
 
                     <div>
-                        <div class="flex items-center justify-between mb-2">
+                        <div class="flex items-center justify-between mb-1.5">
                             <label for="loginPassword" class="block text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300">Password</label>
-                            <button type="button" id="forgotPasswordBtn" class="text-xs text-brand-600 hover:text-brand-500 font-medium">Forgot password?</button>
+                            <button type="button" id="forgotPasswordBtn" class="text-xs text-brand-600 hover:text-brand-500 font-medium">Reset password?</button>
                         </div>
                         <div class="relative">
                             <i class="fa-solid fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
-                            <input id="loginPassword" type="password" required placeholder="••••••••"
-                                class="w-full pl-11 pr-11 py-3 bg-white dark:bg-dark-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 dark:text-white transition">
+                            <input id="loginPassword" type="password" placeholder="••••••••"
+                                class="w-full pl-11 pr-11 py-2.5 bg-white dark:bg-dark-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 dark:text-white transition">
                             <button type="button" id="togglePasswordBtn" class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
                                 <i class="fa-regular fa-eye"></i>
                             </button>
@@ -113,30 +146,49 @@
                     </div>
 
                     <div id="newPasswordGroup" class="hidden">
-                        <label for="newPassword" class="block text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-2">New Password (Recovery)</label>
+                        <label for="newPassword" class="block text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-1.5">New Password</label>
                         <input id="newPassword" type="password" minlength="6" placeholder="At least 6 characters"
-                            class="w-full px-4 py-3 bg-white dark:bg-dark-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 dark:text-white transition">
+                            class="w-full px-4 py-2.5 bg-white dark:bg-dark-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 dark:text-white transition">
                     </div>
 
                     <button type="submit" id="submitLoginBtn"
-                        class="w-full py-3 px-4 bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-700 hover:to-indigo-700 text-white font-semibold rounded-xl shadow-lg shadow-brand-500/25 transition duration-150 flex items-center justify-center gap-2">
-                        <span>Sign In</span>
+                        class="w-full py-2.5 px-4 bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-xl shadow-lg shadow-brand-500/25 transition duration-150 flex items-center justify-center gap-2">
+                        <span>Sign In with Password</span>
                         <i class="fa-solid fa-arrow-right text-xs"></i>
                     </button>
 
-                    <button type="button" id="updatePasswordBtn" class="hidden w-full py-3 px-4 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl shadow-lg transition">
+                    <button type="button" id="updatePasswordBtn" class="hidden w-full py-2.5 px-4 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl shadow-lg transition">
                         Set New Password & Log In
                     </button>
                 </form>
 
-                <div class="mt-6 pt-6 border-t border-slate-200 dark:border-slate-700 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
+                <!-- 3. Gmail OTP View -->
+                <div id="loginViewOtp" class="space-y-4 hidden">
+                    <div>
+                        <label for="otpEmail" class="block text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-1.5">Gmail Address</label>
+                        <input id="otpEmail" type="email" value="gamerhindi571@gmail.com" class="w-full px-4 py-2.5 bg-white dark:bg-dark-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 dark:text-white">
+                    </div>
+
+                    <button type="button" id="sendOtpBtn" class="w-full py-2.5 px-4 bg-slate-800 dark:bg-slate-700 hover:bg-slate-900 text-white text-xs font-semibold rounded-xl transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-paper-plane"></i>
+                        <span>Send 6-Digit Code to Gmail</span>
+                    </button>
+
+                    <div id="otpInputGroup" class="space-y-3 pt-2 border-t border-slate-200 dark:border-slate-800">
+                        <label for="otpCode" class="block text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300">Enter 6-Digit Code from Email</label>
+                        <input id="otpCode" type="text" maxlength="8" placeholder="123456" class="w-full text-center tracking-widest font-mono text-lg py-2.5 bg-white dark:bg-dark-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500 dark:text-white">
+                        <button type="button" id="verifyOtpBtn" class="w-full py-2.5 px-4 bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-xl transition">
+                            Verify Code & Log In
+                        </button>
+                    </div>
+                </div>
+
+                <div class="mt-6 pt-5 border-t border-slate-200 dark:border-slate-700 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
                     <a href="./index.html" class="flex items-center gap-1.5 hover:text-brand-600 dark:hover:text-brand-400 font-medium transition">
                         <i class="fa-solid fa-arrow-left"></i>
                         <span>Back to Website</span>
                     </a>
-                    <button type="button" id="guestModeBtn" class="underline hover:text-slate-800 dark:hover:text-slate-200">
-                        Local Demo Mode
-                    </button>
+                    <span class="text-[11px] text-slate-400">Admin Hub v2.0</span>
                 </div>
             </div>
         </div>
@@ -1421,8 +1473,43 @@
             }
         }
 
-        // Login Handler
-        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+        // Authentication Method Switcher
+        const tabInstantBtn = document.getElementById('tabInstantBtn');
+        const tabPasswordBtn = document.getElementById('tabPasswordBtn');
+        const tabOtpBtn = document.getElementById('tabOtpBtn');
+        const loginViewInstant = document.getElementById('loginViewInstant');
+        const loginForm = document.getElementById('loginForm');
+        const loginViewOtp = document.getElementById('loginViewOtp');
+
+        function setLoginTab(tab) {
+            [tabInstantBtn, tabPasswordBtn, tabOtpBtn].forEach(b => {
+                b.className = 'flex-1 py-2 text-xs font-semibold rounded-lg transition text-slate-500 hover:text-slate-800 dark:hover:text-slate-200';
+            });
+            [loginViewInstant, loginForm, loginViewOtp].forEach(v => v.classList.add('hidden'));
+
+            if (tab === 'instant') {
+                tabInstantBtn.className = 'flex-1 py-2 text-xs font-semibold rounded-lg transition bg-white dark:bg-dark-700 shadow-sm text-brand-600 dark:text-brand-400';
+                loginViewInstant.classList.remove('hidden');
+            } else if (tab === 'password') {
+                tabPasswordBtn.className = 'flex-1 py-2 text-xs font-semibold rounded-lg transition bg-white dark:bg-dark-700 shadow-sm text-brand-600 dark:text-brand-400';
+                loginForm.classList.remove('hidden');
+            } else if (tab === 'otp') {
+                tabOtpBtn.className = 'flex-1 py-2 text-xs font-semibold rounded-lg transition bg-white dark:bg-dark-700 shadow-sm text-brand-600 dark:text-brand-400';
+                loginViewOtp.classList.remove('hidden');
+            }
+        }
+        tabInstantBtn.addEventListener('click', () => setLoginTab('instant'));
+        tabPasswordBtn.addEventListener('click', () => setLoginTab('password'));
+        tabOtpBtn.addEventListener('click', () => setLoginTab('otp'));
+
+        // 1. Instant Owner Unlock
+        document.getElementById('instantUnlockBtn').addEventListener('click', () => {
+            unlockDashboard();
+            showToast('Welcome back, Saadman! (Owner Access Mode)');
+        });
+
+        // 2. Password Login
+        loginForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const email = document.getElementById('loginEmail').value.trim();
             const password = document.getElementById('loginPassword').value;
@@ -1446,7 +1533,14 @@
             }
         });
 
-        // Forgot password
+        // Safe Redirect URL (avoids file:/// errors from Supabase)
+        const getSafeRedirectUrl = () => {
+            return window.location.protocol.startsWith('http') 
+                ? window.location.href.split('#')[0] 
+                : 'https://saadmankhandker.netlify.app/saadman_khandker.html';
+        };
+
+        // Forgot Password (Safe HTTP redirect)
         document.getElementById('forgotPasswordBtn').addEventListener('click', async () => {
             const email = document.getElementById('loginEmail').value.trim();
             if (!email) {
@@ -1454,18 +1548,76 @@
                 return;
             }
             if (!supabase) return;
-            const { error } = await supabase.auth.resetPasswordForEmail(email, {
-                redirectTo: window.location.href
-            });
-            if (error) {
-                showToast(error.message, 'error');
-            } else {
-                showToast('Password reset link sent to your inbox!');
+            showToast('Sending password reset link...', 'info');
+            try {
+                const { error } = await supabase.auth.resetPasswordForEmail(email, {
+                    redirectTo: getSafeRedirectUrl()
+                });
+                if (error) throw error;
+                showToast('Password reset link sent to your Gmail inbox!');
+            } catch (err) {
+                showToast(err.message, 'error');
+            }
+        });
+
+        // 3. Gmail 6-Digit OTP Handlers
+        document.getElementById('sendOtpBtn').addEventListener('click', async () => {
+            const email = document.getElementById('otpEmail').value.trim();
+            if (!email) {
+                showToast('Please enter your email.', 'error');
+                return;
+            }
+            const btn = document.getElementById('sendOtpBtn');
+            const orig = btn.innerHTML;
+            btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i><span>Sending code...</span>`;
+            btn.disabled = true;
+
+            try {
+                const { error } = await supabase.auth.signInWithOtp({
+                    email,
+                    options: { emailRedirectTo: getSafeRedirectUrl() }
+                });
+                if (error) throw error;
+                showToast('6-digit login code sent! Check your Gmail inbox.');
+            } catch (err) {
+                showToast(err.message, 'error');
+            } finally {
+                btn.innerHTML = orig;
+                btn.disabled = false;
+            }
+        });
+
+        document.getElementById('verifyOtpBtn').addEventListener('click', async () => {
+            const email = document.getElementById('otpEmail').value.trim();
+            const token = document.getElementById('otpCode').value.trim();
+            if (!token || token.length < 6) {
+                showToast('Please enter the 6-digit code from your email.', 'info');
+                return;
+            }
+            const btn = document.getElementById('verifyOtpBtn');
+            btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i><span>Verifying...</span>`;
+            btn.disabled = true;
+
+            try {
+                const { error } = await supabase.auth.verifyOtp({
+                    email,
+                    token,
+                    type: 'email'
+                });
+                if (error) throw error;
+                showToast('Successfully verified!');
+                unlockDashboard();
+            } catch (err) {
+                showToast(`Verification failed: ${err.message}`, 'error');
+            } finally {
+                btn.innerHTML = 'Verify Code & Log In';
+                btn.disabled = false;
             }
         });
 
         // Password Recovery from URL
         if (window.location.hash.includes('type=recovery')) {
+            setLoginTab('password');
             document.getElementById('loginPassword').parentElement.classList.add('hidden');
             document.getElementById('newPasswordGroup').classList.remove('hidden');
             document.getElementById('submitLoginBtn').classList.add('hidden');
@@ -1488,12 +1640,6 @@
                 window.location.hash = '';
                 window.location.reload();
             }
-        });
-
-        // Guest / Demo Mode
-        document.getElementById('guestModeBtn').addEventListener('click', () => {
-            unlockDashboard();
-            showToast('Logged in under local mode.');
         });
 
         // Password toggle
