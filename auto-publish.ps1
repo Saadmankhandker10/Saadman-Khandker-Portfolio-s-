@@ -1,13 +1,17 @@
 Set-Location $PSScriptRoot
 
+$siteRoot = [System.IO.Path]::GetFullPath($PSScriptRoot)
+$siteFilesPattern = '^(admin\.html|google1093e83ae0034777\.html|index\.html|robots\.txt|saadman_khandker\.html|sitemap\.xml|public[\\/].+)$'
+
 $watcher = New-Object IO.FileSystemWatcher
-$watcher.Path = $PSScriptRoot
+$watcher.Path = $siteRoot
 $watcher.IncludeSubdirectories = $true
 $watcher.EnableRaisingEvents = $true
 
 $action = {
     $changedPath = $Event.SourceEventArgs.FullPath
-    if ($changedPath -match '\\.git\\' -or $changedPath -match '\\(auto-publish|publish)\.ps1$') {
+    $relativePath = $changedPath.Substring($siteRoot.Length).TrimStart('\', '/')
+    if ($relativePath -notmatch $siteFilesPattern) {
         return
     }
 
