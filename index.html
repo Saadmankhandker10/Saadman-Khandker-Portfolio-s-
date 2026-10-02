@@ -789,15 +789,12 @@
                 <p class="text-sm text-gray-400 mt-1">© <span id="year"></span> All rights reserved.</p>
             </div>
             <div class="flex space-x-6 font-mono text-sm items-center">
-                <a id="adminPortalLink" href="#" class="opacity-60 hover:opacity-100 hover:text-retro-accent transition-all text-xs" title="Admin Portal">ADMIN ⚙</a>
                 <a href="#home" class="hover:text-retro-accent transition-colors">BACK TO TOP ↑</a>
             </div>
         </div>
     </footer>
 
     <script>
-        document.getElementById('adminPortalLink').href = new URL('./saadman_khandker.html', window.location.href).toString();
-
         // Set current year in footer
         document.getElementById('year').textContent = new Date().getFullYear();
 
