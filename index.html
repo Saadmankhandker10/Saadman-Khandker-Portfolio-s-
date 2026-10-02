@@ -698,8 +698,38 @@
             transition: opacity 800ms ease;
         }
         #cinemaIntro.gone { opacity: 0; pointer-events: none; }
-        #cinemaCount { color: #e8a24c; font: 12rem/1 'Bebas Neue', Impact, sans-serif; }
-        #cinemaIntro p { margin: 0; color: #8d9aa0; }
+        #cinemaIntro > div {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.35rem;
+        }
+        #cinemaCount {
+            color: #e8a24c;
+            font: 12rem/1 'Bebas Neue', Impact, sans-serif;
+            opacity: 1;
+            animation: countPulse 500ms ease;
+        }
+        #cinemaIntro p {
+            margin: 0;
+            color: #f5e7d2;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            font: 700 clamp(1.15rem, 2.2vw, 2.1rem) 'Libre Franklin', sans-serif;
+            text-shadow: 0 0 22px rgba(232, 162, 76, 0.25);
+            opacity: 0;
+            transform: translateY(16px);
+            animation: titleReveal 700ms 180ms ease forwards;
+            transition: opacity 350ms ease, transform 350ms ease;
+        }
+        @keyframes countPulse {
+            0% { opacity: 0; transform: scale(0.7); }
+            60% { opacity: 1; transform: scale(1.08); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        @keyframes titleReveal {
+            to { opacity: 1; transform: translateY(0); }
+        }
         #cinemaSkip { margin-top: 1.5rem; padding: 0.6rem 1.4rem; border: 1px solid #8d9aa0; background: transparent; color: #ece6d8; font: inherit; }
 
         header {
@@ -918,7 +948,7 @@
     <canvas id="ambientCanvas" aria-hidden="true"></canvas>
     <div class="letterbox top" aria-hidden="true"></div>
     <div class="letterbox bottom" aria-hidden="true"></div>
-    <div id="cinemaIntro" aria-label="Opening title sequence"><div><div id="cinemaCount">3</div><p>Opening title sequence</p><button id="cinemaSkip" type="button">Skip intro</button></div></div>
+    <div id="cinemaIntro" aria-label="Opening title sequence"><div><div id="cinemaCount">3</div><p>Welcome to Khandker's Home</p><button id="cinemaSkip" type="button">Skip intro</button></div></div>
     <div id="scrollProgress" aria-hidden="true"></div>
     <div id="liveWidget" aria-label="Portfolio live status"><span class="live-dot" aria-hidden="true"></span><span id="liveClock">LIVE / 00:00</span></div>
     <button id="backToTop" type="button" aria-label="Back to top" title="Back to top">↑</button>
