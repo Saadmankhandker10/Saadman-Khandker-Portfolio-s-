@@ -69,6 +69,27 @@
         .quick-action-btn {
             box-shadow: 0 14px 30px rgba(79, 70, 229, 0.22);
         }
+        button:not(:disabled) {
+            transition-duration: 180ms;
+            transition-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        @media (hover: hover) and (pointer: fine) {
+            button:not(:disabled):hover {
+                transform: translateY(-2px);
+            }
+            button:not(:disabled):active {
+                transform: translateY(0) scale(0.98);
+            }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            button:not(:disabled) {
+                transition-duration: 0ms;
+            }
+            button:not(:disabled):hover,
+            button:not(:disabled):active {
+                transform: none;
+            }
+        }
     </style>
 </head>
 <body class="bg-slate-50 dark:bg-dark-900 text-slate-800 dark:text-slate-100 min-h-screen flex flex-col font-sans transition-colors duration-200">
