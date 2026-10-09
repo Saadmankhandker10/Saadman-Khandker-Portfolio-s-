@@ -523,6 +523,34 @@
         @keyframes waPing { to { transform:scale(1.7); opacity:0; } }
         #langBtn { padding:0 12px; height:40px; border-radius:12px; font-size:.8rem; font-weight:700; background:rgba(255,255,255,0.05); color:#c084fc; border:1px solid rgba(192,132,252,0.4); text-shadow:0 0 8px rgba(192,132,252,0.5); transition:all 0.2s; display:inline-flex; align-items:center; justify-content:center; } #langBtn:hover { background:rgba(192,132,252,0.15); border-color:#c084fc; }
         .visitor-pill { display:inline-flex; align-items:center; gap:8px; padding:6px 14px; border-radius:99px; font-size:.75rem; font-weight:700; color:#34d399; border:1px solid rgba(52,211,153,.4); text-shadow:0 0 8px #34d399; }
+        /* Skill Progress Bar */
+        .skill-bar-bg {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 99px;
+            overflow: hidden;
+            margin-top: 8px;
+        }
+        .skill-bar-fill {
+            height: 100%;
+            border-radius: 99px;
+            background: linear-gradient(90deg, #818cf8, #c084fc, #f472b6);
+            box-shadow: 0 0 10px rgba(192, 132, 252, 0.6);
+            width: 0%;
+            transition: width 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        .group:hover .skill-bar-fill {
+            box-shadow: 0 0 16px rgba(244, 114, 182, 0.9);
+        }
+
+        /* Quote Calculator Options */
+        .quote-option-btn.selected {
+            background: rgba(192, 132, 252, 0.2);
+            border-color: #c084fc;
+            color: #fff;
+            box-shadow: 0 0 15px rgba(192, 132, 252, 0.35);
+        }
     </style></head>
 <body class="min-h-screen flex flex-col relative selection:bg-brand-500 selection:text-white">
 <div id="pageLoader"><div class="loader-hello">Welcome to the portfolio of</div><div class="loader-logo">Khandker Saadman Rafid</div><div class="loader-tag">Where precision meets passion &#10022; Service &#10022; Design &#10022; Impact</div><div class="loader-bar"></div></div>
@@ -915,6 +943,71 @@
                 <!-- Background Decorative Glow -->
                 <div class="absolute -top-24 -right-24 w-80 h-80 bg-brand-500/20 rounded-full blur-3xl pointer-events-none"></div>
 
+                                <!-- Quick Quote & Project Estimator -->
+                <div class="mb-14 glass-card p-6 sm:p-8 rounded-3xl border border-brand-500/30">
+                    <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-6 pb-6 border-b border-white/10">
+                        <div>
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-semibold bg-pink-500/10 text-pink-400 border border-pink-500/30 mb-2">
+                                <i class="fa-solid fa-calculator"></i> Quick Quote Estimator
+                            </span>
+                            <h3 class="text-xl sm:text-2xl font-extrabold text-white">Need a Task Done Fast? Estimate & Book</h3>
+                        </div>
+                        <div class="text-left md:text-right">
+                            <span class="text-xs text-slate-400 font-mono">Estimated Turnaround</span>
+                            <p id="quoteTurnaround" class="text-lg font-bold text-emerald-400">⚡ Standard (24-48 Hours)</p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <!-- Select Service -->
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-widest text-slate-400 mb-2 font-mono">1. Select Service Type</label>
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5" id="quoteServiceBtns">
+                                <button type="button" data-val="Presentation & Pitch Deck Design" class="quote-option-btn selected text-left p-3 rounded-2xl border border-white/10 text-xs font-semibold hover:border-brand-400 transition">
+                                    <i class="fa-solid fa-file-powerpoint text-pink-400 mb-1 block text-base"></i>
+                                    Presentation Design
+                                </button>
+                                <button type="button" data-val="Data QA & High-Accuracy Formatting" class="quote-option-btn text-left p-3 rounded-2xl border border-white/10 text-xs font-semibold hover:border-brand-400 transition">
+                                    <i class="fa-solid fa-table text-indigo-400 mb-1 block text-base"></i>
+                                    Data Formatting / QA
+                                </button>
+                                <button type="button" data-val="Digital Content Digitization & Operations" class="quote-option-btn text-left p-3 rounded-2xl border border-white/10 text-xs font-semibold hover:border-brand-400 transition">
+                                    <i class="fa-solid fa-layer-group text-emerald-400 mb-1 block text-base"></i>
+                                    Content & Ops
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Select Urgency -->
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-widest text-slate-400 mb-2 font-mono">2. Delivery Timeframe</label>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5" id="quoteUrgencyBtns">
+                                <button type="button" data-val="Standard (2-3 Days)" data-time="Standard (2-3 Days)" class="quote-urgency-btn selected text-left p-3 rounded-2xl border border-white/10 text-xs font-semibold hover:border-brand-400 transition">
+                                    <i class="fa-solid fa-calendar-check text-indigo-400 mb-1 block text-base"></i>
+                                    Standard Delivery
+                                </button>
+                                <button type="button" data-val="Urgent Express (Under 24 Hours)" data-time="⚡ Urgent (Within 24 Hours)" class="quote-urgency-btn text-left p-3 rounded-2xl border border-white/10 text-xs font-semibold hover:border-brand-400 transition">
+                                    <i class="fa-solid fa-bolt text-amber-400 mb-1 block text-base"></i>
+                                    Express (Within 24h)
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 pt-5 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
+                        <p class="text-xs text-slate-400 text-center sm:text-left">
+                            Selected: <span id="quoteSummaryText" class="font-bold text-white">Presentation Design (Standard Delivery)</span>
+                        </p>
+                        <div class="flex items-center gap-3 w-full sm:w-auto">
+                            <button type="button" id="applyQuoteToFormBtn" class="flex-1 sm:flex-none px-4 py-2.5 rounded-xl text-xs font-bold bg-white/10 hover:bg-white/20 text-white transition border border-white/10">
+                                Autofill Form
+                            </button>
+                            <a id="quoteWhatsappDirectBtn" target="_blank" rel="noopener" class="flex-1 sm:flex-none px-5 py-2.5 rounded-xl text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-500 shadow-lg shadow-emerald-600/30 transition flex items-center justify-center gap-1.5">
+                                <i class="fa-brands fa-whatsapp text-sm"></i> Book on WhatsApp
+                            </a>
+                        </div>
+                    </div>
+                </div>
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 relative z-10">
                     <!-- Contact Intro & Links -->
                     <div class="space-y-8">
@@ -1187,16 +1280,49 @@
             `).join('');
         };
 
-        // Render Skills Function
+        // Render Skills Function with Interactive Proficiency Progress Bars
         const renderSkills = (skills = []) => {
-            document.getElementById('skillsGrid').innerHTML = skills.map(skill => `
-                <div class="glass-card p-6 rounded-3xl text-center space-y-3 group">
-                    <div class="w-14 h-14 rounded-2xl bg-brand-500/10 border border-brand-500/20 text-brand-400 mx-auto flex items-center justify-center text-2xl font-mono group-hover:scale-110 group-hover:bg-brand-500 group-hover:text-white transition-all duration-300">
-                        ${escapeHTML(skill.icon || 'â˜…')}
+            const defaultLevels = {
+                'presentation': 96, 'deck': 96, 'powerpoint': 96, 'slides': 96,
+                'data': 94, 'excel': 92, 'format': 94, 'qa': 92, 'quality': 92,
+                'operations': 95, 'customer': 93, 'service': 93, 'retail': 92,
+                'volunteer': 98, 'first aid': 95, 'red crescent': 98,
+                'web': 88, 'digit': 90, 'canva': 90, 'comm': 95
+            };
+            const getLevel = name => {
+                const n = (name || '').toLowerCase();
+                for (const k in defaultLevels) {
+                    if (n.includes(k)) return defaultLevels[k];
+                }
+                return 90;
+            };
+
+            document.getElementById('skillsGrid').innerHTML = skills.map((skill, idx) => {
+                const pct = skill.level || getLevel(skill.name);
+                return `
+                <div class="glass-card p-6 rounded-3xl text-left space-y-3 group transition-all duration-300">
+                    <div class="flex items-center justify-between">
+                        <div class="w-12 h-12 rounded-2xl bg-brand-500/10 border border-brand-500/20 text-brand-400 flex items-center justify-center text-xl font-mono group-hover:scale-110 group-hover:bg-brand-500 group-hover:text-white transition-all duration-300">
+                            ${escapeHTML(skill.icon || '✦')}
+                        </div>
+                        <span class="text-xs font-mono font-bold text-pink-400">${pct}%</span>
                     </div>
-                    <h4 class="font-bold text-sm text-white">${escapeHTML(skill.name)}</h4>
+                    <div>
+                        <h4 class="font-bold text-sm text-white tracking-wide">${escapeHTML(skill.name)}</h4>
+                        <div class="skill-bar-bg">
+                            <div class="skill-bar-fill" data-pct="${pct}" style="width: 0%"></div>
+                        </div>
+                    </div>
                 </div>
-            `).join('');
+                `;
+            }).join('');
+
+            // Trigger progress bar animation
+            setTimeout(() => {
+                document.querySelectorAll('.skill-bar-fill').forEach(bar => {
+                    bar.style.width = bar.dataset.pct + '%';
+                });
+            }, 300);
         };
 
         // State Application
@@ -1526,6 +1652,58 @@
 
         // Service worker (PWA)
         if ('serviceWorker' in navigator && location.protocol.startsWith('http')) navigator.serviceWorker.register('./sw.js').catch(() => { });
+        // Quote Calculator Interaction
+        (function () {
+            let selectedService = 'Presentation & Pitch Deck Design';
+            let selectedUrgency = 'Standard Delivery';
+
+            const updateQuote = () => {
+                const turnaround = document.getElementById('quoteTurnaround');
+                const summary = document.getElementById('quoteSummaryText');
+                const waBtn = document.getElementById('quoteWhatsappDirectBtn');
+                const isUrgent = selectedUrgency.includes('24');
+
+                if (turnaround) turnaround.textContent = isUrgent ? '⚡ Express (Under 24 Hours)' : 'Standard (2-3 Days)';
+                if (summary) summary.textContent = `${selectedService} (${selectedUrgency})`;
+
+                if (waBtn) {
+                    const msg = encodeURIComponent(`Hi Saadman, I want to discuss a project:\n- Service: ${selectedService}\n- Timeline: ${selectedUrgency}`);
+                    waBtn.href = `https://wa.me/8801320399465?text=${msg}`;
+                }
+            };
+
+            document.querySelectorAll('#quoteServiceBtns button').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('#quoteServiceBtns button').forEach(b => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+                    selectedService = btn.dataset.val;
+                    updateQuote();
+                });
+            });
+
+            document.querySelectorAll('#quoteUrgencyBtns button').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('#quoteUrgencyBtns button').forEach(b => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+                    selectedUrgency = btn.dataset.val;
+                    updateQuote();
+                });
+            });
+
+            const autofillBtn = document.getElementById('applyQuoteToFormBtn');
+            if (autofillBtn) {
+                autofillBtn.addEventListener('click', () => {
+                    const msgInput = document.getElementById('message');
+                    if (msgInput) {
+                        msgInput.value = `Hello Saadman,\nI am interested in hiring you for:\n- Service: ${selectedService}\n- Timeframe: ${selectedUrgency}\n\nPlease let me know your availability and requirements.`;
+                        msgInput.focus();
+                        msgInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                });
+            }
+
+            updateQuote();
+        })();
     </script>
 </body>
 </html>
