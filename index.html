@@ -518,12 +518,13 @@
         #waBtn i { color:#fff; }
         #waBtn::before { content:''; position:absolute; inset:0; border-radius:50%; border:2px solid #22c55e; animation:waPing 1.8s ease-out infinite; }
         @keyframes waPing { to { transform:scale(1.7); opacity:0; } }
-        #langBtn { position:static; padding:0 14px; height:40px; border-radius:12px; font-size:.75rem; font-weight:800; background:rgba(17,24,39,.6); color:#c084fc; border:1.5px solid #c084fc; text-shadow:0 0 8px #c084fc; box-shadow:0 0 10px rgba(192,132,252,.4); white-space:nowrap; }
+        #langBtn { position:fixed; left:0; top:50%; transform:translateY(-50%); z-index:9998; writing-mode:vertical-rl; padding:14px 8px; border-radius:0 12px 12px 0; font-size:.8rem; font-weight:800; background:rgba(17,24,39,.85); color:#c084fc; border:1.5px solid #c084fc; border-left:none; text-shadow:0 0 8px #c084fc; box-shadow:0 0 12px rgba(192,132,252,.5); }
         .visitor-pill { display:inline-flex; align-items:center; gap:8px; padding:6px 14px; border-radius:99px; font-size:.75rem; font-weight:700; color:#34d399; border:1px solid rgba(52,211,153,.4); text-shadow:0 0 8px #34d399; }
     </style></head>
 <body class="min-h-screen flex flex-col relative selection:bg-brand-500 selection:text-white">
 <div id="pageLoader"><div class="loader-logo">KSR</div><div class="loader-bar"></div></div>
 <canvas id="bgParticles"></canvas>
+<button id="langBtn" type="button" aria-label="Change language">বাংলা</button>
 <div id="lightbox"><button id="lbClose" aria-label="Close">&times;</button><button id="lbPrev" style="left:10px" aria-label="Previous">&#10094;</button><img id="lbImg" alt=""><button id="lbNext" style="right:10px" aria-label="Next">&#10095;</button></div>
 <a id="waBtn" class="float-btn hidden" target="_blank" rel="noopener" aria-label="Chat on WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
 
@@ -576,7 +577,6 @@
 
                 <!-- Actions: Theme Toggle -->
                 <div class="flex items-center gap-2">
-                    <button id="langBtn" type="button" aria-label="Change language">বাংলা</button>
                     <button id="themeToggle" type="button" class="w-10 h-10 rounded-xl flex items-center justify-center bg-white/5 hover:bg-white/10 border border-white/10 text-slate-400 hover:text-white transition" title="Toggle Dark/Light Mode">
                         <i class="fa-solid fa-moon dark:hidden"></i>
                         <i class="fa-solid fa-sun hidden dark:inline text-amber-400"></i>
