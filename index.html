@@ -478,8 +478,55 @@
         .neon-cursor-ring { width:34px; height:34px; margin:-17px 0 0 -17px; border:2px solid #c084fc; box-shadow:0 0 14px #c084fc,inset 0 0 10px rgba(192,132,252,.5); transition:width .2s,height .2s,margin .2s,border-color .2s; }
         .neon-cursor-ring.active { width:54px; height:54px; margin:-27px 0 0 -27px; border-color:#f472b6; box-shadow:0 0 18px #f472b6; }
     </style>
-</head>
+    <link rel="manifest" href="./manifest.json">
+    <link rel="icon" href="./public/img.jpg">
+    <link rel="apple-touch-icon" href="./public/img.jpg">
+    <style>
+        /* ===== Extras: spotlight, marquee, loader, gallery, faq, floating ===== */
+        .glass-card { background-image: radial-gradient(320px circle at var(--mx,-999px) var(--my,-999px), rgba(129,140,248,.18), transparent 60%); will-change: transform; }
+        #bgParticles { position:fixed; inset:0; z-index:0; pointer-events:none; }
+        #pageLoader { position:fixed; inset:0; z-index:100000; background:#050817; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:18px; transition:opacity .6s ease, visibility .6s ease; }
+        #pageLoader.done { opacity:0; visibility:hidden; }
+        .loader-logo { font-size:2.6rem; font-weight:900; letter-spacing:.08em; color:#fff; text-shadow:0 0 12px #818cf8,0 0 30px #c084fc,0 0 60px #f472b6; animation:loaderPulse 1.2s ease-in-out infinite; }
+        .loader-bar { width:180px; height:3px; border-radius:99px; background:rgba(255,255,255,.1); overflow:hidden; }
+        .loader-bar::after { content:''; display:block; height:100%; width:40%; background:linear-gradient(90deg,#818cf8,#f472b6); box-shadow:0 0 12px #c084fc; animation:loaderSlide 1s ease-in-out infinite; }
+        @keyframes loaderPulse { 50% { opacity:.6; transform:scale(1.06); } }
+        @keyframes loaderSlide { 0% { transform:translateX(-100%); } 100% { transform:translateX(350%); } }
+        .marquee { overflow:hidden; border-block:1px solid rgba(129,140,248,.2); background:rgba(17,24,39,.4); padding:14px 0; position:relative; z-index:10; -webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent); mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent); }
+        .marquee-track { display:flex; gap:48px; width:max-content; animation:marqueeMove 35s linear infinite; }
+        .marquee:hover .marquee-track { animation-play-state:paused; }
+        .marquee-item { font-weight:800; font-size:1.05rem; white-space:nowrap; color:#c7d2fe; text-shadow:0 0 10px rgba(129,140,248,.8); display:inline-flex; align-items:center; gap:48px; }
+        .marquee-item::after { content:'\2726'; color:#f472b6; text-shadow:0 0 10px #f472b6; }
+        @keyframes marqueeMove { to { transform:translateX(-50%); } }
+        .gallery-grid { columns:2; column-gap:14px; }
+        @media (min-width:768px) { .gallery-grid { columns:3; } }
+        @media (min-width:1024px) { .gallery-grid { columns:4; } }
+        .gallery-grid img { width:100%; margin-bottom:14px; border-radius:18px; cursor:zoom-in; border:1px solid rgba(129,140,248,.25); transition:transform .3s, box-shadow .3s; break-inside:avoid; }
+        .gallery-grid img:hover { transform:scale(1.03); box-shadow:0 0 22px rgba(192,132,252,.6); }
+        #lightbox { position:fixed; inset:0; z-index:100001; background:rgba(3,5,15,.92); display:none; align-items:center; justify-content:center; padding:20px; }
+        #lightbox.open { display:flex; }
+        #lightbox img { max-width:94vw; max-height:88vh; border-radius:16px; box-shadow:0 0 40px rgba(192,132,252,.5); }
+        #lightbox button { position:absolute; color:#fff; font-size:2rem; background:none; border:none; padding:10px 16px; text-shadow:0 0 12px #c084fc; }
+        .faq-item { border:1px solid rgba(129,140,248,.25); border-radius:18px; overflow:hidden; }
+        .faq-q { width:100%; text-align:left; padding:18px 22px; font-weight:700; display:flex; justify-content:space-between; align-items:center; gap:12px; }
+        .faq-a { max-height:0; overflow:hidden; transition:max-height .4s ease; padding:0 22px; color:#94a3b8; font-size:.95rem; }
+        .faq-item.open .faq-a { max-height:220px; padding-bottom:18px; }
+        .faq-item.open .faq-q i { transform:rotate(45deg); color:#f472b6; }
+        .faq-q i { transition:transform .3s; }
+        .float-btn { position:fixed; z-index:9998; display:flex; align-items:center; justify-content:center; border-radius:50%; color:#fff; border:none; box-shadow:0 0 18px currentColor; }
+        #waBtn { right:20px; bottom:80px; width:54px; height:54px; font-size:1.6rem; background:#22c55e; color:#22c55e; }
+        #waBtn i { color:#fff; }
+        #waBtn::before { content:''; position:absolute; inset:0; border-radius:50%; border:2px solid #22c55e; animation:waPing 1.8s ease-out infinite; }
+        @keyframes waPing { to { transform:scale(1.7); opacity:0; } }
+        #langBtn { left:20px; bottom:20px; padding:0 16px; height:42px; border-radius:99px; font-size:.8rem; font-weight:800; background:rgba(17,24,39,.85); color:#c084fc; border:1.5px solid #c084fc; text-shadow:0 0 8px #c084fc; }
+        .visitor-pill { display:inline-flex; align-items:center; gap:8px; padding:6px 14px; border-radius:99px; font-size:.75rem; font-weight:700; color:#34d399; border:1px solid rgba(52,211,153,.4); text-shadow:0 0 8px #34d399; }
+    </style></head>
 <body class="min-h-screen flex flex-col relative selection:bg-brand-500 selection:text-white">
+<div id="pageLoader"><div class="loader-logo">KSR</div><div class="loader-bar"></div></div>
+<canvas id="bgParticles"></canvas>
+<div id="lightbox"><button id="lbClose" aria-label="Close">&times;</button><button id="lbPrev" style="left:10px" aria-label="Previous">&#10094;</button><img id="lbImg" alt=""><button id="lbNext" style="right:10px" aria-label="Next">&#10095;</button></div>
+<a id="waBtn" class="float-btn hidden" target="_blank" rel="noopener" aria-label="Chat on WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+<button id="langBtn" class="float-btn" type="button">বাংলা</button>
 
     <!-- Scroll Progress Indicator -->
     <div id="scrollProgress"></div>
@@ -740,6 +787,7 @@
         </section>
 
         <!-- ==================== EXPERIENCE SECTION ==================== -->
+                <div class="marquee" aria-hidden="true"><div class="marquee-track" id="marqueeTrack"></div></div>
         <section id="experience" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
             <div class="text-center max-w-2xl mx-auto mb-16">
                 <span class="section-tag neon-glow-badge">01 / Career</span>
@@ -808,6 +856,47 @@
         </section>
 
         <!-- ==================== CONTACT SECTION ==================== -->
+        <!-- Gallery -->
+        <section id="gallery" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="section-tag neon-glow-badge">Moments</span>
+                <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight neon-glow-heading">Gallery</h2>
+                <p class="text-slate-400 mt-3 text-sm sm:text-base">Glimpses from volunteering, events and work. Click any photo to enlarge.</p>
+            </div>
+            <div id="galleryGrid" class="gallery-grid"></div>
+        </section>
+
+        <!-- Certifications (shown only when entries are added) -->
+        <section id="certifications" class="hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="section-tag neon-glow-badge">Learning</span>
+                <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight neon-glow-heading">Certifications &amp; Training</h2>
+            </div>
+            <div id="certGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        </section>
+
+        <!-- Testimonials (shown only when entries are added) -->
+        <section id="testimonials" class="hidden max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="section-tag neon-glow-badge">Kind Words</span>
+                <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight neon-glow-heading">Testimonials</h2>
+            </div>
+            <div id="testiGrid" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+        </section>
+
+        <!-- FAQ -->
+        <section id="faq" class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+            <div class="text-center mb-12">
+                <span class="section-tag neon-glow-badge">Questions</span>
+                <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight neon-glow-heading">FAQ</h2>
+            </div>
+            <div class="space-y-4" id="faqList">
+                <div class="faq-item glass-card"><button class="faq-q" type="button"><span>What kind of work do you do?</span><i class="fa-solid fa-plus"></i></button><div class="faq-a">I work in operations, customer service, presentation and data formatting, quality assurance and digital content digitization, plus emergency volunteering with the Red Crescent.</div></div>
+                <div class="faq-item glass-card"><button class="faq-q" type="button"><span>Are you available for new roles?</span><i class="fa-solid fa-plus"></i></button><div class="faq-a">Yes, I am open to operations and media roles. Send a message from the contact form below and I will reply.</div></div>
+                <div class="faq-item glass-card"><button class="faq-q" type="button"><span>How can I contact you quickly?</span><i class="fa-solid fa-plus"></i></button><div class="faq-a">Use the contact form, email, or the social links in the contact section. If the WhatsApp button is visible, you can chat there directly.</div></div>
+                <div class="faq-item glass-card"><button class="faq-q" type="button"><span>Can I see your CV?</span><i class="fa-solid fa-plus"></i></button><div class="faq-a">If a Resume button is shown at the top of the page, you can open it from there. Otherwise, ask through the contact form.</div></div>
+            </div>
+        </section>
         <section id="contact" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
             <div class="glass-card rounded-3xl p-8 sm:p-12 lg:p-16 relative overflow-hidden">
                 <!-- Background Decorative Glow -->
@@ -913,6 +1002,7 @@
 
     <!-- Footer Area -->
     <footer class="glass-header mt-auto py-8 z-10 relative">
+        <div class="text-center mb-4"><span class="visitor-pill hidden"><i class="fa-solid fa-eye"></i> Visitors: <b id="visitorCount">0</b></span></div>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
             <div>
                 <p class="font-bold text-sm text-slate-200">Khandker Saadman Rafid Saad</p>
@@ -1268,6 +1358,147 @@
             (function loop() { rx += (x - rx) * 0.15; ry += (y - ry) * 0.15; ring.style.transform = `translate(${rx}px,${ry}px)`; requestAnimationFrame(loop); })();
             document.addEventListener('mouseover', e => { ring.classList.toggle('active', !!e.target.closest('a,button,input,textarea,.group')); });
         })();
+    </script>
+    <script>
+        // ===== Extras config (edit these) =====
+        const WHATSAPP_NUMBER = '';   // e.g. '8801XXXXXXXXX' (country code, no +)
+        const CERTIFICATES = [];      // { title:'', issuer:'', date:'', link:'' }
+        const TESTIMONIALS = [];      // { name:'', role:'', text:'' }
+
+        // Loader
+        window.addEventListener('load', () => setTimeout(() => document.getElementById('pageLoader').classList.add('done'), 500));
+        setTimeout(() => document.getElementById('pageLoader').classList.add('done'), 4000);
+
+        // Particles
+        (function () {
+            const cv = document.getElementById('bgParticles'); const ctx = cv.getContext('2d');
+            if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+            let W, H, pts = [];
+            const colors = ['#818cf8', '#c084fc', '#f472b6', '#34d399'];
+            function size() { W = cv.width = innerWidth; H = cv.height = innerHeight; const n = Math.min(70, Math.floor(W * H / 22000)); pts = Array.from({ length: n }, () => ({ x: Math.random() * W, y: Math.random() * H, r: Math.random() * 2 + .6, vx: (Math.random() - .5) * .35, vy: (Math.random() - .5) * .35, c: colors[Math.floor(Math.random() * colors.length)] })); }
+            size(); addEventListener('resize', size);
+            (function draw() {
+                ctx.clearRect(0, 0, W, H);
+                pts.forEach(p => {
+                    p.x += p.vx; p.y += p.vy; if (p.x < 0 || p.x > W) p.vx *= -1; if (p.y < 0 || p.y > H) p.vy *= -1;
+                    ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.283); ctx.fillStyle = p.c; ctx.shadowColor = p.c; ctx.shadowBlur = 12; ctx.fill();
+                });
+                ctx.shadowBlur = 0;
+                for (let i = 0; i < pts.length; i++) for (let j = i + 1; j < pts.length; j++) {
+                    const dx = pts[i].x - pts[j].x, dy = pts[i].y - pts[j].y, d = dx * dx + dy * dy;
+                    if (d < 14000) { ctx.strokeStyle = 'rgba(129,140,248,' + (0.18 * (1 - d / 14000)) + ')'; ctx.beginPath(); ctx.moveTo(pts[i].x, pts[i].y); ctx.lineTo(pts[j].x, pts[j].y); ctx.stroke(); }
+                }
+                requestAnimationFrame(draw);
+            })();
+        })();
+
+        // Marquee
+        (function () {
+            const items = ['Presentation Design', 'Data Formatting', 'Quality Assurance', 'Customer Service', 'Operations', 'Teamwork', 'Emergency Response', 'Content Digitization', 'Attention to Detail'];
+            const html = items.map(i => '<span class="marquee-item">' + i + '</span>').join('');
+            document.getElementById('marqueeTrack').innerHTML = html + html;
+        })();
+
+        // Spotlight + tilt on cards (desktop)
+        (function () {
+            if (!matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+            document.addEventListener('mousemove', e => {
+                const card = e.target.closest && e.target.closest('.glass-card');
+                if (!card) return;
+                const r = card.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
+                card.style.setProperty('--mx', x + 'px'); card.style.setProperty('--my', y + 'px');
+                if (card.matches('form, #contact .glass-card, .faq-item') || r.width > 700) return;
+                const rx = ((y / r.height) - .5) * -8, ry = ((x / r.width) - .5) * 8;
+                card.style.transform = 'perspective(800px) rotateX(' + rx + 'deg) rotateY(' + ry + 'deg) translateY(-4px)';
+            });
+            document.addEventListener('mouseout', e => {
+                const card = e.target.closest && e.target.closest('.glass-card');
+                if (card && !card.contains(e.relatedTarget)) card.style.transform = '';
+            });
+        })();
+
+        // Gallery + lightbox
+        (function () {
+            const grid = document.getElementById('galleryGrid'); let imgs = [], cur = 0;
+            const lb = document.getElementById('lightbox'), lbImg = document.getElementById('lbImg');
+            const show = i => { cur = (i + imgs.length) % imgs.length; lbImg.src = imgs[cur]; lb.classList.add('open'); };
+            fetch('./public/project-gallery.json').then(r => r.json()).then(d => {
+                imgs = d.images || [];
+                grid.innerHTML = imgs.map((s, i) => '<img loading="lazy" src="' + s + '" alt="Gallery photo ' + (i + 1) + '" data-i="' + i + '">').join('');
+                if (!imgs.length) document.getElementById('gallery').classList.add('hidden');
+            }).catch(() => document.getElementById('gallery').classList.add('hidden'));
+            grid.addEventListener('click', e => { if (e.target.dataset.i) show(+e.target.dataset.i); });
+            document.getElementById('lbClose').onclick = () => lb.classList.remove('open');
+            document.getElementById('lbPrev').onclick = () => show(cur - 1);
+            document.getElementById('lbNext').onclick = () => show(cur + 1);
+            lb.addEventListener('click', e => { if (e.target === lb) lb.classList.remove('open'); });
+            addEventListener('keydown', e => { if (!lb.classList.contains('open')) return; if (e.key === 'Escape') lb.classList.remove('open'); if (e.key === 'ArrowLeft') show(cur - 1); if (e.key === 'ArrowRight') show(cur + 1); });
+        })();
+
+        // Certifications & testimonials (only if data present)
+        (function () {
+            const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+            if (CERTIFICATES.length) {
+                document.getElementById('certificates') ; 
+                document.getElementById('certifications').classList.remove('hidden');
+                document.getElementById('certGrid').innerHTML = CERTIFICATES.map(c => '<div class="glass-card p-6 rounded-3xl space-y-2"><i class="fa-solid fa-award text-2xl text-amber-400"></i><h3 class="font-bold text-lg">' + esc(c.title) + '</h3><p class="text-sm text-slate-400">' + esc(c.issuer) + ' &middot; ' + esc(c.date) + '</p>' + (c.link ? '<a class="text-xs text-brand-400" target="_blank" rel="noopener" href="' + esc(c.link) + '">View certificate</a>' : '') + '</div>').join('');
+            }
+            if (TESTIMONIALS.length) {
+                document.getElementById('testimonials').classList.remove('hidden');
+                document.getElementById('testiGrid').innerHTML = TESTIMONIALS.map(t => '<div class="glass-card p-7 rounded-3xl space-y-3"><i class="fa-solid fa-quote-left text-pink-400"></i><p class="text-slate-300">' + esc(t.text) + '</p><p class="font-bold">' + esc(t.name) + ' <span class="text-xs text-slate-400 font-normal">' + esc(t.role) + '</span></p></div>').join('');
+            }
+        })();
+
+        // FAQ accordion
+        document.getElementById('faqList').addEventListener('click', e => {
+            const q = e.target.closest('.faq-q'); if (!q) return;
+            q.parentElement.classList.toggle('open');
+        });
+
+        // WhatsApp
+        (function () {
+            const b = document.getElementById('waBtn');
+            if (WHATSAPP_NUMBER) { b.href = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent('Hello Saadman, I saw your portfolio.'); b.classList.remove('hidden'); }
+        })();
+
+        // Visitor counter
+        (function () {
+            const el = document.getElementById('visitorCount'); if (!el) return;
+            const base = 'https://api.counterapi.dev/v1/saadmankhandker-portfolio/visits';
+            const url = sessionStorage.getItem('counted') ? base : base + '/up';
+            fetch(url).then(r => r.json()).then(d => { sessionStorage.setItem('counted', '1'); if (d && d.count != null) { el.textContent = Number(d.count).toLocaleString(); el.parentElement.classList.remove('hidden'); } }).catch(() => { });
+        })();
+
+        // Language toggle (EN <-> BN) for static labels
+        (function () {
+            const dict = {
+                'Home': 'হোম', 'Services': 'সার্ভিস', 'Experience': 'অভিজ্ঞতা', 'Projects': 'প্রজেক্ট', 'Skills': 'দক্ষতা', 'Contact': 'যোগাযোগ',
+                'Get In Touch': 'যোগাযোগ করুন', 'Gallery': 'গ্যালারি', 'FAQ': 'প্রশ্নোত্তর', 'Featured Projects': 'নির্বাচিত প্রজেক্ট',
+                'Skills & Capabilities': 'দক্ষতা ও সক্ষমতা', 'Certifications & Training': 'সার্টিফিকেশন ও প্রশিক্ষণ', 'Testimonials': 'প্রশংসাপত্র',
+                'Resume': 'রেজিউমে', 'Moments': 'মুহূর্ত', 'Questions': 'প্রশ্ন',
+                'What kind of work do you do?': 'আপনি কী ধরনের কাজ করেন?', 'Are you available for new roles?': 'আপনি কি নতুন কাজের জন্য প্রস্তুত?',
+                'How can I contact you quickly?': 'দ্রুত কীভাবে যোগাযোগ করব?', 'Can I see your CV?': 'আপনার CV দেখতে পারি?',
+                'Available for Operations & Media Roles': 'অপারেশন্স ও মিডিয়া কাজের জন্য প্রস্তুত'
+            };
+            const store = new WeakMap(); let bn = false;
+            const nodes = () => { const out = []; document.querySelectorAll('a,span,h2,button span,h3').forEach(el => { if (el.children.length === 0 && el.textContent.trim() in dict) out.push(el); }); return out; };
+            const btn = document.getElementById('langBtn');
+            btn.addEventListener('click', () => {
+                bn = !bn;
+                nodes().forEach(el => { if (!store.has(el)) store.set(el, el.textContent.trim()); });
+                document.querySelectorAll('a,span,h2,h3,button span').forEach(el => {
+                    if (el.children.length) return;
+                    const orig = store.get(el) || el.textContent.trim();
+                    if (bn && dict[orig]) { store.set(el, orig); el.textContent = dict[orig]; }
+                    else if (!bn && store.has(el)) el.textContent = store.get(el);
+                });
+                btn.textContent = bn ? 'English' : 'বাংলা';
+                document.documentElement.lang = bn ? 'bn' : 'en';
+            });
+        })();
+
+        // Service worker (PWA)
+        if ('serviceWorker' in navigator && location.protocol.startsWith('http')) navigator.serviceWorker.register('./sw.js').catch(() => { });
     </script>
 </body>
 </html>
