@@ -144,7 +144,7 @@
             transition: all 0.25s ease;
         }
         .btn-gradient:hover {
-            box-shadow: 0 8px 28px rgba(79, 70, 229, 0.55);
+            box-shadow: 0 8px 32px rgba(99, 102, 241, 0.7), 0 0 15px rgba(168, 85, 247, 0.5);
             transform: translateY(-2px);
         }
         .btn-gradient:active {
@@ -158,8 +158,9 @@
             transition: all 0.25s ease;
         }
         .btn-outline:hover {
-            border-color: #6366f1;
-            background: rgba(99, 102, 241, 0.15);
+            border-color: #818cf8;
+            background: rgba(99, 102, 241, 0.2);
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
             transform: translateY(-2px);
         }
         html:not(.dark) .btn-outline {
@@ -167,16 +168,60 @@
             background: rgba(255, 255, 255, 0.6);
         }
 
-        /* Gradient Accent Text */
+        /* Neon Glowing Gradient Text with Shimmer Animation */
         .gradient-text {
-            background: linear-gradient(135deg, #818cf8 0%, #c084fc 50%, #f472b6 100%);
+            background: linear-gradient(90deg, #818cf8 0%, #c084fc 25%, #f472b6 50%, #c084fc 75%, #818cf8 100%);
+            background-size: 200% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            animation: textShimmer 5s linear infinite;
+            filter: drop-shadow(0 0 12px rgba(129, 140, 248, 0.35));
         }
-        html:not(.dark) .gradient-text {
-            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #db2777 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        @keyframes textShimmer {
+            0% { background-position: 0% center; }
+            100% { background-position: 200% center; }
+        }
+
+        /* Pulsating Neon Glow for Headings */
+        .neon-glow-heading {
+            text-shadow: 0 0 20px rgba(99, 102, 241, 0.3), 0 0 40px rgba(168, 85, 247, 0.2);
+        }
+
+        /* Dynamic Neon Border for Picture Box */
+        .neon-border-box {
+            position: relative;
+        }
+        .neon-border-box::before {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 1.75rem;
+            background: linear-gradient(135deg, #6366f1, #a855f7, #ec4899, #3b82f6);
+            background-size: 300% 300%;
+            animation: neonBorderRotate 4s ease infinite alternate;
+            filter: blur(12px);
+            opacity: 0.85;
+            z-index: 0;
+            transition: opacity 0.3s;
+        }
+        .neon-border-box:hover::before {
+            opacity: 1;
+            filter: blur(18px);
+        }
+        @keyframes neonBorderRotate {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Neon Floating Orbs */
+        .neon-glow-badge {
+            box-shadow: 0 0 15px rgba(99, 102, 241, 0.4), inset 0 0 10px rgba(99, 102, 241, 0.2);
+            animation: badgePulse 3s ease-in-out infinite;
+        }
+        @keyframes badgePulse {
+            0%, 100% { box-shadow: 0 0 15px rgba(99, 102, 241, 0.4), inset 0 0 8px rgba(99, 102, 241, 0.2); }
+            50% { box-shadow: 0 0 25px rgba(168, 85, 247, 0.6), inset 0 0 14px rgba(168, 85, 247, 0.3); }
         }
 
         /* Section Headings */
@@ -494,21 +539,22 @@
 
             <!-- Right Avatar Area -->
             <div class="lg:w-5/12 flex justify-center">
-                <div class="relative group">
-                    <!-- Glow Behind Image -->
-                    <div class="absolute -inset-1.5 bg-gradient-to-r from-brand-600 via-purple-600 to-pink-600 rounded-3xl blur-xl opacity-50 group-hover:opacity-75 transition duration-500"></div>
-                    
-                    <!-- Image Card -->
-                    <div class="relative w-72 sm:w-84 aspect-[3/4] rounded-3xl overflow-hidden border border-white/20 dark:border-brand-500/30 bg-dark-900 shadow-2xl">
+                <div class="neon-border-box group">
+                    <!-- Image Card with Neon Frame -->
+                    <div class="relative w-72 sm:w-80 aspect-[3/4] rounded-3xl overflow-hidden border-2 border-indigo-500/40 bg-dark-900 shadow-2xl z-10">
                         <img id="profileImage" src="./public/img.jpg" alt="Khandker Saadman Rafid" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-                        <div class="absolute inset-0 bg-gradient-to-t from-dark-950/80 via-transparent to-transparent"></div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-950/85 via-transparent to-transparent"></div>
                         
-                        <div class="absolute bottom-4 inset-x-4 p-3 rounded-2xl bg-dark-900/80 backdrop-blur-md border border-white/10 flex items-center justify-between">
+                        <!-- Floating Location & Live Status Pill -->
+                        <div class="absolute bottom-4 inset-x-4 p-3 rounded-2xl bg-dark-900/85 backdrop-blur-md border border-indigo-500/30 flex items-center justify-between shadow-lg">
                             <div>
-                                <span class="block text-xs font-bold text-white">Saadman Rafid</span>
-                                <span class="block text-[11px] text-slate-400">Dhaka, Bangladesh</span>
+                                <span class="block text-xs font-bold text-white flex items-center gap-1.5">
+                                    <span class="w-2 h-2 rounded-full bg-indigo-400"></span>
+                                    Saadman Rafid
+                                </span>
+                                <span class="block text-[11px] text-slate-400 mt-0.5">Dhaka, Bangladesh</span>
                             </div>
-                            <span class="w-3 h-3 rounded-full bg-emerald-500 ring-4 ring-emerald-500/20"></span>
+                            <span class="w-3 h-3 rounded-full bg-emerald-400 ring-4 ring-emerald-500/30 animate-pulse"></span>
                         </div>
                     </div>
                 </div>
@@ -518,8 +564,8 @@
         <!-- ==================== EXPERIENCE SECTION ==================== -->
         <section id="experience" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
             <div class="text-center max-w-2xl mx-auto mb-16">
-                <span class="section-tag">01 / Career</span>
-                <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight">Work Experience</h2>
+                <span class="section-tag neon-glow-badge">01 / Career</span>
+                <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight neon-glow-heading">Work Experience</h2>
                 <p class="text-slate-400 mt-3 text-sm sm:text-base">A track record of high-performance operations, retail discipline, and active humanitarian response.</p>
             </div>
 
@@ -560,8 +606,8 @@
         <!-- ==================== PROJECTS SECTION ==================== -->
         <section id="projects" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
             <div class="text-center max-w-2xl mx-auto mb-16">
-                <span class="section-tag">02 / Portfolio</span>
-                <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight">Featured Projects</h2>
+                <span class="section-tag neon-glow-badge">02 / Portfolio</span>
+                <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight neon-glow-heading">Featured Projects</h2>
                 <p class="text-slate-400 mt-3 text-sm sm:text-base">Selected projects across digital content digitization, data formatting, and humanitarian leadership.</p>
             </div>
 
@@ -573,8 +619,8 @@
         <!-- ==================== SKILLS SECTION ==================== -->
         <section id="skills" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
             <div class="text-center max-w-2xl mx-auto mb-16">
-                <span class="section-tag">03 / Competencies</span>
-                <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight">Skills & Capabilities</h2>
+                <span class="section-tag neon-glow-badge">03 / Competencies</span>
+                <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight neon-glow-heading">Skills & Capabilities</h2>
                 <p class="text-slate-400 mt-3 text-sm sm:text-base">Key technical tools and organizational competencies honed through operations and media work.</p>
             </div>
 
@@ -593,8 +639,8 @@
                     <!-- Contact Intro & Links -->
                     <div class="space-y-8">
                         <div>
-                            <span class="section-tag">04 / Connect</span>
-                            <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight mt-2">Let's Work Together.</h2>
+                            <span class="section-tag neon-glow-badge">04 / Connect</span>
+                            <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight mt-2 neon-glow-heading">Let's Work Together.</h2>
                             <p class="text-slate-400 mt-3 text-sm sm:text-base leading-relaxed">
                                 Whether you have an operational opportunity, creative project, or simply want to connect, feel free to drop a message.
                             </p>
