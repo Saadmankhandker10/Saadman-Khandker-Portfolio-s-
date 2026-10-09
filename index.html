@@ -409,16 +409,12 @@
                     <a href="#contact" class="px-4 py-2 rounded-full text-xs font-semibold hover:text-brand-400 hover:bg-white/5 transition">Contact</a>
                 </nav>
 
-                <!-- Actions: Theme Toggle & Admin Link -->
+                <!-- Actions: Theme Toggle -->
                 <div class="flex items-center gap-2">
                     <button id="themeToggle" type="button" class="w-10 h-10 rounded-xl flex items-center justify-center bg-white/5 hover:bg-white/10 border border-white/10 text-slate-400 hover:text-white transition" title="Toggle Dark/Light Mode">
                         <i class="fa-solid fa-moon dark:hidden"></i>
                         <i class="fa-solid fa-sun hidden dark:inline text-amber-400"></i>
                     </button>
-                    <a href="./saadman_khandker.html" class="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold btn-outline" title="Admin Control Center">
-                        <i class="fa-solid fa-lock text-brand-400"></i>
-                        <span>Admin</span>
-                    </a>
                     
                     <!-- Mobile Hamburger -->
                     <button id="mobileMenuBtn" type="button" class="md:hidden w-10 h-10 rounded-xl flex items-center justify-center bg-white/5 border border-white/10 text-slate-300">
@@ -435,7 +431,6 @@
             <a href="#projects" class="block px-4 py-2.5 rounded-xl text-sm font-semibold hover:bg-brand-500/10 hover:text-brand-400 transition">Projects</a>
             <a href="#skills" class="block px-4 py-2.5 rounded-xl text-sm font-semibold hover:bg-brand-500/10 hover:text-brand-400 transition">Skills</a>
             <a href="#contact" class="block px-4 py-2.5 rounded-xl text-sm font-semibold hover:bg-brand-500/10 hover:text-brand-400 transition">Contact</a>
-            <a href="./saadman_khandker.html" class="block px-4 py-2.5 rounded-xl text-sm font-semibold text-brand-400 hover:bg-brand-500/10 transition">Admin Dashboard →</a>
         </div>
     </header>
 
@@ -701,13 +696,20 @@
             </div>
             <div class="flex items-center gap-6 text-xs font-mono text-slate-400">
                 <a href="#home" class="hover:text-brand-400 transition">Back to Top ↑</a>
-                <a href="./saadman_khandker.html" class="hover:text-brand-400 transition">Admin Login</a>
             </div>
         </div>
     </footer>
 
     <!-- ==================== JAVASCRIPT LOGIC ==================== -->
     <script>
+        // Secret Keyboard Shortcut: Ctrl + Shift + A -> Admin Dashboard
+        window.addEventListener('keydown', e => {
+            if (e.ctrlKey && e.shiftKey && (e.key === 'A' || e.key === 'a')) {
+                e.preventDefault();
+                window.location.href = './saadman_khandker.html';
+            }
+        });
+
         // Set dynamic current year in footer
         document.getElementById('year').textContent = new Date().getFullYear();
 
