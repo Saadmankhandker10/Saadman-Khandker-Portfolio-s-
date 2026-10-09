@@ -120,11 +120,19 @@
         ::-webkit-scrollbar-thumb { background: #4338ca; border-radius: 9999px; }
         .light ::-webkit-scrollbar-thumb { background: #c7d2fe; }
 
+        html {
+            overflow-x: hidden;
+            width: 100%;
+            -webkit-text-size-adjust: 100%;
+        }
+
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
             background-color: #050817;
             color: #f1f5f9;
             overflow-x: hidden;
+            width: 100%;
+            position: relative;
             transition: background-color 0.3s ease, color 0.3s ease;
         }
 
@@ -564,6 +572,22 @@
             transform: translateY(-3px);
         }
 
+        /* Mobile Viewport Optimizations (Avoid Bottom Collisions) */
+        @media (max-width: 768px) {
+            #liveWidget {
+                display: none !important;
+            }
+            #waBtn {
+                display: none !important;
+            }
+            #backToTop {
+                bottom: 5.5rem !important;
+                right: 1rem !important;
+                width: 2.75rem !important;
+                height: 2.75rem !important;
+            }
+        }
+
         /* Live Status Pill */
         #liveWidget {
             position: fixed;
@@ -931,14 +955,14 @@
     <main class="flex-grow pt-24 z-10 relative">
 
         <!-- ==================== HERO SECTION ==================== -->
-        <section id="home" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 lg:py-32 flex flex-col-reverse lg:flex-row items-center justify-between gap-12 lg:gap-16">
+        <section id="home" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-20 lg:py-32 flex flex-col-reverse lg:flex-row items-center justify-between gap-10 lg:gap-16">
             
             <!-- Left Info Area -->
-            <div class="lg:w-7/12 space-y-8 text-center lg:text-left">
+            <div class="lg:w-7/12 space-y-6 sm:space-y-8 text-center lg:text-left">
                 <!-- Cyber HUD Global Status & Live Time Bar -->
-                <div class="cyber-hud-bar inline-flex flex-wrap items-center justify-center lg:justify-start gap-2.5 sm:gap-3 p-2 rounded-2xl max-w-fit mx-auto lg:mx-0">
+                <div class="cyber-hud-bar inline-flex flex-wrap items-center justify-center lg:justify-start gap-2 sm:gap-3 p-2 rounded-2xl max-w-full mx-auto lg:mx-0">
                     <!-- Live Availability Pill -->
-                    <div class="cyber-pill cyber-pill-avail flex items-center gap-2.5 px-3.5 py-1.5 rounded-xl text-emerald-300 text-xs sm:text-sm font-bold tracking-wide">
+                    <div class="cyber-pill cyber-pill-avail flex items-center gap-2 px-3 sm:px-3.5 py-1.5 rounded-xl text-emerald-300 text-xs sm:text-sm font-bold tracking-wide">
                         <span class="relative flex h-2.5 w-2.5">
                             <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-80"></span>
                             <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400 shadow-[0_0_8px_#34d399]"></span>
@@ -947,7 +971,7 @@
                     </div>
 
                     <!-- Location & Live Clock Pill -->
-                    <div class="cyber-pill cyber-pill-location flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-bold font-mono text-slate-100">
+                    <div class="cyber-pill cyber-pill-location flex items-center gap-1.5 sm:gap-2 px-3 sm:px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-bold font-mono text-slate-100">
                         <i class="fa-solid fa-location-dot text-rose-400 text-sm drop-shadow-[0_0_8px_rgba(251,113,133,0.7)] animate-pulse"></i>
                         <span class="tracking-wide">Dhaka, BD</span>
                         <span class="text-brand-400 font-extrabold">&bull;</span>
@@ -955,37 +979,37 @@
                     </div>
 
                     <!-- Fast Response Pill -->
-                    <div class="cyber-pill cyber-pill-response flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold font-mono text-amber-300">
+                    <div class="cyber-pill cyber-pill-response flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold font-mono text-amber-300">
                         <i class="fa-solid fa-bolt text-amber-400 text-sm drop-shadow-[0_0_8px_rgba(251,191,36,0.8)]"></i>
                         <span class="drop-shadow-[0_0_8px_rgba(251,191,36,0.4)]">Response &lt; 30m</span>
                     </div>
                 </div>
 
                 <!-- Main Headline -->
-                <div class="space-y-4">
-                    <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.1]">
+                <div class="space-y-3 sm:space-y-4">
+                    <h1 class="text-3xl sm:text-5xl lg:text-7xl font-extrabold tracking-tight leading-[1.1] break-words">
                         Hi, I'm <br class="hidden sm:inline" />
                         <span id="heroName" class="gradient-text">Khandker Sadman Rafid Saad</span>
                     </h1>
-                    <div class="text-lg sm:text-2xl font-bold neon-typing-line">
+                    <div class="text-base sm:text-2xl font-bold neon-typing-line">
                         <span class="text-slate-400">I'm a </span><span id="typingText" class="neon-typing-text"></span><span class="typing-caret">|</span>
                     </div>
-                    <p id="heroBio" class="text-base sm:text-xl text-slate-400 dark:text-slate-300 max-w-2xl font-normal leading-relaxed mx-auto lg:mx-0">
+                    <p id="heroBio" class="text-sm sm:text-xl text-slate-400 dark:text-slate-300 max-w-2xl font-normal leading-relaxed mx-auto lg:mx-0">
                         Professional typist &amp; operations specialist delivering 65+ WPM speed, 99.9% accuracy, flawless document formatting, and rapid turnaround for clients worldwide.
                     </p>
                 </div>
 
                 <!-- Call to Action Buttons -->
-                <div class="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-2">
-                    <a href="#typing-services" class="btn-gradient inline-flex items-center gap-2 px-6 py-3.5 rounded-2xl text-sm font-bold text-white shadow-lg shadow-brand-500/25">
+                <div class="flex flex-wrap items-center justify-center lg:justify-start gap-3 sm:gap-4 pt-2">
+                    <a href="#typing-services" class="w-full sm:w-auto btn-gradient inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl text-sm font-bold text-white shadow-lg shadow-brand-500/25">
                         <i class="fa-solid fa-keyboard text-xs"></i>
                         <span>Hire for Typing</span>
                     </a>
-                    <a href="#contact" class="btn-outline inline-flex items-center gap-2 px-6 py-3.5 rounded-2xl text-sm font-semibold">
+                    <a href="#contact" class="w-full sm:w-auto btn-outline inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl text-sm font-semibold">
                         <span>Get In Touch</span>
                         <i class="fa-solid fa-arrow-right text-xs"></i>
                     </a>
-                    <a href="#projects" class="btn-outline inline-flex items-center gap-2 px-6 py-3.5 rounded-2xl text-sm font-semibold">
+                    <a href="#projects" class="w-full sm:w-auto btn-outline inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl text-sm font-semibold">
                         <span>View Work</span>
                         <i class="fa-solid fa-layer-group text-xs text-brand-400"></i>
                     </a>
@@ -996,18 +1020,18 @@
                 </div>
 
                 <!-- Live Metrics Summary Pill -->
-                <div class="grid grid-cols-3 gap-4 pt-4 max-w-lg mx-auto lg:mx-0">
-                    <div class="glass-card p-4 rounded-2xl text-center">
-                        <span id="projectCount" class="block text-2xl sm:text-3xl font-extrabold text-white gradient-text">1</span>
-                        <span class="text-[11px] font-mono uppercase text-slate-400 tracking-wider">Projects</span>
+                <div class="grid grid-cols-3 gap-2 sm:gap-4 pt-2 sm:pt-4 max-w-lg mx-auto lg:mx-0">
+                    <div class="glass-card p-2.5 sm:p-4 rounded-xl sm:rounded-2xl text-center">
+                        <span id="projectCount" class="block text-xl sm:text-3xl font-extrabold text-white gradient-text">1</span>
+                        <span class="text-[10px] sm:text-[11px] font-mono uppercase text-slate-400 tracking-wider">Projects</span>
                     </div>
-                    <div class="glass-card p-4 rounded-2xl text-center">
-                        <span id="experienceCount" class="block text-2xl sm:text-3xl font-extrabold text-white gradient-text">2</span>
-                        <span class="text-[11px] font-mono uppercase text-slate-400 tracking-wider">Experience</span>
+                    <div class="glass-card p-2.5 sm:p-4 rounded-xl sm:rounded-2xl text-center">
+                        <span id="experienceCount" class="block text-xl sm:text-3xl font-extrabold text-white gradient-text">2</span>
+                        <span class="text-[10px] sm:text-[11px] font-mono uppercase text-slate-400 tracking-wider">Experience</span>
                     </div>
-                    <div class="glass-card p-4 rounded-2xl text-center">
-                        <span id="skillCount" class="block text-2xl sm:text-3xl font-extrabold text-white gradient-text">4</span>
-                        <span class="text-[11px] font-mono uppercase text-slate-400 tracking-wider">Skills</span>
+                    <div class="glass-card p-2.5 sm:p-4 rounded-xl sm:rounded-2xl text-center">
+                        <span id="skillCount" class="block text-xl sm:text-3xl font-extrabold text-white gradient-text">4</span>
+                        <span class="text-[10px] sm:text-[11px] font-mono uppercase text-slate-400 tracking-wider">Skills</span>
                     </div>
                 </div>
             </div>
@@ -1040,41 +1064,41 @@
 
         <!-- ==================== IMPACT HIGHLIGHTS COUNTERS ==================== -->
         <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-6 mb-16 relative z-20">
-            <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-                <div class="glass-card p-6 rounded-3xl relative overflow-hidden group">
-                    <div class="w-10 h-10 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 flex items-center justify-center text-lg mb-3 group-hover:scale-110 transition-transform">
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
+                <div class="glass-card p-3.5 sm:p-6 rounded-2xl sm:rounded-3xl relative overflow-hidden group">
+                    <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 flex items-center justify-center text-base sm:text-lg mb-2 sm:mb-3 group-hover:scale-110 transition-transform">
                         <i class="fa-solid fa-keyboard"></i>
                     </div>
-                    <span class="block text-3xl sm:text-4xl font-extrabold text-white gradient-text">65+ WPM</span>
-                    <p class="text-xs sm:text-sm font-semibold text-slate-300 mt-1">Touch Typing Speed</p>
-                    <p class="text-[11px] text-slate-400 mt-0.5 font-mono">Fast &amp; steady manual typing</p>
+                    <span class="block text-2xl sm:text-4xl font-extrabold text-white gradient-text">65+ WPM</span>
+                    <p class="text-[11px] sm:text-sm font-semibold text-slate-300 mt-1">Touch Typing Speed</p>
+                    <p class="text-[10px] sm:text-[11px] text-slate-400 mt-0.5 font-mono">Fast &amp; steady manual typing</p>
                 </div>
 
-                <div class="glass-card p-6 rounded-3xl relative overflow-hidden group">
-                    <div class="w-10 h-10 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center text-lg mb-3 group-hover:scale-110 transition-transform">
+                <div class="glass-card p-3.5 sm:p-6 rounded-2xl sm:rounded-3xl relative overflow-hidden group">
+                    <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center text-base sm:text-lg mb-2 sm:mb-3 group-hover:scale-110 transition-transform">
                         <i class="fa-solid fa-bullseye"></i>
                     </div>
-                    <span class="block text-3xl sm:text-4xl font-extrabold text-white gradient-text">99.9%</span>
-                    <p class="text-xs sm:text-sm font-semibold text-slate-300 mt-1">Accuracy &amp; Proofreading</p>
-                    <p class="text-[11px] text-slate-400 mt-0.5 font-mono">Zero typos &amp; clean Word format</p>
+                    <span class="block text-2xl sm:text-4xl font-extrabold text-white gradient-text">99.9%</span>
+                    <p class="text-[11px] sm:text-sm font-semibold text-slate-300 mt-1">Accuracy &amp; Proofreading</p>
+                    <p class="text-[10px] sm:text-[11px] text-slate-400 mt-0.5 font-mono">Zero typos &amp; clean Word format</p>
                 </div>
 
-                <div class="glass-card p-6 rounded-3xl relative overflow-hidden group">
-                    <div class="w-10 h-10 rounded-2xl bg-purple-500/10 border border-purple-500/20 text-purple-400 flex items-center justify-center text-lg mb-3 group-hover:scale-110 transition-transform">
+                <div class="glass-card p-3.5 sm:p-6 rounded-2xl sm:rounded-3xl relative overflow-hidden group">
+                    <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-purple-500/10 border border-purple-500/20 text-purple-400 flex items-center justify-center text-base sm:text-lg mb-2 sm:mb-3 group-hover:scale-110 transition-transform">
                         <i class="fa-solid fa-file-word"></i>
                     </div>
-                    <span class="block text-3xl sm:text-4xl font-extrabold text-white gradient-text">100+</span>
-                    <p class="text-xs sm:text-sm font-semibold text-slate-300 mt-1">Documents &amp; Decks</p>
-                    <p class="text-[11px] text-slate-400 mt-0.5 font-mono">High accuracy digitization</p>
+                    <span class="block text-2xl sm:text-4xl font-extrabold text-white gradient-text">100+</span>
+                    <p class="text-[11px] sm:text-sm font-semibold text-slate-300 mt-1">Documents &amp; Decks</p>
+                    <p class="text-[10px] sm:text-[11px] text-slate-400 mt-0.5 font-mono">High accuracy digitization</p>
                 </div>
 
-                <div class="glass-card p-6 rounded-3xl relative overflow-hidden group">
-                    <div class="w-10 h-10 rounded-2xl bg-pink-500/10 border border-pink-500/20 text-pink-400 flex items-center justify-center text-lg mb-3 group-hover:scale-110 transition-transform">
+                <div class="glass-card p-3.5 sm:p-6 rounded-2xl sm:rounded-3xl relative overflow-hidden group">
+                    <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-pink-500/10 border border-pink-500/20 text-pink-400 flex items-center justify-center text-base sm:text-lg mb-2 sm:mb-3 group-hover:scale-110 transition-transform">
                         <i class="fa-solid fa-shield-halved"></i>
                     </div>
-                    <span class="block text-3xl sm:text-4xl font-extrabold text-white gradient-text">100%</span>
-                    <p class="text-xs sm:text-sm font-semibold text-slate-300 mt-1">Confidential &amp; Private</p>
-                    <p class="text-[11px] text-slate-400 mt-0.5 font-mono">Strict client data protection</p>
+                    <span class="block text-2xl sm:text-4xl font-extrabold text-white gradient-text">100%</span>
+                    <p class="text-[11px] sm:text-sm font-semibold text-slate-300 mt-1">Confidential &amp; Private</p>
+                    <p class="text-[10px] sm:text-[11px] text-slate-400 mt-0.5 font-mono">Strict client data protection</p>
                 </div>
             </div>
         </section>
@@ -1149,41 +1173,41 @@
             </div>
 
             <!-- Live Performance Metrics & Guarantee Bar -->
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 mb-12">
-                <div class="glass-card p-6 rounded-3xl text-center group border border-brand-500/30">
-                    <div class="w-12 h-12 rounded-2xl bg-brand-500/10 border border-brand-500/20 text-brand-400 flex items-center justify-center text-xl mx-auto mb-3 group-hover:scale-110 transition-transform">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6 mb-12">
+                <div class="glass-card p-3.5 sm:p-6 rounded-2xl sm:rounded-3xl text-center group border border-brand-500/30">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-brand-500/10 border border-brand-500/20 text-brand-400 flex items-center justify-center text-lg sm:text-xl mx-auto mb-2 sm:mb-3 group-hover:scale-110 transition-transform">
                         <i class="fa-solid fa-keyboard"></i>
                     </div>
-                    <span class="block text-3xl sm:text-4xl font-extrabold text-white gradient-text">65+ WPM</span>
-                    <p class="text-xs sm:text-sm font-semibold text-slate-200 mt-1">Typing Speed</p>
-                    <p class="text-[11px] text-slate-400 mt-0.5 font-mono">Touch-typing with rapid turnaround</p>
+                    <span class="block text-2xl sm:text-4xl font-extrabold text-white gradient-text">65+ WPM</span>
+                    <p class="text-[11px] sm:text-sm font-semibold text-slate-200 mt-1">Typing Speed</p>
+                    <p class="text-[10px] sm:text-[11px] text-slate-400 mt-0.5 font-mono">Touch-typing with rapid turnaround</p>
                 </div>
 
-                <div class="glass-card p-6 rounded-3xl text-center group border border-emerald-500/30">
-                    <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center text-xl mx-auto mb-3 group-hover:scale-110 transition-transform">
+                <div class="glass-card p-3.5 sm:p-6 rounded-2xl sm:rounded-3xl text-center group border border-emerald-500/30">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center text-lg sm:text-xl mx-auto mb-2 sm:mb-3 group-hover:scale-110 transition-transform">
                         <i class="fa-solid fa-bullseye"></i>
                     </div>
-                    <span class="block text-3xl sm:text-4xl font-extrabold text-white gradient-text">99.9%</span>
-                    <p class="text-xs sm:text-sm font-semibold text-slate-200 mt-1">Accuracy Rate</p>
-                    <p class="text-[11px] text-slate-400 mt-0.5 font-mono">Zero typos &amp; strict proofreading</p>
+                    <span class="block text-2xl sm:text-4xl font-extrabold text-white gradient-text">99.9%</span>
+                    <p class="text-[11px] sm:text-sm font-semibold text-slate-200 mt-1">Accuracy Rate</p>
+                    <p class="text-[10px] sm:text-[11px] text-slate-400 mt-0.5 font-mono">Zero typos &amp; strict proofreading</p>
                 </div>
 
-                <div class="glass-card p-6 rounded-3xl text-center group border border-pink-500/30">
-                    <div class="w-12 h-12 rounded-2xl bg-pink-500/10 border border-pink-500/20 text-pink-400 flex items-center justify-center text-xl mx-auto mb-3 group-hover:scale-110 transition-transform">
+                <div class="glass-card p-3.5 sm:p-6 rounded-2xl sm:rounded-3xl text-center group border border-pink-500/30">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-pink-500/10 border border-pink-500/20 text-pink-400 flex items-center justify-center text-lg sm:text-xl mx-auto mb-2 sm:mb-3 group-hover:scale-110 transition-transform">
                         <i class="fa-solid fa-bolt"></i>
                     </div>
-                    <span class="block text-3xl sm:text-4xl font-extrabold text-white gradient-text">&lt;24 Hours</span>
-                    <p class="text-xs sm:text-sm font-semibold text-slate-200 mt-1">Express Delivery</p>
-                    <p class="text-[11px] text-slate-400 mt-0.5 font-mono">Rush turnaround available on request</p>
+                    <span class="block text-2xl sm:text-4xl font-extrabold text-white gradient-text">&lt;24 Hours</span>
+                    <p class="text-[11px] sm:text-sm font-semibold text-slate-200 mt-1">Express Delivery</p>
+                    <p class="text-[10px] sm:text-[11px] text-slate-400 mt-0.5 font-mono">Rush turnaround available on request</p>
                 </div>
 
-                <div class="glass-card p-6 rounded-3xl text-center group border border-purple-500/30">
-                    <div class="w-12 h-12 rounded-2xl bg-purple-500/10 border border-purple-500/20 text-purple-400 flex items-center justify-center text-xl mx-auto mb-3 group-hover:scale-110 transition-transform">
+                <div class="glass-card p-3.5 sm:p-6 rounded-2xl sm:rounded-3xl text-center group border border-purple-500/30">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-purple-500/10 border border-purple-500/20 text-purple-400 flex items-center justify-center text-lg sm:text-xl mx-auto mb-2 sm:mb-3 group-hover:scale-110 transition-transform">
                         <i class="fa-solid fa-shield-halved"></i>
                     </div>
-                    <span class="block text-3xl sm:text-4xl font-extrabold text-white gradient-text">100% Secure</span>
-                    <p class="text-xs sm:text-sm font-semibold text-slate-200 mt-1">Confidential &amp; Private</p>
-                    <p class="text-[11px] text-slate-400 mt-0.5 font-mono">Strict NDA, data purged after project</p>
+                    <span class="block text-2xl sm:text-4xl font-extrabold text-white gradient-text">100% Secure</span>
+                    <p class="text-[11px] sm:text-sm font-semibold text-slate-200 mt-1">Confidential &amp; Private</p>
+                    <p class="text-[10px] sm:text-[11px] text-slate-400 mt-0.5 font-mono">Strict NDA, data purged after project</p>
                 </div>
             </div>
 
@@ -1239,7 +1263,7 @@
             </div>
 
             <!-- Interactive Live Typing Benchmark & Interactive Test Showcase -->
-            <div class="glass-card p-8 sm:p-10 rounded-3xl border border-brand-500/30 overflow-hidden relative">
+            <div class="glass-card p-5 sm:p-8 lg:p-10 rounded-2xl sm:rounded-3xl border border-brand-500/30 overflow-hidden relative">
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
                     <!-- Left Info -->
                     <div class="lg:col-span-7 space-y-4">
@@ -1666,7 +1690,7 @@
             </div>
 
             <!-- Guestbook Card Box -->
-            <div class="glass-card rounded-3xl p-6 sm:p-10 border border-brand-500/30 relative overflow-hidden">
+            <div class="glass-card rounded-2xl sm:rounded-3xl p-4 sm:p-8 lg:p-10 border border-brand-500/30 relative overflow-hidden">
                 <!-- Ambient Glow Behind Form -->
                 <div class="absolute -top-24 -right-24 w-72 h-72 bg-brand-500/10 rounded-full blur-3xl pointer-events-none" aria-hidden="true"></div>
 
@@ -1734,12 +1758,12 @@
             </div>
         </section>
         <section id="contact" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-            <div class="glass-card rounded-3xl p-8 sm:p-12 lg:p-16 relative overflow-hidden">
+            <div class="glass-card rounded-2xl sm:rounded-3xl p-4 sm:p-10 lg:p-16 relative overflow-hidden">
                 <!-- Background Decorative Glow -->
                 <div class="absolute -top-24 -right-24 w-80 h-80 bg-brand-500/20 rounded-full blur-3xl pointer-events-none"></div>
 
-                                <!-- Quick Quote & Project Estimator -->
-                <div class="mb-14 glass-card p-6 sm:p-8 rounded-3xl border border-brand-500/30">
+                <!-- Quick Quote & Project Estimator -->
+                <div class="mb-10 sm:mb-14 glass-card p-4 sm:p-6 lg:p-8 rounded-2xl sm:rounded-3xl border border-brand-500/30">
                     <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-6 pb-6 border-b border-white/10">
                         <div>
                             <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-semibold bg-pink-500/10 text-pink-400 border border-pink-500/30 mb-2">
