@@ -487,7 +487,10 @@
         #bgParticles { position:fixed; inset:0; z-index:0; pointer-events:none; }
         #pageLoader { position:fixed; inset:0; z-index:100000; background:#050817; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:18px; transition:opacity .6s ease, visibility .6s ease; }
         #pageLoader.done { opacity:0; visibility:hidden; }
-        .loader-logo { font-size:2.6rem; font-weight:900; letter-spacing:.08em; color:#fff; text-shadow:0 0 12px #818cf8,0 0 30px #c084fc,0 0 60px #f472b6; animation:loaderPulse 1.2s ease-in-out infinite; }
+        .loader-hello { font-size:.8rem; letter-spacing:.35em; text-transform:uppercase; color:#94a3b8; animation:loaderFade 1s ease both; }
+        .loader-tag { font-size:.9rem; color:#c7d2fe; text-shadow:0 0 10px rgba(129,140,248,.8); letter-spacing:.08em; text-align:center; padding:0 20px; animation:loaderFade 1.4s ease .4s both; }
+        @keyframes loaderFade { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:none; } }
+        .loader-logo { font-size:clamp(1.6rem,6vw,3rem); text-align:center; padding:0 16px; font-weight:900; letter-spacing:.06em; color:#fff; text-shadow:0 0 12px #818cf8,0 0 30px #c084fc,0 0 60px #f472b6; animation:loaderPulse 1.2s ease-in-out infinite; }
         .loader-bar { width:180px; height:3px; border-radius:99px; background:rgba(255,255,255,.1); overflow:hidden; }
         .loader-bar::after { content:''; display:block; height:100%; width:40%; background:linear-gradient(90deg,#818cf8,#f472b6); box-shadow:0 0 12px #c084fc; animation:loaderSlide 1s ease-in-out infinite; }
         @keyframes loaderPulse { 50% { opacity:.6; transform:scale(1.06); } }
@@ -522,7 +525,7 @@
         .visitor-pill { display:inline-flex; align-items:center; gap:8px; padding:6px 14px; border-radius:99px; font-size:.75rem; font-weight:700; color:#34d399; border:1px solid rgba(52,211,153,.4); text-shadow:0 0 8px #34d399; }
     </style></head>
 <body class="min-h-screen flex flex-col relative selection:bg-brand-500 selection:text-white">
-<div id="pageLoader"><div class="loader-logo">KSR</div><div class="loader-bar"></div></div>
+<div id="pageLoader"><div class="loader-hello">Welcome to the portfolio of</div><div class="loader-logo">Khandker Saadman Rafid</div><div class="loader-tag">Where precision meets passion &#10022; Service &#10022; Design &#10022; Impact</div><div class="loader-bar"></div></div>
 <canvas id="bgParticles"></canvas>
 <button id="langBtn" type="button" aria-label="Change language">বাংলা</button>
 <div id="lightbox"><button id="lbClose" aria-label="Close">&times;</button><button id="lbPrev" style="left:10px" aria-label="Previous">&#10094;</button><img id="lbImg" alt=""><button id="lbNext" style="right:10px" aria-label="Next">&#10095;</button></div>
@@ -1389,7 +1392,8 @@
         const TESTIMONIALS = [];      // { name:'', role:'', text:'' }
 
         // Loader
-        window.addEventListener('load', () => setTimeout(() => document.getElementById('pageLoader').classList.add('done'), 500));
+        const loaderStart = Date.now();
+        window.addEventListener('load', () => setTimeout(() => document.getElementById('pageLoader').classList.add('done'), Math.max(300, 1800 - (Date.now() - loaderStart))));
         setTimeout(() => document.getElementById('pageLoader').classList.add('done'), 4000);
 
         // Particles
