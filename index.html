@@ -650,8 +650,8 @@
         /* ===== Extras: spotlight, marquee, loader, gallery, faq, floating ===== */
         .glass-card { background-image: radial-gradient(320px circle at var(--mx,-999px) var(--my,-999px), rgba(129,140,248,.18), transparent 60%); will-change: transform; }
         #bgVideoWrapper { position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
-        #bgVideo3D { width:100%; height:100%; object-fit:cover; }
-        html:not(.dark) #bgVideoWrapper { opacity:0.18; filter:grayscale(30%); }
+        #bgVideo3D { width:100%; height:100%; object-fit:cover; filter:saturate(200%) brightness(135%) contrast(115%); }
+        html:not(.dark) #bgVideoWrapper { opacity:0.25; filter:grayscale(20%); }
         #pageLoader { position:fixed; inset:0; z-index:100000; background:#050817; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:18px; transition:opacity .6s ease, visibility .6s ease; }
         #pageLoader.done { opacity:0; visibility:hidden; }
         .loader-hello { font-size:.8rem; letter-spacing:.35em; text-transform:uppercase; color:#94a3b8; animation:loaderFade 1s ease both; }
@@ -822,11 +822,13 @@
 <div id="pageLoader"><div class="loader-hello">Welcome to the portfolio of</div><div class="loader-logo">Khandker Saadman Rafid</div><div class="loader-tag">Where precision meets passion &#10022; Service &#10022; Design &#10022; Impact</div><div class="loader-bar"></div></div>
     <!-- 3D Cinematic Render Loop Video Background (Cinema 4D / Blender Style) -->
     <div id="bgVideoWrapper" aria-hidden="true">
-        <video id="bgVideo3D" autoplay muted loop playsinline preload="auto" poster="./public/bg-3d-poster.jpg" class="opacity-40 scale-105">
+        <video id="bgVideo3D" autoplay muted loop playsinline preload="auto" poster="./public/bg-3d-poster.jpg" class="opacity-80 scale-105">
             <source src="./public/bg-3d.mp4" type="video/mp4">
         </video>
-        <!-- Dark Sci-Fi Vignette & Glass Tint Overlay for Clean Typography -->
-        <div class="absolute inset-0 bg-gradient-to-b from-[#050817]/85 via-[#0b0f19]/75 to-[#050817]/90 backdrop-blur-[1.5px]"></div>
+        <!-- Vibrant Cyber Neon Color Wash (Brings out rich violet, cyan, and glowing amber tones) -->
+        <div class="absolute inset-0 bg-gradient-to-tr from-brand-600/35 via-purple-600/25 to-pink-500/20 mix-blend-screen pointer-events-none"></div>
+        <!-- Light Vignette to maintain contrast and readable typography -->
+        <div class="absolute inset-0 bg-gradient-to-b from-[#050817]/50 via-transparent to-[#050817]/65 pointer-events-none"></div>
     </div>
     <!-- Project Case Study Modal -->
     <div id="projectModal" class="fixed inset-0 z-[100002] bg-dark-950/85 backdrop-blur-xl hidden flex items-center justify-center p-4 sm:p-6 overflow-y-auto" role="dialog" aria-modal="true">
