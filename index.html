@@ -649,7 +649,9 @@
     <style>
         /* ===== Extras: spotlight, marquee, loader, gallery, faq, floating ===== */
         .glass-card { background-image: radial-gradient(320px circle at var(--mx,-999px) var(--my,-999px), rgba(129,140,248,.18), transparent 60%); will-change: transform; }
-        #bgParticles { position:fixed; inset:0; z-index:0; pointer-events:none; }
+        #bgVideoWrapper { position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
+        #bgVideo3D { width:100%; height:100%; object-fit:cover; }
+        html:not(.dark) #bgVideoWrapper { opacity:0.18; filter:grayscale(30%); }
         #pageLoader { position:fixed; inset:0; z-index:100000; background:#050817; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:18px; transition:opacity .6s ease, visibility .6s ease; }
         #pageLoader.done { opacity:0; visibility:hidden; }
         .loader-hello { font-size:.8rem; letter-spacing:.35em; text-transform:uppercase; color:#94a3b8; animation:loaderFade 1s ease both; }
@@ -818,7 +820,14 @@
     </style></head>
 <body class="min-h-screen flex flex-col relative selection:bg-brand-500 selection:text-white">
 <div id="pageLoader"><div class="loader-hello">Welcome to the portfolio of</div><div class="loader-logo">Khandker Saadman Rafid</div><div class="loader-tag">Where precision meets passion &#10022; Service &#10022; Design &#10022; Impact</div><div class="loader-bar"></div></div>
-<canvas id="bgParticles"></canvas>
+    <!-- 3D Cinematic Render Loop Video Background (Cinema 4D / Blender Style) -->
+    <div id="bgVideoWrapper" aria-hidden="true">
+        <video id="bgVideo3D" autoplay muted loop playsinline preload="auto" poster="./public/bg-3d-poster.jpg" class="opacity-40 scale-105">
+            <source src="./public/bg-3d.mp4" type="video/mp4">
+        </video>
+        <!-- Dark Sci-Fi Vignette & Glass Tint Overlay for Clean Typography -->
+        <div class="absolute inset-0 bg-gradient-to-b from-[#050817]/85 via-[#0b0f19]/75 to-[#050817]/90 backdrop-blur-[1.5px]"></div>
+    </div>
     <!-- Project Case Study Modal -->
     <div id="projectModal" class="fixed inset-0 z-[100002] bg-dark-950/85 backdrop-blur-xl hidden flex items-center justify-center p-4 sm:p-6 overflow-y-auto" role="dialog" aria-modal="true">
         <div class="relative w-full max-w-3xl glass-card rounded-3xl p-6 sm:p-10 border border-brand-500/30 shadow-2xl my-auto animate-modalIn">
@@ -834,14 +843,6 @@
 
     <!-- Scroll Progress Indicator -->
     <div id="scrollProgress"></div>
-
-    <!-- Aurora Mesh Background -->
-    <div class="aurora-bg" aria-hidden="true">
-        <div class="aurora-blob w-[500px] h-[500px] bg-brand-600 top-[-100px] left-[-100px]"></div>
-        <div class="aurora-blob w-[600px] h-[600px] bg-purple-600 top-[30%] right-[-150px] animation-delay-2000"></div>
-        <div class="aurora-blob w-[450px] h-[450px] bg-indigo-500 bottom-[10%] left-[15%]"></div>
-        <div class="aurora-blob w-[400px] h-[400px] bg-pink-500 bottom-[-100px] right-[20%]"></div>
-    </div>
 
     <!-- Floating Live Status -->
     <div id="liveWidget" aria-label="Portfolio live clock">
@@ -2275,27 +2276,30 @@
         window.addEventListener('load', () => setTimeout(() => document.getElementById('pageLoader').classList.add('done'), Math.max(300, 1800 - (Date.now() - loaderStart))));
         setTimeout(() => document.getElementById('pageLoader').classList.add('done'), 4000);
 
-        // Particles
+        // 3D Cinematic Render Loop Video Controller
         (function () {
-            const cv = document.getElementById('bgParticles'); const ctx = cv.getContext('2d');
-            if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-            let W, H, pts = [];
-            const colors = ['#818cf8', '#c084fc', '#f472b6', '#34d399'];
-            function size() { W = cv.width = innerWidth; H = cv.height = innerHeight; const n = Math.min(70, Math.floor(W * H / 22000)); pts = Array.from({ length: n }, () => ({ x: Math.random() * W, y: Math.random() * H, r: Math.random() * 2 + .6, vx: (Math.random() - .5) * .35, vy: (Math.random() - .5) * .35, c: colors[Math.floor(Math.random() * colors.length)] })); }
-            size(); addEventListener('resize', size);
-            (function draw() {
-                ctx.clearRect(0, 0, W, H);
-                pts.forEach(p => {
-                    p.x += p.vx; p.y += p.vy; if (p.x < 0 || p.x > W) p.vx *= -1; if (p.y < 0 || p.y > H) p.vy *= -1;
-                    ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.283); ctx.fillStyle = p.c; ctx.shadowColor = p.c; ctx.shadowBlur = 12; ctx.fill();
-                });
-                ctx.shadowBlur = 0;
-                for (let i = 0; i < pts.length; i++) for (let j = i + 1; j < pts.length; j++) {
-                    const dx = pts[i].x - pts[j].x, dy = pts[i].y - pts[j].y, d = dx * dx + dy * dy;
-                    if (d < 14000) { ctx.strokeStyle = 'rgba(129,140,248,' + (0.18 * (1 - d / 14000)) + ')'; ctx.beginPath(); ctx.moveTo(pts[i].x, pts[i].y); ctx.lineTo(pts[j].x, pts[j].y); ctx.stroke(); }
+            const vid = document.getElementById('bgVideo3D');
+            if (!vid) return;
+            const tryPlay = () => {
+                const playPromise = vid.play();
+                if (playPromise !== undefined) {
+                    playPromise.catch(() => {
+                        // Safe fallback for strict mobile browser autoplay policies
+                        const resume = () => {
+                            vid.play().catch(() => {});
+                            window.removeEventListener('click', resume);
+                            window.removeEventListener('touchstart', resume);
+                        };
+                        window.addEventListener('click', resume, { passive: true });
+                        window.addEventListener('touchstart', resume, { passive: true });
+                    });
                 }
-                requestAnimationFrame(draw);
-            })();
+            };
+            if (document.readyState === 'complete') {
+                tryPlay();
+            } else {
+                window.addEventListener('load', tryPlay);
+            }
         })();
 
         // Marquee
