@@ -275,6 +275,56 @@
             100% { background-position: 0% 50%; }
         }
 
+        /* Holographic Card Shimmer & Cyber Scanline */
+        .holo-card {
+            position: relative;
+        }
+        .holo-shimmer {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                115deg,
+                transparent 15%,
+                rgba(255, 255, 255, 0.05) 30%,
+                rgba(129, 140, 248, 0.22) 42%,
+                rgba(236, 72, 153, 0.28) 50%,
+                rgba(52, 211, 153, 0.2) 58%,
+                transparent 75%
+            );
+            background-size: 250% 250%;
+            pointer-events: none;
+            z-index: 15;
+            mix-blend-mode: color-dodge;
+            opacity: 0.5;
+            animation: holoSweep 5s ease-in-out infinite alternate;
+            transition: opacity 0.4s ease;
+        }
+        .holo-card:hover .holo-shimmer {
+            opacity: 0.95;
+        }
+        @keyframes holoSweep {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 100% 100%; }
+        }
+        .cyber-scanline {
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, rgba(129, 140, 248, 0.6), rgba(244, 114, 182, 0.8), transparent);
+            box-shadow: 0 0 12px rgba(129, 140, 248, 0.6);
+            pointer-events: none;
+            z-index: 16;
+            opacity: 0.7;
+            animation: cyberScan 6s ease-in-out infinite;
+        }
+        @keyframes cyberScan {
+            0% { top: -5%; opacity: 0; }
+            15% { opacity: 0.7; }
+            85% { opacity: 0.7; }
+            100% { top: 105%; opacity: 0; }
+        }
+
         /* Neon Floating Orbs */
         .neon-glow-badge {
             box-shadow: 0 0 15px rgba(99, 102, 241, 0.4), inset 0 0 10px rgba(99, 102, 241, 0.2);
@@ -869,9 +919,11 @@
             <!-- Right Avatar Area -->
             <div class="lg:w-5/12 flex justify-center">
                 <div class="neon-border-box group">
-                    <!-- Image Card with Neon Frame -->
-                    <div class="relative w-72 sm:w-80 aspect-[3/4] rounded-3xl overflow-hidden border-2 border-indigo-500/40 bg-dark-900 shadow-2xl z-10">
+                    <!-- Image Card with Neon Frame & Holographic Shimmer -->
+                    <div class="relative w-72 sm:w-80 aspect-[3/4] rounded-3xl overflow-hidden border-2 border-indigo-500/40 bg-dark-900 shadow-2xl z-10 holo-card">
                         <img id="profileImage" src="./public/img.jpg" alt="Khandker Saadman Rafid" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                        <div class="holo-shimmer"></div>
+                        <div class="cyber-scanline"></div>
                         <div class="absolute inset-0 bg-gradient-to-t from-dark-950/85 via-transparent to-transparent"></div>
                         
                         <!-- Floating Location & Live Status Pill -->
@@ -1291,6 +1343,96 @@
                 <p class="text-slate-400 mt-3 text-sm sm:text-base">Real feedback from clients who trusted my typing speed, formatting precision, and rapid turnaround.</p>
             </div>
             <div id="testiGrid" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+        </section>
+
+        <!-- ==================== INSTAGRAM CREATOR HUB ==================== -->
+        <section id="instagram-hub" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 relative">
+            <div class="glass-card rounded-3xl p-7 sm:p-10 lg:p-12 border border-pink-500/30 relative overflow-hidden group">
+                <!-- Background Ambient Gradient Glow -->
+                <div class="absolute -top-20 -right-20 w-80 h-80 bg-gradient-to-br from-purple-600/20 via-pink-600/20 to-amber-500/20 rounded-full blur-3xl pointer-events-none"></div>
+
+                <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 pb-8 border-b border-white/10 relative z-10">
+                    <!-- Profile Info -->
+                    <div class="flex items-center gap-4 sm:gap-5">
+                        <!-- Animated Rainbow Story Ring -->
+                        <div class="p-[3px] rounded-full bg-gradient-to-tr from-amber-500 via-rose-500 to-purple-600 shadow-lg shadow-pink-500/25 animate-pulse">
+                            <div class="p-0.5 rounded-full bg-dark-950">
+                                <img src="./public/img.jpg" alt="Saadman Khandker" class="w-16 h-16 sm:w-20 sm:h-20 rounded-full object-cover">
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <h3 class="text-xl sm:text-2xl font-extrabold text-white">saadman_khandker</h3>
+                                <i class="fa-solid fa-circle-check text-sky-400 text-sm" title="Verified Creator"></i>
+                            </div>
+                            <p class="text-xs sm:text-sm text-slate-300 font-medium mt-0.5">Khandker Saadman Rafid Saad</p>
+                            <p class="text-[11px] text-slate-400 font-mono mt-1 flex items-center gap-2">
+                                <span><i class="fa-solid fa-camera-retro text-pink-400 mr-1"></i> Lifestyle &amp; Updates</span>
+                                <span>&bull;</span>
+                                <span class="text-emerald-400"><i class="fa-solid fa-bolt mr-1"></i> Daily Stories</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Follow Button & Tag -->
+                    <div class="flex items-center gap-3 w-full sm:w-auto">
+                        <a href="https://www.instagram.com/saadman_khandker/" target="_blank" rel="noopener" class="w-full sm:w-auto px-6 py-3.5 rounded-2xl text-xs sm:text-sm font-bold text-white bg-gradient-to-r from-purple-600 via-pink-600 to-rose-500 hover:opacity-95 active:scale-95 shadow-xl shadow-pink-500/30 transition flex items-center justify-center gap-2">
+                            <i class="fa-brands fa-instagram text-base"></i>
+                            <span>Follow on Instagram</span>
+                            <i class="fa-solid fa-arrow-up-right-from-square text-[10px] ml-1"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Visual Grid of Posts & Moments -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 pt-8 relative z-10">
+                    <!-- Post 1 -->
+                    <a href="https://www.instagram.com/saadman_khandker/" target="_blank" rel="noopener" class="group/post relative aspect-square rounded-2xl overflow-hidden border border-white/10 shadow-md">
+                        <img src="./public/FB_IMG_1711641936781.jpg" alt="Moment 1" class="w-full h-full object-cover group-hover/post:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-dark-950/60 opacity-0 group-hover/post:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-2 text-white text-xs sm:text-sm font-bold backdrop-blur-xs">
+                            <i class="fa-solid fa-heart text-rose-500"></i>
+                            <span>View</span>
+                        </div>
+                    </a>
+
+                    <!-- Post 2 -->
+                    <a href="https://www.instagram.com/saadman_khandker/" target="_blank" rel="noopener" class="group/post relative aspect-square rounded-2xl overflow-hidden border border-white/10 shadow-md">
+                        <img src="./public/FB_IMG_1733546681910.jpg" alt="Moment 2" class="w-full h-full object-cover group-hover/post:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-dark-950/60 opacity-0 group-hover/post:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-2 text-white text-xs sm:text-sm font-bold backdrop-blur-xs">
+                            <i class="fa-solid fa-heart text-rose-500"></i>
+                            <span>View</span>
+                        </div>
+                    </a>
+
+                    <!-- Post 3 -->
+                    <a href="https://www.instagram.com/saadman_khandker/" target="_blank" rel="noopener" class="group/post relative aspect-square rounded-2xl overflow-hidden border border-white/10 shadow-md">
+                        <img src="./public/1707486322179.jpg" alt="Moment 3" class="w-full h-full object-cover group-hover/post:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-dark-950/60 opacity-0 group-hover/post:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-2 text-white text-xs sm:text-sm font-bold backdrop-blur-xs">
+                            <i class="fa-solid fa-heart text-rose-500"></i>
+                            <span>View</span>
+                        </div>
+                    </a>
+
+                    <!-- Post 4 -->
+                    <a href="https://www.instagram.com/saadman_khandker/" target="_blank" rel="noopener" class="group/post relative aspect-square rounded-2xl overflow-hidden border border-white/10 shadow-md">
+                        <img src="./public/IMG-20241216-WA0053.jpg" alt="Moment 4" class="w-full h-full object-cover group-hover/post:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-dark-950/60 opacity-0 group-hover/post:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-2 text-white text-xs sm:text-sm font-bold backdrop-blur-xs">
+                            <i class="fa-solid fa-heart text-rose-500"></i>
+                            <span>View</span>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Footer Tagline -->
+                <div class="mt-6 pt-4 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 gap-2">
+                    <span>Connect with me on Instagram for daily updates, stories, and behind-the-scenes.</span>
+                    <a href="https://www.instagram.com/saadman_khandker/" target="_blank" rel="noopener" class="text-pink-400 hover:text-pink-300 font-bold flex items-center gap-1">
+                        <span>@saadman_khandker</span>
+                        <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                    </a>
+                </div>
+            </div>
         </section>
 
         <!-- Blog / Updates (shown only when posts exist) -->
