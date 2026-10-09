@@ -226,6 +226,55 @@
             50% { box-shadow: 0 0 25px rgba(168, 85, 247, 0.6), inset 0 0 14px rgba(168, 85, 247, 0.3); }
         }
 
+        /* Bold Neon Service Tags (card footer labels) */
+        .neon-service-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 800;
+            letter-spacing: 0.02em;
+            border: 1.5px solid var(--neon);
+            color: var(--neon);
+            background: color-mix(in srgb, var(--neon) 10%, transparent);
+            text-shadow: 0 0 6px var(--neon), 0 0 14px var(--neon);
+            box-shadow: 0 0 10px color-mix(in srgb, var(--neon) 55%, transparent), inset 0 0 8px color-mix(in srgb, var(--neon) 25%, transparent);
+            animation: neonTagPulse 2.4s ease-in-out infinite;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+        .neon-service-tag i {
+            font-size: 0.8rem;
+            transition: transform 0.25s ease;
+        }
+        .group:hover .neon-service-tag {
+            transform: translateY(-2px) scale(1.04);
+            box-shadow: 0 0 22px var(--neon), 0 0 40px color-mix(in srgb, var(--neon) 60%, transparent), inset 0 0 12px color-mix(in srgb, var(--neon) 35%, transparent);
+        }
+        .group:hover .neon-service-tag i {
+            transform: translateX(5px);
+        }
+        .neon-indigo  { --neon: #818cf8; }
+        .neon-purple  { --neon: #c084fc; }
+        .neon-pink    { --neon: #f472b6; }
+        .neon-emerald { --neon: #34d399; }
+        @keyframes neonTagPulse {
+            0%, 100% {
+                text-shadow: 0 0 5px var(--neon), 0 0 12px var(--neon);
+                box-shadow: 0 0 8px color-mix(in srgb, var(--neon) 45%, transparent), inset 0 0 6px color-mix(in srgb, var(--neon) 20%, transparent);
+            }
+            50% {
+                text-shadow: 0 0 9px var(--neon), 0 0 22px var(--neon), 0 0 34px var(--neon);
+                box-shadow: 0 0 18px color-mix(in srgb, var(--neon) 75%, transparent), inset 0 0 12px color-mix(in srgb, var(--neon) 35%, transparent);
+            }
+        }
+        html:not(.dark) .neon-service-tag {
+            text-shadow: none;
+            color: color-mix(in srgb, var(--neon) 70%, #1e1b4b);
+        }
+
         /* Section Headings */
         .section-tag {
             display: inline-flex;
@@ -623,9 +672,11 @@
                     <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
                         Website maintenance, digital data formatting, real-time updates, and workflow optimization for streamlined web operations.
                     </p>
-                    <div class="pt-2 text-xs font-mono text-indigo-400 flex items-center gap-1">
-                        <span>Classvel standard</span>
-                        <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                    <div class="pt-3">
+                        <span class="neon-service-tag neon-indigo">
+                            <span>Classvel standard</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </span>
                     </div>
                 </div>
 
@@ -637,10 +688,7 @@
                     <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
                         Stock reconciliation, inventory tracking, quality inspection, and store shelf organization with strict retail precision.
                     </p>
-                    <div class="pt-2 text-xs font-mono text-purple-400 flex items-center gap-1">
-                        <span>Meena Bazar & Agora proven</span>
-                        <i class="fa-solid fa-arrow-right text-[10px]"></i>
-                    </div>
+                    <div class="pt-3"><span class="neon-service-tag neon-purple"><span>Meena Bazar & Agora proven</span><i class="fa-solid fa-arrow-right"></i></span></div>
                 </div>
 
                 <div class="glass-card p-7 rounded-3xl space-y-4 group">
@@ -651,10 +699,7 @@
                     <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
                         Converting raw data & questionnaires into clean, engaging, visually digestible PowerPoint presentations for end-users.
                     </p>
-                    <div class="pt-2 text-xs font-mono text-pink-400 flex items-center gap-1">
-                        <span>High-accuracy formatting</span>
-                        <i class="fa-solid fa-arrow-right text-[10px]"></i>
-                    </div>
+                    <div class="pt-3"><span class="neon-service-tag neon-pink"><span>High-accuracy formatting</span><i class="fa-solid fa-arrow-right"></i></span></div>
                 </div>
 
                 <div class="glass-card p-7 rounded-3xl space-y-4 group">
@@ -665,10 +710,7 @@
                     <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
                         Calm execution in fast-paced scenarios, community health & relief drive coordination, and customer-centric support.
                     </p>
-                    <div class="pt-2 text-xs font-mono text-emerald-400 flex items-center gap-1">
-                        <span>BDRCS emergency volunteer</span>
-                        <i class="fa-solid fa-arrow-right text-[10px]"></i>
-                    </div>
+                    <div class="pt-3"><span class="neon-service-tag neon-emerald"><span>BDRCS emergency volunteer</span><i class="fa-solid fa-arrow-right"></i></span></div>
                 </div>
             </div>
         </section>
