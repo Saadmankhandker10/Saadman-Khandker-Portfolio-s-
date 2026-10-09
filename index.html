@@ -1556,7 +1556,7 @@
                 <p class="text-slate-400 mt-3 text-sm sm:text-base">Key technical tools and organizational competencies honed through operations and media work.</p>
             </div>
 
-            <div id="skillsGrid" class="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6">
+            <div id="skillsGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5 sm:gap-5">
                 <!-- Dynamically rendered or fallback -->
             </div>
         </section>
@@ -2191,7 +2191,239 @@
             });
         }
 
-        // Render Skills Function with Interactive Proficiency Progress Bars
+        // Helper: Resolve Real Official Brand Logos & Visual Metadata for Skills
+        const getSkillBranding = (skill = {}) => {
+            const rawIcon = String(skill.icon || '').trim();
+            const n = String(skill.name || '').toLowerCase();
+
+            // Official High-Fidelity SVGs
+            const SVGS = {
+                // Official Microsoft PowerPoint Fluent Logo
+                powerpoint: `<svg class="w-7 h-7 sm:w-8 sm:h-8 drop-shadow-[0_2px_8px_rgba(208,68,35,0.55)]" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="14" y="6" width="28" height="36" rx="4" fill="#C43E1C"/>
+                    <path d="M28 14 A 10 10 0 0 1 38 24 L 28 24 Z" fill="#F36C45"/>
+                    <path d="M28 24 A 10 10 0 1 1 24.5 14.6 L 28 24 Z" fill="#E24A27"/>
+                    <rect x="6" y="13" width="22" height="22" rx="4" fill="#D24726"/>
+                    <path d="M13.5 18H18C19.9 18 21 18.9 21 20.5C21 22.1 19.9 23 18 23H15.5V28H13.5V18ZM15.5 21.4H17.8C18.6 21.4 19.2 21.1 19.2 20.5C19.2 19.9 18.6 19.6 17.8 19.6H15.5V21.4Z" fill="#FFFFFF"/>
+                </svg>`,
+                // Official Adobe Photoshop App Icon Logo
+                photoshop: `<svg class="w-7 h-7 sm:w-8 sm:h-8 drop-shadow-[0_2px_8px_rgba(49,168,255,0.55)]" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="48" height="48" rx="10" fill="#001E36"/>
+                    <rect x="1.5" y="1.5" width="45" height="45" rx="8.5" stroke="#31A8FF" stroke-width="2.5"/>
+                    <path d="M13.5 14H20.5C23.6 14 25.8 15.8 25.8 18.8C25.8 21.8 23.6 23.6 20.5 23.6H16.8V33H13.5V14ZM16.8 20.8H20.2C21.8 20.8 22.5 20.1 22.5 18.8C22.5 17.5 21.8 16.8 20.2 16.8H16.8V20.8Z" fill="#31A8FF"/>
+                    <path d="M28.2 28.5C29 29.5 30.5 30.2 32.2 30.2C33.7 30.2 34.5 29.5 34.5 28.4C34.5 25.6 28.7 26.6 28.7 21.6C28.7 18.8 31.1 17.1 34.1 17.1C35.6 17.1 37.1 17.7 38 18.5L36.8 21.2C36 20.6 35 20.2 34.1 20.2C32.8 20.2 32.1 20.8 32.1 21.6C32.1 24.2 37.8 23.3 37.8 28.3C37.8 31.2 35.4 33.2 32.1 33.2C30.2 33.2 28.4 32.4 27.2 31.3L28.2 28.5Z" fill="#31A8FF"/>
+                </svg>`,
+                // Official W3C HTML5 / Web Standards Logo
+                web: `<svg class="w-7 h-7 sm:w-8 sm:h-8 drop-shadow-[0_2px_8px_rgba(241,101,41,0.55)]" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M8 6L11.2 42L24 45.5L36.8 42L40 6H8Z" fill="#E44D26"/>
+                    <path d="M24 9.2V42.2L34.1 39.4L36.8 9.2H24Z" fill="#F16529"/>
+                    <path d="M24 16.5H16.2L16.8 23H24V16.5ZM24 29.5H19.5L19.2 26.5H16.8L17.4 33H24V29.5Z" fill="#EBEBEB"/>
+                    <path d="M24 16.5V23H31.2L30.6 29.5L24 31.4V34.9L32.8 32.5L33.7 16.5H24Z" fill="#FFFFFF"/>
+                </svg>`,
+                // Technical Diagnostics & System Support Emblem
+                troubleshoot: `<svg class="w-7 h-7 sm:w-8 sm:h-8 drop-shadow-[0_2px_8px_rgba(16,185,129,0.55)]" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="48" height="48" rx="10" fill="#091E1A"/>
+                    <rect x="1.5" y="1.5" width="45" height="45" rx="8.5" stroke="#10B981" stroke-width="2"/>
+                    <path d="M24 8V12M24 36V40M8 24H12M36 24H40" stroke="#34D399" stroke-width="2.5" stroke-linecap="round"/>
+                    <rect x="16" y="16" width="16" height="16" rx="4" fill="#064E3B" stroke="#34D399" stroke-width="2"/>
+                    <path d="M20 24L23 27L28 21" stroke="#A7F3D0" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <circle cx="34" cy="14" r="2.5" fill="#10B981"/>
+                </svg>`,
+                // Agile Operations & Team Collaboration Synergy
+                teamwork: `<svg class="w-7 h-7 sm:w-8 sm:h-8 drop-shadow-[0_2px_8px_rgba(168,85,247,0.55)]" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="48" height="48" rx="10" fill="#1E1238"/>
+                    <rect x="1.5" y="1.5" width="45" height="45" rx="8.5" stroke="#A855F7" stroke-width="2"/>
+                    <circle cx="24" cy="16" r="4.5" fill="#C084FC"/>
+                    <circle cx="15" cy="29" r="3.8" fill="#818CF8"/>
+                    <circle cx="33" cy="29" r="3.8" fill="#F472B6"/>
+                    <path d="M18.5 27.5C20 25.5 22 24.5 24 24.5C26 24.5 28 27.5 29.5 27.5" stroke="#E9D5FF" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M12 36C12 33.5 13.5 32 15.5 32C17.5 32 19 33.5 19 36" stroke="#C7D2FE" stroke-width="1.8" stroke-linecap="round"/>
+                    <path d="M29 36C29 33.5 30.5 32 32.5 32C34.5 32 36 33.5 36 36" stroke="#FBCFE8" stroke-width="1.8" stroke-linecap="round"/>
+                </svg>`,
+                // Microsoft Word Fluent Logo
+                word: `<svg class="w-7 h-7 sm:w-8 sm:h-8 drop-shadow-[0_2px_8px_rgba(24,90,189,0.55)]" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="14" y="6" width="28" height="36" rx="4" fill="#103F91"/>
+                    <rect x="20" y="14" width="16" height="3" rx="1.5" fill="#4B8BF4"/>
+                    <rect x="20" y="20" width="16" height="3" rx="1.5" fill="#287BE6"/>
+                    <rect x="20" y="26" width="12" height="3" rx="1.5" fill="#185ABD"/>
+                    <rect x="6" y="13" width="22" height="22" rx="4" fill="#185ABD"/>
+                    <path d="M11.5 18L13.8 28H15.9L17.5 21.2L19.1 28H21.2L23.5 18H21.6L20.1 25.5L18.4 18H16.6L14.9 25.5L13.4 18H11.5Z" fill="#FFFFFF"/>
+                </svg>`,
+                // RGB Mechanical Touch-Typing Keyboard
+                typing: `<svg class="w-7 h-7 sm:w-8 sm:h-8 drop-shadow-[0_2px_8px_rgba(244,63,94,0.55)]" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="48" height="48" rx="10" fill="#0A0F1D"/>
+                    <rect x="1.5" y="1.5" width="45" height="45" rx="8.5" stroke="#F43F5E" stroke-width="2"/>
+                    <rect x="9" y="13" width="6" height="5" rx="1.5" fill="#38BDF8"/>
+                    <rect x="17" y="13" width="6" height="5" rx="1.5" fill="#818CF8"/>
+                    <rect x="25" y="13" width="6" height="5" rx="1.5" fill="#C084FC"/>
+                    <rect x="33" y="13" width="6" height="5" rx="1.5" fill="#F472B6"/>
+                    <rect x="9" y="21" width="6" height="5" rx="1.5" fill="#34D399"/>
+                    <rect x="17" y="21" width="6" height="5" rx="1.5" fill="#FBBF24"/>
+                    <rect x="25" y="21" width="6" height="5" rx="1.5" fill="#FB7185"/>
+                    <rect x="33" y="21" width="6" height="5" rx="1.5" fill="#A78BFA"/>
+                    <rect x="14" y="29" width="20" height="5" rx="2" fill="#F43F5E"/>
+                </svg>`,
+                // Bangladesh Red Crescent Official Emblem
+                redcrescent: `<svg class="w-7 h-7 sm:w-8 sm:h-8 drop-shadow-[0_2px_8px_rgba(237,27,36,0.55)]" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="48" height="48" rx="10" fill="#FFFFFF"/>
+                    <rect x="1.5" y="1.5" width="45" height="45" rx="8.5" stroke="#ED1B24" stroke-width="2"/>
+                    <path d="M28 10C20.3 10 14 16.3 14 24C14 31.7 20.3 38 28 38C30.2 38 32.3 37.5 34.2 36.5C28.5 34.5 24.5 29.7 24.5 24C24.5 18.3 28.5 13.5 34.2 11.5C32.3 10.5 30.2 10 28 10Z" fill="#ED1B24"/>
+                </svg>`
+            };
+
+            // Custom HTTP or embedded SVG
+            if (rawIcon.startsWith('<svg') || /^https?:\/\//i.test(rawIcon)) {
+                const logoHtml = /^https?:\/\//i.test(rawIcon)
+                    ? `<img src="${escapeHTML(rawIcon)}" alt="${escapeHTML(skill.name)}" class="w-7 h-7 sm:w-8 sm:h-8 object-contain" />`
+                    : rawIcon;
+                return {
+                    tag: 'Specialty Tool',
+                    subtitle: 'Verified Competency',
+                    bgClass: 'bg-brand-500/15',
+                    borderClass: 'border-brand-500/30 group-hover:border-brand-500/60',
+                    cardBorder: 'hover:border-brand-500/50',
+                    pctClass: 'text-brand-400',
+                    accentColor: '#6366f1',
+                    gradient: 'linear-gradient(90deg, #6366f1, #ec4899)',
+                    logoSvg: logoHtml
+                };
+            }
+
+            // 1. MS PowerPoint Match
+            if (n.includes('powerpoint') || n.includes('ppt') || n.includes('presentation') || n.includes('slide')) {
+                return {
+                    tag: 'Microsoft 365',
+                    subtitle: 'Pitch Decks & Presentation Design',
+                    bgClass: 'bg-orange-500/10',
+                    borderClass: 'border-orange-500/30 group-hover:border-orange-500/60',
+                    cardBorder: 'hover:border-orange-500/50',
+                    pctClass: 'text-orange-400',
+                    accentColor: '#D24726',
+                    gradient: 'linear-gradient(90deg, #C43E1C, #F36C45)',
+                    logoSvg: SVGS.powerpoint
+                };
+            }
+
+            // 2. Image Editing / Adobe Photoshop Match
+            if (n.includes('image') || n.includes('photo') || n.includes('edit') || n.includes('photoshop')) {
+                return {
+                    tag: 'Adobe Creative',
+                    subtitle: 'Photo Retouching & Graphics',
+                    bgClass: 'bg-sky-500/10',
+                    borderClass: 'border-sky-500/30 group-hover:border-sky-500/60',
+                    cardBorder: 'hover:border-sky-500/50',
+                    pctClass: 'text-sky-400',
+                    accentColor: '#31A8FF',
+                    gradient: 'linear-gradient(90deg, #0284C7, #31A8FF)',
+                    logoSvg: SVGS.photoshop
+                };
+            }
+
+            // 3. Web Management / HTML5 Match
+            if (n.includes('web') || n.includes('site') || n.includes('html') || n.includes('classvel') || n.includes('content')) {
+                return {
+                    tag: 'Web Assistant',
+                    subtitle: 'HTML5 & CMS Platform Maintenance',
+                    bgClass: 'bg-amber-500/10',
+                    borderClass: 'border-amber-500/30 group-hover:border-amber-500/60',
+                    cardBorder: 'hover:border-amber-500/50',
+                    pctClass: 'text-amber-400',
+                    accentColor: '#F16529',
+                    gradient: 'linear-gradient(90deg, #E44D26, #F16529)',
+                    logoSvg: SVGS.web
+                };
+            }
+
+            // 4. Troubleshooting / Diagnostic Match
+            if (n.includes('troubleshoot') || n.includes('diagnos') || n.includes('hardware') || n.includes('pc') || n.includes('support')) {
+                return {
+                    tag: 'Tech Support',
+                    subtitle: 'System Support & Problem Solving',
+                    bgClass: 'bg-emerald-500/10',
+                    borderClass: 'border-emerald-500/30 group-hover:border-emerald-500/60',
+                    cardBorder: 'hover:border-emerald-500/50',
+                    pctClass: 'text-emerald-400',
+                    accentColor: '#10B981',
+                    gradient: 'linear-gradient(90deg, #059669, #34D399)',
+                    logoSvg: SVGS.troubleshoot
+                };
+            }
+
+            // 5. Operations & Teamwork Match
+            if (n.includes('operation') || n.includes('team') || n.includes('retail') || n.includes('store') || n.includes('agora') || n.includes('meena')) {
+                return {
+                    tag: 'Retail & Operations',
+                    subtitle: 'Inventory Tracking & Team Synergy',
+                    bgClass: 'bg-purple-500/10',
+                    borderClass: 'border-purple-500/30 group-hover:border-purple-500/60',
+                    cardBorder: 'hover:border-purple-500/50',
+                    pctClass: 'text-purple-400',
+                    accentColor: '#A855F7',
+                    gradient: 'linear-gradient(90deg, #7C3AED, #C084FC)',
+                    logoSvg: SVGS.teamwork
+                };
+            }
+
+            // 6. MS Word Match
+            if (n.includes('word') || n.includes('retype') || n.includes('doc')) {
+                return {
+                    tag: 'Microsoft 365',
+                    subtitle: 'Document Typing & Word Formatting',
+                    bgClass: 'bg-blue-500/10',
+                    borderClass: 'border-blue-500/30 group-hover:border-blue-500/60',
+                    cardBorder: 'hover:border-blue-500/50',
+                    pctClass: 'text-blue-400',
+                    accentColor: '#185ABD',
+                    gradient: 'linear-gradient(90deg, #103F91, #38BDF8)',
+                    logoSvg: SVGS.word
+                };
+            }
+
+            // 7. Touch Typing Match
+            if (n.includes('typing') || n.includes('wpm') || n.includes('speed')) {
+                return {
+                    tag: 'Touch Typing',
+                    subtitle: '65+ WPM Manual Speed & 99.9% QA',
+                    bgClass: 'bg-rose-500/10',
+                    borderClass: 'border-rose-500/30 group-hover:border-rose-500/60',
+                    cardBorder: 'hover:border-rose-500/50',
+                    pctClass: 'text-rose-400',
+                    accentColor: '#F43F5E',
+                    gradient: 'linear-gradient(90deg, #E11D48, #FB7185)',
+                    logoSvg: SVGS.typing
+                };
+            }
+
+            // 8. Red Crescent Volunteer Match
+            if (n.includes('red crescent') || n.includes('bdrcs') || n.includes('volunteer') || n.includes('aid')) {
+                return {
+                    tag: 'Red Crescent Society',
+                    subtitle: 'Disaster Response & Volunteer Aid',
+                    bgClass: 'bg-red-500/10',
+                    borderClass: 'border-red-500/30 group-hover:border-red-500/60',
+                    cardBorder: 'hover:border-red-500/50',
+                    pctClass: 'text-red-400',
+                    accentColor: '#ED1B24',
+                    gradient: 'linear-gradient(90deg, #DC2626, #F87171)',
+                    logoSvg: SVGS.redcrescent
+                };
+            }
+
+            // Generic fallback
+            return {
+                tag: 'Competency',
+                subtitle: 'Professional Operational Skill',
+                bgClass: 'bg-brand-500/10',
+                borderClass: 'border-brand-500/30 group-hover:border-brand-500/60',
+                cardBorder: 'hover:border-brand-500/50',
+                pctClass: 'text-brand-400',
+                accentColor: '#6366f1',
+                gradient: 'linear-gradient(90deg, #6366f1, #a855f7)',
+                logoSvg: SVGS.troubleshoot
+            };
+        };
+
+        // Render Skills Function with Real Brand Logos and Progress Bars
         const renderSkills = (skills = []) => {
             const defaultLevels = {
                 'typing': 98, 'word': 96, 'retyping': 97, 'format': 95, 'pdf': 95,
@@ -2199,7 +2431,8 @@
                 'qa': 94, 'quality': 94, 'proofread': 96,
                 'operations': 95, 'customer': 93, 'service': 93, 'retail': 92,
                 'volunteer': 98, 'first aid': 95, 'red crescent': 98,
-                'web': 88, 'digit': 92, 'canva': 90, 'comm': 95
+                'web': 90, 'digit': 92, 'canva': 90, 'image': 92, 'photo': 92, 'edit': 92,
+                'troubleshoot': 94
             };
             const getLevel = name => {
                 const n = (name || '').toLowerCase();
@@ -2209,20 +2442,49 @@
                 return 90;
             };
 
-            document.getElementById('skillsGrid').innerHTML = skills.map((skill, idx) => {
+            const targetSkills = (skills && skills.length) ? skills : [
+                { id: 'powerpoint', name: 'MS PowerPoint', level: 96 },
+                { id: 'image-editing', name: 'Image Editing', level: 92 },
+                { id: 'sk-1790930319310', name: 'Web Management', level: 90 },
+                { id: 'troubleshooting', name: 'Troubleshooting', level: 94 },
+                { id: 'teamwork', name: 'Operations & Teamwork', level: 95 }
+            ];
+
+            const grid = document.getElementById('skillsGrid');
+            if (!grid) return;
+
+            grid.innerHTML = targetSkills.map((skill, idx) => {
                 const pct = skill.level || getLevel(skill.name);
+                const branding = getSkillBranding(skill);
                 return `
-                <div class="glass-card p-6 rounded-3xl text-left space-y-3 group transition-all duration-300">
-                    <div class="flex items-center justify-between">
-                        <div class="w-12 h-12 rounded-2xl bg-brand-500/10 border border-brand-500/20 text-brand-400 flex items-center justify-center text-xl font-mono group-hover:scale-110 group-hover:bg-brand-500 group-hover:text-white transition-all duration-300">
-                            ${escapeHTML(skill.icon || '✦')}
-                        </div>
-                        <span class="text-xs font-mono font-bold text-pink-400">${pct}%</span>
-                    </div>
+                <div class="glass-card p-4 sm:p-5 rounded-2xl sm:rounded-3xl text-left flex flex-col justify-between group relative overflow-hidden transition-all duration-300 hover:-translate-y-1 ${branding.cardBorder}">
+                    <!-- Background Ambient Glow on Hover -->
+                    <div class="absolute -top-12 -right-12 w-28 h-28 rounded-full blur-2xl opacity-0 group-hover:opacity-30 transition-opacity duration-500 pointer-events-none" style="background: ${branding.accentColor};" aria-hidden="true"></div>
+
                     <div>
-                        <h4 class="font-bold text-sm text-white tracking-wide">${escapeHTML(skill.name)}</h4>
-                        <div class="skill-bar-bg">
-                            <div class="skill-bar-fill" data-pct="${pct}" style="width: 0%"></div>
+                        <!-- Top Row: Real Official Logo & Level Badge -->
+                        <div class="flex items-center justify-between mb-3.5">
+                            <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl ${branding.bgClass} border ${branding.borderClass} flex items-center justify-center p-2 sm:p-2.5 shadow-md group-hover:scale-110 transition-transform duration-300">
+                                ${branding.logoSvg}
+                            </div>
+                            <div class="text-right">
+                                <span class="text-xs sm:text-sm font-mono font-extrabold ${branding.pctClass}">${pct}%</span>
+                                <span class="block text-[9px] uppercase tracking-wider font-mono text-slate-400">Mastery</span>
+                            </div>
+                        </div>
+
+                        <!-- Skill Title & Subtitle -->
+                        <div class="space-y-0.5 mb-3">
+                            <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-400 block">${branding.tag}</span>
+                            <h4 class="font-extrabold text-sm sm:text-base text-white tracking-tight leading-snug group-hover:text-brand-300 transition-colors">${escapeHTML(skill.name)}</h4>
+                            <p class="text-[11px] text-slate-400 leading-tight mt-0.5">${branding.subtitle}</p>
+                        </div>
+                    </div>
+
+                    <!-- Proficiency Progress Bar with Brand Colors -->
+                    <div class="pt-2">
+                        <div class="skill-bar-bg h-1.5 sm:h-2 rounded-full bg-white/10 overflow-hidden">
+                            <div class="skill-bar-fill h-full rounded-full transition-all duration-1000" data-pct="${pct}" style="width: 0%; background: ${branding.gradient};"></div>
                         </div>
                     </div>
                 </div>
@@ -2231,7 +2493,7 @@
 
             // Trigger progress bar animation
             setTimeout(() => {
-                document.querySelectorAll('.skill-bar-fill').forEach(bar => {
+                document.querySelectorAll('#skillsGrid .skill-bar-fill').forEach(bar => {
                     bar.style.width = bar.dataset.pct + '%';
                 });
             }, 300);
@@ -2324,6 +2586,9 @@
                     </article>`).join('');
             }
         };
+
+        // Render initial skills with real official logos immediately
+        renderSkills();
 
         // Load Local Storage First
         try {

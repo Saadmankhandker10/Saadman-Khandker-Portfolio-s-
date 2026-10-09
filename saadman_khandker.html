@@ -1416,6 +1416,100 @@
             `).join('');
         }
 
+        // Helper: Resolve Real Official Brand Logos for Admin Skills
+        function getSkillBranding(skill = {}) {
+            const rawIcon = String(skill.icon || '').trim();
+            const n = String(skill.name || '').toLowerCase();
+
+            const SVGS = {
+                powerpoint: `<svg class="w-7 h-7 drop-shadow-sm" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="14" y="6" width="28" height="36" rx="4" fill="#C43E1C"/>
+                    <path d="M28 14 A 10 10 0 0 1 38 24 L 28 24 Z" fill="#F36C45"/>
+                    <path d="M28 24 A 10 10 0 1 1 24.5 14.6 L 28 24 Z" fill="#E24A27"/>
+                    <rect x="6" y="13" width="22" height="22" rx="4" fill="#D24726"/>
+                    <path d="M13.5 18H18C19.9 18 21 18.9 21 20.5C21 22.1 19.9 23 18 23H15.5V28H13.5V18ZM15.5 21.4H17.8C18.6 21.4 19.2 21.1 19.2 20.5C19.2 19.9 18.6 19.6 17.8 19.6H15.5V21.4Z" fill="#FFFFFF"/>
+                </svg>`,
+                photoshop: `<svg class="w-7 h-7 drop-shadow-sm" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="48" height="48" rx="10" fill="#001E36"/>
+                    <rect x="1.5" y="1.5" width="45" height="45" rx="8.5" stroke="#31A8FF" stroke-width="2.5"/>
+                    <path d="M13.5 14H20.5C23.6 14 25.8 15.8 25.8 18.8C25.8 21.8 23.6 23.6 20.5 23.6H16.8V33H13.5V14ZM16.8 20.8H20.2C21.8 20.8 22.5 20.1 22.5 18.8C22.5 17.5 21.8 16.8 20.2 16.8H16.8V20.8Z" fill="#31A8FF"/>
+                    <path d="M28.2 28.5C29 29.5 30.5 30.2 32.2 30.2C33.7 30.2 34.5 29.5 34.5 28.4C34.5 25.6 28.7 26.6 28.7 21.6C28.7 18.8 31.1 17.1 34.1 17.1C35.6 17.1 37.1 17.7 38 18.5L36.8 21.2C36 20.6 35 20.2 34.1 20.2C32.8 20.2 32.1 20.8 32.1 21.6C32.1 24.2 37.8 23.3 37.8 28.3C37.8 31.2 35.4 33.2 32.1 33.2C30.2 33.2 28.4 32.4 27.2 31.3L28.2 28.5Z" fill="#31A8FF"/>
+                </svg>`,
+                web: `<svg class="w-7 h-7 drop-shadow-sm" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M8 6L11.2 42L24 45.5L36.8 42L40 6H8Z" fill="#E44D26"/>
+                    <path d="M24 9.2V42.2L34.1 39.4L36.8 9.2H24Z" fill="#F16529"/>
+                    <path d="M24 16.5H16.2L16.8 23H24V16.5ZM24 29.5H19.5L19.2 26.5H16.8L17.4 33H24V29.5Z" fill="#EBEBEB"/>
+                    <path d="M24 16.5V23H31.2L30.6 29.5L24 31.4V34.9L32.8 32.5L33.7 16.5H24Z" fill="#FFFFFF"/>
+                </svg>`,
+                troubleshoot: `<svg class="w-7 h-7 drop-shadow-sm" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="48" height="48" rx="10" fill="#091E1A"/>
+                    <rect x="1.5" y="1.5" width="45" height="45" rx="8.5" stroke="#10B981" stroke-width="2"/>
+                    <path d="M24 8V12M24 36V40M8 24H12M36 24H40" stroke="#34D399" stroke-width="2.5" stroke-linecap="round"/>
+                    <rect x="16" y="16" width="16" height="16" rx="4" fill="#064E3B" stroke="#34D399" stroke-width="2"/>
+                    <path d="M20 24L23 27L28 21" stroke="#A7F3D0" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <circle cx="34" cy="14" r="2.5" fill="#10B981"/>
+                </svg>`,
+                teamwork: `<svg class="w-7 h-7 drop-shadow-sm" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="48" height="48" rx="10" fill="#1E1238"/>
+                    <rect x="1.5" y="1.5" width="45" height="45" rx="8.5" stroke="#A855F7" stroke-width="2"/>
+                    <circle cx="24" cy="16" r="4.5" fill="#C084FC"/>
+                    <circle cx="15" cy="29" r="3.8" fill="#818CF8"/>
+                    <circle cx="33" cy="29" r="3.8" fill="#F472B6"/>
+                    <path d="M18.5 27.5C20 25.5 22 24.5 24 24.5C26 24.5 28 27.5 29.5 27.5" stroke="#E9D5FF" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M12 36C12 33.5 13.5 32 15.5 32C17.5 32 19 33.5 19 36" stroke="#C7D2FE" stroke-width="1.8" stroke-linecap="round"/>
+                    <path d="M29 36C29 33.5 30.5 32 32.5 32C34.5 32 36 33.5 36 36" stroke="#FBCFE8" stroke-width="1.8" stroke-linecap="round"/>
+                </svg>`
+            };
+
+            if (rawIcon.startsWith('<svg') || /^https?:\/\//i.test(rawIcon)) {
+                return {
+                    tag: 'Custom',
+                    bgClass: 'bg-brand-500/10 dark:bg-brand-500/20',
+                    borderClass: 'border-brand-500/30',
+                    logoSvg: /^https?:\/\//i.test(rawIcon) ? `<img src="${escapeHtml(rawIcon)}" class="w-7 h-7 object-contain" />` : rawIcon
+                };
+            }
+
+            if (n.includes('powerpoint') || n.includes('ppt') || n.includes('presentation') || n.includes('slide')) {
+                return {
+                    tag: 'Microsoft 365',
+                    bgClass: 'bg-orange-500/10 dark:bg-orange-500/20',
+                    borderClass: 'border-orange-500/30',
+                    logoSvg: SVGS.powerpoint
+                };
+            }
+            if (n.includes('image') || n.includes('photo') || n.includes('edit') || n.includes('photoshop')) {
+                return {
+                    tag: 'Adobe Creative',
+                    bgClass: 'bg-sky-500/10 dark:bg-sky-500/20',
+                    borderClass: 'border-sky-500/30',
+                    logoSvg: SVGS.photoshop
+                };
+            }
+            if (n.includes('web') || n.includes('site') || n.includes('html') || n.includes('classvel') || n.includes('content')) {
+                return {
+                    tag: 'Web Standards',
+                    bgClass: 'bg-amber-500/10 dark:bg-amber-500/20',
+                    borderClass: 'border-amber-500/30',
+                    logoSvg: SVGS.web
+                };
+            }
+            if (n.includes('troubleshoot') || n.includes('diagnos') || n.includes('hardware') || n.includes('pc') || n.includes('support')) {
+                return {
+                    tag: 'Tech Support',
+                    bgClass: 'bg-emerald-500/10 dark:bg-emerald-500/20',
+                    borderClass: 'border-emerald-500/30',
+                    logoSvg: SVGS.troubleshoot
+                };
+            }
+            return {
+                tag: 'Operations',
+                bgClass: 'bg-purple-500/10 dark:bg-purple-500/20',
+                borderClass: 'border-purple-500/30',
+                logoSvg: SVGS.teamwork
+            };
+        }
+
         // Render Skills
         function renderSkills() {
             const container = document.getElementById('skillsContainer');
@@ -1428,18 +1522,22 @@
                 return;
             }
 
-            container.innerHTML = skills.map(skill => `
+            container.innerHTML = skills.map(skill => {
+                const branding = getSkillBranding(skill);
+                return `
                 <div class="glass-panel p-4 rounded-2xl text-center relative group hover:border-brand-300 dark:hover:border-brand-700 transition-all duration-200">
                     <button type="button" onclick="deleteSkill('${skill.id}')" class="absolute top-2 right-2 text-slate-300 hover:text-rose-500 text-xs opacity-0 group-hover:opacity-100 transition p-1 rounded-lg hover:bg-rose-50 dark:hover:bg-rose-950/30">
                         <i class="fa-solid fa-xmark"></i>
                     </button>
-                    <div class="w-12 h-12 mx-auto mb-3 rounded-2xl bg-gradient-to-tr from-indigo-50 to-purple-50 dark:from-indigo-950/60 dark:to-purple-950/60 border border-indigo-100 dark:border-indigo-900/40 flex items-center justify-center text-xl font-mono text-brand-600 dark:text-brand-400">
-                        ${escapeHtml(skill.icon || '★')}
+                    <div class="w-12 h-12 mx-auto mb-2 rounded-2xl ${branding.bgClass} border ${branding.borderClass} flex items-center justify-center p-2 shadow-sm">
+                        ${branding.logoSvg}
                     </div>
+                    <span class="inline-block text-[10px] font-mono font-bold uppercase text-slate-400 mb-0.5">${branding.tag}</span>
                     <h4 class="text-xs font-bold text-slate-900 dark:text-white truncate">${escapeHtml(skill.name)}</h4>
                     <button type="button" onclick="editSkill('${skill.id}')" class="mt-2 text-[10px] text-brand-500 dark:text-brand-400 hover:underline font-semibold">Edit</button>
                 </div>
-            `).join('');
+                `;
+            }).join('');
         }
 
         function updateMetrics() {
