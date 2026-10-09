@@ -622,33 +622,33 @@
                                 </div>
                             </div>
 
-                            <div id="githubRow" class="hidden flex items-center gap-4">
+                            <div id="githubRow" class="flex items-center gap-4">
                                 <div class="w-11 h-11 rounded-2xl bg-slate-500/10 border border-slate-500/20 text-slate-300 flex items-center justify-center text-base">
                                     <i class="fa-brands fa-github"></i>
                                 </div>
                                 <div>
                                     <span class="block text-xs uppercase font-mono text-slate-400">GitHub</span>
-                                    <a id="githubLink" href="#" target="_blank" rel="noopener" class="font-bold text-sm sm:text-base hover:text-brand-400 transition">GitHub Profile</a>
+                                    <a id="githubLink" href="https://github.com/Saadmankhandker10" target="_blank" rel="noopener" class="font-bold text-sm sm:text-base hover:text-brand-400 transition">github.com/Saadmankhandker10</a>
                                 </div>
                             </div>
 
-                            <div id="facebookRow" class="hidden flex items-center gap-4">
+                            <div id="facebookRow" class="flex items-center gap-4">
                                 <div class="w-11 h-11 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 flex items-center justify-center text-base">
                                     <i class="fa-brands fa-facebook"></i>
                                 </div>
                                 <div>
                                     <span class="block text-xs uppercase font-mono text-slate-400">Facebook</span>
-                                    <a id="facebookLink" href="#" target="_blank" rel="noopener" class="font-bold text-sm sm:text-base hover:text-brand-400 transition">Facebook Profile</a>
+                                    <a id="facebookLink" href="https://www.facebook.com/saadman.khandker.1" target="_blank" rel="noopener" class="font-bold text-sm sm:text-base hover:text-brand-400 transition">facebook.com/saadman.khandker.1</a>
                                 </div>
                             </div>
 
-                            <div id="instagramRow" class="hidden flex items-center gap-4">
+                            <div id="instagramRow" class="flex items-center gap-4">
                                 <div class="w-11 h-11 rounded-2xl bg-pink-500/10 border border-pink-500/20 text-pink-400 flex items-center justify-center text-base">
                                     <i class="fa-brands fa-instagram"></i>
                                 </div>
                                 <div>
                                     <span class="block text-xs uppercase font-mono text-slate-400">Instagram</span>
-                                    <a id="instagramLink" href="#" target="_blank" rel="noopener" class="font-bold text-sm sm:text-base hover:text-brand-400 transition">Instagram Profile</a>
+                                    <a id="instagramLink" href="https://www.instagram.com/saadman_khandker/" target="_blank" rel="noopener" class="font-bold text-sm sm:text-base hover:text-brand-400 transition">instagram.com/saadman_khandker</a>
                                 </div>
                             </div>
                         </div>
@@ -886,6 +886,7 @@
                 if (data[network]) {
                     const link = document.getElementById(`${network}Link`);
                     link.href = data[network];
+                    link.textContent = data[network].replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '');
                     document.getElementById(`${network}Row`).classList.remove('hidden');
                 }
             });
