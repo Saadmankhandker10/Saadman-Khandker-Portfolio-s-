@@ -845,15 +845,114 @@
             box-shadow: 0 0 8px #ffffff;
         }
 
-        /* Filter Tab Buttons */
-        .exp-filter-btn {
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        /* ==================== 3D INTERACTIVE CATEGORY STAGE ==================== */
+        .stage-3d-viewport {
+            perspective: 1400px;
+            perspective-origin: 50% 30%;
+            position: relative;
+            width: 100%;
+            min-height: 520px;
+            overflow: hidden;
+            padding: 10px 0 20px 0;
         }
-        .exp-filter-btn.active {
-            background: rgba(192, 132, 252, 0.2);
-            border-color: #c084fc;
-            color: #ffffff;
-            box-shadow: 0 0 15px rgba(192, 132, 252, 0.4);
+        .stage-3d-panel {
+            width: 100%;
+            transform-style: preserve-3d;
+            backface-visibility: hidden;
+            transition: transform 0.65s cubic-bezier(0.2, 0.9, 0.3, 1), opacity 0.5s ease, filter 0.5s ease;
+            will-change: transform, opacity;
+        }
+        .stage-3d-panel.active-3d {
+            opacity: 1;
+            transform: perspective(1400px) rotateY(0deg) translateZ(0) scale(1);
+            pointer-events: auto;
+            position: relative;
+            z-index: 10;
+            filter: blur(0px);
+        }
+        .stage-3d-panel.leave-left {
+            opacity: 0;
+            transform: perspective(1400px) rotateY(-65deg) translateZ(-160px) scale(0.85);
+            pointer-events: none;
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            z-index: 1;
+            filter: blur(5px);
+        }
+        .stage-3d-panel.leave-right {
+            opacity: 0;
+            transform: perspective(1400px) rotateY(65deg) translateZ(-160px) scale(0.85);
+            pointer-events: none;
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            z-index: 1;
+            filter: blur(5px);
+        }
+        .stage-3d-tab {
+            position: relative;
+            transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+            transform-style: preserve-3d;
+            cursor: pointer;
+            user-select: none;
+        }
+        .stage-3d-tab.active {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.35), rgba(236, 72, 153, 0.35)) !important;
+            border-color: rgba(99, 102, 241, 0.8) !important;
+            color: #ffffff !important;
+            box-shadow: 0 0 25px rgba(99, 102, 241, 0.45), inset 0 0 15px rgba(236, 72, 153, 0.25);
+            transform: translateY(-2px) scale(1.03);
+        }
+        .stage-3d-tab:hover:not(.active) {
+            border-color: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.08);
+        }
+        .stage-3d-nav-arrow {
+            width: 2.75rem;
+            height: 2.75rem;
+            border-radius: 9999px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #e2e8f0;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+        }
+        .stage-3d-nav-arrow:hover {
+            background: rgba(99, 102, 241, 0.4);
+            border-color: rgba(99, 102, 241, 0.8);
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
+            transform: scale(1.1);
+            color: #fff;
+        }
+        .card-3d-interactive {
+            transform-style: preserve-3d;
+            transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.4, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+        .card-3d-interactive:hover {
+            box-shadow: 0 20px 40px -10px rgba(99, 102, 241, 0.3), 0 0 25px rgba(236, 72, 153, 0.15);
+        }
+        .card-3d-pop {
+            transform: translateZ(32px);
+            transition: transform 0.25s ease;
+        }
+        .stage-3d-viewport {
+            touch-action: pan-y;
+        }
+        .stage-expanded-view {
+            overflow: visible !important;
+            min-height: auto !important;
+        }
+        .stage-expanded-view .stage-3d-panel {
+            position: relative !important;
+            opacity: 1 !important;
+            transform: none !important;
+            pointer-events: auto !important;
+            filter: none !important;
+            margin-bottom: 4rem;
         }
     </style></head>
 <body class="min-h-screen flex flex-col relative selection:bg-brand-500 selection:text-white">
@@ -1103,370 +1202,376 @@
             </div>
         </section>
 
-        <!-- ==================== SERVICES / WHAT I DO ==================== -->
-        <section id="services" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-            <div class="text-center max-w-2xl mx-auto mb-16">
-                <span class="section-tag neon-glow-badge">Expertise</span>
-                <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight neon-glow-heading">What I Bring to the Table</h2>
-                <p class="text-slate-400 mt-3 text-sm sm:text-base">Comprehensive services combining operational discipline, digital precision, and dedicated teamwork.</p>
+        <!-- ==================== 3D INTERACTIVE CAPABILITIES & SERVICES HUB ==================== -->
+        <section id="capabilities-hub" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 relative z-20">
+            <!-- 3D Hub Header -->
+            <div class="text-center max-w-3xl mx-auto mb-10">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-mono font-bold bg-brand-500/10 border border-brand-500/30 text-brand-300 shadow-[0_0_15px_rgba(99,102,241,0.25)] mb-3">
+                    <span class="relative flex h-2 w-2">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-brand-400"></span>
+                    </span>
+                    <span>3D Interactive Capabilities Hub</span>
+                    <span class="text-slate-500">&bull;</span>
+                    <span class="text-pink-400">Rotate &amp; Switch in 3D</span>
+                </div>
+                <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight neon-glow-heading">
+                    Explore My Services &amp; Skills
+                </h2>
+                <p class="text-slate-400 mt-3 text-sm sm:text-base">
+                    Click categories, drag with mouse, or use arrow buttons to rotate through freelancing services, tool mastery with real logos, and delivery workflows in full 3D animation.
+                </p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="glass-card p-7 rounded-3xl space-y-4 group">
-                    <div class="w-12 h-12 rounded-2xl bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 flex items-center justify-center text-xl group-hover:scale-110 group-hover:bg-indigo-500 group-hover:text-white transition-all">
-                        <i class="fa-solid fa-globe"></i>
-                    </div>
-                    <h3 class="text-lg font-bold text-white">Web Assistance & Content</h3>
-                    <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                        Website maintenance, digital data formatting, real-time updates, and workflow optimization for streamlined web operations.
-                    </p>
-                    <div class="pt-3">
-                        <span class="neon-service-tag neon-indigo">
-                            <span>Classvel standard</span>
-                            <i class="fa-solid fa-arrow-right"></i>
-                        </span>
-                    </div>
+            <!-- 3D Category Switcher Control Bar -->
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4 max-w-5xl mx-auto mb-10 p-2 sm:p-2.5 rounded-3xl bg-dark-900/85 backdrop-blur-xl border border-white/10 shadow-2xl">
+                <!-- 4 Interactive Category Tabs -->
+                <div class="flex flex-wrap items-center justify-center gap-2 w-full sm:w-auto" id="stageTabsBar" role="tablist">
+                    <button type="button" data-stage="0" role="tab" aria-selected="true" class="stage-3d-tab active px-3.5 sm:px-4 py-2 rounded-2xl text-xs font-bold text-slate-300 border border-white/10 flex items-center gap-2">
+                        <i class="fa-solid fa-keyboard text-brand-400"></i>
+                        <span>Freelance Typing</span>
+                    </button>
+                    <button type="button" data-stage="1" role="tab" aria-selected="false" class="stage-3d-tab px-3.5 sm:px-4 py-2 rounded-2xl text-xs font-bold text-slate-300 border border-white/10 flex items-center gap-2">
+                        <i class="fa-solid fa-shapes text-pink-400"></i>
+                        <span>Skills &amp; Tools</span>
+                    </button>
+                    <button type="button" data-stage="2" role="tab" aria-selected="false" class="stage-3d-tab px-3.5 sm:px-4 py-2 rounded-2xl text-xs font-bold text-slate-300 border border-white/10 flex items-center gap-2">
+                        <i class="fa-solid fa-diagram-project text-purple-400"></i>
+                        <span>4-Step Workflow</span>
+                    </button>
+                    <button type="button" data-stage="3" role="tab" aria-selected="false" class="stage-3d-tab px-3.5 sm:px-4 py-2 rounded-2xl text-xs font-bold text-slate-300 border border-white/10 flex items-center gap-2">
+                        <i class="fa-solid fa-store text-emerald-400"></i>
+                        <span>Operations &amp; Aid</span>
+                    </button>
                 </div>
 
-                <div class="glass-card p-7 rounded-3xl space-y-4 group">
-                    <div class="w-12 h-12 rounded-2xl bg-purple-500/10 border border-purple-500/30 text-purple-400 flex items-center justify-center text-xl group-hover:scale-110 group-hover:bg-purple-500 group-hover:text-white transition-all">
-                        <i class="fa-solid fa-boxes-stacked"></i>
-                    </div>
-                    <h3 class="text-lg font-bold text-white">Store & Inventory Operations</h3>
-                    <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                        Stock reconciliation, inventory tracking, quality inspection, and store shelf organization with strict retail precision.
-                    </p>
-                    <div class="pt-3"><span class="neon-service-tag neon-purple"><span>Meena Bazar & Agora proven</span><i class="fa-solid fa-arrow-right"></i></span></div>
-                </div>
-
-                <div class="glass-card p-7 rounded-3xl space-y-4 group">
-                    <div class="w-12 h-12 rounded-2xl bg-pink-500/10 border border-pink-500/30 text-pink-400 flex items-center justify-center text-xl group-hover:scale-110 group-hover:bg-pink-500 group-hover:text-white transition-all">
-                        <i class="fa-solid fa-chalkboard-user"></i>
-                    </div>
-                    <h3 class="text-lg font-bold text-white">Digital Content & Slide Decks</h3>
-                    <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                        Converting raw data & questionnaires into clean, engaging, visually digestible PowerPoint presentations for end-users.
-                    </p>
-                    <div class="pt-3"><span class="neon-service-tag neon-pink"><span>High-accuracy formatting</span><i class="fa-solid fa-arrow-right"></i></span></div>
-                </div>
-
-                <div class="glass-card p-7 rounded-3xl space-y-4 group">
-                    <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 flex items-center justify-center text-xl group-hover:scale-110 group-hover:bg-emerald-500 group-hover:text-white transition-all">
-                        <i class="fa-solid fa-users-gear"></i>
-                    </div>
-                    <h3 class="text-lg font-bold text-white">Crisis Response & Team Support</h3>
-                    <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                        Calm execution in fast-paced scenarios, community health & relief drive coordination, and customer-centric support.
-                    </p>
-                    <div class="pt-3"><span class="neon-service-tag neon-emerald"><span>BDRCS emergency volunteer</span><i class="fa-solid fa-arrow-right"></i></span></div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ==================== FREELANCE TYPING & DOCUMENT PROCESSING ==================== -->
-        <section id="typing-services" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 relative">
-            <!-- Header -->
-            <div class="text-center max-w-3xl mx-auto mb-14">
-                <span class="section-tag neon-glow-badge">Freelance Typing</span>
-                <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight neon-glow-heading">Fast Typing &amp; Document Retyping</h2>
-                <p class="text-slate-400 mt-3 text-sm sm:text-base">High-speed, 99.9% accurate manual typing, scanned PDF conversion, and professional document formatting into Microsoft Word and Google Docs.</p>
-            </div>
-
-            <!-- Live Performance Metrics & Guarantee Bar -->
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6 mb-12">
-                <div class="glass-card p-3.5 sm:p-6 rounded-2xl sm:rounded-3xl text-center group border border-brand-500/30">
-                    <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-brand-500/10 border border-brand-500/20 text-brand-400 flex items-center justify-center text-lg sm:text-xl mx-auto mb-2 sm:mb-3 group-hover:scale-110 transition-transform">
-                        <i class="fa-solid fa-keyboard"></i>
-                    </div>
-                    <span class="block text-2xl sm:text-4xl font-extrabold text-white gradient-text">65+ WPM</span>
-                    <p class="text-[11px] sm:text-sm font-semibold text-slate-200 mt-1">Typing Speed</p>
-                    <p class="text-[10px] sm:text-[11px] text-slate-400 mt-0.5 font-mono">Touch-typing with rapid turnaround</p>
-                </div>
-
-                <div class="glass-card p-3.5 sm:p-6 rounded-2xl sm:rounded-3xl text-center group border border-emerald-500/30">
-                    <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center text-lg sm:text-xl mx-auto mb-2 sm:mb-3 group-hover:scale-110 transition-transform">
-                        <i class="fa-solid fa-bullseye"></i>
-                    </div>
-                    <span class="block text-2xl sm:text-4xl font-extrabold text-white gradient-text">99.9%</span>
-                    <p class="text-[11px] sm:text-sm font-semibold text-slate-200 mt-1">Accuracy Rate</p>
-                    <p class="text-[10px] sm:text-[11px] text-slate-400 mt-0.5 font-mono">Zero typos &amp; strict proofreading</p>
-                </div>
-
-                <div class="glass-card p-3.5 sm:p-6 rounded-2xl sm:rounded-3xl text-center group border border-pink-500/30">
-                    <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-pink-500/10 border border-pink-500/20 text-pink-400 flex items-center justify-center text-lg sm:text-xl mx-auto mb-2 sm:mb-3 group-hover:scale-110 transition-transform">
-                        <i class="fa-solid fa-bolt"></i>
-                    </div>
-                    <span class="block text-2xl sm:text-4xl font-extrabold text-white gradient-text">&lt;24 Hours</span>
-                    <p class="text-[11px] sm:text-sm font-semibold text-slate-200 mt-1">Express Delivery</p>
-                    <p class="text-[10px] sm:text-[11px] text-slate-400 mt-0.5 font-mono">Rush turnaround available on request</p>
-                </div>
-
-                <div class="glass-card p-3.5 sm:p-6 rounded-2xl sm:rounded-3xl text-center group border border-purple-500/30">
-                    <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-purple-500/10 border border-purple-500/20 text-purple-400 flex items-center justify-center text-lg sm:text-xl mx-auto mb-2 sm:mb-3 group-hover:scale-110 transition-transform">
-                        <i class="fa-solid fa-shield-halved"></i>
-                    </div>
-                    <span class="block text-2xl sm:text-4xl font-extrabold text-white gradient-text">100% Secure</span>
-                    <p class="text-[11px] sm:text-sm font-semibold text-slate-200 mt-1">Confidential &amp; Private</p>
-                    <p class="text-[10px] sm:text-[11px] text-slate-400 mt-0.5 font-mono">Strict NDA, data purged after project</p>
+                <!-- Right Stage Status & Control Buttons -->
+                <div class="flex items-center gap-2.5">
+                    <button type="button" id="stageViewModeBtn" class="px-3 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 text-xs font-mono font-bold flex items-center gap-1.5 transition">
+                        <i class="fa-solid fa-cube text-brand-400"></i>
+                        <span class="hidden sm:inline">3D Mode</span>
+                    </button>
+                    <span id="stageCounter" class="text-xs font-mono font-bold text-slate-400 bg-white/5 px-2.5 py-1.5 rounded-xl border border-white/10">01 / 04</span>
+                    <button type="button" id="stagePrevBtn" aria-label="Previous Category in 3D" class="stage-3d-nav-arrow">
+                        <i class="fa-solid fa-chevron-left text-xs"></i>
+                    </button>
+                    <button type="button" id="stageNextBtn" aria-label="Next Category in 3D" class="stage-3d-nav-arrow">
+                        <i class="fa-solid fa-chevron-right text-xs"></i>
+                    </button>
                 </div>
             </div>
 
-            <!-- 3 Main Freelance Typing Services -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-                <!-- Card 1 -->
-                <div class="glass-card p-7 sm:p-8 rounded-3xl space-y-4 group hover:border-brand-500/50 transition-all duration-300">
-                    <div class="w-12 h-12 rounded-2xl bg-brand-500/10 border border-brand-500/30 text-brand-400 flex items-center justify-center text-xl group-hover:scale-110 group-hover:bg-brand-500 group-hover:text-white transition-all">
-                        <i class="fa-solid fa-file-word"></i>
+            <!-- 3D Stage Viewport -->
+            <div id="stage3dViewport" class="stage-3d-viewport cursor-grab active:cursor-grabbing">
+                <!-- ==================== PANEL 0: FREELANCE TYPING ==================== -->
+                <div id="typing-services" class="stage-3d-panel active-3d">
+                    <!-- Header -->
+                    <div class="text-center max-w-3xl mx-auto mb-10">
+                        <span class="section-tag neon-glow-badge">Freelance Typing</span>
+                        <h3 class="text-2xl sm:text-4xl font-extrabold tracking-tight neon-glow-heading">Fast Typing &amp; Document Retyping</h3>
+                        <p class="text-slate-400 mt-2 text-xs sm:text-sm">High-speed, 99.9% accurate manual typing, scanned PDF conversion, and professional document formatting into Microsoft Word and Google Docs.</p>
                     </div>
-                    <h3 class="text-xl font-bold text-white">Scanned PDF to Word Retyping</h3>
-                    <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                        Manual retyping of scanned book pages, legal documents, contracts, research papers, and archived PDFs into clean, fully editable Microsoft Word (<code class="text-pink-300 font-mono">.docx</code>) and Google Docs files with matching layouts.
-                    </p>
-                    <ul class="text-xs text-slate-400 space-y-1.5 pt-2 border-t border-white/10 font-mono">
-                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400 text-[10px]"></i> No automated OCR mistakes</li>
-                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400 text-[10px]"></i> Preserves tables, bullet points &amp; margins</li>
-                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400 text-[10px]"></i> 100% human-verified line by line</li>
-                    </ul>
-                </div>
 
-                <!-- Card 2 -->
-                <div class="glass-card p-7 sm:p-8 rounded-3xl space-y-4 group hover:border-pink-500/50 transition-all duration-300">
-                    <div class="w-12 h-12 rounded-2xl bg-pink-500/10 border border-pink-500/30 text-pink-400 flex items-center justify-center text-xl group-hover:scale-110 group-hover:bg-pink-500 group-hover:text-white transition-all">
-                        <i class="fa-solid fa-pen-nib"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-white">Handwritten Notes &amp; Image Digitization</h3>
-                    <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                        Precise deciphering and digitization of clear handwriting, meeting diaries, lecture notes, printed screenshots, and photo captures into organized digital documents ready for sharing and printing.
-                    </p>
-                    <ul class="text-xs text-slate-400 space-y-1.5 pt-2 border-t border-white/10 font-mono">
-                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-pink-400 text-[10px]"></i> Handwritten notes &amp; manuscripts</li>
-                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-pink-400 text-[10px]"></i> Screenshots &amp; image text extraction</li>
-                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-pink-400 text-[10px]"></i> Academic lecture notes &amp; assignments</li>
-                    </ul>
-                </div>
-
-                <!-- Card 3 -->
-                <div class="glass-card p-7 sm:p-8 rounded-3xl space-y-4 group hover:border-purple-500/50 transition-all duration-300">
-                    <div class="w-12 h-12 rounded-2xl bg-purple-500/10 border border-purple-500/30 text-purple-400 flex items-center justify-center text-xl group-hover:scale-110 group-hover:bg-purple-500 group-hover:text-white transition-all">
-                        <i class="fa-solid fa-align-left"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-white">Document Formatting &amp; Styling</h3>
-                    <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                        Transform messy, unformatted files into executive-grade documents. Styling typography, headings, line spacing, margins, page numbers, dynamic Table of Contents (TOC), and custom headers/footers in Word or Docs.
-                    </p>
-                    <ul class="text-xs text-slate-400 space-y-1.5 pt-2 border-t border-white/10 font-mono">
-                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-purple-400 text-[10px]"></i> Standard corporate &amp; academic styles</li>
-                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-purple-400 text-[10px]"></i> Clickable Table of Contents &amp; numbering</li>
-                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-purple-400 text-[10px]"></i> Print-ready PDF &amp; editable Word export</li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Interactive Live Typing Benchmark & Interactive Test Showcase -->
-            <div class="glass-card p-5 sm:p-8 lg:p-10 rounded-2xl sm:rounded-3xl border border-brand-500/30 overflow-hidden relative">
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-                    <!-- Left Info -->
-                    <div class="lg:col-span-7 space-y-4">
-                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono font-semibold bg-brand-500/10 text-brand-400 border border-brand-500/30">
-                            <i class="fa-solid fa-certificate text-xs"></i> Verified Touch-Typing Benchmark
-                        </div>
-                        <h3 class="text-2xl sm:text-3xl font-extrabold text-white">Need 10 to 500+ Pages Retyped Accurately?</h3>
-                        <p class="text-slate-300 text-xs sm:text-sm leading-relaxed">
-                            Unlike automated tools that garble formatting and miss crucial details, every document is typed manually with meticulous focus. You get clean spelling, flawless punctuation, properly aligned layouts, and on-time delivery every single time.
-                        </p>
-
-                        <!-- Supported File Types -->
-                        <div class="pt-2">
-                            <span class="block text-xs font-mono font-bold uppercase tracking-wider text-slate-400 mb-2.5">Input &amp; Output Formats Handled:</span>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="px-3 py-1.5 rounded-xl text-xs font-mono bg-white/5 border border-white/10 text-slate-200"><i class="fa-solid fa-file-pdf text-red-400 mr-1.5"></i> Scanned PDF</span>
-                                <span class="px-3 py-1.5 rounded-xl text-xs font-mono bg-white/5 border border-white/10 text-slate-200"><i class="fa-solid fa-image text-amber-400 mr-1.5"></i> JPG / PNG Scans</span>
-                                <span class="px-3 py-1.5 rounded-xl text-xs font-mono bg-white/5 border border-white/10 text-slate-200"><i class="fa-solid fa-pen text-pink-400 mr-1.5"></i> Clear Handwriting</span>
-                                <span class="px-3 py-1.5 rounded-xl text-xs font-mono bg-white/5 border border-brand-500/30 text-brand-300"><i class="fa-solid fa-file-word text-blue-400 mr-1.5"></i> MS Word (.docx)</span>
-                                <span class="px-3 py-1.5 rounded-xl text-xs font-mono bg-white/5 border border-emerald-500/30 text-emerald-300"><i class="fa-solid fa-file-lines text-emerald-400 mr-1.5"></i> Google Docs</span>
+                    <!-- Live Performance Metrics & Guarantee Bar -->
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6 mb-10">
+                        <div class="glass-card p-3.5 sm:p-6 rounded-2xl sm:rounded-3xl text-center group border border-brand-500/30">
+                            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-brand-500/10 border border-brand-500/20 text-brand-400 flex items-center justify-center text-lg sm:text-xl mx-auto mb-2 sm:mb-3 group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-keyboard"></i>
                             </div>
+                            <span class="block text-2xl sm:text-4xl font-extrabold text-white gradient-text">65+ WPM</span>
+                            <p class="text-[11px] sm:text-sm font-semibold text-slate-200 mt-1">Typing Speed</p>
+                            <p class="text-[10px] sm:text-[11px] text-slate-400 mt-0.5 font-mono">Touch-typing with rapid turnaround</p>
                         </div>
 
-                        <!-- Action Button -->
-                        <div class="pt-4 flex flex-wrap gap-3">
-                            <a href="#contact" class="btn-gradient px-6 py-3 rounded-2xl text-xs sm:text-sm font-bold text-white inline-flex items-center gap-2">
-                                <span>Get Instant Typing Quote</span>
-                                <i class="fa-solid fa-arrow-right text-xs"></i>
-                            </a>
-                            <a href="https://wa.me/8801320399465?text=Hi%20Saadman,%20I%20have%20a%20typing%20and%20document%20retyping%20project%20for%20you" target="_blank" rel="noopener" class="px-5 py-3 rounded-2xl text-xs sm:text-sm font-bold bg-emerald-600 hover:bg-emerald-500 text-white transition inline-flex items-center gap-2 shadow-lg shadow-emerald-600/25">
-                                <i class="fa-brands fa-whatsapp text-sm"></i> Chat on WhatsApp
-                            </a>
+                        <div class="glass-card p-3.5 sm:p-6 rounded-2xl sm:rounded-3xl text-center group border border-emerald-500/30">
+                            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center text-lg sm:text-xl mx-auto mb-2 sm:mb-3 group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-bullseye"></i>
+                            </div>
+                            <span class="block text-2xl sm:text-4xl font-extrabold text-white gradient-text">99.9%</span>
+                            <p class="text-[11px] sm:text-sm font-semibold text-slate-200 mt-1">Accuracy Rate</p>
+                            <p class="text-[10px] sm:text-[11px] text-slate-400 mt-0.5 font-mono">Zero typos &amp; strict proofreading</p>
+                        </div>
+
+                        <div class="glass-card p-3.5 sm:p-6 rounded-2xl sm:rounded-3xl text-center group border border-pink-500/30">
+                            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-pink-500/10 border border-pink-500/20 text-pink-400 flex items-center justify-center text-lg sm:text-xl mx-auto mb-2 sm:mb-3 group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-bolt"></i>
+                            </div>
+                            <span class="block text-2xl sm:text-4xl font-extrabold text-white gradient-text">&lt;24 Hours</span>
+                            <p class="text-[11px] sm:text-sm font-semibold text-slate-200 mt-1">Express Delivery</p>
+                            <p class="text-[10px] sm:text-[11px] text-slate-400 mt-0.5 font-mono">Rush turnaround available on request</p>
+                        </div>
+
+                        <div class="glass-card p-3.5 sm:p-6 rounded-2xl sm:rounded-3xl text-center group border border-purple-500/30">
+                            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-purple-500/10 border border-purple-500/20 text-purple-400 flex items-center justify-center text-lg sm:text-xl mx-auto mb-2 sm:mb-3 group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-shield-halved"></i>
+                            </div>
+                            <span class="block text-2xl sm:text-4xl font-extrabold text-white gradient-text">100% Secure</span>
+                            <p class="text-[11px] sm:text-sm font-semibold text-slate-200 mt-1">Confidential &amp; Private</p>
+                            <p class="text-[10px] sm:text-[11px] text-slate-400 mt-0.5 font-mono">Strict NDA, data purged after project</p>
                         </div>
                     </div>
 
-                    <!-- Right Interactive Typing Terminal Widget -->
-                    <div class="lg:col-span-5">
-                        <div class="glass-card p-5 rounded-2xl border border-brand-500/40 bg-dark-900/90 shadow-2xl relative">
-                            <!-- Terminal Header -->
-                            <div class="flex items-center justify-between pb-3 mb-3 border-b border-white/10">
-                                <div class="flex items-center gap-2">
-                                    <span class="w-3 h-3 rounded-full bg-rose-500/80"></span>
-                                    <span class="w-3 h-3 rounded-full bg-amber-500/80"></span>
-                                    <span class="w-3 h-3 rounded-full bg-emerald-500/80"></span>
-                                    <span class="text-[11px] font-mono text-slate-400 ml-2">typist-benchmark.sh</span>
-                                </div>
-                                <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">LIVE</span>
+                    <!-- 3 Main Freelance Typing Services -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+                        <!-- Card 1 -->
+                        <div class="glass-card p-6 sm:p-7 rounded-3xl space-y-4 group hover:border-brand-500/50 transition-all duration-300">
+                            <div class="w-12 h-12 rounded-2xl bg-brand-500/10 border border-brand-500/30 text-brand-400 flex items-center justify-center text-xl group-hover:scale-110 group-hover:bg-brand-500 group-hover:text-white transition-all">
+                                <i class="fa-solid fa-file-word"></i>
                             </div>
+                            <h4 class="text-lg font-bold text-white">Scanned PDF to Word Retyping</h4>
+                            <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                                Manual retyping of scanned book pages, legal documents, contracts, research papers, and archived PDFs into clean, fully editable Microsoft Word (<code class="text-pink-300 font-mono">.docx</code>) and Google Docs files with matching layouts.
+                            </p>
+                            <ul class="text-xs text-slate-400 space-y-1.5 pt-2 border-t border-white/10 font-mono">
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400 text-[10px]"></i> No automated OCR mistakes</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400 text-[10px]"></i> Preserves tables, bullet points &amp; margins</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400 text-[10px]"></i> 100% human-verified line by line</li>
+                            </ul>
+                        </div>
 
-                            <!-- Live Typing Metrics Row -->
-                            <div class="grid grid-cols-3 gap-2 mb-3">
-                                <div class="bg-white/5 p-2 rounded-xl text-center border border-white/5">
-                                    <span class="block text-base sm:text-lg font-mono font-bold text-brand-400" id="liveWpmCounter">68</span>
-                                    <span class="text-[9px] uppercase font-mono text-slate-400">Words / Min</span>
-                                </div>
-                                <div class="bg-white/5 p-2 rounded-xl text-center border border-white/5">
-                                    <span class="block text-base sm:text-lg font-mono font-bold text-emerald-400">99.8%</span>
-                                    <span class="text-[9px] uppercase font-mono text-slate-400">Accuracy</span>
-                                </div>
-                                <div class="bg-white/5 p-2 rounded-xl text-center border border-white/5">
-                                    <span class="block text-base sm:text-lg font-mono font-bold text-pink-400">340</span>
-                                    <span class="text-[9px] uppercase font-mono text-slate-400">CPM Speed</span>
-                                </div>
+                        <!-- Card 2 -->
+                        <div class="glass-card p-6 sm:p-7 rounded-3xl space-y-4 group hover:border-pink-500/50 transition-all duration-300">
+                            <div class="w-12 h-12 rounded-2xl bg-pink-500/10 border border-pink-500/30 text-pink-400 flex items-center justify-center text-xl group-hover:scale-110 group-hover:bg-pink-500 group-hover:text-white transition-all">
+                                <i class="fa-solid fa-pen-nib"></i>
                             </div>
+                            <h4 class="text-lg font-bold text-white">Handwritten Notes &amp; Image Digitization</h4>
+                            <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                                Precise deciphering and digitization of clear handwriting, meeting diaries, lecture notes, printed screenshots, and photo captures into organized digital documents ready for sharing and printing.
+                            </p>
+                            <ul class="text-xs text-slate-400 space-y-1.5 pt-2 border-t border-white/10 font-mono">
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-pink-400 text-[10px]"></i> Handwritten notes &amp; manuscripts</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-pink-400 text-[10px]"></i> Screenshots &amp; image text extraction</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-pink-400 text-[10px]"></i> Academic lecture notes &amp; assignments</li>
+                            </ul>
+                        </div>
 
-                            <!-- Simulated Live Document Stream -->
-                            <div class="bg-dark-950/80 p-3.5 rounded-xl border border-white/5 font-mono text-xs text-slate-300 min-h-[110px] flex flex-col justify-between">
-                                <p class="leading-relaxed text-[11px] sm:text-xs">
-                                    <span class="text-brand-400 font-bold">&gt;</span> <span id="typingBenchmarkDemo">Converting scanned PDF document to clean Word format with zero typos...</span><span class="typing-caret">|</span>
+                        <!-- Card 3 -->
+                        <div class="glass-card p-6 sm:p-7 rounded-3xl space-y-4 group hover:border-purple-500/50 transition-all duration-300">
+                            <div class="w-12 h-12 rounded-2xl bg-purple-500/10 border border-purple-500/30 text-purple-400 flex items-center justify-center text-xl group-hover:scale-110 group-hover:bg-purple-500 group-hover:text-white transition-all">
+                                <i class="fa-solid fa-align-left"></i>
+                            </div>
+                            <h4 class="text-lg font-bold text-white">Document Formatting &amp; Styling</h4>
+                            <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                                Transform messy, unformatted files into executive-grade documents. Styling typography, headings, line spacing, margins, page numbers, dynamic Table of Contents (TOC), and custom headers/footers in Word or Docs.
+                            </p>
+                            <ul class="text-xs text-slate-400 space-y-1.5 pt-2 border-t border-white/10 font-mono">
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-purple-400 text-[10px]"></i> Standard corporate &amp; academic styles</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-purple-400 text-[10px]"></i> Clickable Table of Contents &amp; numbering</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-purple-400 text-[10px]"></i> Print-ready PDF &amp; editable Word export</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Live Typing Benchmark & Interactive Test Showcase -->
+                    <div class="glass-card p-5 sm:p-8 lg:p-10 rounded-2xl sm:rounded-3xl border border-brand-500/30 overflow-hidden relative">
+                        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                            <!-- Left Info -->
+                            <div class="lg:col-span-7 space-y-4">
+                                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono font-semibold bg-brand-500/10 text-brand-400 border border-brand-500/30">
+                                    <i class="fa-solid fa-certificate text-xs"></i> Verified Touch-Typing Benchmark
+                                </div>
+                                <h3 class="text-2xl sm:text-3xl font-extrabold text-white">Need 10 to 500+ Pages Retyped Accurately?</h3>
+                                <p class="text-slate-300 text-xs sm:text-sm leading-relaxed">
+                                    Unlike automated tools that garble formatting and miss crucial details, every document is typed manually with meticulous focus. You get clean spelling, flawless punctuation, properly aligned layouts, and on-time delivery every single time.
                                 </p>
-                                <div class="flex items-center justify-between text-[10px] text-slate-400 pt-2 border-t border-white/5">
-                                    <span>Status: <strong class="text-emerald-400">Ready for Orders</strong></span>
-                                    <span>Revisions: <strong class="text-white">Unlimited</strong></span>
+
+                                <!-- Supported File Types -->
+                                <div class="pt-2">
+                                    <span class="block text-xs font-mono font-bold uppercase tracking-wider text-slate-400 mb-2.5">Input &amp; Output Formats Handled:</span>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="px-3 py-1.5 rounded-xl text-xs font-mono bg-white/5 border border-white/10 text-slate-200"><i class="fa-solid fa-file-pdf text-red-400 mr-1.5"></i> Scanned PDF</span>
+                                        <span class="px-3 py-1.5 rounded-xl text-xs font-mono bg-white/5 border border-white/10 text-slate-200"><i class="fa-solid fa-image text-amber-400 mr-1.5"></i> JPG / PNG Scans</span>
+                                        <span class="px-3 py-1.5 rounded-xl text-xs font-mono bg-white/5 border border-white/10 text-slate-200"><i class="fa-solid fa-pen text-pink-400 mr-1.5"></i> Clear Handwriting</span>
+                                        <span class="px-3 py-1.5 rounded-xl text-xs font-mono bg-white/5 border border-brand-500/30 text-brand-300"><i class="fa-solid fa-file-word text-blue-400 mr-1.5"></i> MS Word (.docx)</span>
+                                        <span class="px-3 py-1.5 rounded-xl text-xs font-mono bg-white/5 border border-emerald-500/30 text-emerald-300"><i class="fa-solid fa-file-lines text-emerald-400 mr-1.5"></i> Google Docs</span>
+                                    </div>
+                                </div>
+
+                                <!-- Action Button -->
+                                <div class="pt-4 flex flex-wrap gap-3">
+                                    <a href="#contact" class="btn-gradient px-6 py-3 rounded-2xl text-xs sm:text-sm font-bold text-white inline-flex items-center gap-2">
+                                        <span>Get Instant Typing Quote</span>
+                                        <i class="fa-solid fa-arrow-right text-xs"></i>
+                                    </a>
+                                    <a href="https://wa.me/8801320399465?text=Hi%20Saadman,%20I%20have%20a%20typing%20and%20document%20retyping%20project%20for%20you" target="_blank" rel="noopener" class="px-5 py-3 rounded-2xl text-xs sm:text-sm font-bold bg-emerald-600 hover:bg-emerald-500 text-white transition inline-flex items-center gap-2 shadow-lg shadow-emerald-600/25">
+                                        <i class="fa-brands fa-whatsapp text-sm"></i> Chat on WhatsApp
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!-- Right Interactive Typing Terminal Widget -->
+                            <div class="lg:col-span-5">
+                                <div class="glass-card p-5 rounded-2xl border border-brand-500/40 bg-dark-900/90 shadow-2xl relative">
+                                    <div class="flex items-center justify-between pb-3 mb-3 border-b border-white/10">
+                                        <div class="flex items-center gap-2">
+                                            <span class="w-3 h-3 rounded-full bg-rose-500/80"></span>
+                                            <span class="w-3 h-3 rounded-full bg-amber-500/80"></span>
+                                            <span class="w-3 h-3 rounded-full bg-emerald-500/80"></span>
+                                            <span class="text-[11px] font-mono text-slate-400 ml-2">typist-benchmark.sh</span>
+                                        </div>
+                                        <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">LIVE</span>
+                                    </div>
+
+                                    <div class="grid grid-cols-3 gap-2 mb-3">
+                                        <div class="bg-white/5 p-2 rounded-xl text-center border border-white/5">
+                                            <span class="block text-base sm:text-lg font-mono font-bold text-brand-400" id="liveWpmCounter">68</span>
+                                            <span class="text-[9px] uppercase font-mono text-slate-400">Words / Min</span>
+                                        </div>
+                                        <div class="bg-white/5 p-2 rounded-xl text-center border border-white/5">
+                                            <span class="block text-base sm:text-lg font-mono font-bold text-emerald-400">99.8%</span>
+                                            <span class="text-[9px] uppercase font-mono text-slate-400">Accuracy</span>
+                                        </div>
+                                        <div class="bg-white/5 p-2 rounded-xl text-center border border-white/5">
+                                            <span class="block text-base sm:text-lg font-mono font-bold text-pink-400">340</span>
+                                            <span class="text-[9px] uppercase font-mono text-slate-400">CPM Speed</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="bg-dark-950/80 p-3.5 rounded-xl border border-white/5 font-mono text-xs text-slate-300 min-h-[110px] flex flex-col justify-between">
+                                        <p class="leading-relaxed text-[11px] sm:text-xs">
+                                            <span class="text-brand-400 font-bold">&gt;</span> <span id="typingBenchmarkDemo">Converting scanned PDF document to clean Word format with zero typos...</span><span class="typing-caret">|</span>
+                                        </p>
+                                        <div class="flex items-center justify-between text-[10px] text-slate-400 pt-2 border-t border-white/5">
+                                            <span>Status: <strong class="text-emerald-400">Ready for Orders</strong></span>
+                                            <span>Revisions: <strong class="text-white">Unlimited</strong></span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
 
-        <!-- ==================== RAPID DELIVERY WORKFLOW SECTION ==================== -->
-        <section id="workflow" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative">
-            <div class="text-center max-w-3xl mx-auto mb-16">
-                <span class="section-tag neon-glow-badge">4-Step Delivery Roadmap</span>
-                <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight neon-glow-heading">How I Work &amp; Deliver</h2>
-                <p class="text-slate-400 mt-3 text-sm sm:text-base">A transparent, reliable 4-step workflow ensuring zero stress, lightning turnaround, and 99.9% error-free documents.</p>
-            </div>
-
-            <!-- Workflow Steps Grid -->
-            <div class="relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
-                <!-- Connecting Laser Line (Desktop) -->
-                <div class="hidden lg:block absolute top-16 left-12 right-12 h-0.5 bg-gradient-to-r from-brand-500/50 via-purple-500/50 to-emerald-500/50 pointer-events-none z-0" aria-hidden="true"></div>
-
-                <!-- Step 01 -->
-                <div class="glass-card rounded-3xl p-6 sm:p-7 relative overflow-hidden group hover:border-brand-500/50 transition-all duration-300 z-10">
-                    <div class="flex items-center justify-between mb-5">
-                        <span class="w-12 h-12 rounded-2xl bg-brand-500/15 border border-brand-500/30 text-brand-300 font-mono font-extrabold text-lg flex items-center justify-center shadow-lg shadow-brand-500/20 group-hover:scale-110 transition-transform">
-                            01
-                        </span>
-                        <span class="text-xs font-mono font-bold text-brand-400 bg-brand-500/10 px-2.5 py-1 rounded-full border border-brand-500/20">
-                            &lt; 10 Mins
-                        </span>
+                <!-- ==================== PANEL 1: SKILLS & REAL BRAND LOGOS ==================== -->
+                <div id="skills" class="stage-3d-panel leave-right">
+                    <div class="text-center max-w-2xl mx-auto mb-10">
+                        <span class="section-tag neon-glow-badge">Competencies</span>
+                        <h3 class="text-2xl sm:text-4xl font-extrabold tracking-tight neon-glow-heading">Skills &amp; Capabilities</h3>
+                        <p class="text-slate-400 mt-2 text-xs sm:text-sm">Key technical tools and organizational competencies with authentic brand logos and verified proficiencies.</p>
                     </div>
-                    <div class="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-brand-400 text-lg mb-4">
-                        <i class="fa-solid fa-cloud-arrow-up"></i>
-                    </div>
-                    <h3 class="text-lg font-bold text-white mb-2 group-hover:text-brand-300 transition-colors">
-                        Share Your Files
-                    </h3>
-                    <p class="text-slate-400 text-xs sm:text-sm leading-relaxed mb-4">
-                        Send scanned PDFs, images, or handwritten notes via WhatsApp or Email with your instructions.
-                    </p>
-                    <div class="text-[11px] font-mono text-slate-500 flex items-center gap-1.5 pt-3 border-t border-white/5">
-                        <i class="fa-solid fa-bolt text-brand-400"></i>
-                        <span>Instant quote &amp; confirmation</span>
+
+                    <div id="skillsGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5 sm:gap-5">
+                        <!-- Dynamically rendered with real MS PowerPoint, Photoshop, HTML5 Web, etc. logos -->
                     </div>
                 </div>
 
-                <!-- Step 02 -->
-                <div class="glass-card rounded-3xl p-6 sm:p-7 relative overflow-hidden group hover:border-purple-500/50 transition-all duration-300 z-10">
-                    <div class="flex items-center justify-between mb-5">
-                        <span class="w-12 h-12 rounded-2xl bg-purple-500/15 border border-purple-500/30 text-purple-300 font-mono font-extrabold text-lg flex items-center justify-center shadow-lg shadow-purple-500/20 group-hover:scale-110 transition-transform">
-                            02
-                        </span>
-                        <span class="text-xs font-mono font-bold text-purple-400 bg-purple-500/10 px-2.5 py-1 rounded-full border border-purple-500/20">
-                            Express 24h
-                        </span>
+                <!-- ==================== PANEL 2: 4-STEP CLIENT WORKFLOW ==================== -->
+                <div id="workflow" class="stage-3d-panel leave-right">
+                    <div class="text-center max-w-3xl mx-auto mb-10">
+                        <span class="section-tag neon-glow-badge">4-Step Delivery Roadmap</span>
+                        <h3 class="text-2xl sm:text-4xl font-extrabold tracking-tight neon-glow-heading">How I Work &amp; Deliver</h3>
+                        <p class="text-slate-400 mt-2 text-xs sm:text-sm">A transparent, reliable 4-step workflow ensuring zero stress, lightning turnaround, and 99.9% error-free documents.</p>
                     </div>
-                    <div class="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-purple-400 text-lg mb-4">
-                        <i class="fa-solid fa-keyboard"></i>
+
+                    <div class="relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+                        <div class="hidden lg:block absolute top-16 left-12 right-12 h-0.5 bg-gradient-to-r from-brand-500/50 via-purple-500/50 to-emerald-500/50 pointer-events-none z-0" aria-hidden="true"></div>
+
+                        <!-- Step 01 -->
+                        <div class="glass-card rounded-3xl p-6 sm:p-7 relative overflow-hidden group hover:border-brand-500/50 transition-all duration-300 z-10">
+                            <div class="flex items-center justify-between mb-5">
+                                <span class="w-12 h-12 rounded-2xl bg-brand-500/15 border border-brand-500/30 text-brand-300 font-mono font-extrabold text-lg flex items-center justify-center shadow-lg shadow-brand-500/20 group-hover:scale-110 transition-transform">01</span>
+                                <span class="text-xs font-mono font-bold text-brand-400 bg-brand-500/10 px-2.5 py-1 rounded-full border border-brand-500/20">&lt; 10 Mins</span>
+                            </div>
+                            <div class="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-brand-400 text-lg mb-4"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+                            <h4 class="text-lg font-bold text-white mb-2 group-hover:text-brand-300 transition-colors">Share Your Files</h4>
+                            <p class="text-slate-400 text-xs sm:text-sm leading-relaxed mb-4">Send scanned PDFs, images, or handwritten notes via WhatsApp or Email with your instructions.</p>
+                            <div class="text-[11px] font-mono text-slate-500 flex items-center gap-1.5 pt-3 border-t border-white/5"><i class="fa-solid fa-bolt text-brand-400"></i><span>Instant quote &amp; confirmation</span></div>
+                        </div>
+
+                        <!-- Step 02 -->
+                        <div class="glass-card rounded-3xl p-6 sm:p-7 relative overflow-hidden group hover:border-purple-500/50 transition-all duration-300 z-10">
+                            <div class="flex items-center justify-between mb-5">
+                                <span class="w-12 h-12 rounded-2xl bg-purple-500/15 border border-purple-500/30 text-purple-300 font-mono font-extrabold text-lg flex items-center justify-center shadow-lg shadow-purple-500/20 group-hover:scale-110 transition-transform">02</span>
+                                <span class="text-xs font-mono font-bold text-purple-400 bg-purple-500/10 px-2.5 py-1 rounded-full border border-purple-500/20">Express 24h</span>
+                            </div>
+                            <div class="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-purple-400 text-lg mb-4"><i class="fa-solid fa-keyboard"></i></div>
+                            <h4 class="text-lg font-bold text-white mb-2 group-hover:text-purple-300 transition-colors">High-Speed Typing</h4>
+                            <p class="text-slate-400 text-xs sm:text-sm leading-relaxed mb-4">Manual touch typing at 65+ WPM directly into structured Word (.docx) or Google Docs with zero OCR flaws.</p>
+                            <div class="text-[11px] font-mono text-slate-500 flex items-center gap-1.5 pt-3 border-t border-white/5"><i class="fa-solid fa-gauge-high text-purple-400"></i><span>65+ WPM Human Typing</span></div>
+                        </div>
+
+                        <!-- Step 03 -->
+                        <div class="glass-card rounded-3xl p-6 sm:p-7 relative overflow-hidden group hover:border-pink-500/50 transition-all duration-300 z-10">
+                            <div class="flex items-center justify-between mb-5">
+                                <span class="w-12 h-12 rounded-2xl bg-pink-500/15 border border-pink-500/30 text-pink-300 font-mono font-extrabold text-lg flex items-center justify-center shadow-lg shadow-pink-500/20 group-hover:scale-110 transition-transform">03</span>
+                                <span class="text-xs font-mono font-bold text-pink-400 bg-pink-500/10 px-2.5 py-1 rounded-full border border-pink-500/20">99.9% Accuracy</span>
+                            </div>
+                            <div class="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-pink-400 text-lg mb-4"><i class="fa-solid fa-magnifying-glass-check"></i></div>
+                            <h4 class="text-lg font-bold text-white mb-2 group-hover:text-pink-300 transition-colors">Proofreading &amp; QA</h4>
+                            <p class="text-slate-400 text-xs sm:text-sm leading-relaxed mb-4">Rigorous sentence-by-sentence proofreading, font styling, margin alignment, and layout formatting.</p>
+                            <div class="text-[11px] font-mono text-slate-500 flex items-center gap-1.5 pt-3 border-t border-white/5"><i class="fa-solid fa-shield-halved text-pink-400"></i><span>Strict human quality verification</span></div>
+                        </div>
+
+                        <!-- Step 04 -->
+                        <div class="glass-card rounded-3xl p-6 sm:p-7 relative overflow-hidden group hover:border-emerald-500/50 transition-all duration-300 z-10">
+                            <div class="flex items-center justify-between mb-5">
+                                <span class="w-12 h-12 rounded-2xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 font-mono font-extrabold text-lg flex items-center justify-center shadow-lg shadow-emerald-500/20 group-hover:scale-110 transition-transform">04</span>
+                                <span class="text-xs font-mono font-bold text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/20">On-Time Delivery</span>
+                            </div>
+                            <div class="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-emerald-400 text-lg mb-4"><i class="fa-solid fa-circle-check"></i></div>
+                            <h4 class="text-lg font-bold text-white mb-2 group-hover:text-emerald-300 transition-colors">Ready-to-Use Handover</h4>
+                            <p class="text-slate-400 text-xs sm:text-sm leading-relaxed mb-4">Receive polished Word &amp; PDF files ready to print, share, or submit, backed by free revisions.</p>
+                            <div class="text-[11px] font-mono text-slate-500 flex items-center gap-1.5 pt-3 border-t border-white/5"><i class="fa-solid fa-handshake text-emerald-400"></i><span>Free minor revisions guaranteed</span></div>
+                        </div>
                     </div>
-                    <h3 class="text-lg font-bold text-white mb-2 group-hover:text-purple-300 transition-colors">
-                        High-Speed Typing
-                    </h3>
-                    <p class="text-slate-400 text-xs sm:text-sm leading-relaxed mb-4">
-                        Manual touch typing at 65+ WPM directly into structured Word (.docx) or Google Docs with zero OCR flaws.
-                    </p>
-                    <div class="text-[11px] font-mono text-slate-500 flex items-center gap-1.5 pt-3 border-t border-white/5">
-                        <i class="fa-solid fa-gauge-high text-purple-400"></i>
-                        <span>65+ WPM Human Typing</span>
+
+                    <!-- Workflow CTA Bar -->
+                    <div class="mt-10 text-center">
+                        <div class="inline-flex flex-wrap items-center justify-center gap-3 p-2 px-5 rounded-2xl bg-white/5 border border-brand-500/30 backdrop-blur-xl">
+                            <span class="text-xs sm:text-sm text-slate-300 font-medium">Ready to convert your files into clean documents?</span>
+                            <a href="https://wa.me/8801917726581?text=Hi%20Saadman,%20I%20have%20a%20document%20for%20typing%20and%20formatting!" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-4 py-1.5 rounded-xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 hover:bg-emerald-500/30 text-xs font-bold transition">
+                                <i class="fa-brands fa-whatsapp text-sm"></i>
+                                <span>Start on WhatsApp</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Step 03 -->
-                <div class="glass-card rounded-3xl p-6 sm:p-7 relative overflow-hidden group hover:border-pink-500/50 transition-all duration-300 z-10">
-                    <div class="flex items-center justify-between mb-5">
-                        <span class="w-12 h-12 rounded-2xl bg-pink-500/15 border border-pink-500/30 text-pink-300 font-mono font-extrabold text-lg flex items-center justify-center shadow-lg shadow-pink-500/20 group-hover:scale-110 transition-transform">
-                            03
-                        </span>
-                        <span class="text-xs font-mono font-bold text-pink-400 bg-pink-500/10 px-2.5 py-1 rounded-full border border-pink-500/20">
-                            99.9% Accuracy
-                        </span>
+                <!-- ==================== PANEL 3: STORE OPERATIONS & AID ==================== -->
+                <div id="services" class="stage-3d-panel leave-right">
+                    <div class="text-center max-w-2xl mx-auto mb-10">
+                        <span class="section-tag neon-glow-badge">Operations</span>
+                        <h3 class="text-2xl sm:text-4xl font-extrabold tracking-tight neon-glow-heading">What I Bring to the Table</h3>
+                        <p class="text-slate-400 mt-2 text-xs sm:text-sm">Comprehensive services combining operational discipline, retail precision, and dedicated teamwork.</p>
                     </div>
-                    <div class="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-pink-400 text-lg mb-4">
-                        <i class="fa-solid fa-magnifying-glass-check"></i>
-                    </div>
-                    <h3 class="text-lg font-bold text-white mb-2 group-hover:text-pink-300 transition-colors">
-                        Proofreading &amp; QA
-                    </h3>
-                    <p class="text-slate-400 text-xs sm:text-sm leading-relaxed mb-4">
-                        Rigorous sentence-by-sentence proofreading, font styling, margin alignment, and layout formatting.
-                    </p>
-                    <div class="text-[11px] font-mono text-slate-500 flex items-center gap-1.5 pt-3 border-t border-white/5">
-                        <i class="fa-solid fa-shield-halved text-pink-400"></i>
-                        <span>Strict human quality verification</span>
-                    </div>
-                </div>
 
-                <!-- Step 04 -->
-                <div class="glass-card rounded-3xl p-6 sm:p-7 relative overflow-hidden group hover:border-emerald-500/50 transition-all duration-300 z-10">
-                    <div class="flex items-center justify-between mb-5">
-                        <span class="w-12 h-12 rounded-2xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 font-mono font-extrabold text-lg flex items-center justify-center shadow-lg shadow-emerald-500/20 group-hover:scale-110 transition-transform">
-                            04
-                        </span>
-                        <span class="text-xs font-mono font-bold text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/20">
-                            On-Time Delivery
-                        </span>
-                    </div>
-                    <div class="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-emerald-400 text-lg mb-4">
-                        <i class="fa-solid fa-circle-check"></i>
-                    </div>
-                    <h3 class="text-lg font-bold text-white mb-2 group-hover:text-emerald-300 transition-colors">
-                        Ready-to-Use Handover
-                    </h3>
-                    <p class="text-slate-400 text-xs sm:text-sm leading-relaxed mb-4">
-                        Receive polished Word &amp; PDF files ready to print, share, or submit, backed by free revisions.
-                    </p>
-                    <div class="text-[11px] font-mono text-slate-500 flex items-center gap-1.5 pt-3 border-t border-white/5">
-                        <i class="fa-solid fa-handshake text-emerald-400"></i>
-                        <span>Free minor revisions guaranteed</span>
-                    </div>
-                </div>
-            </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <div class="glass-card p-6 sm:p-7 rounded-3xl space-y-4 group">
+                            <div class="w-12 h-12 rounded-2xl bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 flex items-center justify-center text-xl group-hover:scale-110 group-hover:bg-indigo-500 group-hover:text-white transition-all">
+                                <i class="fa-solid fa-globe"></i>
+                            </div>
+                            <h4 class="text-lg font-bold text-white">Web Assistance &amp; Content</h4>
+                            <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">Website maintenance, digital data formatting, real-time updates, and workflow optimization for streamlined web operations.</p>
+                            <div class="pt-3"><span class="neon-service-tag neon-indigo"><span>Classvel standard</span><i class="fa-solid fa-arrow-right"></i></span></div>
+                        </div>
 
-            <!-- Workflow CTA Bar -->
-            <div class="mt-12 text-center">
-                <div class="inline-flex flex-wrap items-center justify-center gap-3 p-2 px-5 rounded-2xl bg-white/5 border border-brand-500/30 backdrop-blur-xl">
-                    <span class="text-xs sm:text-sm text-slate-300 font-medium">Ready to convert your files into clean documents?</span>
-                    <a href="https://wa.me/8801917726581?text=Hi%20Saadman,%20I%20have%20a%20document%20for%20typing%20and%20formatting!" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-4 py-1.5 rounded-xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 hover:bg-emerald-500/30 text-xs font-bold transition">
-                        <i class="fa-brands fa-whatsapp text-sm"></i>
-                        <span>Start on WhatsApp</span>
-                    </a>
+                        <div class="glass-card p-6 sm:p-7 rounded-3xl space-y-4 group">
+                            <div class="w-12 h-12 rounded-2xl bg-purple-500/10 border border-purple-500/30 text-purple-400 flex items-center justify-center text-xl group-hover:scale-110 group-hover:bg-purple-500 group-hover:text-white transition-all">
+                                <i class="fa-solid fa-boxes-stacked"></i>
+                            </div>
+                            <h4 class="text-lg font-bold text-white">Store &amp; Inventory Operations</h4>
+                            <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">Stock reconciliation, inventory tracking, quality inspection, and store shelf organization with strict retail precision.</p>
+                            <div class="pt-3"><span class="neon-service-tag neon-purple"><span>Meena Bazar &amp; Agora proven</span><i class="fa-solid fa-arrow-right"></i></span></div>
+                        </div>
+
+                        <div class="glass-card p-6 sm:p-7 rounded-3xl space-y-4 group">
+                            <div class="w-12 h-12 rounded-2xl bg-pink-500/10 border border-pink-500/30 text-pink-400 flex items-center justify-center text-xl group-hover:scale-110 group-hover:bg-pink-500 group-hover:text-white transition-all">
+                                <i class="fa-solid fa-chalkboard-user"></i>
+                            </div>
+                            <h4 class="text-lg font-bold text-white">Digital Content &amp; Slide Decks</h4>
+                            <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">Converting raw data &amp; questionnaires into clean, engaging, visually digestible PowerPoint presentations for end-users.</p>
+                            <div class="pt-3"><span class="neon-service-tag neon-pink"><span>High-accuracy formatting</span><i class="fa-solid fa-arrow-right"></i></span></div>
+                        </div>
+
+                        <div class="glass-card p-6 sm:p-7 rounded-3xl space-y-4 group">
+                            <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 flex items-center justify-center text-xl group-hover:scale-110 group-hover:bg-emerald-500 group-hover:text-white transition-all">
+                                <i class="fa-solid fa-users-gear"></i>
+                            </div>
+                            <h4 class="text-lg font-bold text-white">Crisis Response &amp; Team Support</h4>
+                            <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">Calm execution in fast-paced scenarios, community health &amp; relief drive coordination, and customer-centric support.</p>
+                            <div class="pt-3"><span class="neon-service-tag neon-emerald"><span>BDRCS emergency volunteer</span><i class="fa-solid fa-arrow-right"></i></span></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -1548,18 +1653,6 @@
             </div>
         </section>
 
-        <!-- ==================== SKILLS SECTION ==================== -->
-        <section id="skills" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-            <div class="text-center max-w-2xl mx-auto mb-16">
-                <span class="section-tag neon-glow-badge">03 / Competencies</span>
-                <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight neon-glow-heading">Skills & Capabilities</h2>
-                <p class="text-slate-400 mt-3 text-sm sm:text-base">Key technical tools and organizational competencies honed through operations and media work.</p>
-            </div>
-
-            <div id="skillsGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5 sm:gap-5">
-                <!-- Dynamically rendered or fallback -->
-            </div>
-        </section>
 
         <!-- ==================== CONTACT SECTION ==================== -->
         <!-- Gallery -->
@@ -3371,6 +3464,220 @@
                     bar.classList.add('translate-y-24', 'opacity-0', 'pointer-events-none');
                 });
             }
+        })();
+    </script>
+
+    <!-- ==================== 3D INTERACTIVE CATEGORIES HUB SCRIPT ==================== -->
+    <script>
+        (function () {
+            const viewport = document.getElementById('stage3dViewport');
+            const tabsBar = document.getElementById('stageTabsBar');
+            const prevBtn = document.getElementById('stagePrevBtn');
+            const nextBtn = document.getElementById('stageNextBtn');
+            const counter = document.getElementById('stageCounter');
+            const modeBtn = document.getElementById('stageViewModeBtn');
+
+            if (!viewport || !tabsBar) return;
+
+            const panels = Array.from(viewport.querySelectorAll('.stage-3d-panel'));
+            const tabs = Array.from(tabsBar.querySelectorAll('.stage-3d-tab'));
+            const panelCount = panels.length;
+            let currentIndex = 0;
+            let isExpandedMode = false;
+
+            function updateStage(index) {
+                if (index < 0) index = 0;
+                if (index >= panelCount) index = panelCount - 1;
+                currentIndex = index;
+
+                if (isExpandedMode) return;
+
+                // Sync counter
+                if (counter) {
+                    counter.textContent = `${String(currentIndex + 1).padStart(2, '0')} / ${String(panelCount).padStart(2, '0')}`;
+                }
+
+                // Sync Prev / Next buttons
+                if (prevBtn) {
+                    prevBtn.disabled = currentIndex === 0;
+                    prevBtn.classList.toggle('opacity-30', currentIndex === 0);
+                    prevBtn.classList.toggle('cursor-not-allowed', currentIndex === 0);
+                }
+                if (nextBtn) {
+                    nextBtn.disabled = currentIndex === panelCount - 1;
+                    nextBtn.classList.toggle('opacity-30', currentIndex === panelCount - 1);
+                    nextBtn.classList.toggle('cursor-not-allowed', currentIndex === panelCount - 1);
+                }
+
+                // Update tabs active state
+                tabs.forEach((tab, i) => {
+                    if (i === currentIndex) {
+                        tab.classList.add('active');
+                        tab.setAttribute('aria-selected', 'true');
+                        tab.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                    } else {
+                        tab.classList.remove('active');
+                        tab.setAttribute('aria-selected', 'false');
+                    }
+                });
+
+                // Update 3D Stage panels transform classes
+                panels.forEach((panel, i) => {
+                    panel.classList.remove('active-3d', 'leave-left', 'leave-right');
+                    if (i === currentIndex) {
+                        panel.classList.add('active-3d');
+                    } else if (i < currentIndex) {
+                        panel.classList.add('leave-left');
+                    } else {
+                        panel.classList.add('leave-right');
+                    }
+                });
+            }
+
+            // Tab click handling
+            tabs.forEach((tab) => {
+                tab.addEventListener('click', () => {
+                    const targetIdx = parseInt(tab.getAttribute('data-stage'), 10);
+                    if (!isNaN(targetIdx)) {
+                        if (isExpandedMode) toggleViewMode(false);
+                        updateStage(targetIdx);
+                    }
+                });
+            });
+
+            // Arrow button click handling
+            if (prevBtn) {
+                prevBtn.addEventListener('click', () => {
+                    if (currentIndex > 0) updateStage(currentIndex - 1);
+                });
+            }
+            if (nextBtn) {
+                nextBtn.addEventListener('click', () => {
+                    if (currentIndex < panelCount - 1) updateStage(currentIndex + 1);
+                });
+            }
+
+            // Mouse Drag & Touch Swipe across 3D Stage
+            let startX = 0;
+            let startY = 0;
+            let isPointerDown = false;
+            let dragThreshold = 50;
+            let isHorizontalDrag = false;
+
+            viewport.addEventListener('pointerdown', (e) => {
+                if (e.target.closest('button, a, input, textarea, select')) return;
+                isPointerDown = true;
+                startX = e.clientX;
+                startY = e.clientY;
+                isHorizontalDrag = false;
+            });
+
+            window.addEventListener('pointermove', (e) => {
+                if (!isPointerDown) return;
+                const dx = e.clientX - startX;
+                const dy = e.clientY - startY;
+                if (!isHorizontalDrag && Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 10) {
+                    isHorizontalDrag = true;
+                }
+            });
+
+            window.addEventListener('pointerup', (e) => {
+                if (!isPointerDown) return;
+                isPointerDown = false;
+                if (!isHorizontalDrag) return;
+
+                const dx = e.clientX - startX;
+                if (dx < -dragThreshold && currentIndex < panelCount - 1) {
+                    updateStage(currentIndex + 1);
+                } else if (dx > dragThreshold && currentIndex > 0) {
+                    updateStage(currentIndex - 1);
+                }
+            });
+
+            // Expand / 3D Mode Toggle
+            function toggleViewMode(forceExpand) {
+                isExpandedMode = typeof forceExpand === 'boolean' ? forceExpand : !isExpandedMode;
+                if (isExpandedMode) {
+                    viewport.classList.add('stage-expanded-view');
+                    if (modeBtn) {
+                        modeBtn.innerHTML = '<i class="fa-solid fa-cube text-brand-400"></i><span class="hidden sm:inline">3D View</span>';
+                        modeBtn.title = 'Switch to 3D Stage View';
+                    }
+                } else {
+                    viewport.classList.remove('stage-expanded-view');
+                    if (modeBtn) {
+                        modeBtn.innerHTML = '<i class="fa-solid fa-layer-group text-brand-400"></i><span class="hidden sm:inline">Expand All</span>';
+                        modeBtn.title = 'Switch to Classic Expanded View';
+                    }
+                    updateStage(currentIndex);
+                }
+            }
+
+            if (modeBtn) {
+                modeBtn.addEventListener('click', () => toggleViewMode());
+            }
+
+            // Sync with URL hashes (#typing-services, #skills, #workflow, #services)
+            const stageIds = ['typing-services', 'skills', 'workflow', 'services'];
+            function checkHash() {
+                const hash = (window.location.hash || '').replace('#', '');
+                const targetIdx = stageIds.indexOf(hash);
+                if (targetIdx !== -1) {
+                    if (isExpandedMode) toggleViewMode(false);
+                    updateStage(targetIdx);
+                    const hub = document.getElementById('capabilities-hub');
+                    if (hub) {
+                        hub.scrollIntoView({ behavior: 'smooth' });
+                    }
+                }
+            }
+
+            window.addEventListener('hashchange', checkHash);
+            if (window.location.hash) {
+                setTimeout(checkHash, 180);
+            } else {
+                updateStage(0);
+            }
+
+            // Keyboard navigation
+            document.addEventListener('keydown', (e) => {
+                const hub = document.getElementById('capabilities-hub');
+                if (!hub) return;
+                const rect = hub.getBoundingClientRect();
+                const isInView = rect.top < window.innerHeight * 0.7 && rect.bottom > window.innerHeight * 0.2;
+                if (!isInView || isExpandedMode) return;
+
+                if (e.key === 'ArrowRight' && currentIndex < panelCount - 1) {
+                    updateStage(currentIndex + 1);
+                } else if (e.key === 'ArrowLeft' && currentIndex > 0) {
+                    updateStage(currentIndex - 1);
+                }
+            });
+
+            // 3D Perspective Tilt on Mouse Hover
+            const tiltElements = document.querySelectorAll('.card-3d-interactive, #skillsGrid > div');
+            tiltElements.forEach((el) => {
+                let rafId = null;
+                el.addEventListener('mousemove', (e) => {
+                    const rect = el.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    const rotX = -((y - centerY) / centerY) * 10;
+                    const rotY = ((x - centerX) / centerX) * 10;
+
+                    if (rafId) cancelAnimationFrame(rafId);
+                    rafId = requestAnimationFrame(() => {
+                        el.style.transform = `perspective(900px) rotateX(${rotX.toFixed(2)}deg) rotateY(${rotY.toFixed(2)}deg) translateY(-6px) translateZ(14px)`;
+                    });
+                });
+
+                el.addEventListener('mouseleave', () => {
+                    if (rafId) cancelAnimationFrame(rafId);
+                    el.style.transform = '';
+                });
+            });
         })();
     </script>
 </body>
