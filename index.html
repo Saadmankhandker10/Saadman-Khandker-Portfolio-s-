@@ -1396,6 +1396,35 @@
                 renderSkills(data.skills);
                 document.getElementById('skillCount').textContent = data.skills.length;
             }
+                        // Sync WhatsApp from Admin
+            if (data.whatsapp) {
+                const cleanWa = String(data.whatsapp).replace(/[^0-9]/g, '');
+                const waFloat = document.getElementById('waBtn');
+                if (waFloat && cleanWa) {
+                    waFloat.href = `https://wa.me/${cleanWa}?text=Hello%20Saadman,%20I%20saw%20your%20portfolio.`;
+                    waFloat.classList.remove('hidden');
+                }
+            }
+
+            // Sync Certificates from Admin
+            if (Array.isArray(data.certificates) && data.certificates.length) {
+                const certSec = document.getElementById('certifications');
+                const certGrid = document.getElementById('certGrid');
+                if (certSec && certGrid) {
+                    certSec.classList.remove('hidden');
+                    certGrid.innerHTML = data.certificates.map(c => `
+                        <div class="glass-card p-6 rounded-3xl space-y-3 group hover:border-amber-400/40 transition">
+                            <div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-amber-400 flex items-center justify-center text-xl group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-award"></i>
+                            </div>
+                            <h3 class="font-bold text-lg text-white">${escapeHTML(c.title)}</h3>
+                            <p class="text-sm text-slate-400">${escapeHTML(c.issuer || '')} â€¢ <span class="font-mono text-xs text-amber-400">${escapeHTML(c.date || '')}</span></p>
+                            ${c.link ? `<a class="inline-flex items-center gap-1.5 text-xs font-bold text-brand-400 hover:text-brand-300 pt-1" target="_blank" rel="noopener" href="${escapeHTML(c.link)}"><span>View Credential</span><i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i></a>` : ''}
+                        </div>
+                    `).join('');
+                }
+            }
+
             if (Array.isArray(data.blog) && data.blog.length) {
                 const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
                 document.getElementById('blog').classList.remove('hidden');
