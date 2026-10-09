@@ -377,6 +377,13 @@
             <span id="mobileSidebarMessageBadge" class="text-[11px] font-mono px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-400 font-bold">0</span>
         </button>
         <p class="px-3 pt-3 pb-1 text-[10px] font-bold uppercase tracking-widest text-slate-400 font-mono">System</p>
+        <button type="button" data-tab="blog" class="tab-btn flex items-center justify-between w-full px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-600 dark:text-slate-300">
+            <div class="flex items-center gap-3"><i class="fa-solid fa-newspaper w-4 text-slate-400"></i><span>Blog / Updates</span></div>
+            <span id="blogBadge" class="text-[11px] font-mono px-2 py-0.5 rounded-full bg-pink-100 dark:bg-pink-950/60 text-pink-600 dark:text-pink-400 font-bold">0</span>
+        </button>
+        <button type="button" data-tab="stats" class="tab-btn flex items-center gap-3 w-full px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-600 dark:text-slate-300">
+            <i class="fa-solid fa-chart-line w-4 text-slate-400"></i><span>Site Stats</span>
+        </button>
         <button type="button" data-tab="settings" class="tab-btn flex items-center gap-3 w-full px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-600 dark:text-slate-300">
             <i class="fa-solid fa-sliders w-4 text-slate-400"></i><span>Backup & Settings</span>
         </button>
@@ -601,7 +608,14 @@
                 </button>
 
                 <p class="px-3 pt-3 pb-1 text-[10px] font-bold uppercase tracking-widest text-slate-400 font-mono">System</p>
-                <button type="button" data-tab="settings" class="tab-btn flex items-center gap-3 w-full px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-600 dark:text-slate-300">
+                <button type="button" data-tab="blog" class="tab-btn flex items-center justify-between w-full px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-600 dark:text-slate-300">
+            <div class="flex items-center gap-3"><i class="fa-solid fa-newspaper w-4 text-slate-400"></i><span>Blog / Updates</span></div>
+            <span id="blogBadge" class="text-[11px] font-mono px-2 py-0.5 rounded-full bg-pink-100 dark:bg-pink-950/60 text-pink-600 dark:text-pink-400 font-bold">0</span>
+        </button>
+        <button type="button" data-tab="stats" class="tab-btn flex items-center gap-3 w-full px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-600 dark:text-slate-300">
+            <i class="fa-solid fa-chart-line w-4 text-slate-400"></i><span>Site Stats</span>
+        </button>
+        <button type="button" data-tab="settings" class="tab-btn flex items-center gap-3 w-full px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-600 dark:text-slate-300">
                     <i class="fa-solid fa-sliders text-sm w-4 text-slate-400"></i>
                     <span>Backup & Settings</span>
                 </button>
@@ -919,7 +933,37 @@
                 </div>
 
                 <!-- 8. BACKUP & SETTINGS TAB -->
-                <div id="tab-settings" class="tab-content hidden space-y-5">
+                <div id="tab-blog" class="tab-content hidden space-y-5">
+                <div class="glass-panel p-6 rounded-3xl space-y-4">
+                    <h2 class="text-xl font-extrabold text-slate-900 dark:text-white flex items-center gap-2"><i class="fa-solid fa-pen-nib text-pink-500"></i> New Update / Blog Post</h2>
+                    <input id="blogTitle" type="text" placeholder="Title" class="w-full px-4 py-3 rounded-xl bg-white/60 dark:bg-dark-900/60 border border-slate-200 dark:border-slate-700 text-sm">
+                    <input id="blogImage" type="text" placeholder="Image URL (optional)" class="w-full px-4 py-3 rounded-xl bg-white/60 dark:bg-dark-900/60 border border-slate-200 dark:border-slate-700 text-sm">
+                    <textarea id="blogBody" rows="5" placeholder="Write your update..." class="w-full px-4 py-3 rounded-xl bg-white/60 dark:bg-dark-900/60 border border-slate-200 dark:border-slate-700 text-sm"></textarea>
+                    <button id="blogPublishBtn" type="button" class="px-5 py-3 rounded-xl text-sm font-bold text-white bg-gradient-to-r from-pink-500 to-violet-500 shadow-lg"><i class="fa-solid fa-paper-plane mr-2"></i>Publish Post</button>
+                </div>
+                <div id="blogList" class="space-y-3"></div>
+            </div>
+
+            <div id="tab-stats" class="tab-content hidden space-y-5">
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="glass-panel p-5 rounded-2xl"><p class="text-xs text-slate-400 font-mono uppercase">Visitors</p><p id="stVisitors" class="text-3xl font-extrabold text-emerald-500">-</p></div>
+                    <div class="glass-panel p-5 rounded-2xl"><p class="text-xs text-slate-400 font-mono uppercase">Messages</p><p id="stMessages" class="text-3xl font-extrabold text-indigo-500">0</p></div>
+                    <div class="glass-panel p-5 rounded-2xl"><p class="text-xs text-slate-400 font-mono uppercase">Last 7 days</p><p id="stWeek" class="text-3xl font-extrabold text-purple-500">0</p></div>
+                    <div class="glass-panel p-5 rounded-2xl"><p class="text-xs text-slate-400 font-mono uppercase">Blog posts</p><p id="stBlog" class="text-3xl font-extrabold text-pink-500">0</p></div>
+                </div>
+                <div class="glass-panel p-6 rounded-3xl">
+                    <h3 class="font-extrabold text-slate-900 dark:text-white mb-4">Messages - last 7 days</h3>
+                    <div id="stChart" class="flex items-end gap-3 h-40"></div>
+                </div>
+                <div class="glass-panel p-6 rounded-3xl text-sm text-slate-500 dark:text-slate-300 space-y-1">
+                    <p>Projects: <b id="stProjects">0</b> &middot; Experiences: <b id="stExp">0</b> &middot; Skills: <b id="stSkills">0</b></p>
+                    <p>Latest message: <b id="stLatest">-</b></p>
+                    <p class="text-xs text-slate-400">Visitor count is tracked via counterapi.dev (one count per browser session).</p>
+                </div>
+                <button id="stRefresh" type="button" class="px-4 py-2.5 rounded-xl text-xs font-bold bg-brand-500 text-white"><i class="fa-solid fa-rotate mr-1"></i>Refresh</button>
+            </div>
+
+            <div id="tab-settings" class="tab-content hidden space-y-5">
                     <div class="glass-panel p-6 rounded-2xl space-y-6">
                         <div>
                             <h2 class="text-lg font-bold text-slate-900 dark:text-white section-heading">Backup & Settings</h2>
@@ -1263,6 +1307,7 @@
             renderProjects();
             renderExperiences();
             renderSkills();
+            renderBlogAdmin();
             updateMetrics();
         }
 
@@ -1804,6 +1849,65 @@
                 console.warn('Could not pull online portfolio table:', err.message);
             }
         }
+
+        // ===== Blog / Updates admin =====
+        function renderBlogAdmin() {
+            const list = document.getElementById('blogList'); if (!list) return;
+            const posts = state.blog || [];
+            document.getElementById('blogBadge').textContent = posts.length;
+            if (!posts.length) { list.innerHTML = '<div class="empty-state p-8 text-center rounded-2xl text-sm text-slate-400">No posts yet.</div>'; return; }
+            list.innerHTML = posts.map((p, i) => `
+                <div class="glass-panel p-5 rounded-2xl flex items-start justify-between gap-4">
+                    <div class="min-w-0">
+                        <p class="font-bold text-slate-900 dark:text-white">${escapeHtml(p.title)}</p>
+                        <p class="text-[11px] text-slate-400 font-mono mb-1">${escapeHtml(new Date(p.date).toLocaleDateString())}</p>
+                        <p class="text-sm text-slate-500 dark:text-slate-300 line-clamp-2">${escapeHtml(p.body)}</p>
+                    </div>
+                    <button type="button" data-del-blog="${i}" class="text-red-500 hover:text-red-400 p-2" title="Delete"><i class="fa-solid fa-trash"></i></button>
+                </div>`).join('');
+        }
+        document.getElementById('blogPublishBtn').addEventListener('click', async () => {
+            const title = document.getElementById('blogTitle').value.trim();
+            const body = document.getElementById('blogBody').value.trim();
+            if (!title || !body) { showToast('Title and text are required.', 'error'); return; }
+            let image = document.getElementById('blogImage').value.trim();
+            if (image && !/^https?:\/\//i.test(image)) image = '';
+            state.blog = [{ title, body, image, date: new Date().toISOString() }, ...(state.blog || [])];
+            document.getElementById('blogTitle').value = ''; document.getElementById('blogBody').value = ''; document.getElementById('blogImage').value = '';
+            renderBlogAdmin();
+            await saveAllData();
+        });
+        document.getElementById('blogList').addEventListener('click', async (e) => {
+            const b = e.target.closest('[data-del-blog]'); if (!b) return;
+            if (!confirm('Delete this post?')) return;
+            state.blog.splice(+b.dataset.delBlog, 1);
+            renderBlogAdmin();
+            await saveAllData();
+        });
+
+        // ===== Site stats =====
+        async function loadStats() {
+            document.getElementById('stMessages').textContent = messages.length;
+            const week = Date.now() - 7 * 864e5;
+            document.getElementById('stWeek').textContent = messages.filter(m => new Date(m.created_at).getTime() >= week).length;
+            document.getElementById('stBlog').textContent = (state.blog || []).length;
+            document.getElementById('stProjects').textContent = (state.projects || []).length;
+            document.getElementById('stExp').textContent = (state.experiences || []).length;
+            document.getElementById('stSkills').textContent = (state.skills || []).length;
+            document.getElementById('stLatest').textContent = messages.length ? new Date(messages[0].created_at).toLocaleString() : '-';
+            const days = [...Array(7)].map((_, i) => { const d = new Date(Date.now() - (6 - i) * 864e5); return { k: d.toDateString(), l: d.toLocaleDateString(undefined, { weekday: 'short' }), n: 0 }; });
+            messages.forEach(m => { const d = days.find(x => x.k === new Date(m.created_at).toDateString()); if (d) d.n++; });
+            const max = Math.max(1, ...days.map(d => d.n));
+            document.getElementById('stChart').innerHTML = days.map(d => `<div class="flex-1 flex flex-col items-center justify-end h-full gap-1"><span class="text-[11px] font-bold text-slate-500">${d.n}</span><div class="w-full rounded-t-lg bg-gradient-to-t from-indigo-500 to-pink-500" style="height:${Math.max(4, d.n / max * 100)}%"></div><span class="text-[10px] text-slate-400">${d.l}</span></div>`).join('');
+            try {
+                const r = await fetch('https://api.counterapi.dev/v1/saadmankhandker-portfolio/visits');
+                const j = await r.json();
+                document.getElementById('stVisitors').textContent = j.count != null ? Number(j.count).toLocaleString() : '-';
+            } catch (e) { document.getElementById('stVisitors').textContent = 'n/a'; }
+        }
+        document.getElementById('stRefresh').addEventListener('click', loadStats);
+        document.querySelector('[data-tab="stats"]').addEventListener('click', loadStats);
+        document.querySelectorAll('[data-tab="stats"]').forEach(b => b.addEventListener('click', loadStats));
 
         async function initAuth() {
             if (!supabase) {
