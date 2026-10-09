@@ -440,6 +440,22 @@
             text-shadow: 0 0 10px rgba(56, 189, 248, 0.75), 0 0 20px rgba(56, 189, 248, 0.4);
         }
 
+        /* Guestbook Active Tag and Card Styles */
+        .gb-tag-btn.active {
+            background: rgba(99, 102, 241, 0.25);
+            border-color: #818cf8;
+            color: #ffffff;
+            box-shadow: 0 0 12px rgba(129, 140, 248, 0.4);
+        }
+        .gb-card {
+            transition: all 0.3s ease;
+        }
+        .gb-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(99, 102, 241, 0.4);
+            box-shadow: 0 12px 24px -8px rgba(99, 102, 241, 0.2);
+        }
+
         /* Section Headings */
         .section-tag {
             display: inline-flex;
@@ -873,6 +889,8 @@
                     <a href="#home" class="px-3.5 py-1.5 rounded-full text-xs font-semibold hover:text-brand-400 hover:bg-white/5 transition">Home</a>
                     <a href="#services" class="px-3.5 py-1.5 rounded-full text-xs font-semibold hover:text-brand-400 hover:bg-white/5 transition">Services</a>
                     <a href="#typing-services" class="px-3.5 py-1.5 rounded-full text-xs font-semibold text-brand-300 bg-brand-500/10 border border-brand-500/30 hover:text-brand-200 hover:bg-brand-500/20 transition flex items-center gap-1.5"><i class="fa-solid fa-keyboard text-[10px]"></i><span>Typing</span></a>
+                    <a href="#workflow" class="px-3.5 py-1.5 rounded-full text-xs font-semibold hover:text-brand-400 hover:bg-white/5 transition">Workflow</a>
+                    <a href="#guestbook" class="px-3.5 py-1.5 rounded-full text-xs font-semibold text-purple-300 hover:text-purple-200 hover:bg-white/5 transition flex items-center gap-1"><i class="fa-solid fa-comments text-[10px]"></i><span>Guestbook</span></a>
                     <a href="#experience" class="px-3.5 py-1.5 rounded-full text-xs font-semibold hover:text-brand-400 hover:bg-white/5 transition">Experience</a>
                     <a href="#projects" class="px-3.5 py-1.5 rounded-full text-xs font-semibold hover:text-brand-400 hover:bg-white/5 transition">Projects</a>
                     <a href="#skills" class="px-3.5 py-1.5 rounded-full text-xs font-semibold hover:text-brand-400 hover:bg-white/5 transition">Skills</a>
@@ -900,6 +918,8 @@
             <a href="#home" class="block px-4 py-2.5 rounded-xl text-sm font-semibold hover:bg-brand-500/10 hover:text-brand-400 transition">Home</a>
             <a href="#services" class="block px-4 py-2.5 rounded-xl text-sm font-semibold hover:bg-brand-500/10 hover:text-brand-400 transition">Services</a>
             <a href="#typing-services" class="block px-4 py-2.5 rounded-xl text-sm font-semibold text-brand-300 hover:bg-brand-500/10 transition flex items-center gap-2"><i class="fa-solid fa-keyboard text-xs"></i><span>Typing &amp; Retyping</span></a>
+            <a href="#workflow" class="block px-4 py-2.5 rounded-xl text-sm font-semibold hover:bg-brand-500/10 hover:text-brand-400 transition flex items-center gap-2"><i class="fa-solid fa-diagram-project text-xs text-brand-400"></i><span>4-Step Workflow</span></a>
+            <a href="#guestbook" class="block px-4 py-2.5 rounded-xl text-sm font-semibold hover:bg-brand-500/10 hover:text-purple-400 transition flex items-center gap-2"><i class="fa-solid fa-comments text-xs text-purple-400"></i><span>Visitor Guestbook</span></a>
             <a href="#experience" class="block px-4 py-2.5 rounded-xl text-sm font-semibold hover:bg-brand-500/10 hover:text-brand-400 transition">Experience</a>
             <a href="#projects" class="block px-4 py-2.5 rounded-xl text-sm font-semibold hover:bg-brand-500/10 hover:text-brand-400 transition">Projects</a>
             <a href="#skills" class="block px-4 py-2.5 rounded-xl text-sm font-semibold hover:bg-brand-500/10 hover:text-brand-400 transition">Skills</a>
@@ -1301,6 +1321,132 @@
             </div>
         </section>
 
+        <!-- ==================== RAPID DELIVERY WORKFLOW SECTION ==================== -->
+        <section id="workflow" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="section-tag neon-glow-badge">4-Step Delivery Roadmap</span>
+                <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight neon-glow-heading">How I Work &amp; Deliver</h2>
+                <p class="text-slate-400 mt-3 text-sm sm:text-base">A transparent, reliable 4-step workflow ensuring zero stress, lightning turnaround, and 99.9% error-free documents.</p>
+            </div>
+
+            <!-- Workflow Steps Grid -->
+            <div class="relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+                <!-- Connecting Laser Line (Desktop) -->
+                <div class="hidden lg:block absolute top-16 left-12 right-12 h-0.5 bg-gradient-to-r from-brand-500/50 via-purple-500/50 to-emerald-500/50 pointer-events-none z-0" aria-hidden="true"></div>
+
+                <!-- Step 01 -->
+                <div class="glass-card rounded-3xl p-6 sm:p-7 relative overflow-hidden group hover:border-brand-500/50 transition-all duration-300 z-10">
+                    <div class="flex items-center justify-between mb-5">
+                        <span class="w-12 h-12 rounded-2xl bg-brand-500/15 border border-brand-500/30 text-brand-300 font-mono font-extrabold text-lg flex items-center justify-center shadow-lg shadow-brand-500/20 group-hover:scale-110 transition-transform">
+                            01
+                        </span>
+                        <span class="text-xs font-mono font-bold text-brand-400 bg-brand-500/10 px-2.5 py-1 rounded-full border border-brand-500/20">
+                            &lt; 10 Mins
+                        </span>
+                    </div>
+                    <div class="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-brand-400 text-lg mb-4">
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2 group-hover:text-brand-300 transition-colors">
+                        Share Your Files
+                    </h3>
+                    <p class="text-slate-400 text-xs sm:text-sm leading-relaxed mb-4">
+                        Send scanned PDFs, images, or handwritten notes via WhatsApp or Email with your instructions.
+                    </p>
+                    <div class="text-[11px] font-mono text-slate-500 flex items-center gap-1.5 pt-3 border-t border-white/5">
+                        <i class="fa-solid fa-bolt text-brand-400"></i>
+                        <span>Instant quote &amp; confirmation</span>
+                    </div>
+                </div>
+
+                <!-- Step 02 -->
+                <div class="glass-card rounded-3xl p-6 sm:p-7 relative overflow-hidden group hover:border-purple-500/50 transition-all duration-300 z-10">
+                    <div class="flex items-center justify-between mb-5">
+                        <span class="w-12 h-12 rounded-2xl bg-purple-500/15 border border-purple-500/30 text-purple-300 font-mono font-extrabold text-lg flex items-center justify-center shadow-lg shadow-purple-500/20 group-hover:scale-110 transition-transform">
+                            02
+                        </span>
+                        <span class="text-xs font-mono font-bold text-purple-400 bg-purple-500/10 px-2.5 py-1 rounded-full border border-purple-500/20">
+                            Express 24h
+                        </span>
+                    </div>
+                    <div class="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-purple-400 text-lg mb-4">
+                        <i class="fa-solid fa-keyboard"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2 group-hover:text-purple-300 transition-colors">
+                        High-Speed Typing
+                    </h3>
+                    <p class="text-slate-400 text-xs sm:text-sm leading-relaxed mb-4">
+                        Manual touch typing at 65+ WPM directly into structured Word (.docx) or Google Docs with zero OCR flaws.
+                    </p>
+                    <div class="text-[11px] font-mono text-slate-500 flex items-center gap-1.5 pt-3 border-t border-white/5">
+                        <i class="fa-solid fa-gauge-high text-purple-400"></i>
+                        <span>65+ WPM Human Typing</span>
+                    </div>
+                </div>
+
+                <!-- Step 03 -->
+                <div class="glass-card rounded-3xl p-6 sm:p-7 relative overflow-hidden group hover:border-pink-500/50 transition-all duration-300 z-10">
+                    <div class="flex items-center justify-between mb-5">
+                        <span class="w-12 h-12 rounded-2xl bg-pink-500/15 border border-pink-500/30 text-pink-300 font-mono font-extrabold text-lg flex items-center justify-center shadow-lg shadow-pink-500/20 group-hover:scale-110 transition-transform">
+                            03
+                        </span>
+                        <span class="text-xs font-mono font-bold text-pink-400 bg-pink-500/10 px-2.5 py-1 rounded-full border border-pink-500/20">
+                            99.9% Accuracy
+                        </span>
+                    </div>
+                    <div class="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-pink-400 text-lg mb-4">
+                        <i class="fa-solid fa-magnifying-glass-check"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2 group-hover:text-pink-300 transition-colors">
+                        Proofreading &amp; QA
+                    </h3>
+                    <p class="text-slate-400 text-xs sm:text-sm leading-relaxed mb-4">
+                        Rigorous sentence-by-sentence proofreading, font styling, margin alignment, and layout formatting.
+                    </p>
+                    <div class="text-[11px] font-mono text-slate-500 flex items-center gap-1.5 pt-3 border-t border-white/5">
+                        <i class="fa-solid fa-shield-halved text-pink-400"></i>
+                        <span>Strict human quality verification</span>
+                    </div>
+                </div>
+
+                <!-- Step 04 -->
+                <div class="glass-card rounded-3xl p-6 sm:p-7 relative overflow-hidden group hover:border-emerald-500/50 transition-all duration-300 z-10">
+                    <div class="flex items-center justify-between mb-5">
+                        <span class="w-12 h-12 rounded-2xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 font-mono font-extrabold text-lg flex items-center justify-center shadow-lg shadow-emerald-500/20 group-hover:scale-110 transition-transform">
+                            04
+                        </span>
+                        <span class="text-xs font-mono font-bold text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/20">
+                            On-Time Delivery
+                        </span>
+                    </div>
+                    <div class="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-emerald-400 text-lg mb-4">
+                        <i class="fa-solid fa-circle-check"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2 group-hover:text-emerald-300 transition-colors">
+                        Ready-to-Use Handover
+                    </h3>
+                    <p class="text-slate-400 text-xs sm:text-sm leading-relaxed mb-4">
+                        Receive polished Word &amp; PDF files ready to print, share, or submit, backed by free revisions.
+                    </p>
+                    <div class="text-[11px] font-mono text-slate-500 flex items-center gap-1.5 pt-3 border-t border-white/5">
+                        <i class="fa-solid fa-handshake text-emerald-400"></i>
+                        <span>Free minor revisions guaranteed</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Workflow CTA Bar -->
+            <div class="mt-12 text-center">
+                <div class="inline-flex flex-wrap items-center justify-center gap-3 p-2 px-5 rounded-2xl bg-white/5 border border-brand-500/30 backdrop-blur-xl">
+                    <span class="text-xs sm:text-sm text-slate-300 font-medium">Ready to convert your files into clean documents?</span>
+                    <a href="https://wa.me/8801917726581?text=Hi%20Saadman,%20I%20have%20a%20document%20for%20typing%20and%20formatting!" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-4 py-1.5 rounded-xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 hover:bg-emerald-500/30 text-xs font-bold transition">
+                        <i class="fa-brands fa-whatsapp text-sm"></i>
+                        <span>Start on WhatsApp</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
         <!-- ==================== EXPERIENCE SECTION ==================== -->
                 <div class="marquee" aria-hidden="true"><div class="marquee-track" id="marqueeTrack"></div></div>
         <section id="experience" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
@@ -1507,6 +1653,59 @@
                         <span>@saadman_khandker</span>
                         <i class="fa-solid fa-arrow-right text-[10px]"></i>
                     </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== VISITOR GUESTBOOK & FAN WALL ==================== -->
+        <section id="guestbook" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="section-tag neon-glow-badge">Community Wall</span>
+                <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight neon-glow-heading">Visitor Guestbook &amp; Fan Wall</h2>
+                <p class="text-slate-400 mt-3 text-sm sm:text-base">Leave a quick shoutout, compliment, or note for Saadman! Share your good vibes with the community.</p>
+            </div>
+
+            <!-- Guestbook Card Box -->
+            <div class="glass-card rounded-3xl p-6 sm:p-10 border border-brand-500/30 relative overflow-hidden">
+                <!-- Ambient Glow Behind Form -->
+                <div class="absolute -top-24 -right-24 w-72 h-72 bg-brand-500/10 rounded-full blur-3xl pointer-events-none" aria-hidden="true"></div>
+
+                <!-- Input Form -->
+                <form id="guestbookForm" class="space-y-4 mb-10 pb-8 border-b border-white/10">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label for="gbName" class="block text-xs font-mono font-bold text-slate-300 mb-1.5">Your Name or Alias</label>
+                            <input type="text" id="gbName" required placeholder="e.g. Tanvir, Client from US, Anonymous" maxlength="40" class="w-full px-4 py-2.5 rounded-2xl bg-white/5 border border-white/10 text-white text-sm focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500 transition">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-mono font-bold text-slate-300 mb-1.5">Quick Tag / Reaction</label>
+                            <div class="flex flex-wrap gap-1.5" id="gbTagList">
+                                <button type="button" class="gb-tag-btn active px-2.5 py-1 rounded-xl bg-white/5 border border-white/10 text-xs font-semibold text-slate-300 hover:border-brand-400 transition" data-tag="🔥 Amazing Work">🔥 Amazing Work</button>
+                                <button type="button" class="gb-tag-btn px-2.5 py-1 rounded-xl bg-white/5 border border-white/10 text-xs font-semibold text-slate-300 hover:border-brand-400 transition" data-tag="⚡ Insane Speed">⚡ Insane Speed</button>
+                                <button type="button" class="gb-tag-btn px-2.5 py-1 rounded-xl bg-white/5 border border-white/10 text-xs font-semibold text-slate-300 hover:border-brand-400 transition" data-tag="⭐ 5-Star Bro">⭐ 5-Star Bro</button>
+                                <button type="button" class="gb-tag-btn px-2.5 py-1 rounded-xl bg-white/5 border border-white/10 text-xs font-semibold text-slate-300 hover:border-brand-400 transition" data-tag="👏 Big Fan">👏 Big Fan</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="gbMessage" class="block text-xs font-mono font-bold text-slate-300 mb-1.5">Your Message / Shoutout</label>
+                        <textarea id="gbMessage" rows="2" required placeholder="Write a short message (e.g. Love the typing speed and site aesthetic, keep shining!)..." maxlength="200" class="w-full px-4 py-2.5 rounded-2xl bg-white/5 border border-white/10 text-white text-sm focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500 transition"></textarea>
+                    </div>
+                    <div class="flex items-center justify-between flex-wrap gap-3">
+                        <span class="text-xs text-slate-400 flex items-center gap-1.5">
+                            <i class="fa-solid fa-shield-halved text-emerald-400"></i>
+                            <span>Public instant post &bull; Friendly community</span>
+                        </span>
+                        <button type="submit" id="gbSubmitBtn" class="px-6 py-2.5 rounded-2xl bg-gradient-to-r from-brand-600 via-purple-600 to-pink-600 hover:from-brand-500 hover:to-pink-500 text-white font-bold text-xs sm:text-sm shadow-lg shadow-brand-500/25 hover:shadow-brand-500/40 hover:scale-105 transition-all flex items-center gap-2">
+                            <i class="fa-solid fa-pen-nib"></i>
+                            <span>Post on Fan Wall</span>
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Fan Wall Shoutout Cards Grid -->
+                <div id="guestbookGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <!-- Populated dynamically by JavaScript -->
                 </div>
             </div>
         </section>
@@ -2672,6 +2871,163 @@
                 if (!isNaN(idx)) {
                     window.openProjectModal(idx);
                 }
+            });
+        })();
+
+        // ==================== VISITOR GUESTBOOK & FAN WALL LOGIC ====================
+        (function () {
+            const form = document.getElementById('guestbookForm');
+            const grid = document.getElementById('guestbookGrid');
+            const tagBtns = document.querySelectorAll('.gb-tag-btn');
+            if (!form || !grid) return;
+
+            let selectedTag = '🔥 Amazing Work';
+            tagBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    tagBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    selectedTag = btn.dataset.tag;
+                });
+            });
+
+            const initialShoutouts = [
+                {
+                    name: 'Tanvir Hossain',
+                    tag: '⚡ Insane Speed',
+                    msg: 'Saadman retyped 45 pages of lecture notes in one night! Formatting was spotless. Keep it up bro! 🚀',
+                    time: 'Yesterday',
+                    avatarBg: 'from-blue-600 to-indigo-600'
+                },
+                {
+                    name: 'David R. (Upwork Client)',
+                    tag: '⭐ 5-Star Bro',
+                    msg: 'Super responsive and highly professional. Scanned contracts converted to Word with 100% precision.',
+                    time: '3 days ago',
+                    avatarBg: 'from-purple-600 to-pink-600'
+                },
+                {
+                    name: 'Nayeem & Team BDRCS',
+                    tag: '👏 Big Fan',
+                    msg: 'Proud to see your journey bro! Dedication to humanitarian work and digital precision is inspiring.',
+                    time: '5 days ago',
+                    avatarBg: 'from-emerald-600 to-teal-600'
+                },
+                {
+                    name: 'Sarah Jenkins',
+                    tag: '🔥 Amazing Work',
+                    msg: 'Found your portfolio on Google. The aesthetic, speed benchmarks, and attention to detail are next-level!',
+                    time: '1 week ago',
+                    avatarBg: 'from-amber-500 to-rose-600'
+                }
+            ];
+
+            const getStored = () => {
+                try {
+                    return JSON.parse(localStorage.getItem('sk_fan_wall_notes') || '[]');
+                } catch { return []; }
+            };
+
+            const saveStored = (list) => {
+                try {
+                    localStorage.setItem('sk_fan_wall_notes', JSON.stringify(list));
+                } catch {}
+            };
+
+            const esc = s => String(s || '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[c]));
+
+            const avatarGradients = [
+                'from-brand-600 to-indigo-600',
+                'from-purple-600 to-pink-600',
+                'from-emerald-600 to-teal-600',
+                'from-rose-500 to-amber-500',
+                'from-cyan-600 to-blue-600'
+            ];
+
+            const renderCard = (item) => {
+                const initial = (item.name || 'F').charAt(0).toUpperCase();
+                const grad = item.avatarBg || avatarGradients[Math.abs(item.name.length) % avatarGradients.length];
+                return `
+                <div class="gb-card glass-card p-5 rounded-2xl border border-white/10 flex flex-col justify-between space-y-3">
+                    <div class="space-y-2">
+                        <div class="flex items-center justify-between gap-2">
+                            <div class="flex items-center gap-2.5">
+                                <div class="w-8 h-8 rounded-full bg-gradient-to-tr ${grad} text-white font-bold text-xs flex items-center justify-center shadow-md">
+                                    ${initial}
+                                </div>
+                                <div>
+                                    <h4 class="text-xs font-bold text-white truncate max-w-[130px] sm:max-w-[160px]">${esc(item.name)}</h4>
+                                    <span class="text-[10px] font-mono text-slate-500">${esc(item.time || 'Recently')}</span>
+                                </div>
+                            </div>
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-mono font-semibold bg-white/5 border border-white/10 text-slate-300">
+                                ${esc(item.tag)}
+                            </span>
+                        </div>
+                        <p class="text-xs text-slate-300 leading-relaxed italic">"${esc(item.msg)}"</p>
+                    </div>
+                    <div class="pt-2 border-t border-white/5 flex items-center justify-between text-[10px] text-slate-500">
+                        <span class="flex items-center gap-1 text-emerald-400 font-semibold"><i class="fa-solid fa-heart text-[9px] text-pink-400"></i> Verified Note</span>
+                        <span class="text-brand-400 font-mono">#FanWall</span>
+                    </div>
+                </div>`;
+            };
+
+            const renderAll = () => {
+                const userNotes = getStored();
+                const all = [...userNotes, ...initialShoutouts];
+                grid.innerHTML = all.map(renderCard).join('');
+            };
+
+            renderAll();
+
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const nameInput = document.getElementById('gbName');
+                const msgInput = document.getElementById('gbMessage');
+                const submitBtn = document.getElementById('gbSubmitBtn');
+
+                const name = nameInput.value.trim();
+                const msg = msgInput.value.trim();
+                if (!name || !msg) return;
+
+                const newNote = {
+                    name,
+                    tag: selectedTag,
+                    msg,
+                    time: 'Just now',
+                    avatarBg: avatarGradients[Math.floor(Math.random() * avatarGradients.length)]
+                };
+
+                const stored = getStored();
+                stored.unshift(newNote);
+                saveStored(stored);
+                renderAll();
+
+                // Send to Supabase contact_messages in background with [Fan Wall] tag
+                fetch('https://oiruilsgqfqpmhradcrm.supabase.co/rest/v1/contact_messages', {
+                    method: 'POST',
+                    headers: {
+                        'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9pcnVpbHNncWZxcG1ocmFkY3JtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDEyMDI2MDIsImV4cCI6MjA1Njc3ODYwMn0.6b9qVd8Nn1X8Hq4y2a4Z1xX5fPqK4r8p3v5X9w0Y3Z4',
+                        'Content-Type': 'application/json',
+                        'Prefer': 'return=minimal'
+                    },
+                    body: JSON.stringify({
+                        name: `${name} [Fan Wall]`,
+                        email: 'fanwall@portfolio.live',
+                        message: `Reaction: ${selectedTag} | Note: ${msg}`
+                    })
+                }).catch(() => {});
+
+                // Button success animation
+                submitBtn.disabled = true;
+                const originalHtml = submitBtn.innerHTML;
+                submitBtn.innerHTML = '<i class="fa-solid fa-check text-emerald-400"></i><span>Posted to Wall!</span>';
+                form.reset();
+
+                setTimeout(() => {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalHtml;
+                }, 2500);
             });
         })();
 </script>
