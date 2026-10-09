@@ -650,8 +650,50 @@
             color: #ffffff;
             box-shadow: 0 0 15px rgba(192, 132, 252, 0.4);
         }
+
+        /* Film Grain Cinematic Overlay */
+        .film-grain-overlay {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.045;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* 3D Nav Rolling Text Effect (Inspired by Kryntix Studio) */
+        .nav-roll-link {
+            position: relative;
+            display: inline-block;
+            height: 18px;
+            line-height: 18px;
+            overflow: hidden;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+        }
+        .nav-roll-inner {
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .nav-roll-link:hover .nav-roll-inner {
+            transform: translateY(-50%);
+        }
+        .nav-roll-primary {
+            color: #cbd5e1;
+            transition: color 0.2s;
+        }
+        .nav-roll-duplicate {
+            color: #c084fc;
+            text-shadow: 0 0 8px rgba(192, 132, 252, 0.6);
+            font-weight: 700;
+        }
     </style></head>
 <body class="min-h-screen flex flex-col relative selection:bg-brand-500 selection:text-white">
+<div class="film-grain-overlay" aria-hidden="true"></div>
 <div id="pageLoader"><div class="loader-hello">Welcome to the portfolio of</div><div class="loader-logo">Khandker Saadman Rafid</div><div class="loader-tag">Where precision meets passion &#10022; Service &#10022; Design &#10022; Impact</div><div class="loader-bar"></div></div>
 <canvas id="bgParticles"></canvas>
     <!-- Project Case Study Modal -->
@@ -703,14 +745,44 @@
                     </span>
                 </a>
 
-                <!-- Desktop Navigation Links -->
+                <!-- Desktop Navigation Links with 3D Roll Effect -->
                 <nav class="hidden md:flex items-center gap-1 bg-white/5 dark:bg-dark-800/60 p-1.5 rounded-full border border-white/10 dark:border-brand-500/20 backdrop-blur-md">
-                    <a href="#home" class="px-4 py-2 rounded-full text-xs font-semibold hover:text-brand-400 hover:bg-white/5 transition">Home</a>
-                    <a href="#services" class="px-4 py-2 rounded-full text-xs font-semibold hover:text-brand-400 hover:bg-white/5 transition">Services</a>
-                    <a href="#experience" class="px-4 py-2 rounded-full text-xs font-semibold hover:text-brand-400 hover:bg-white/5 transition">Experience</a>
-                    <a href="#projects" class="px-4 py-2 rounded-full text-xs font-semibold hover:text-brand-400 hover:bg-white/5 transition">Projects</a>
-                    <a href="#skills" class="px-4 py-2 rounded-full text-xs font-semibold hover:text-brand-400 hover:bg-white/5 transition">Skills</a>
-                    <a href="#contact" class="px-4 py-2 rounded-full text-xs font-semibold hover:text-brand-400 hover:bg-white/5 transition">Contact</a>
+                    <a href="#home" class="px-4 py-2 rounded-full hover:bg-white/5 transition nav-roll-link">
+                        <span class="nav-roll-inner">
+                            <span class="nav-roll-primary">Home</span>
+                            <span class="nav-roll-duplicate">Home</span>
+                        </span>
+                    </a>
+                    <a href="#services" class="px-4 py-2 rounded-full hover:bg-white/5 transition nav-roll-link">
+                        <span class="nav-roll-inner">
+                            <span class="nav-roll-primary">Services</span>
+                            <span class="nav-roll-duplicate">Services</span>
+                        </span>
+                    </a>
+                    <a href="#experience" class="px-4 py-2 rounded-full hover:bg-white/5 transition nav-roll-link">
+                        <span class="nav-roll-inner">
+                            <span class="nav-roll-primary">Experience</span>
+                            <span class="nav-roll-duplicate">Experience</span>
+                        </span>
+                    </a>
+                    <a href="#projects" class="px-4 py-2 rounded-full hover:bg-white/5 transition nav-roll-link">
+                        <span class="nav-roll-inner">
+                            <span class="nav-roll-primary">Projects</span>
+                            <span class="nav-roll-duplicate">Projects</span>
+                        </span>
+                    </a>
+                    <a href="#skills" class="px-4 py-2 rounded-full hover:bg-white/5 transition nav-roll-link">
+                        <span class="nav-roll-inner">
+                            <span class="nav-roll-primary">Skills</span>
+                            <span class="nav-roll-duplicate">Skills</span>
+                        </span>
+                    </a>
+                    <a href="#contact" class="px-4 py-2 rounded-full hover:bg-white/5 transition nav-roll-link">
+                        <span class="nav-roll-inner">
+                            <span class="nav-roll-primary">Contact</span>
+                            <span class="nav-roll-duplicate">Contact</span>
+                        </span>
+                    </a>
                 </nav>
 
                 <!-- Actions: Theme Toggle -->
