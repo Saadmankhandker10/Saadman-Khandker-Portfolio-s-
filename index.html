@@ -1527,34 +1527,116 @@
                 <div class="timeline-track-bg" aria-hidden="true"></div>
                 <div id="timelineLaserLine" class="timeline-laser-line" aria-hidden="true"></div>
                 <div id="experienceGrid" class="space-y-8">
-                <!-- Dynamically rendered or fallback -->
-                <article class="glass-card p-7 sm:p-8 rounded-3xl space-y-4">
-                    <div class="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-white/10">
-                        <div>
-                            <h3 class="text-xl font-bold text-white">Retail & Store Operations</h3>
-                            <p class="text-brand-400 text-sm font-semibold">@ Meena Bazar</p>
+                <!-- Dynamically rendered or fallback with real official brand logos -->
+                <!-- 1. Classvel -->
+                <article class="timeline-item glass-card p-6 sm:p-8 rounded-3xl space-y-4 relative group hover:border-brand-500/50 transition-all duration-300" data-cat="media">
+                    <div class="timeline-node" aria-hidden="true"></div>
+                    <div class="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-white/10">
+                        <div class="flex items-center gap-3.5 sm:gap-4 min-w-0">
+                            <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-white/95 p-1.5 sm:p-2 border border-indigo-500/40 shadow-[0_0_15px_rgba(99,102,241,0.25)] flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform duration-300">
+                                <img src="./public/logos/classvel.png" alt="Classvel Official Logo" class="w-full h-full object-contain" loading="lazy" decoding="async">
+                            </div>
+                            <div class="min-w-0">
+                                <div class="flex items-center gap-2 mb-1">
+                                    <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold uppercase bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">Media &amp; Web</span>
+                                </div>
+                                <h3 class="text-lg sm:text-xl font-bold text-white group-hover:text-brand-300 transition-colors">Web Assistant &amp; Digital Content Specialist</h3>
+                                <p class="text-brand-400 text-xs sm:text-sm font-semibold flex items-center gap-1.5 mt-0.5">
+                                    <span class="text-slate-500">@</span>
+                                    <span>Classvel</span>
+                                </p>
+                            </div>
                         </div>
-                        <span class="px-3 py-1 rounded-full text-xs font-mono font-bold bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">Previous</span>
+                        <span class="px-3 py-1 rounded-full text-xs font-mono font-bold uppercase bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Ongoing</span>
                     </div>
-                    <ul class="space-y-2.5 text-sm text-slate-300 leading-relaxed pt-2">
-                        <li class="flex items-start gap-2.5"><span class="text-brand-400 mt-1">â–¹</span><span>Managed daily store operations, ensuring smooth workflow and high retail standards.</span></li>
-                        <li class="flex items-start gap-2.5"><span class="text-brand-400 mt-1">â–¹</span><span>Handled inventory management, stock reconciliation, and product quality control.</span></li>
-                        <li class="flex items-start gap-2.5"><span class="text-brand-400 mt-1">â–¹</span><span>Delivered customer-focused service, ensuring rapid query resolution.</span></li>
+                    <ul class="space-y-2 text-sm text-slate-300 leading-relaxed pt-2">
+                        <li class="flex items-start gap-2.5"><span class="text-brand-400 mt-1">▹</span><span>Specialized in website maintenance, digital data formatting, content management, and workflow optimization.</span></li>
+                        <li class="flex items-start gap-2.5"><span class="text-brand-400 mt-1">▹</span><span>Digitized and systematically formatted complex educational questionnaires into high-quality, engaging presentations.</span></li>
+                        <li class="flex items-start gap-2.5"><span class="text-brand-400 mt-1">▹</span><span>Delivered tailored web assistance ensuring digital educational platforms remain seamless, precise, and highly efficient.</span></li>
                     </ul>
                 </article>
 
-                <article class="glass-card p-7 sm:p-8 rounded-3xl space-y-4">
-                    <div class="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-white/10">
-                        <div>
-                            <h3 class="text-xl font-bold text-white">Volunteer Responder</h3>
-                            <p class="text-purple-400 text-sm font-semibold">@ Red Crescent Society</p>
+                <!-- 2. Agora Superstores -->
+                <article class="timeline-item glass-card p-6 sm:p-8 rounded-3xl space-y-4 relative group hover:border-brand-500/50 transition-all duration-300" data-cat="operations">
+                    <div class="timeline-node" aria-hidden="true"></div>
+                    <div class="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-white/10">
+                        <div class="flex items-center gap-3.5 sm:gap-4 min-w-0">
+                            <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-white/95 p-1.5 sm:p-2 border border-emerald-500/40 shadow-[0_0_15px_rgba(16,185,129,0.25)] flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform duration-300">
+                                <img src="./public/logos/agora.png" alt="Agora Superstores Official Logo" class="w-full h-full object-contain" loading="lazy" decoding="async">
+                            </div>
+                            <div class="min-w-0">
+                                <div class="flex items-center gap-2 mb-1">
+                                    <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold uppercase bg-purple-500/10 text-purple-400 border border-purple-500/20">Retail &amp; Operations</span>
+                                </div>
+                                <h3 class="text-lg sm:text-xl font-bold text-white group-hover:text-brand-300 transition-colors">CSA-3 (Customer Service &amp; Operations)</h3>
+                                <p class="text-brand-400 text-xs sm:text-sm font-semibold flex items-center gap-1.5 mt-0.5">
+                                    <span class="text-slate-500">@</span>
+                                    <span>Agora Superstores</span>
+                                </p>
+                            </div>
                         </div>
-                        <span class="px-3 py-1 rounded-full text-xs font-mono font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Ongoing</span>
+                        <span class="px-3 py-1 rounded-full text-xs font-mono font-bold uppercase bg-slate-500/10 text-slate-400 border border-slate-500/20">Previous</span>
                     </div>
-                    <ul class="space-y-2.5 text-sm text-slate-300 leading-relaxed pt-2">
-                        <li class="flex items-start gap-2.5"><span class="text-purple-400 mt-1">â–¹</span><span>Actively participated in community initiatives and crisis disaster response operations.</span></li>
-                        <li class="flex items-start gap-2.5"><span class="text-purple-400 mt-1">â–¹</span><span>Assisted in organizing local health camps, awareness drives, and blood donations.</span></li>
-                        <li class="flex items-start gap-2.5"><span class="text-purple-400 mt-1">â–¹</span><span>Demonstrated calm execution and high adaptability under emergency conditions.</span></li>
+                    <ul class="space-y-2 text-sm text-slate-300 leading-relaxed pt-2">
+                        <li class="flex items-start gap-2.5"><span class="text-brand-400 mt-1">▹</span><span>Customer Support: Provided attentive service and direct assistance to ensure an exceptional shopping experience.</span></li>
+                        <li class="flex items-start gap-2.5"><span class="text-brand-400 mt-1">▹</span><span>Inventory Management: Handled product placement, shelf replenishment, and stock updates for precise inventory control.</span></li>
+                        <li class="flex items-start gap-2.5"><span class="text-brand-400 mt-1">▹</span><span>Team Coordination: Collaborated effectively with team members to streamline daily store operations and workflow efficiency.</span></li>
+                    </ul>
+                </article>
+
+                <!-- 3. Meena Bazar -->
+                <article class="timeline-item glass-card p-6 sm:p-8 rounded-3xl space-y-4 relative group hover:border-brand-500/50 transition-all duration-300" data-cat="operations">
+                    <div class="timeline-node" aria-hidden="true"></div>
+                    <div class="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-white/10">
+                        <div class="flex items-center gap-3.5 sm:gap-4 min-w-0">
+                            <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-white/95 p-1.5 sm:p-2 border border-rose-500/40 shadow-[0_0_15px_rgba(244,63,94,0.25)] flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform duration-300">
+                                <img src="./public/logos/meenabazar.png" alt="Meena Bazar Official Logo" class="w-full h-full object-contain" loading="lazy" decoding="async">
+                            </div>
+                            <div class="min-w-0">
+                                <div class="flex items-center gap-2 mb-1">
+                                    <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold uppercase bg-purple-500/10 text-purple-400 border border-purple-500/20">Retail &amp; Operations</span>
+                                </div>
+                                <h3 class="text-lg sm:text-xl font-bold text-white group-hover:text-brand-300 transition-colors">Cashier &amp; Store Operations</h3>
+                                <p class="text-brand-400 text-xs sm:text-sm font-semibold flex items-center gap-1.5 mt-0.5">
+                                    <span class="text-slate-500">@</span>
+                                    <span>Meena Bazar</span>
+                                </p>
+                            </div>
+                        </div>
+                        <span class="px-3 py-1 rounded-full text-xs font-mono font-bold uppercase bg-slate-500/10 text-slate-400 border border-slate-500/20">Previous</span>
+                    </div>
+                    <ul class="space-y-2 text-sm text-slate-300 leading-relaxed pt-2">
+                        <li class="flex items-start gap-2.5"><span class="text-brand-400 mt-1">▹</span><span>Managed daily store checkout operations, ensuring smooth workflow and high standards of retail presentation.</span></li>
+                        <li class="flex items-start gap-2.5"><span class="text-brand-400 mt-1">▹</span><span>Handled inventory management, stock reconciliation, and quality control of products.</span></li>
+                        <li class="flex items-start gap-2.5"><span class="text-brand-400 mt-1">▹</span><span>Delivered customer-focused service, resolving inquiries and ensuring a positive retail experience.</span></li>
+                    </ul>
+                </article>
+
+                <!-- 4. Bangladesh Red Crescent Society -->
+                <article class="timeline-item glass-card p-6 sm:p-8 rounded-3xl space-y-4 relative group hover:border-brand-500/50 transition-all duration-300" data-cat="humanitarian">
+                    <div class="timeline-node" aria-hidden="true"></div>
+                    <div class="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-white/10">
+                        <div class="flex items-center gap-3.5 sm:gap-4 min-w-0">
+                            <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-white/95 p-1.5 sm:p-2 border border-red-500/40 shadow-[0_0_15px_rgba(239,68,68,0.25)] flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform duration-300">
+                                <img src="./public/logos/bdrcs.png" alt="Bangladesh Red Crescent Society Emblem" class="w-full h-full object-contain" loading="lazy" decoding="async">
+                            </div>
+                            <div class="min-w-0">
+                                <div class="flex items-center gap-2 mb-1">
+                                    <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold uppercase bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Humanitarian &amp; Aid</span>
+                                </div>
+                                <h3 class="text-lg sm:text-xl font-bold text-white group-hover:text-brand-300 transition-colors">Volunteer Responder &amp; First Aider</h3>
+                                <p class="text-brand-400 text-xs sm:text-sm font-semibold flex items-center gap-1.5 mt-0.5">
+                                    <span class="text-slate-500">@</span>
+                                    <span>Red Crescent Society</span>
+                                </p>
+                            </div>
+                        </div>
+                        <span class="px-3 py-1 rounded-full text-xs font-mono font-bold uppercase bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Ongoing</span>
+                    </div>
+                    <ul class="space-y-2 text-sm text-slate-300 leading-relaxed pt-2">
+                        <li class="flex items-start gap-2.5"><span class="text-brand-400 mt-1">▹</span><span>Actively participated in community service initiatives and emergency disaster response operations.</span></li>
+                        <li class="flex items-start gap-2.5"><span class="text-brand-400 mt-1">▹</span><span>Assisted in organizing local health camps, awareness drives, and blood donation campaigns.</span></li>
+                        <li class="flex items-start gap-2.5"><span class="text-brand-400 mt-1">▹</span><span>Demonstrated strong teamwork, calm execution, and crisis management skills in emergency environments.</span></li>
                     </ul>
                 </article>
                 </div>
@@ -2114,6 +2196,53 @@
         let allExperiencesData = [];
         let currentExpFilter = 'all';
 
+        const getOrgBranding = (org = '', title = '') => {
+            const s = `${org} ${title}`.toLowerCase();
+            if (s.includes('classvel')) {
+                return {
+                    src: './public/logos/classvel.png',
+                    alt: 'Classvel Official Logo',
+                    displayName: 'Classvel',
+                    badgeBg: 'bg-white/95 dark:bg-white/95',
+                    badgeBorder: 'border-indigo-500/40 shadow-[0_0_15px_rgba(99,102,241,0.25)]'
+                };
+            }
+            if (s.includes('agora')) {
+                return {
+                    src: './public/logos/agora.png',
+                    alt: 'Agora Superstores Official Logo',
+                    displayName: 'Agora Superstores',
+                    badgeBg: 'bg-white/95 dark:bg-white/95',
+                    badgeBorder: 'border-emerald-500/40 shadow-[0_0_15px_rgba(16,185,129,0.25)]'
+                };
+            }
+            if (s.includes('meena')) {
+                return {
+                    src: './public/logos/meenabazar.png',
+                    alt: 'Meena Bazar Official Logo',
+                    displayName: 'Meena Bazar',
+                    badgeBg: 'bg-white/95 dark:bg-white/95',
+                    badgeBorder: 'border-rose-500/40 shadow-[0_0_15px_rgba(244,63,94,0.25)]'
+                };
+            }
+            if (s.includes('crescent') || s.includes('bdrcs') || s.includes('volunteer')) {
+                return {
+                    src: './public/logos/bdrcs.png',
+                    alt: 'Bangladesh Red Crescent Society Emblem',
+                    displayName: 'Red Crescent Society',
+                    badgeBg: 'bg-white/95 dark:bg-white/95',
+                    badgeBorder: 'border-red-500/40 shadow-[0_0_15px_rgba(239,68,68,0.25)]'
+                };
+            }
+            return {
+                src: './public/img.jpg',
+                alt: org || 'Company Logo',
+                displayName: org || 'Company',
+                badgeBg: 'bg-white/10 dark:bg-white/10',
+                badgeBorder: 'border-white/20'
+            };
+        };
+
         const getExpCategory = exp => {
             const str = `${exp.title || ''} ${exp.organization || ''}`.toLowerCase();
             if (str.includes('crescent') || str.includes('volunteer') || str.includes('relief') || str.includes('aid')) return 'humanitarian';
@@ -2145,20 +2274,31 @@
 
             grid.innerHTML = filtered.map((exp, idx) => {
                 const cat = getExpCategory(exp);
+                const branding = getOrgBranding(exp.organization, exp.title);
                 return `
-                <article class="timeline-item glass-card p-7 sm:p-8 rounded-3xl space-y-4 relative group hover:border-brand-500/50 transition-all duration-300" data-cat="${cat}">
+                <article class="timeline-item glass-card p-6 sm:p-8 rounded-3xl space-y-4 relative group hover:border-brand-500/50 transition-all duration-300" data-cat="${cat}">
                     <!-- Pulsing Timeline Node -->
                     <div class="timeline-node" aria-hidden="true"></div>
 
-                    <div class="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-white/10">
-                        <div>
-                            <div class="flex items-center gap-2 mb-1">
-                                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold uppercase ${cat === 'humanitarian' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : cat === 'media' ? 'bg-indigo-500/10 text-indigo-400 border border-indigo-500/20' : 'bg-purple-500/10 text-purple-400 border border-purple-500/20'}">
-                                    ${cat === 'humanitarian' ? 'Humanitarian & Aid' : cat === 'media' ? 'Media & Web' : 'Retail & Operations'}
-                                </span>
+                    <div class="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-white/10">
+                        <div class="flex items-center gap-3.5 sm:gap-4 min-w-0">
+                            <!-- Real Brand Logo Badge -->
+                            <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl ${branding.badgeBg} p-1.5 sm:p-2 border ${branding.badgeBorder} shadow-lg flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform duration-300">
+                                <img src="${branding.src}" alt="${branding.alt}" class="w-full h-full object-contain" loading="lazy" decoding="async">
                             </div>
-                            <h3 class="text-xl font-bold text-white group-hover:text-brand-300 transition-colors">${escapeHTML(exp.title)}</h3>
-                            <p class="text-brand-400 text-sm font-semibold">@ ${escapeHTML(exp.organization)}</p>
+
+                            <div class="min-w-0">
+                                <div class="flex items-center gap-2 mb-1">
+                                    <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold uppercase ${cat === 'humanitarian' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : cat === 'media' ? 'bg-indigo-500/10 text-indigo-400 border border-indigo-500/20' : 'bg-purple-500/10 text-purple-400 border border-purple-500/20'}">
+                                        ${cat === 'humanitarian' ? 'Humanitarian & Aid' : cat === 'media' ? 'Media & Web' : 'Retail & Operations'}
+                                    </span>
+                                </div>
+                                <h3 class="text-lg sm:text-xl font-bold text-white group-hover:text-brand-300 transition-colors">${escapeHTML(exp.title)}</h3>
+                                <p class="text-brand-400 text-xs sm:text-sm font-semibold flex items-center gap-1.5 mt-0.5">
+                                    <span class="text-slate-500">@</span>
+                                    <span>${escapeHTML(exp.organization || branding.displayName)}</span>
+                                </p>
+                            </div>
                         </div>
                         <span class="px-3 py-1 rounded-full text-xs font-mono font-bold uppercase ${exp.status === 'Ongoing' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'bg-slate-500/10 text-slate-400 border border-slate-500/20'}">
                             ${escapeHTML(exp.status)}
