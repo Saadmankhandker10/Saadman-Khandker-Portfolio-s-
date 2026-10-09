@@ -551,11 +551,28 @@
             color: #fff;
             box-shadow: 0 0 15px rgba(192, 132, 252, 0.35);
         }
+        /* Modal Animation */
+        @keyframes modalIn {
+            from { opacity: 0; transform: scale(0.95) translateY(20px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        .animate-modalIn {
+            animation: modalIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
     </style></head>
 <body class="min-h-screen flex flex-col relative selection:bg-brand-500 selection:text-white">
 <div id="pageLoader"><div class="loader-hello">Welcome to the portfolio of</div><div class="loader-logo">Khandker Saadman Rafid</div><div class="loader-tag">Where precision meets passion &#10022; Service &#10022; Design &#10022; Impact</div><div class="loader-bar"></div></div>
 <canvas id="bgParticles"></canvas>
-<div id="lightbox"><button id="lbClose" aria-label="Close">&times;</button><button id="lbPrev" style="left:10px" aria-label="Previous">&#10094;</button><img id="lbImg" alt=""><button id="lbNext" style="right:10px" aria-label="Next">&#10095;</button></div>
+    <!-- Project Case Study Modal -->
+    <div id="projectModal" class="fixed inset-0 z-[100002] bg-dark-950/85 backdrop-blur-xl hidden flex items-center justify-center p-4 sm:p-6 overflow-y-auto" role="dialog" aria-modal="true">
+        <div class="relative w-full max-w-3xl glass-card rounded-3xl p-6 sm:p-10 border border-brand-500/30 shadow-2xl my-auto animate-modalIn">
+            <button id="projectModalCloseBtn" type="button" aria-label="Close modal" class="absolute top-5 right-5 w-10 h-10 rounded-2xl bg-white/10 hover:bg-white/20 text-white flex items-center justify-center text-lg transition">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div id="projectModalContent" class="space-y-6"></div>
+        </div>
+    </div>
+    <div id="lightbox"><button id="lbClose" aria-label="Close">&times;</button><button id="lbPrev" style="left:10px" aria-label="Previous">&#10094;</button><img id="lbImg" alt=""><button id="lbNext" style="right:10px" aria-label="Next">&#10095;</button></div>
 <a id="waBtn" class="float-btn hidden" target="_blank" rel="noopener" aria-label="Chat on WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
 
 
@@ -1210,7 +1227,7 @@
         };
 
         // Render Projects Function
-        const renderProjects = (projects = []) => {
+        const renderProjects = (projects = []) => { window.currentProjectsList = projects;
             const isBdrcs = p => /bdrcs|red crescent|humanitarian/i.test(`${p.title || ''} ${p.category || ''}`);
             const sortedProjects = [...projects].sort((a, b) => Number(isBdrcs(b)) - Number(isBdrcs(a)));
 
@@ -1236,16 +1253,26 @@
                     </div>`;
 
                 return `
-                    <article class="glass-card rounded-3xl overflow-hidden flex flex-col lg:flex-row items-stretch">
+                    <article class="glass-card rounded-3xl overflow-hidden flex flex-col lg:flex-row items-stretch group cursor-pointer hover:border-brand-500/50 transition-all duration-300" data-project-idx="${sortedProjects.indexOf(proj)}">
                         ${visualArea}
                         <div class="lg:w-1/2 p-8 lg:p-10 flex flex-col justify-center space-y-4">
-                            <span class="inline-block px-3 py-1 rounded-full text-xs font-mono font-bold bg-brand-500/10 text-brand-400 border border-brand-500/20 w-fit">
-                                ${escapeHTML(proj.category)}
-                            </span>
-                            <h3 class="text-2xl sm:text-3xl font-extrabold text-white">${escapeHTML(proj.title)}</h3>
+                            <div class="flex items-center justify-between">
+                                <span class="inline-block px-3 py-1 rounded-full text-xs font-mono font-bold bg-brand-500/10 text-brand-400 border border-brand-500/20 w-fit">
+                                    ${escapeHTML(proj.category)}
+                                </span>
+                                <span class="text-xs font-mono text-purple-400 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                                    Case Study <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                                </span>
+                            </div>
+                            <h3 class="text-2xl sm:text-3xl font-extrabold text-white group-hover:text-brand-300 transition-colors">${escapeHTML(proj.title)}</h3>
                             <p class="text-slate-400 text-sm leading-relaxed">${escapeHTML(proj.description)}</p>
                             <div class="flex flex-wrap gap-2 pt-2">
                                 ${(proj.tags || []).map(t => `<span class="px-2.5 py-1 rounded-lg text-xs font-mono bg-white/5 border border-white/10 text-slate-300">${escapeHTML(t)}</span>`).join('')}
+                            </div>
+                            <div class="pt-2">
+                                <span class="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold bg-brand-500/20 border border-brand-500/40 text-brand-300 group-hover:bg-brand-500 group-hover:text-white transition">
+                                    <i class="fa-solid fa-magnifying-glass-plus"></i> View Full Case Study
+                                </span>
                             </div>
                         </div>
                     </article>`;
@@ -1705,5 +1732,134 @@
             updateQuote();
         })();
     </script>
+<script>
+        // Project Case Study Modal Logic
+        (function () {
+            const modal = document.getElementById('projectModal');
+            const modalContent = document.getElementById('projectModalContent');
+            const closeBtn = document.getElementById('projectModalCloseBtn');
+
+            const caseStudies = {
+                'bdrcs': {
+                    challenge: 'Managing emergency humanitarian logistics, field coordination, and medical volunteers during urgent relief campaigns with zero margin for error.',
+                    solution: 'Implemented structured digital volunteer rosters, coordinated crisis communications across multiple zones, and led on-ground first-aid deployments.',
+                    tools: ['Emergency Response Logistics', 'First Aid Protocols', 'Field Coordination', 'Digital Volunteer Roster'],
+                    result: 'Successfully handled 10+ major disaster relief and emergency aid drives with 100% volunteer turnout and swift execution.',
+                    liveLabel: 'Inquire on WhatsApp',
+                    liveUrl: 'https://wa.me/8801320399465?text=Hi%20Saadman,%20I%20want%20to%20know%20more%20about%20your%20BDRCS%20work'
+                },
+                'classvel': {
+                    challenge: 'High volume web operations, formatting academic and media presentations with strict deadlines and precise brand standards.',
+                    solution: 'Standardized layout templates, established quality assurance checklists, and formatted 100+ executive slide decks.',
+                    tools: ['PowerPoint & Keynote', 'Canva Pro', 'Google Workspace', 'Content Digitization', 'QA Checklists'],
+                    result: 'Achieved 99.9% error-free delivery rate and reduced turnaround time by 35% across all client deliverables.',
+                    liveLabel: 'Discuss Presentation Project',
+                    liveUrl: 'https://wa.me/8801320399465?text=Hi%20Saadman,%20I%20need%20a%20presentation%20deck%20like%20your%20Classvel%20standards'
+                },
+                'meena': {
+                    challenge: 'Fast-paced retail POS operations, financial accuracy in transactions, and seamless customer grievance resolution.',
+                    solution: 'Maintained zero-variance cashier register accounting, enforced swift checkout protocols, and ensured high customer satisfaction.',
+                    tools: ['Retail POS Terminals', 'Cash Reconciliation', 'Customer Service', 'Inventory Cross-check'],
+                    result: 'Recognized for 100% audit accuracy and zero customer escalations during peak holiday shopping hours.',
+                    liveLabel: 'Contact Saadman',
+                    liveUrl: 'https://wa.me/8801320399465?text=Hi%20Saadman,%20regarding%20your%20operations%20experience'
+                }
+            };
+
+            const getCaseStudy = (proj) => {
+                const text = ((proj.title || '') + ' ' + (proj.category || '') + ' ' + (proj.description || '')).toLowerCase();
+                if (text.includes('bdrcs') || text.includes('red crescent') || text.includes('volunteer')) return caseStudies.bdrcs;
+                if (text.includes('classvel') || text.includes('deck') || text.includes('presentation')) return caseStudies.classvel;
+                return caseStudies.meena;
+            };
+
+            window.openProjectModal = function(idx) {
+                const proj = (window.currentProjectsList || [])[idx];
+                if (!proj) return;
+
+                const cs = getCaseStudy(proj);
+                const isBdrcs = /bdrcs|red crescent/i.test((proj.title || '') + ' ' + (proj.category || ''));
+                const previewImg = isBdrcs ? (window.bdrcsSlideSources ? window.bdrcsSlideSources[0] : './public/img.jpg') : './public/img.jpg';
+
+                modalContent.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <span class="px-3.5 py-1 rounded-full text-xs font-mono font-bold bg-pink-500/10 text-pink-400 border border-pink-500/30">
+                            ${escapeHTML(proj.category)}
+                        </span>
+                        <span class="text-xs font-mono text-slate-400">Case Study</span>
+                    </div>
+
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">${escapeHTML(proj.title)}</h2>
+
+                    <div class="rounded-2xl overflow-hidden max-h-72 border border-white/10 shadow-lg relative group">
+                        <img src="${previewImg}" alt="${escapeHTML(proj.title)}" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-950 via-transparent to-transparent"></div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="glass-card p-4 rounded-2xl border border-red-500/20 bg-red-500/5">
+                            <h4 class="font-bold text-xs uppercase tracking-wider text-red-400 mb-1 flex items-center gap-2">
+                                <i class="fa-solid fa-triangle-exclamation"></i> The Challenge
+                            </h4>
+                            <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">${escapeHTML(cs.challenge)}</p>
+                        </div>
+                        <div class="glass-card p-4 rounded-2xl border border-emerald-500/20 bg-emerald-500/5">
+                            <h4 class="font-bold text-xs uppercase tracking-wider text-emerald-400 mb-1 flex items-center gap-2">
+                                <i class="fa-solid fa-circle-check"></i> The Solution
+                            </h4>
+                            <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">${escapeHTML(cs.solution)}</p>
+                        </div>
+                    </div>
+
+                    <div class="glass-card p-4 rounded-2xl border border-brand-500/20">
+                        <h4 class="font-bold text-xs uppercase tracking-wider text-brand-300 mb-2 flex items-center gap-2">
+                            <i class="fa-solid fa-trophy"></i> Key Results & Impact
+                        </h4>
+                        <p class="text-xs sm:text-sm text-slate-200 leading-relaxed font-semibold">${escapeHTML(cs.result)}</p>
+                    </div>
+
+                    <div>
+                        <h4 class="font-mono text-xs uppercase text-slate-400 mb-2.5">Tools & Skills Used</h4>
+                        <div class="flex flex-wrap gap-2">
+                            ${(cs.tools || []).map(t => `<span class="px-3 py-1 rounded-xl text-xs font-mono font-semibold bg-white/5 border border-purple-500/30 text-purple-300">${escapeHTML(t)}</span>`).join('')}
+                        </div>
+                    </div>
+
+                    <div class="pt-4 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
+                        <p class="text-xs text-slate-400">Want similar results for your business or project?</p>
+                        <a href="${cs.liveUrl}" target="_blank" rel="noopener" class="w-full sm:w-auto px-6 py-3 rounded-2xl text-xs font-bold text-white bg-gradient-to-r from-brand-600 via-indigo-600 to-pink-600 hover:opacity-90 transition shadow-lg shadow-brand-500/25 flex items-center justify-center gap-2">
+                            <i class="fa-brands fa-whatsapp text-sm"></i> ${escapeHTML(cs.liveLabel)}
+                        </a>
+                    </div>
+                `;
+
+                modal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            };
+
+            const closeModal = () => {
+                modal.classList.add('hidden');
+                document.body.style.overflow = '';
+            };
+
+            if (closeBtn) closeBtn.addEventListener('click', closeModal);
+            modal.addEventListener('click', e => {
+                if (e.target === modal) closeModal();
+            });
+            window.addEventListener('keydown', e => {
+                if (e.key === 'Escape' && !modal.classList.contains('hidden')) closeModal();
+            });
+
+            document.getElementById('projectsGrid').addEventListener('click', e => {
+                const article = e.target.closest('article[data-project-idx]');
+                if (!article) return;
+                if (e.target.closest('.bdrcs-slide-control')) return;
+                const idx = parseInt(article.dataset.projectIdx, 10);
+                if (!isNaN(idx)) {
+                    window.openProjectModal(idx);
+                }
+            });
+        })();
+</script>
 </body>
 </html>
