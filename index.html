@@ -384,6 +384,62 @@
             color: color-mix(in srgb, var(--neon) 70%, #1e1b4b);
         }
 
+        /* Cyber HUD Global Status & Glow */
+        .cyber-hud-bar {
+            background: rgba(11, 15, 25, 0.85);
+            border: 1px solid rgba(99, 102, 241, 0.4);
+            box-shadow: 0 0 25px rgba(99, 102, 241, 0.25), inset 0 0 15px rgba(99, 102, 241, 0.1);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .cyber-hud-bar:hover {
+            border-color: rgba(129, 140, 248, 0.7);
+            box-shadow: 0 0 35px rgba(99, 102, 241, 0.4), inset 0 0 20px rgba(99, 102, 241, 0.2);
+            transform: translateY(-2px);
+        }
+        .cyber-pill {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .cyber-pill:hover {
+            transform: translateY(-2px) scale(1.03);
+        }
+        .cyber-pill-avail {
+            background: rgba(16, 185, 129, 0.14);
+            border: 1px solid rgba(52, 211, 153, 0.5);
+            box-shadow: 0 0 16px rgba(16, 185, 129, 0.25), inset 0 0 10px rgba(16, 185, 129, 0.1);
+        }
+        .cyber-pill-avail:hover {
+            background: rgba(16, 185, 129, 0.25);
+            border-color: rgba(52, 211, 153, 0.8);
+            box-shadow: 0 0 26px rgba(16, 185, 129, 0.55), inset 0 0 15px rgba(16, 185, 129, 0.2);
+        }
+        .cyber-pill-location {
+            background: rgba(99, 102, 241, 0.12);
+            border: 1px solid rgba(129, 140, 248, 0.4);
+            box-shadow: 0 0 16px rgba(99, 102, 241, 0.22), inset 0 0 10px rgba(99, 102, 241, 0.08);
+        }
+        .cyber-pill-location:hover {
+            background: rgba(99, 102, 241, 0.22);
+            border-color: rgba(129, 140, 248, 0.75);
+            box-shadow: 0 0 26px rgba(99, 102, 241, 0.45), inset 0 0 15px rgba(99, 102, 241, 0.18);
+        }
+        .cyber-pill-response {
+            background: rgba(245, 158, 11, 0.14);
+            border: 1px solid rgba(251, 191, 36, 0.45);
+            box-shadow: 0 0 16px rgba(245, 158, 11, 0.25), inset 0 0 10px rgba(245, 158, 11, 0.1);
+        }
+        .cyber-pill-response:hover {
+            background: rgba(245, 158, 11, 0.25);
+            border-color: rgba(251, 191, 36, 0.8);
+            box-shadow: 0 0 26px rgba(245, 158, 11, 0.55), inset 0 0 15px rgba(245, 158, 11, 0.2);
+        }
+        .cyber-glow-clock {
+            color: #38bdf8;
+            font-weight: 800;
+            text-shadow: 0 0 10px rgba(56, 189, 248, 0.75), 0 0 20px rgba(56, 189, 248, 0.4);
+        }
+
         /* Section Headings */
         .section-tag {
             display: inline-flex;
@@ -860,28 +916,28 @@
             <!-- Left Info Area -->
             <div class="lg:w-7/12 space-y-8 text-center lg:text-left">
                 <!-- Cyber HUD Global Status & Live Time Bar -->
-                <div class="inline-flex flex-wrap items-center justify-center lg:justify-start gap-2 sm:gap-2.5 p-1.5 rounded-2xl bg-dark-900/80 border border-brand-500/30 backdrop-blur-xl shadow-xl shadow-brand-500/10 max-w-fit mx-auto lg:mx-0">
+                <div class="cyber-hud-bar inline-flex flex-wrap items-center justify-center lg:justify-start gap-2.5 sm:gap-3 p-2 rounded-2xl max-w-fit mx-auto lg:mx-0">
                     <!-- Live Availability Pill -->
-                    <div class="flex items-center gap-2 px-3 py-1 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold">
-                        <span class="relative flex h-2 w-2">
-                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                            <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                    <div class="cyber-pill cyber-pill-avail flex items-center gap-2.5 px-3.5 py-1.5 rounded-xl text-emerald-300 text-xs sm:text-sm font-bold tracking-wide">
+                        <span class="relative flex h-2.5 w-2.5">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-80"></span>
+                            <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400 shadow-[0_0_8px_#34d399]"></span>
                         </span>
-                        <span>Available for Projects</span>
+                        <span class="drop-shadow-[0_0_8px_rgba(52,211,153,0.5)]">Available for Projects</span>
                     </div>
 
                     <!-- Location & Live Clock Pill -->
-                    <div class="flex items-center gap-1.5 px-3 py-1 rounded-xl bg-white/5 border border-white/10 text-xs font-mono text-slate-300">
-                        <i class="fa-solid fa-location-dot text-rose-400 text-[11px]"></i>
-                        <span>Dhaka, BD</span>
-                        <span class="text-slate-500">&bull;</span>
-                        <span id="cyberLiveClock" class="text-brand-300 font-bold">LIVE</span>
+                    <div class="cyber-pill cyber-pill-location flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-bold font-mono text-slate-100">
+                        <i class="fa-solid fa-location-dot text-rose-400 text-sm drop-shadow-[0_0_8px_rgba(251,113,133,0.7)] animate-pulse"></i>
+                        <span class="tracking-wide">Dhaka, BD</span>
+                        <span class="text-brand-400 font-extrabold">&bull;</span>
+                        <span id="cyberLiveClock" class="cyber-glow-clock text-xs sm:text-sm tracking-wider">LIVE</span>
                     </div>
 
                     <!-- Fast Response Pill -->
-                    <div class="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-amber-500/10 border border-amber-500/20 text-[11px] font-mono text-amber-300">
-                        <i class="fa-solid fa-bolt text-amber-400"></i>
-                        <span>Response &lt; 30m</span>
+                    <div class="cyber-pill cyber-pill-response flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold font-mono text-amber-300">
+                        <i class="fa-solid fa-bolt text-amber-400 text-sm drop-shadow-[0_0_8px_rgba(251,191,36,0.8)]"></i>
+                        <span class="drop-shadow-[0_0_8px_rgba(251,191,36,0.4)]">Response &lt; 30m</span>
                     </div>
                 </div>
 
