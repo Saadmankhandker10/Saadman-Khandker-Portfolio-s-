@@ -859,10 +859,30 @@
             
             <!-- Left Info Area -->
             <div class="lg:w-7/12 space-y-8 text-center lg:text-left">
-                <!-- Status Badge -->
-                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold">
-                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-                    <span>Available for Freelance Typing &amp; Document Roles</span>
+                <!-- Cyber HUD Global Status & Live Time Bar -->
+                <div class="inline-flex flex-wrap items-center justify-center lg:justify-start gap-2 sm:gap-2.5 p-1.5 rounded-2xl bg-dark-900/80 border border-brand-500/30 backdrop-blur-xl shadow-xl shadow-brand-500/10 max-w-fit mx-auto lg:mx-0">
+                    <!-- Live Availability Pill -->
+                    <div class="flex items-center gap-2 px-3 py-1 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold">
+                        <span class="relative flex h-2 w-2">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                        </span>
+                        <span>Available for Projects</span>
+                    </div>
+
+                    <!-- Location & Live Clock Pill -->
+                    <div class="flex items-center gap-1.5 px-3 py-1 rounded-xl bg-white/5 border border-white/10 text-xs font-mono text-slate-300">
+                        <i class="fa-solid fa-location-dot text-rose-400 text-[11px]"></i>
+                        <span>Dhaka, BD</span>
+                        <span class="text-slate-500">&bull;</span>
+                        <span id="cyberLiveClock" class="text-brand-300 font-bold">LIVE</span>
+                    </div>
+
+                    <!-- Fast Response Pill -->
+                    <div class="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-amber-500/10 border border-amber-500/20 text-[11px] font-mono text-amber-300">
+                        <i class="fa-solid fa-bolt text-amber-400"></i>
+                        <span>Response &lt; 30m</span>
+                    </div>
                 </div>
 
                 <!-- Main Headline -->
@@ -1690,7 +1710,10 @@
         // Live Clock Tracker
         const updateClock = () => {
             const timeStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
-            document.getElementById('liveClock').textContent = `LIVE / ${timeStr}`;
+            const clock1 = document.getElementById('liveClock');
+            if (clock1) clock1.textContent = `LIVE / ${timeStr}`;
+            const cyberClock = document.getElementById('cyberLiveClock');
+            if (cyberClock) cyberClock.textContent = timeStr;
         };
         updateClock();
         setInterval(updateClock, 1000);
