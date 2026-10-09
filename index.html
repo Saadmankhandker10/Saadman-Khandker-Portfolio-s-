@@ -882,7 +882,15 @@
 
         // Render Experience Function
         const renderExperience = (experiences = []) => {
-            document.getElementById('experienceGrid').innerHTML = experiences.map(exp => `
+            const sortedExperiences = [...experiences].sort((a, b) => {
+                const isClassvelA = /classvel/i.test(`${a.organization || ''} ${a.title || ''}`);
+                const isClassvelB = /classvel/i.test(`${b.organization || ''} ${b.title || ''}`);
+                if (isClassvelA) return -1;
+                if (isClassvelB) return 1;
+                return 0;
+            });
+
+            document.getElementById('experienceGrid').innerHTML = sortedExperiences.map(exp => `
                 <article class="glass-card p-7 sm:p-8 rounded-3xl space-y-4">
                     <div class="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-white/10">
                         <div>
