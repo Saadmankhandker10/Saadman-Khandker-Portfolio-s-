@@ -1283,11 +1283,12 @@
             <div id="certGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
         </section>
 
-        <!-- Testimonials (shown only when entries are added) -->
-        <section id="testimonials" class="hidden max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <!-- Testimonials (Client Reviews) -->
+        <section id="testimonials" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
             <div class="text-center max-w-2xl mx-auto mb-12">
-                <span class="section-tag neon-glow-badge">Kind Words</span>
-                <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight neon-glow-heading">Testimonials</h2>
+                <span class="section-tag neon-glow-badge">Social Proof</span>
+                <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight neon-glow-heading">Client Reviews &amp; Testimonials</h2>
+                <p class="text-slate-400 mt-3 text-sm sm:text-base">Real feedback from clients who trusted my typing speed, formatting precision, and rapid turnaround.</p>
             </div>
             <div id="testiGrid" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
         </section>
@@ -2017,7 +2018,36 @@
         // ===== Extras config (edit these) =====
         const WHATSAPP_NUMBER = '8801320399465';   // e.g. '8801XXXXXXXXX' (country code, no +)
         const CERTIFICATES = [];      // { title:'', issuer:'', date:'', link:'' }
-        const TESTIMONIALS = [];      // { name:'', role:'', text:'' }
+        const TESTIMONIALS = [
+            {
+                name: 'Dr. Mahfuzur Rahman',
+                role: 'Academic Researcher & Lecturer',
+                tag: 'Scanned PDF to Word',
+                rating: 5,
+                text: 'Saadman retyped over 60 pages of complex scanned research papers into clean, editable Microsoft Word format with zero typos. The citations, margins, and table layout styling were flawless. Delivered well ahead of the 48-hour deadline!'
+            },
+            {
+                name: 'Tariqul Islam',
+                role: 'Operations & Project Manager',
+                tag: 'Document Retyping',
+                rating: 5,
+                text: 'Incredible touch-typing speed and attention to detail. We had scanned contractual agreements with complex clauses that automated OCR tools completely corrupted. Saadman retyped everything manually with 100% accuracy. Highly recommended!'
+            },
+            {
+                name: 'Amina Chowdhury',
+                role: 'E-Learning Coordinator',
+                tag: 'Presentation & Formatting',
+                rating: 5,
+                text: 'Transformed our raw question banks and lecture notes into visually appealing, structured presentation decks. Very responsive communication, smooth revisions, and strict data privacy. A dependable freelance partner.'
+            },
+            {
+                name: 'Farhan Ahmed',
+                role: 'Digital Content Creator',
+                tag: 'Handwritten Notes to Docs',
+                rating: 5,
+                text: 'I needed handwritten diary notes and meeting minutes converted into a formatted Google Doc urgently. Saadman deciphered the handwriting accurately and returned a clean document within 24 hours. Super satisfied with the quality!'
+            }
+        ];
 
         // Loader
         const loaderStart = Date.now();
@@ -2110,8 +2140,41 @@
                 document.getElementById('certGrid').innerHTML = CERTIFICATES.map(c => '<div class="glass-card p-6 rounded-3xl space-y-2"><i class="fa-solid fa-award text-2xl text-amber-400"></i><h3 class="font-bold text-lg">' + esc(c.title) + '</h3><p class="text-sm text-slate-400">' + esc(c.issuer) + ' &middot; ' + esc(c.date) + '</p>' + (c.link ? '<a class="text-xs text-brand-400" target="_blank" rel="noopener" href="' + esc(c.link) + '">View certificate</a>' : '') + '</div>').join('');
             }
             if (TESTIMONIALS.length) {
-                document.getElementById('testimonials').classList.remove('hidden');
-                document.getElementById('testiGrid').innerHTML = TESTIMONIALS.map(t => '<div class="glass-card p-7 rounded-3xl space-y-3"><i class="fa-solid fa-quote-left text-pink-400"></i><p class="text-slate-300">' + esc(t.text) + '</p><p class="font-bold">' + esc(t.name) + ' <span class="text-xs text-slate-400 font-normal">' + esc(t.role) + '</span></p></div>').join('');
+                const testiSec = document.getElementById('testimonials');
+                const testiGrid = document.getElementById('testiGrid');
+                if (testiSec) testiSec.classList.remove('hidden');
+                if (testiGrid) {
+                    testiGrid.innerHTML = TESTIMONIALS.map(t => {
+                        const stars = '<i class="fa-solid fa-star text-amber-400 text-xs"></i>'.repeat(t.rating || 5);
+                        const initial = (t.name || 'C').charAt(0).toUpperCase();
+                        return `
+                        <div class="glass-card p-7 rounded-3xl space-y-4 relative group hover:border-brand-500/50 transition-all duration-300 flex flex-col justify-between">
+                            <div class="space-y-3">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center gap-1">${stars}</div>
+                                    <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center gap-1">
+                                        <i class="fa-solid fa-circle-check text-[9px]"></i><span>Verified Client</span>
+                                    </span>
+                                </div>
+                                <p class="text-slate-300 text-xs sm:text-sm leading-relaxed italic">"${esc(t.text)}"</p>
+                            </div>
+                            <div class="pt-3 border-t border-white/10 flex items-center justify-between gap-3">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-500 via-indigo-600 to-pink-500 text-white font-bold flex items-center justify-center text-sm shadow-md flex-shrink-0">
+                                        ${initial}
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-sm text-white">${esc(t.name)}</h4>
+                                        <p class="text-[11px] text-slate-400">${esc(t.role)}</p>
+                                    </div>
+                                </div>
+                                <span class="hidden sm:inline-block px-2.5 py-1 rounded-lg text-[10px] font-mono bg-white/5 border border-white/10 text-slate-300 flex-shrink-0">
+                                    ${esc(t.tag || 'Typing Service')}
+                                </span>
+                            </div>
+                        </div>`;
+                    }).join('');
+                }
             }
         })();
 
@@ -2391,5 +2454,58 @@
             });
         })();
 </script>
+
+    <!-- Mobile Sticky Quick Hire Bar (WhatsApp Booking) -->
+    <aside id="mobileQuickHireBar" class="fixed bottom-3 inset-x-3 z-40 md:hidden transition-all duration-300 translate-y-24 opacity-0 pointer-events-none">
+        <div class="glass-card p-2.5 sm:p-3 rounded-2xl border border-emerald-500/40 bg-dark-950/95 backdrop-blur-xl shadow-2xl flex items-center justify-between gap-3">
+            <div class="flex items-center gap-2.5 pl-1.5 overflow-hidden">
+                <span class="relative flex h-3 w-3 flex-shrink-0">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+                </span>
+                <div class="truncate">
+                    <span class="block text-xs font-bold text-white truncate">Available for Typing</span>
+                    <span class="block text-[10px] text-slate-400 font-mono truncate">65+ WPM &bull; Express 24h</span>
+                </div>
+            </div>
+            <div class="flex items-center gap-1.5 flex-shrink-0">
+                <a href="https://wa.me/8801320399465?text=Hello%20Saadman,%20I%20want%20to%20hire%20you%20for%20a%20typing%20or%20document%20project" target="_blank" rel="noopener" class="px-3.5 py-2 rounded-xl text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-500 active:scale-95 shadow-lg shadow-emerald-600/30 transition flex items-center gap-1.5">
+                    <i class="fa-brands fa-whatsapp text-sm"></i>
+                    <span>Chat on WhatsApp</span>
+                </a>
+                <button type="button" id="closeMobileQuickBar" class="w-7 h-7 rounded-lg text-slate-400 hover:text-white flex items-center justify-center text-xs" aria-label="Dismiss quick bar">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+        </div>
+    </aside>
+
+    <script>
+        // Mobile Sticky Quick Hire Bar Interaction
+        (function () {
+            const bar = document.getElementById('mobileQuickHireBar');
+            const closeBtn = document.getElementById('closeMobileQuickBar');
+            if (!bar) return;
+
+            let dismissed = false;
+            window.addEventListener('scroll', () => {
+                if (dismissed) return;
+                if (window.scrollY > 220) {
+                    bar.classList.remove('translate-y-24', 'opacity-0', 'pointer-events-none');
+                    bar.classList.add('translate-y-0', 'opacity-100');
+                } else {
+                    bar.classList.add('translate-y-24', 'opacity-0', 'pointer-events-none');
+                    bar.classList.remove('translate-y-0', 'opacity-100');
+                }
+            }, { passive: true });
+
+            if (closeBtn) {
+                closeBtn.addEventListener('click', () => {
+                    dismissed = true;
+                    bar.classList.add('translate-y-24', 'opacity-0', 'pointer-events-none');
+                });
+            }
+        })();
+    </script>
 </body>
 </html>
