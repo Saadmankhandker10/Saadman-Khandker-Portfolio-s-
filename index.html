@@ -11,6 +11,12 @@
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
     <link rel="canonical" href="https://saadmankhandker10.github.io/Saadman-Khandker-Portfolio-s-/">
     
+    <!-- Favicon & Brand Icons -->
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+    <link rel="icon" type="image/jpeg" href="./public/img.jpg">
+    <link rel="apple-touch-icon" href="./public/img.jpg">
+    <link rel="manifest" href="./manifest.json">
+    
     <!-- Google Search Verification -->
     <meta name="google-site-verification" content="google1093e83ae0034777">
     
@@ -571,27 +577,36 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
+        html {
+            scroll-behavior: smooth !important;
+        }
+
         /* Floating Back to Top Button */
         #backToTop {
             position: fixed;
             bottom: 1.5rem;
             right: 1.5rem;
-            z-index: 40;
-            width: 3rem;
-            height: 3rem;
+            z-index: 9990;
+            height: 2.6rem;
+            padding: 0 0.95rem;
             border-radius: 9999px;
-            display: flex;
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-            background: rgba(17, 24, 39, 0.85);
+            gap: 0.35rem;
+            background: rgba(11, 15, 25, 0.85);
             backdrop-filter: blur(12px);
-            border: 1px solid rgba(99, 102, 241, 0.3);
-            color: #818cf8;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(99, 102, 241, 0.4);
+            color: #c7d2fe;
+            font-size: 0.75rem;
+            font-weight: 700;
+            font-family: 'Space Mono', monospace;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), 0 0 16px rgba(99, 102, 241, 0.2);
             opacity: 0;
             pointer-events: none;
             transform: translateY(12px);
-            transition: all 0.25s ease;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            cursor: pointer;
         }
         #backToTop.is-visible {
             opacity: 1;
@@ -599,9 +614,10 @@
             transform: translateY(0);
         }
         #backToTop:hover {
-            background: #4f46e5;
-            color: white;
-            box-shadow: 0 8px 24px rgba(79, 70, 229, 0.5);
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            color: #ffffff;
+            border-color: rgba(165, 180, 252, 0.8);
+            box-shadow: 0 10px 28px rgba(79, 70, 229, 0.5), 0 0 20px rgba(168, 85, 247, 0.4);
             transform: translateY(-3px);
         }
 
@@ -614,10 +630,11 @@
                 display: none !important;
             }
             #backToTop {
-                bottom: 5.5rem !important;
+                bottom: 1.25rem !important;
                 right: 1rem !important;
-                width: 2.75rem !important;
-                height: 2.75rem !important;
+                height: 2.35rem !important;
+                padding: 0 0.8rem !important;
+                font-size: 0.7rem !important;
             }
         }
 
@@ -707,11 +724,7 @@
         .neon-cursor-dot { width:8px; height:8px; background:#fff; box-shadow:0 0 10px #c084fc,0 0 20px #818cf8; }
         .neon-cursor-ring { width:34px; height:34px; margin:-17px 0 0 -17px; border:2px solid #c084fc; box-shadow:0 0 14px #c084fc,inset 0 0 10px rgba(192,132,252,.5); transition:width .2s,height .2s,margin .2s,border-color .2s; }
         .neon-cursor-ring.active { width:54px; height:54px; margin:-27px 0 0 -27px; border-color:#f472b6; box-shadow:0 0 18px #f472b6; }
-    </style>
-    <link rel="manifest" href="./manifest.json">
-    <link rel="icon" href="./public/img.jpg">
-    <link rel="apple-touch-icon" href="./public/img.jpg">
-    <style>
+        
         /* ===== Extras: spotlight, marquee, loader, gallery, faq, floating ===== */
         .glass-card { background-image: radial-gradient(320px circle at var(--mx,-999px) var(--my,-999px), rgba(129,140,248,.18), transparent 60%); will-change: transform; }
         #bgParticles { position:fixed; inset:0; z-index:0; pointer-events:none; }
@@ -914,9 +927,10 @@
         <span id="liveClock" class="font-bold tracking-wider">LIVE / 00:00</span>
     </div>
 
-    <!-- Back To Top Button -->
-    <button id="backToTop" type="button" aria-label="Scroll back to top">
-        <i class="fa-solid fa-arrow-up text-sm"></i>
+    <!-- Floating Back To Top Button -->
+    <button id="backToTop" type="button" aria-label="Scroll back to top" title="Back to Top">
+        <i class="fa-solid fa-arrow-up text-xs"></i>
+        <span>Top</span>
     </button>
 
     <!-- Navigation Header -->
@@ -939,6 +953,7 @@
                     <a href="#services" class="px-3.5 py-1.5 rounded-full text-xs font-semibold hover:text-brand-400 hover:bg-white/5 transition">Services</a>
                     <a href="#typing-services" class="px-3.5 py-1.5 rounded-full text-xs font-semibold text-brand-300 bg-brand-500/10 border border-brand-500/30 hover:text-brand-200 hover:bg-brand-500/20 transition flex items-center gap-1.5"><i class="fa-solid fa-keyboard text-[10px]"></i><span>Typing</span></a>
                     <a href="#workflow" class="px-3.5 py-1.5 rounded-full text-xs font-semibold hover:text-brand-400 hover:bg-white/5 transition">Workflow</a>
+                    <a href="#faq" class="px-3.5 py-1.5 rounded-full text-xs font-semibold hover:text-brand-400 hover:bg-white/5 transition">FAQ</a>
                     <a href="#guestbook" class="px-3.5 py-1.5 rounded-full text-xs font-semibold text-purple-300 hover:text-purple-200 hover:bg-white/5 transition flex items-center gap-1"><i class="fa-solid fa-comments text-[10px]"></i><span>Guestbook</span></a>
                     <a href="#experience" class="px-3.5 py-1.5 rounded-full text-xs font-semibold hover:text-brand-400 hover:bg-white/5 transition">Experience</a>
                     <a href="#projects" class="px-3.5 py-1.5 rounded-full text-xs font-semibold hover:text-brand-400 hover:bg-white/5 transition">Projects</a>
@@ -958,24 +973,25 @@
                     </button>
                     
                     <!-- Mobile Hamburger -->
-                    <button id="mobileMenuBtn" type="button" aria-label="Toggle mobile menu" class="md:hidden w-10 h-10 rounded-xl flex items-center justify-center bg-white/5 border border-white/10 text-slate-300">
-                        <i class="fa-solid fa-bars text-lg"></i>
+                    <button id="mobileMenuBtn" type="button" aria-label="Toggle mobile menu" aria-expanded="false" class="md:hidden w-10 h-10 rounded-xl flex items-center justify-center bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 hover:text-white transition">
+                        <i id="mobileMenuIcon" class="fa-solid fa-bars text-lg transition-transform duration-200"></i>
                     </button>
                 </div>
             </div>
         </div>
 
         <!-- Mobile Menu Dropdown -->
-        <div id="mobileMenu" class="hidden md:hidden border-t border-white/10 px-4 pt-3 pb-6 space-y-2 bg-dark-950/95 backdrop-blur-xl">
-            <a href="#home" class="block px-4 py-2.5 rounded-xl text-sm font-semibold hover:bg-brand-500/10 hover:text-brand-400 transition">Home</a>
-            <a href="#services" class="block px-4 py-2.5 rounded-xl text-sm font-semibold hover:bg-brand-500/10 hover:text-brand-400 transition">Services</a>
-            <a href="#typing-services" class="block px-4 py-2.5 rounded-xl text-sm font-semibold text-brand-300 hover:bg-brand-500/10 transition flex items-center gap-2"><i class="fa-solid fa-keyboard text-xs"></i><span>Typing &amp; Retyping</span></a>
-            <a href="#workflow" class="block px-4 py-2.5 rounded-xl text-sm font-semibold hover:bg-brand-500/10 hover:text-brand-400 transition flex items-center gap-2"><i class="fa-solid fa-diagram-project text-xs text-brand-400"></i><span>4-Step Workflow</span></a>
-            <a href="#guestbook" class="block px-4 py-2.5 rounded-xl text-sm font-semibold hover:bg-brand-500/10 hover:text-purple-400 transition flex items-center gap-2"><i class="fa-solid fa-comments text-xs text-purple-400"></i><span>Visitor Guestbook</span></a>
-            <a href="#experience" class="block px-4 py-2.5 rounded-xl text-sm font-semibold hover:bg-brand-500/10 hover:text-brand-400 transition">Experience</a>
-            <a href="#projects" class="block px-4 py-2.5 rounded-xl text-sm font-semibold hover:bg-brand-500/10 hover:text-brand-400 transition">Projects</a>
-            <a href="#skills" class="block px-4 py-2.5 rounded-xl text-sm font-semibold hover:bg-brand-500/10 hover:text-brand-400 transition">Skills</a>
-            <a href="#contact" class="block px-4 py-2.5 rounded-xl text-sm font-semibold hover:bg-brand-500/10 hover:text-brand-400 transition">Contact</a>
+        <div id="mobileMenu" class="hidden md:hidden border-t border-white/10 px-4 pt-3 pb-6 space-y-1.5 bg-dark-950/95 backdrop-blur-2xl shadow-2xl transition-all duration-300">
+            <a href="#home" class="block px-4 py-2.5 rounded-xl text-sm font-semibold hover:bg-brand-500/10 hover:text-brand-400 transition flex items-center gap-2.5"><i class="fa-solid fa-house text-xs text-brand-400 w-4"></i><span>Home</span></a>
+            <a href="#services" class="block px-4 py-2.5 rounded-xl text-sm font-semibold hover:bg-brand-500/10 hover:text-brand-400 transition flex items-center gap-2.5"><i class="fa-solid fa-briefcase text-xs text-brand-400 w-4"></i><span>Services</span></a>
+            <a href="#typing-services" class="block px-4 py-2.5 rounded-xl text-sm font-semibold text-brand-300 hover:bg-brand-500/10 transition flex items-center gap-2.5"><i class="fa-solid fa-keyboard text-xs text-pink-400 w-4"></i><span>Typing &amp; Retyping</span></a>
+            <a href="#workflow" class="block px-4 py-2.5 rounded-xl text-sm font-semibold hover:bg-brand-500/10 hover:text-brand-400 transition flex items-center gap-2.5"><i class="fa-solid fa-diagram-project text-xs text-brand-400 w-4"></i><span>4-Step Workflow</span></a>
+            <a href="#faq" class="block px-4 py-2.5 rounded-xl text-sm font-semibold hover:bg-brand-500/10 hover:text-amber-400 transition flex items-center gap-2.5"><i class="fa-solid fa-circle-question text-xs text-amber-400 w-4"></i><span>FAQ</span></a>
+            <a href="#guestbook" class="block px-4 py-2.5 rounded-xl text-sm font-semibold hover:bg-brand-500/10 hover:text-purple-400 transition flex items-center gap-2.5"><i class="fa-solid fa-comments text-xs text-purple-400 w-4"></i><span>Visitor Guestbook</span></a>
+            <a href="#experience" class="block px-4 py-2.5 rounded-xl text-sm font-semibold hover:bg-brand-500/10 hover:text-brand-400 transition flex items-center gap-2.5"><i class="fa-solid fa-user-tie text-xs text-cyan-400 w-4"></i><span>Experience</span></a>
+            <a href="#projects" class="block px-4 py-2.5 rounded-xl text-sm font-semibold hover:bg-brand-500/10 hover:text-brand-400 transition flex items-center gap-2.5"><i class="fa-solid fa-laptop-code text-xs text-emerald-400 w-4"></i><span>Projects</span></a>
+            <a href="#skills" class="block px-4 py-2.5 rounded-xl text-sm font-semibold hover:bg-brand-500/10 hover:text-brand-400 transition flex items-center gap-2.5"><i class="fa-solid fa-wand-magic-sparkles text-xs text-amber-400 w-4"></i><span>Skills</span></a>
+            <a href="#contact" class="block px-4 py-2.5 rounded-xl text-sm font-semibold hover:bg-brand-500/10 hover:text-brand-400 transition flex items-center gap-2.5"><i class="fa-solid fa-envelope text-xs text-rose-400 w-4"></i><span>Contact</span></a>
         </div>
     </header>
 
@@ -1500,6 +1516,96 @@
             </div>
         </section>
 
+        <!-- ==================== FAQ SECTION (TYPING & SERVICES) ==================== -->
+        <section id="faq" class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="section-tag neon-glow-badge">Got Questions?</span>
+                <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight neon-glow-heading">Frequently Asked Questions</h2>
+                <p class="text-slate-400 mt-3 text-sm sm:text-base">Everything you need to know about typing turnaround, supported file formats, and strict confidentiality.</p>
+            </div>
+            
+            <div class="space-y-4" id="faqList">
+                <!-- FAQ 1: Delivery Speed -->
+                <div class="faq-item glass-card open">
+                    <button class="faq-q" type="button">
+                        <span class="flex items-center gap-3">
+                            <i class="fa-solid fa-bolt text-brand-400 text-sm"></i>
+                            <span>How fast can you deliver urgent typing projects?</span>
+                        </span>
+                        <i class="fa-solid fa-plus"></i>
+                    </button>
+                    <div class="faq-a">
+                        Standard typing projects (up to 30 pages) are delivered within 24 to 48 hours. For time-sensitive or urgent assignments, express rush delivery (within 12 to 24 hours or same-day) is readily available upon request with 100% human precision and full proofreading.
+                    </div>
+                </div>
+
+                <!-- FAQ 2: File Formats -->
+                <div class="faq-item glass-card">
+                    <button class="faq-q" type="button">
+                        <span class="flex items-center gap-3">
+                            <i class="fa-solid fa-file-lines text-pink-400 text-sm"></i>
+                            <span>What file formats do you accept and deliver?</span>
+                        </span>
+                        <i class="fa-solid fa-plus"></i>
+                    </button>
+                    <div class="faq-a">
+                        I accept scanned PDFs, clear photos, mobile snapshots, screenshots, handwritten notes, printed documents, and voice dictations. I deliver clean, print-ready, fully editable Microsoft Word (.docx), Google Docs, or PDF (.pdf) documents with professional layout formatting.
+                    </div>
+                </div>
+
+                <!-- FAQ 3: Confidentiality -->
+                <div class="faq-item glass-card">
+                    <button class="faq-q" type="button">
+                        <span class="flex items-center gap-3">
+                            <i class="fa-solid fa-shield-halved text-emerald-400 text-sm"></i>
+                            <span>How do you ensure data confidentiality and privacy?</span>
+                        </span>
+                        <i class="fa-solid fa-plus"></i>
+                    </button>
+                    <div class="faq-a">
+                        100% strict data privacy is guaranteed. All client files, academic notes, personal records, and business documents are handled under strict confidentiality, never shared with third parties, and permanently deleted from my local drive once you approve delivery.
+                    </div>
+                </div>
+
+                <!-- FAQ 4: Bangla & English -->
+                <div class="faq-item glass-card">
+                    <button class="faq-q" type="button">
+                        <span class="flex items-center gap-3">
+                            <i class="fa-solid fa-language text-purple-400 text-sm"></i>
+                            <span>Do you type in both Bangla and English?</span>
+                        </span>
+                        <i class="fa-solid fa-plus"></i>
+                    </button>
+                    <div class="faq-a">
+                        Yes! I maintain high typing speeds (65+ WPM) in both Bangla (Bijoy 52 &amp; Avro Keyboard) and English with 99.9% spelling, punctuation, and grammatical accuracy. Every page is typed by hand with zero automated OCR errors.
+                    </div>
+                </div>
+
+                <!-- FAQ 5: Revisions & Formatting -->
+                <div class="faq-item glass-card">
+                    <button class="faq-q" type="button">
+                        <span class="flex items-center gap-3">
+                            <i class="fa-solid fa-rotate-left text-cyan-400 text-sm"></i>
+                            <span>How do revisions and layout formatting work?</span>
+                        </span>
+                        <i class="fa-solid fa-plus"></i>
+                    </button>
+                    <div class="faq-a">
+                        Every project includes customized document styling (margins, headers, page numbers, clean font styles) and free minor revisions until you are completely satisfied with the final result.
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ Bottom Callout -->
+            <div class="mt-8 text-center text-xs text-slate-400">
+                <span>Have a unique project or custom requirement?</span>
+                <a href="https://wa.me/8801320399465?text=Hi%20Saadman,%20I%20have%20a%20question%20about%20your%20typing%20service!" target="_blank" rel="noopener" class="text-brand-400 hover:text-brand-300 font-bold ml-1 inline-flex items-center gap-1">
+                    <span>Chat on WhatsApp</span>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                </a>
+            </div>
+        </section>
+
         <!-- ==================== EXPERIENCE SECTION ==================== -->
                 <div class="marquee" aria-hidden="true"><div class="marquee-track" id="marqueeTrack"></div></div>
         <section id="experience" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
@@ -1854,20 +1960,6 @@
             <div id="blogGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
         </section>
 
-        <!-- FAQ -->
-        <section id="faq" class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-            <div class="text-center mb-12">
-                <span class="section-tag neon-glow-badge">Questions</span>
-                <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight neon-glow-heading">FAQ</h2>
-            </div>
-            <div class="space-y-4" id="faqList">
-                <div class="faq-item glass-card"><button class="faq-q" type="button"><span>What typing and document retyping services do you offer?</span><i class="fa-solid fa-plus"></i></button><div class="faq-a">I specialize in high-speed (65+ WPM), 99.9% accurate manual typing and retyping from scanned PDFs, images, handwritten notes, and book pages into clean, editable Microsoft Word (.docx) and Google Docs files with custom layout formatting. Strict human precision with zero automated OCR mistakes.</div></div>
-                <div class="faq-item glass-card"><button class="faq-q" type="button"><span>How fast can you complete a typing project?</span><i class="fa-solid fa-plus"></i></button><div class="faq-a">Standard orders (up to 30 pages) are delivered within 24 to 48 hours. Express rush delivery (within 12 to 24 hours) is also available upon request.</div></div>
-                <div class="faq-item glass-card"><button class="faq-q" type="button"><span>Are my confidential documents and data protected?</span><i class="fa-solid fa-plus"></i></button><div class="faq-a">Yes, 100%. All client documents, personal data, and business records are handled under strict confidentiality, never shared with third parties, and permanently deleted upon successful delivery.</div></div>
-                <div class="faq-item glass-card"><button class="faq-q" type="button"><span>What kind of other operational work do you do?</span><i class="fa-solid fa-plus"></i></button><div class="faq-a">In addition to freelance document typing, I handle presentation design, digital content formatting, retail store operations, quality assurance, and humanitarian response with the Red Crescent.</div></div>
-                <div class="faq-item glass-card"><button class="faq-q" type="button"><span>How can I contact or hire you quickly?</span><i class="fa-solid fa-plus"></i></button><div class="faq-a">Use the contact form below or click the WhatsApp button to chat directly. I reply promptly to project inquiries.</div></div>
-            </div>
-        </section>
         <section id="contact" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
             <div class="glass-card rounded-2xl sm:rounded-3xl p-4 sm:p-10 lg:p-16 relative overflow-hidden">
                 <!-- Background Decorative Glow -->
@@ -2075,27 +2167,71 @@
             applyTheme(!document.documentElement.classList.contains('dark'));
         });
 
-        // Mobile Menu Toggle
+        // Mobile Menu Toggle & Accessibility
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const mobileMenu = document.getElementById('mobileMenu');
-        mobileMenuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
-        mobileMenu.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
-        });
+        const mobileMenuIcon = document.getElementById('mobileMenuIcon');
 
-        // Scroll Progress Bar & Back-to-Top Button
+        const toggleMobileMenu = (forceClose = false) => {
+            if (!mobileMenu || !mobileMenuBtn) return;
+            const willOpen = forceClose ? false : mobileMenu.classList.contains('hidden');
+            if (willOpen) {
+                mobileMenu.classList.remove('hidden');
+                mobileMenuBtn.setAttribute('aria-expanded', 'true');
+                if (mobileMenuIcon) {
+                    mobileMenuIcon.classList.remove('fa-bars');
+                    mobileMenuIcon.classList.add('fa-xmark');
+                }
+            } else {
+                mobileMenu.classList.add('hidden');
+                mobileMenuBtn.setAttribute('aria-expanded', 'false');
+                if (mobileMenuIcon) {
+                    mobileMenuIcon.classList.remove('fa-xmark');
+                    mobileMenuIcon.classList.add('fa-bars');
+                }
+            }
+        };
+
+        if (mobileMenuBtn && mobileMenu) {
+            mobileMenuBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleMobileMenu();
+            });
+
+            mobileMenu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => toggleMobileMenu(true));
+            });
+
+            // Close on click outside
+            document.addEventListener('click', (e) => {
+                if (!mobileMenu.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+                    toggleMobileMenu(true);
+                }
+            });
+
+            // Close on Escape key
+            window.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && !mobileMenu.classList.contains('hidden')) {
+                    toggleMobileMenu(true);
+                }
+            });
+        }
+
+        // Scroll Progress Bar & Floating Back-to-Top Button
+        const backToTopBtn = document.getElementById('backToTop');
         window.addEventListener('scroll', () => {
             const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
             const progress = scrollableHeight > 0 ? (window.scrollY / scrollableHeight) * 100 : 0;
-            document.getElementById('scrollProgress').style.width = `${progress}%`;
-            document.getElementById('backToTop').classList.toggle('is-visible', window.scrollY > 400);
+            const progressEl = document.getElementById('scrollProgress');
+            if (progressEl) progressEl.style.width = `${progress}%`;
+            if (backToTopBtn) backToTopBtn.classList.toggle('is-visible', window.scrollY > 350);
         }, { passive: true });
 
-        document.getElementById('backToTop').addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
+        if (backToTopBtn) {
+            backToTopBtn.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
 
         // Live Clock Tracker
         const updateClock = () => {
@@ -3080,8 +3216,10 @@
             const dict = {
                 'Home': 'হোম', 'Services': 'সার্ভিস', 'Typing': 'টাইপিং', 'Experience': 'অভিজ্ঞতা', 'Projects': 'প্রজেক্ট', 'Skills': 'দক্ষতা', 'Contact': 'যোগাযোগ',
                 'Get In Touch': 'যোগাযোগ করুন', 'Gallery': 'গ্যালারি', 'FAQ': 'প্রশ্নোত্তর', 'Featured Projects': 'নির্বাচিত প্রজেক্ট',
+                'Workflow': 'কাজের ধাপ', 'Guestbook': 'গেস্টবুক', 'Visitor Guestbook': 'ভিজিটর গেস্টবুক', 'Top': 'উপরে',
                 'Skills & Capabilities': 'দক্ষতা ও সক্ষমতা', 'Certifications & Training': 'সার্টিফিকেশন ও প্রশিক্ষণ', 'Testimonials': 'প্রশংসাপত্র',
                 'Resume': 'রেজিউমে', 'Moments': 'মুহূর্ত', 'Questions': 'প্রশ্ন',
+                'Frequently Asked Questions': 'সচরাচর জিজ্ঞাসিত প্রশ্নাবলী',
                 'Fast Typing & Document Retyping': 'দ্রুত টাইপিং ও ডকুমেন্ট রিটাইপিং',
                 'What kind of work do you do?': 'আপনি কী ধরনের কাজ করেন?', 'Are you available for new roles?': 'আপনি কি নতুন কাজের জন্য প্রস্তুত?',
                 'How can I contact you quickly?': 'দ্রুত কীভাবে যোগাযোগ করব?', 'Can I see your CV?': 'আপনার CV দেখতে পারি?',
@@ -3469,9 +3607,21 @@
                         'Prefer': 'return=minimal'
                     },
                     body: JSON.stringify({
-                        name: `${name} [Fan Wall]`,
-                        email: 'fanwall@portfolio.live',
+                        name: `${name} [Guestbook / Fan Wall]`,
+                        email: 'guestbook@portfolio.live',
                         message: `Reaction: ${selectedTag} | Note: ${msg}`
+                    })
+                }).catch(() => {});
+
+                // Email notification backup via Formsubmit
+                fetch('https://formsubmit.co/ajax/gamerhindi571@gmail.com', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                    body: JSON.stringify({
+                        name: `${name} [Guestbook]`,
+                        email: 'guestbook@portfolio.live',
+                        message: `Tag: ${selectedTag}\nNote: ${msg}`,
+                        _subject: `New Guestbook Shoutout from ${name}`
                     })
                 }).catch(() => {});
 
