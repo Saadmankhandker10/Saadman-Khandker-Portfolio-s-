@@ -963,6 +963,15 @@
 
                 <!-- Actions: Theme Toggle -->
                 <div class="flex items-center gap-2">
+                    <!-- Live Systems Uptime Badge (Desktop) -->
+                    <div class="hidden xl:inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-mono font-bold bg-emerald-500/10 text-emerald-300 border border-emerald-500/30 shadow-[0_0_12px_rgba(16,185,129,0.25)] hover:border-emerald-400/60 transition cursor-default">
+                        <span class="relative flex h-2 w-2">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-400 shadow-[0_0_6px_#34d399]"></span>
+                        </span>
+                        <span>Systems Active &bull; 99.9% Uptime</span>
+                    </div>
+
                     <button id="langBtn" type="button" aria-label="Change language" class="px-3 py-1.5 rounded-xl text-xs font-bold font-mono bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 hover:text-white transition flex items-center gap-1.5">
                         <i class="fa-solid fa-globe text-brand-400"></i>
                         <span>বাংলা</span>
@@ -982,6 +991,14 @@
 
         <!-- Mobile Menu Dropdown -->
         <div id="mobileMenu" class="hidden md:hidden border-t border-white/10 px-4 pt-3 pb-6 space-y-1.5 bg-dark-950/95 backdrop-blur-2xl shadow-2xl transition-all duration-300">
+            <!-- Mobile Live Uptime Badge -->
+            <div class="flex items-center justify-center gap-2 py-2 mb-2 rounded-xl text-xs font-mono font-bold bg-emerald-500/10 text-emerald-300 border border-emerald-500/25">
+                <span class="relative flex h-2 w-2">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
+                </span>
+                <span>Systems Active &bull; 99.9% Uptime</span>
+            </div>
             <a href="#home" class="block px-4 py-2.5 rounded-xl text-sm font-semibold hover:bg-brand-500/10 hover:text-brand-400 transition flex items-center gap-2.5"><i class="fa-solid fa-house text-xs text-brand-400 w-4"></i><span>Home</span></a>
             <a href="#services" class="block px-4 py-2.5 rounded-xl text-sm font-semibold hover:bg-brand-500/10 hover:text-brand-400 transition flex items-center gap-2.5"><i class="fa-solid fa-briefcase text-xs text-brand-400 w-4"></i><span>Services</span></a>
             <a href="#typing-services" class="block px-4 py-2.5 rounded-xl text-sm font-semibold text-brand-300 hover:bg-brand-500/10 transition flex items-center gap-2.5"><i class="fa-solid fa-keyboard text-xs text-pink-400 w-4"></i><span>Typing &amp; Retyping</span></a>
@@ -2147,11 +2164,21 @@
     <!-- Footer Area -->
     <footer class="glass-header mt-auto py-8 z-10 relative">
         <div class="text-center mb-4"><span class="visitor-pill hidden"><i class="fa-solid fa-eye"></i> Visitors: <b id="visitorCount">0</b></span></div>
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
             <div>
                 <p class="font-bold text-sm text-slate-200">Khandker Saadman Rafid Saad</p>
                 <p class="text-xs text-slate-400 mt-0.5">&copy; <span id="year"></span> All Rights Reserved.</p>
             </div>
+
+            <!-- Public Live Systems Uptime Badge in Footer -->
+            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-mono font-bold bg-emerald-500/10 text-emerald-300 border border-emerald-500/30 shadow-[0_0_16px_rgba(16,185,129,0.2)] hover:shadow-[0_0_24px_rgba(16,185,129,0.35)] transition cursor-default">
+                <span class="relative flex h-2.5 w-2.5">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-80"></span>
+                    <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400 shadow-[0_0_8px_#34d399]"></span>
+                </span>
+                <span>Systems Active &bull; 99.9% Uptime</span>
+            </div>
+
             <div class="flex items-center gap-6 text-xs font-mono text-slate-400">
                 <a href="#home" class="hover:text-brand-400 transition inline-flex items-center gap-1">Back to Top <i class="fa-solid fa-arrow-up text-[10px]"></i></a>
             </div>
@@ -3239,7 +3266,8 @@
                 'Fast Typing & Document Retyping': 'দ্রুত টাইপিং ও ডকুমেন্ট রিটাইপিং',
                 'What kind of work do you do?': 'আপনি কী ধরনের কাজ করেন?', 'Are you available for new roles?': 'আপনি কি নতুন কাজের জন্য প্রস্তুত?',
                 'How can I contact you quickly?': 'দ্রুত কীভাবে যোগাযোগ করব?', 'Can I see your CV?': 'আপনার CV দেখতে পারি?',
-                'Available for Freelance Typing & Document Roles': 'ফ্রিল্যান্স টাইপিং ও ডকুমেন্ট কাজের জন্য প্রস্তুত'
+                'Available for Freelance Typing & Document Roles': 'ফ্রিল্যান্স টাইপিং ও ডকুমেন্ট কাজের জন্য প্রস্তুত',
+                'Systems Active • 99.9% Uptime': 'সিস্টেম সক্রিয় • ৯৯.৯% আপটাইম'
             };
             const store = new WeakMap(); let bn = false;
             const nodes = () => { const out = []; document.querySelectorAll('a,span,h2,button span,h3').forEach(el => { if (el.children.length === 0 && el.textContent.trim() in dict) out.push(el); }); return out; };
