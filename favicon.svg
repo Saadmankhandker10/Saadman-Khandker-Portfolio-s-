@@ -23,3 +23,4 @@
   <text x="32" y="42" font-family="'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, sans-serif" font-weight="900" font-size="28" fill="url(#skGrad)" text-anchor="middle" letter-spacing="-1" filter="url(#skGlow)">SK</text>
   <circle cx="51" cy="18" r="3.5" fill="#38bdf8"/>
 </svg>
+

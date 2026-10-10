@@ -690,6 +690,120 @@
                         </div>
                     </div>
 
+                    <!-- Live System Status & Health Monitor -->
+                    <div class="glass-panel p-6 rounded-2xl anim-fade-up anim-delay-1 border border-indigo-200/50 dark:border-indigo-900/40 relative overflow-hidden">
+                        <!-- Glow accent on top right -->
+                        <div class="absolute -top-12 -right-12 w-40 h-40 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+                        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-5 border-b border-slate-200/60 dark:border-slate-700/40 relative z-10">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-emerald-500 to-teal-400 text-white flex items-center justify-center shadow-lg shadow-emerald-500/25">
+                                    <i class="fa-solid fa-heart-pulse text-base animate-pulse"></i>
+                                </div>
+                                <div>
+                                    <div class="flex flex-wrap items-center gap-2.5">
+                                        <h2 class="text-base font-extrabold text-slate-900 dark:text-white">Live System Status & Health</h2>
+                                        <span id="overallHealthBadge" class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800">
+                                            <span class="relative flex h-2 w-2">
+                                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                                <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                                            </span>
+                                            All Systems Operational
+                                        </span>
+                                    </div>
+                                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Real-time latency & uptime monitoring across portfolio infrastructure</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-end">
+                                <span id="lastHealthCheckTime" class="text-[11px] font-mono text-slate-400">Checked: Just now</span>
+                                <button type="button" id="btnRefreshHealth" class="px-3.5 py-1.5 text-xs font-semibold rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-dark-800 dark:hover:bg-dark-700 text-slate-700 dark:text-slate-200 border border-slate-200/60 dark:border-slate-700/40 transition flex items-center gap-1.5 cursor-pointer">
+                                    <i class="fa-solid fa-arrows-rotate text-xs"></i>
+                                    <span>Test All Services</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- 4 Services Grid -->
+                        <div class="mt-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 relative z-10">
+                            <!-- Service 1: Live Portfolio -->
+                            <div id="serviceCard-web" class="p-4 rounded-xl bg-slate-50/70 dark:bg-slate-900/50 border border-slate-200/70 dark:border-slate-800 transition hover:border-emerald-500/40">
+                                <div class="flex items-center justify-between mb-2">
+                                    <div class="w-8 h-8 rounded-xl bg-blue-500/10 text-blue-500 dark:text-blue-400 flex items-center justify-center text-sm font-bold">
+                                        <i class="fa-solid fa-globe"></i>
+                                    </div>
+                                    <span id="serviceStatus-web" class="inline-flex items-center gap-1.5 text-[10px] font-mono uppercase px-2 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                                        Operational
+                                    </span>
+                                </div>
+                                <h3 class="text-xs font-bold text-slate-900 dark:text-white">Portfolio CDN</h3>
+                                <p class="text-[11px] text-slate-400 mb-3">GitHub Pages Edge</p>
+                                <div class="flex items-center justify-between pt-2 border-t border-slate-200/50 dark:border-slate-800/60 text-[11px] font-mono">
+                                    <span class="text-slate-400">Latency:</span>
+                                    <span id="servicePing-web" class="font-bold text-emerald-600 dark:text-emerald-400">-- ms</span>
+                                </div>
+                            </div>
+
+                            <!-- Service 2: Supabase DB -->
+                            <div id="serviceCard-db" class="p-4 rounded-xl bg-slate-50/70 dark:bg-slate-900/50 border border-slate-200/70 dark:border-slate-800 transition hover:border-emerald-500/40">
+                                <div class="flex items-center justify-between mb-2">
+                                    <div class="w-8 h-8 rounded-xl bg-emerald-500/10 text-emerald-500 dark:text-emerald-400 flex items-center justify-center text-sm font-bold">
+                                        <i class="fa-solid fa-database"></i>
+                                    </div>
+                                    <span id="serviceStatus-db" class="inline-flex items-center gap-1.5 text-[10px] font-mono uppercase px-2 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                                        Operational
+                                    </span>
+                                </div>
+                                <h3 class="text-xs font-bold text-slate-900 dark:text-white">Supabase Cloud DB</h3>
+                                <p class="text-[11px] text-slate-400 mb-3">Content Database</p>
+                                <div class="flex items-center justify-between pt-2 border-t border-slate-200/50 dark:border-slate-800/60 text-[11px] font-mono">
+                                    <span class="text-slate-400">Latency:</span>
+                                    <span id="servicePing-db" class="font-bold text-emerald-600 dark:text-emerald-400">-- ms</span>
+                                </div>
+                            </div>
+
+                            <!-- Service 3: Messages API -->
+                            <div id="serviceCard-api" class="p-4 rounded-xl bg-slate-50/70 dark:bg-slate-900/50 border border-slate-200/70 dark:border-slate-800 transition hover:border-emerald-500/40">
+                                <div class="flex items-center justify-between mb-2">
+                                    <div class="w-8 h-8 rounded-xl bg-purple-500/10 text-purple-500 dark:text-purple-400 flex items-center justify-center text-sm font-bold">
+                                        <i class="fa-solid fa-envelope-circle-check"></i>
+                                    </div>
+                                    <span id="serviceStatus-api" class="inline-flex items-center gap-1.5 text-[10px] font-mono uppercase px-2 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                                        Operational
+                                    </span>
+                                </div>
+                                <h3 class="text-xs font-bold text-slate-900 dark:text-white">Inquiries Gateway</h3>
+                                <p class="text-[11px] text-slate-400 mb-3">Contact Form Engine</p>
+                                <div class="flex items-center justify-between pt-2 border-t border-slate-200/50 dark:border-slate-800/60 text-[11px] font-mono">
+                                    <span class="text-slate-400">Latency:</span>
+                                    <span id="servicePing-api" class="font-bold text-emerald-600 dark:text-emerald-400">-- ms</span>
+                                </div>
+                            </div>
+
+                            <!-- Service 4: GitHub Deployment -->
+                            <div id="serviceCard-git" class="p-4 rounded-xl bg-slate-50/70 dark:bg-slate-900/50 border border-slate-200/70 dark:border-slate-800 transition hover:border-emerald-500/40">
+                                <div class="flex items-center justify-between mb-2">
+                                    <div class="w-8 h-8 rounded-xl bg-amber-500/10 text-amber-500 dark:text-amber-400 flex items-center justify-center text-sm font-bold">
+                                        <i class="fa-brands fa-github"></i>
+                                    </div>
+                                    <span id="serviceStatus-git" class="inline-flex items-center gap-1.5 text-[10px] font-mono uppercase px-2 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                                        Operational
+                                    </span>
+                                </div>
+                                <h3 class="text-xs font-bold text-slate-900 dark:text-white">GitHub Repo & Sync</h3>
+                                <p id="serviceGitBranch" class="text-[11px] text-slate-400 mb-3">Branch: master / live</p>
+                                <div class="flex items-center justify-between pt-2 border-t border-slate-200/50 dark:border-slate-800/60 text-[11px] font-mono">
+                                    <span class="text-slate-400">Status:</span>
+                                    <span id="servicePing-git" class="font-bold text-emerald-600 dark:text-emerald-400">Synced</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Profile Quick Status -->
                     <div class="glass-panel p-6 rounded-2xl anim-fade-up anim-delay-2">
                         <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-5 border-b border-slate-200/60 dark:border-slate-700/40">
@@ -2058,6 +2172,10 @@
             populateForm();
             fetchOnlineData();
             fetchMessages();
+            checkSystemHealth();
+            if (!systemHealthTimer) {
+                systemHealthTimer = setInterval(checkSystemHealth, 60000);
+            }
         }
 
         async function fetchOnlineData() {
@@ -2477,6 +2595,156 @@
                 link.click();
                 document.body.removeChild(link);
                 showToast('Messages exported to CSV successfully!');
+            });
+        }
+
+        // ===== LIVE SYSTEM STATUS & HEALTH MONITOR =====
+        let systemHealthTimer = null;
+        async function checkSystemHealth() {
+            const btn = document.getElementById('btnRefreshHealth');
+            const icon = btn?.querySelector('i');
+            if (icon) icon.classList.add('fa-spin');
+
+            const updateCard = (key, isOnline, pingMs, detailText = '') => {
+                const statusBadge = document.getElementById(`serviceStatus-${key}`);
+                const pingEl = document.getElementById(`servicePing-${key}`);
+                if (!statusBadge || !pingEl) return;
+
+                if (isOnline) {
+                    statusBadge.className = 'inline-flex items-center gap-1.5 text-[10px] font-mono uppercase px-2 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800';
+                    statusBadge.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Operational`;
+                    pingEl.className = 'font-bold text-emerald-600 dark:text-emerald-400';
+                    pingEl.textContent = detailText || `${Math.round(pingMs)} ms`;
+                } else {
+                    statusBadge.className = 'inline-flex items-center gap-1.5 text-[10px] font-mono uppercase px-2 py-0.5 rounded-full bg-rose-50 dark:bg-rose-950/60 text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-rose-800';
+                    statusBadge.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span> Degraded`;
+                    pingEl.className = 'font-bold text-rose-600 dark:text-rose-400';
+                    pingEl.textContent = detailText || 'Timeout';
+                }
+            };
+
+            const results = { web: false, db: false, api: false, git: false };
+
+            // 1. Check Live Portfolio Website (CDN / GitHub Pages)
+            try {
+                const t0 = performance.now();
+                await fetch(`https://saadmankhandker10.github.io/Saadman-Khandker-Portfolio-s-/?_ping=${Date.now()}`, {
+                    method: 'GET',
+                    mode: 'no-cors',
+                    cache: 'no-store'
+                });
+                const t1 = performance.now();
+                results.web = true;
+                updateCard('web', true, t1 - t0);
+            } catch (err) {
+                console.warn('System Monitor: Portfolio ping failed:', err);
+                updateCard('web', false, 0);
+            }
+
+            // 2. Check Supabase Cloud DB
+            try {
+                const t0 = performance.now();
+                const res = await fetch('https://oiruilsgqfqpmhradcrm.supabase.co/rest/v1/portfolio_content?id=eq.1&select=id', {
+                    headers: {
+                        'apikey': 'sb_publishable_eejxo50gMcgeLDFM91a70A_trAfjMPm'
+                    },
+                    cache: 'no-store'
+                });
+                const t1 = performance.now();
+                if (res.ok) {
+                    results.db = true;
+                    updateCard('db', true, t1 - t0);
+                } else {
+                    updateCard('db', false, 0, `HTTP ${res.status}`);
+                }
+            } catch (err) {
+                console.warn('System Monitor: Supabase DB ping failed:', err);
+                updateCard('db', false, 0);
+            }
+
+            // 3. Check Contact Form Gateway (Inquiries Table)
+            try {
+                const t0 = performance.now();
+                const res = await fetch('https://oiruilsgqfqpmhradcrm.supabase.co/rest/v1/contact_messages?select=id&limit=1', {
+                    headers: {
+                        'apikey': 'sb_publishable_eejxo50gMcgeLDFM91a70A_trAfjMPm'
+                    },
+                    cache: 'no-store'
+                });
+                const t1 = performance.now();
+                if (res.ok) {
+                    results.api = true;
+                    updateCard('api', true, t1 - t0);
+                } else {
+                    updateCard('api', false, 0, `HTTP ${res.status}`);
+                }
+            } catch (err) {
+                console.warn('System Monitor: Messages API ping failed:', err);
+                updateCard('api', false, 0);
+            }
+
+            // 4. Check GitHub Repository Deployment
+            try {
+                const t0 = performance.now();
+                const res = await fetch('https://api.github.com/repos/Saadmankhandker10/Saadman-Khandker-Portfolio-s-', {
+                    cache: 'no-store'
+                });
+                const t1 = performance.now();
+                if (res.ok) {
+                    const data = await res.json();
+                    results.git = true;
+                    const branchEl = document.getElementById('serviceGitBranch');
+                    if (branchEl && data.default_branch) {
+                        branchEl.textContent = `Branch: ${data.default_branch} / live`;
+                    }
+                    updateCard('git', true, t1 - t0, `${Math.round(t1 - t0)} ms`);
+                } else {
+                    updateCard('git', false, 0, `HTTP ${res.status}`);
+                }
+            } catch (err) {
+                console.warn('System Monitor: GitHub repo ping failed:', err);
+                updateCard('git', false, 0);
+            }
+
+            // Overall Status Summary & Top Badge Update
+            const allOnline = Object.values(results).every(Boolean);
+            const overallBadge = document.getElementById('overallHealthBadge');
+            const syncBadge = document.getElementById('syncStatusBadge');
+            const timeEl = document.getElementById('lastHealthCheckTime');
+
+            if (timeEl) {
+                const now = new Date();
+                timeEl.textContent = `Checked: ${now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}`;
+            }
+
+            if (overallBadge) {
+                if (allOnline) {
+                    overallBadge.className = 'inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800';
+                    overallBadge.innerHTML = `<span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span></span> All Systems Operational`;
+                } else {
+                    overallBadge.className = 'inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 border border-amber-200 dark:border-amber-800';
+                    overallBadge.innerHTML = `<span class="w-2 h-2 rounded-full bg-amber-500"></span> Degraded Service`;
+                }
+            }
+
+            if (syncBadge) {
+                if (results.db) {
+                    syncBadge.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-500 glow-dot animate-pulse"></span> Synced`;
+                } else {
+                    syncBadge.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span> DB Offline`;
+                }
+            }
+
+            if (icon) {
+                setTimeout(() => icon.classList.remove('fa-spin'), 600);
+            }
+        }
+
+        const refreshHealthBtn = document.getElementById('btnRefreshHealth');
+        if (refreshHealthBtn) {
+            refreshHealthBtn.addEventListener('click', () => {
+                checkSystemHealth();
+                showToast('Testing all system services...');
             });
         }
 </script>
