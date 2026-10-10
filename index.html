@@ -948,14 +948,17 @@
 
                 <!-- Actions: Theme Toggle -->
                 <div class="flex items-center gap-2">
-                    <button id="langBtn" type="button" aria-label="Change language">বাংলা</button>
+                    <button id="langBtn" type="button" aria-label="Change language" class="px-3 py-1.5 rounded-xl text-xs font-bold font-mono bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 hover:text-white transition flex items-center gap-1.5">
+                        <i class="fa-solid fa-globe text-brand-400"></i>
+                        <span>বাংলা</span>
+                    </button>
                     <button id="themeToggle" type="button" class="w-10 h-10 rounded-xl flex items-center justify-center bg-white/5 hover:bg-white/10 border border-white/10 text-slate-400 hover:text-white transition" title="Toggle Dark/Light Mode">
                         <i class="fa-solid fa-moon dark:hidden"></i>
                         <i class="fa-solid fa-sun hidden dark:inline text-amber-400"></i>
                     </button>
                     
                     <!-- Mobile Hamburger -->
-                    <button id="mobileMenuBtn" type="button" class="md:hidden w-10 h-10 rounded-xl flex items-center justify-center bg-white/5 border border-white/10 text-slate-300">
+                    <button id="mobileMenuBtn" type="button" aria-label="Toggle mobile menu" class="md:hidden w-10 h-10 rounded-xl flex items-center justify-center bg-white/5 border border-white/10 text-slate-300">
                         <i class="fa-solid fa-bars text-lg"></i>
                     </button>
                 </div>
@@ -1489,7 +1492,7 @@
             <div class="mt-12 text-center">
                 <div class="inline-flex flex-wrap items-center justify-center gap-3 p-2 px-5 rounded-2xl bg-white/5 border border-brand-500/30 backdrop-blur-xl">
                     <span class="text-xs sm:text-sm text-slate-300 font-medium">Ready to convert your files into clean documents?</span>
-                    <a href="https://wa.me/8801917726581?text=Hi%20Saadman,%20I%20have%20a%20document%20for%20typing%20and%20formatting!" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-4 py-1.5 rounded-xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 hover:bg-emerald-500/30 text-xs font-bold transition">
+                    <a href="https://wa.me/8801320399465?text=Hi%20Saadman,%20I%20have%20a%20document%20for%20typing%20and%20formatting!" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-4 py-1.5 rounded-xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 hover:bg-emerald-500/30 text-xs font-bold transition">
                         <i class="fa-brands fa-whatsapp text-sm"></i>
                         <span>Start on WhatsApp</span>
                     </a>
@@ -2039,10 +2042,10 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
             <div>
                 <p class="font-bold text-sm text-slate-200">Khandker Saadman Rafid Saad</p>
-                <p class="text-xs text-slate-400 mt-0.5">Â© <span id="year"></span> All Rights Reserved.</p>
+                <p class="text-xs text-slate-400 mt-0.5">&copy; <span id="year"></span> All Rights Reserved.</p>
             </div>
             <div class="flex items-center gap-6 text-xs font-mono text-slate-400">
-                <a href="#home" class="hover:text-brand-400 transition">Back to Top â†‘</a>
+                <a href="#home" class="hover:text-brand-400 transition inline-flex items-center gap-1">Back to Top <i class="fa-solid fa-arrow-up text-[10px]"></i></a>
             </div>
         </div>
     </footer>
@@ -2731,7 +2734,7 @@
                                 <i class="fa-solid fa-award"></i>
                             </div>
                             <h3 class="font-bold text-lg text-white">${escapeHTML(c.title)}</h3>
-                            <p class="text-sm text-slate-400">${escapeHTML(c.issuer || '')} â€¢ <span class="font-mono text-xs text-amber-400">${escapeHTML(c.date || '')}</span></p>
+                            <p class="text-sm text-slate-400">${escapeHTML(c.issuer || '')} &bull; <span class="font-mono text-xs text-amber-400">${escapeHTML(c.date || '')}</span></p>
                             ${c.link ? `<a class="inline-flex items-center gap-1.5 text-xs font-bold text-brand-400 hover:text-brand-300 pt-1" target="_blank" rel="noopener" href="${escapeHTML(c.link)}"><span>View Credential</span><i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i></a>` : ''}
                         </div>
                     `).join('');
@@ -3010,7 +3013,6 @@
         (function () {
             const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
             if (CERTIFICATES.length) {
-                document.getElementById('certificates') ; 
                 document.getElementById('certifications').classList.remove('hidden');
                 document.getElementById('certGrid').innerHTML = CERTIFICATES.map(c => '<div class="glass-card p-6 rounded-3xl space-y-2"><i class="fa-solid fa-award text-2xl text-amber-400"></i><h3 class="font-bold text-lg">' + esc(c.title) + '</h3><p class="text-sm text-slate-400">' + esc(c.issuer) + ' &middot; ' + esc(c.date) + '</p>' + (c.link ? '<a class="text-xs text-brand-400" target="_blank" rel="noopener" href="' + esc(c.link) + '">View certificate</a>' : '') + '</div>').join('');
             }
@@ -3097,7 +3099,7 @@
                     if (bn && dict[orig]) { store.set(el, orig); el.textContent = dict[orig]; }
                     else if (!bn && store.has(el)) el.textContent = store.get(el);
                 });
-                btn.textContent = bn ? 'English' : 'বাংলা';
+                btn.innerHTML = bn ? '<i class="fa-solid fa-globe text-brand-400"></i><span>English</span>' : '<i class="fa-solid fa-globe text-brand-400"></i><span>বাংলা</span>';
                 document.documentElement.lang = bn ? 'bn' : 'en';
             });
         })();
@@ -3462,7 +3464,7 @@
                 fetch('https://oiruilsgqfqpmhradcrm.supabase.co/rest/v1/contact_messages', {
                     method: 'POST',
                     headers: {
-                        'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9pcnVpbHNncWZxcG1ocmFkY3JtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDEyMDI2MDIsImV4cCI6MjA1Njc3ODYwMn0.6b9qVd8Nn1X8Hq4y2a4Z1xX5fPqK4r8p3v5X9w0Y3Z4',
+                        'apikey': 'sb_publishable_eejxo50gMcgeLDFM91a70A_trAfjMPm',
                         'Content-Type': 'application/json',
                         'Prefer': 'return=minimal'
                     },

@@ -594,7 +594,7 @@
                 </button>
                         <button type="button" data-tab="certifications" class="tab-btn flex items-center justify-between w-full px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-600 dark:text-slate-300">
             <div class="flex items-center gap-3"><i class="fa-solid fa-award w-4 text-slate-400"></i><span>Certifications</span></div>
-            <span id="mobileSidebarCertBadge" class="text-[11px] font-mono px-2 py-0.5 rounded-full bg-amber-100 dark:bg-amber-950 text-amber-600 dark:text-amber-400">0</span>
+            <span id="sidebarCertBadge" class="text-[11px] font-mono px-2 py-0.5 rounded-full bg-amber-100 dark:bg-amber-950 text-amber-600 dark:text-amber-400">0</span>
         </button>
         <button type="button" data-tab="skills" class="tab-btn flex items-center justify-between w-full px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-600 dark:text-slate-300">
                     <div class="flex items-center gap-3">
@@ -896,11 +896,19 @@
                         </div>
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <div class="sm:col-span-2">
+                            <div>
                                 <label for="inputEmail" class="block text-xs font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400 mb-2">Primary Email Address</label>
                                 <div class="relative">
                                     <i class="fa-solid fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-rose-400 text-sm"></i>
                                     <input id="inputEmail" type="email" class="admin-input w-full pl-11 pr-4 py-3 rounded-xl text-sm dark:text-white">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label for="inputWhatsapp" class="block text-xs font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400 mb-2">WhatsApp Number</label>
+                                <div class="relative">
+                                    <i class="fa-brands fa-whatsapp absolute left-4 top-1/2 -translate-y-1/2 text-emerald-500 text-sm"></i>
+                                    <input id="inputWhatsapp" type="tel" placeholder="8801320399465" class="admin-input w-full pl-11 pr-4 py-3 rounded-xl text-sm dark:text-white font-mono">
                                 </div>
                             </div>
 
@@ -2370,8 +2378,8 @@
                         </div>
                     </div>
                     <h4 class="font-bold text-xs text-slate-900 dark:text-white line-clamp-2">${escapeHtml(c.title)}</h4>
-                    <p class="text-[11px] text-slate-500 dark:text-slate-400">${escapeHtml(c.issuer || '')} â€¢ ${escapeHtml(c.date || '')}</p>
-                    ${c.link ? `<a href="${escapeHtml(c.link)}" target="_blank" class="inline-block text-[10px] text-brand-500 hover:underline">View Link â†’</a>` : ''}
+                    <p class="text-[11px] text-slate-500 dark:text-slate-400">${escapeHtml(c.issuer || '')} &bull; ${escapeHtml(c.date || '')}</p>
+                    ${c.link ? `<a href="${escapeHtml(c.link)}" target="_blank" class="inline-block text-[10px] text-brand-500 hover:underline">View Link &rarr;</a>` : ''}
                 </div>
             `).join('');
         }
