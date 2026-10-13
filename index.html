@@ -959,6 +959,7 @@
                     <a href="#projects" class="px-3.5 py-1.5 rounded-full text-xs font-semibold hover:text-brand-400 hover:bg-white/5 transition">Projects</a>
                     <a href="#skills" class="px-3.5 py-1.5 rounded-full text-xs font-semibold hover:text-brand-400 hover:bg-white/5 transition">Skills</a>
                     <a href="#contact" class="px-3.5 py-1.5 rounded-full text-xs font-semibold hover:text-brand-400 hover:bg-white/5 transition">Contact</a>
+                    <a id="navResumeLink" href="#" target="_blank" rel="noopener" class="hidden px-3.5 py-1.5 rounded-full text-xs font-semibold text-rose-300 border border-rose-500/30 bg-rose-500/10 hover:bg-rose-500/20 transition flex items-center gap-1.5"><i class="fa-solid fa-file-pdf text-[10px]"></i><span>Resume</span></a>
                 </nav>
 
                 <!-- Actions: Theme Toggle -->
@@ -992,6 +993,7 @@
             <a href="#projects" class="block px-4 py-2.5 rounded-xl text-sm font-semibold hover:bg-brand-500/10 hover:text-brand-400 transition flex items-center gap-2.5"><i class="fa-solid fa-laptop-code text-xs text-emerald-400 w-4"></i><span>Projects</span></a>
             <a href="#skills" class="block px-4 py-2.5 rounded-xl text-sm font-semibold hover:bg-brand-500/10 hover:text-brand-400 transition flex items-center gap-2.5"><i class="fa-solid fa-wand-magic-sparkles text-xs text-amber-400 w-4"></i><span>Skills</span></a>
             <a href="#contact" class="block px-4 py-2.5 rounded-xl text-sm font-semibold hover:bg-brand-500/10 hover:text-brand-400 transition flex items-center gap-2.5"><i class="fa-solid fa-envelope text-xs text-rose-400 w-4"></i><span>Contact</span></a>
+            <a id="mobileResumeLink" href="#" target="_blank" rel="noopener" class="hidden px-4 py-2.5 rounded-xl text-sm font-semibold text-rose-300 hover:bg-rose-500/10 transition flex items-center gap-2.5"><i class="fa-solid fa-file-pdf text-xs text-rose-400 w-4"></i><span>Download Resume</span></a>
         </div>
     </header>
 
@@ -1057,9 +1059,10 @@
                         <span>View Work</span>
                         <i class="fa-solid fa-layer-group text-xs text-brand-400"></i>
                     </a>
-                    <a id="resumeLink" href="#" target="_blank" rel="noopener" class="hidden inline-flex items-center gap-2 px-6 py-3.5 rounded-2xl text-sm font-semibold bg-rose-500/10 border border-rose-500/30 text-rose-400 hover:bg-rose-500/20 transition">
-                        <i class="fa-solid fa-file-pdf"></i>
-                        <span>Resume</span>
+                    <a id="resumeLink" href="#" target="_blank" rel="noopener" class="hidden inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl text-sm font-bold bg-rose-500/10 border border-rose-500/30 text-rose-300 hover:bg-rose-500/20 hover:scale-[1.02] shadow-lg shadow-rose-500/10 transition group">
+                        <i class="fa-solid fa-file-pdf text-rose-400 group-hover:scale-110 transition-transform"></i>
+                        <span>Download Resume</span>
+                        <i class="fa-solid fa-arrow-down text-xs text-rose-400/80"></i>
                     </a>
                 </div>
 
@@ -2114,19 +2117,31 @@
                     <!-- Contact Form Area -->
                     <div>
                         <form id="contactForm" class="space-y-4">
+                            <!-- Anti-Spam Honeypot (invisible to humans) -->
+                            <input type="text" name="_website_honey" id="contactHoneypot" style="display:none !important;" tabindex="-1" autocomplete="off" aria-hidden="true">
+
                             <div>
                                 <label for="name" class="block text-xs font-bold uppercase tracking-widest text-slate-400 mb-2 font-mono">Your Name</label>
                                 <input type="text" id="name" required placeholder="Enter your full name" class="glass-input text-sm">
                             </div>
                             <div>
-                                <label for="email" class="block text-xs font-bold uppercase tracking-widest text-slate-400 mb-2 font-mono">Email Address</label>
-                                <input type="email" id="email" required placeholder="name@domain.com" class="glass-input text-sm">
+                                <div class="flex items-center justify-between mb-2">
+                                    <label for="email" class="block text-xs font-bold uppercase tracking-widest text-slate-400 font-mono">Email Address</label>
+                                    <span id="emailStatusText" class="text-[10px] font-mono text-slate-400 hidden"></span>
+                                </div>
+                                <div class="relative">
+                                    <input type="email" id="email" required placeholder="name@domain.com" class="glass-input text-sm pr-9">
+                                    <span id="emailValidationIcon" class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-xs"></span>
+                                </div>
                             </div>
                             <div>
-                                <label for="message" class="block text-xs font-bold uppercase tracking-widest text-slate-400 mb-2 font-mono">Message</label>
-                                <textarea id="message" rows="4" required placeholder="How can I help you today?" class="glass-input text-sm resize-none"></textarea>
+                                <div class="flex items-center justify-between mb-2">
+                                    <label for="message" class="block text-xs font-bold uppercase tracking-widest text-slate-400 font-mono">Message</label>
+                                    <span id="msgCharCounter" class="text-[10px] font-mono text-slate-400">0 / 1000</span>
+                                </div>
+                                <textarea id="message" rows="4" maxlength="1000" required placeholder="How can I help you today? (Minimum 10 characters)" class="glass-input text-sm resize-none"></textarea>
                             </div>
-                            <button type="submit" class="btn-gradient w-full py-3.5 px-6 rounded-2xl text-sm font-bold text-white flex items-center justify-center gap-2">
+                            <button type="submit" id="contactSubmitBtn" class="btn-gradient w-full py-3.5 px-6 rounded-2xl text-sm font-bold text-white flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-brand-500/20 hover:shadow-brand-500/35 transition">
                                 <span>Send Message</span>
                                 <i class="fa-solid fa-paper-plane text-xs"></i>
                             </button>
@@ -2847,9 +2862,13 @@
                 }
             });
             if (data.resumeUrl) {
-                const resLink = document.getElementById('resumeLink');
-                resLink.href = data.resumeUrl;
-                resLink.classList.remove('hidden');
+                ['resumeLink', 'navResumeLink', 'mobileResumeLink'].forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) {
+                        el.href = data.resumeUrl;
+                        el.classList.remove('hidden');
+                    }
+                });
             }
 
             if (Array.isArray(data.projects) && data.projects.length) {
@@ -2940,20 +2959,96 @@
         // Auto rotate slides every 5 seconds
         setInterval(() => showBdrcsSlide(currentBdrcsSlide + 1), 5000);
 
-        // Form Submit Handler
+        // Form Submit Handler & Live Validation
         const contactForm = document.getElementById('contactForm');
         const successMessage = document.getElementById('successMessage');
+        const contactEmailInput = document.getElementById('email');
+        const contactMsgInput = document.getElementById('message');
+        const msgCharCounter = document.getElementById('msgCharCounter');
+        const emailValidationIcon = document.getElementById('emailValidationIcon');
+        const emailStatusText = document.getElementById('emailStatusText');
+        let lastSubmissionTime = 0;
+
+        // Live Character Counter
+        if (contactMsgInput && msgCharCounter) {
+            contactMsgInput.addEventListener('input', () => {
+                const len = contactMsgInput.value.length;
+                msgCharCounter.textContent = `${len} / 1000`;
+                if (len >= 950) {
+                    msgCharCounter.className = 'text-[10px] font-mono text-rose-400 font-bold';
+                } else if (len >= 10) {
+                    msgCharCounter.className = 'text-[10px] font-mono text-emerald-400';
+                } else {
+                    msgCharCounter.className = 'text-[10px] font-mono text-slate-400';
+                }
+            });
+        }
+
+        // Live Email Validation
+        if (contactEmailInput && emailValidationIcon) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+            contactEmailInput.addEventListener('input', () => {
+                const val = contactEmailInput.value.trim();
+                if (!val) {
+                    emailValidationIcon.classList.add('hidden');
+                    if (emailStatusText) emailStatusText.classList.add('hidden');
+                    return;
+                }
+                if (emailRegex.test(val)) {
+                    emailValidationIcon.className = 'absolute right-3 top-1/2 -translate-y-1/2 text-xs text-emerald-400 fa-solid fa-circle-check';
+                    emailValidationIcon.classList.remove('hidden');
+                    if (emailStatusText) {
+                        emailStatusText.textContent = 'Valid Email ✓';
+                        emailStatusText.className = 'text-[10px] font-mono text-emerald-400 font-semibold';
+                        emailStatusText.classList.remove('hidden');
+                    }
+                } else {
+                    emailValidationIcon.className = 'absolute right-3 top-1/2 -translate-y-1/2 text-xs text-amber-400 fa-solid fa-circle-exclamation';
+                    emailValidationIcon.classList.remove('hidden');
+                    if (emailStatusText) {
+                        emailStatusText.textContent = 'Enter valid address';
+                        emailStatusText.className = 'text-[10px] font-mono text-amber-400';
+                        emailStatusText.classList.remove('hidden');
+                    }
+                }
+            });
+        }
 
         contactForm.addEventListener('submit', async function(e) {
             e.preventDefault();
-            const submitBtn = this.querySelector('button[type="submit"]');
-            const originalHTML = submitBtn.innerHTML;
-            submitBtn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i><span>Sending...</span>`;
-            submitBtn.disabled = true;
+
+            // 1. Anti-Spam Honeypot check
+            const honeypot = document.getElementById('contactHoneypot');
+            if (honeypot && honeypot.value) {
+                // Silently pretend success to fool bots
+                contactForm.reset();
+                contactForm.classList.add('hidden');
+                successMessage.classList.remove('hidden');
+                return;
+            }
+
+            // 2. Anti-Spam Rate Limiting (15s cooldown)
+            const now = Date.now();
+            if (now - lastSubmissionTime < 15000) {
+                const remaining = Math.ceil((15000 - (now - lastSubmissionTime)) / 1000);
+                alert(`Please wait ${remaining} seconds before sending another message.`);
+                return;
+            }
 
             const nameVal = document.getElementById('name').value.trim();
-            const emailVal = document.getElementById('email').value.trim();
-            const msgVal = document.getElementById('message').value.trim();
+            const emailVal = contactEmailInput.value.trim();
+            const msgVal = contactMsgInput.value.trim();
+
+            if (msgVal.length < 10) {
+                alert('Please provide a message with at least 10 characters.');
+                contactMsgInput.focus();
+                return;
+            }
+
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalHTML = submitBtn.innerHTML;
+            submitBtn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i><span>Sending Securely...</span>`;
+            submitBtn.disabled = true;
 
             const payload = { name: nameVal, email: emailVal, message: msgVal };
 
@@ -2983,7 +3078,12 @@
                 const ok = results.some(r => r.status === 'fulfilled' && r.value.ok);
                 if (!ok) throw new Error('Submission failed');
 
+                lastSubmissionTime = Date.now();
                 contactForm.reset();
+                if (msgCharCounter) msgCharCounter.textContent = '0 / 1000';
+                if (emailValidationIcon) emailValidationIcon.classList.add('hidden');
+                if (emailStatusText) emailStatusText.classList.add('hidden');
+
                 contactForm.classList.add('hidden');
                 successMessage.classList.remove('hidden');
 
@@ -2992,7 +3092,7 @@
                     contactForm.classList.remove('hidden');
                     submitBtn.innerHTML = originalHTML;
                     submitBtn.disabled = false;
-                }, 5000);
+                }, 6000);
             } catch (err) {
                 alert('Could not send message. Please send an email directly to gamerhindi571@gmail.com.');
                 submitBtn.innerHTML = originalHTML;

@@ -911,7 +911,11 @@
                                         <i class="fa-solid fa-external-link-alt text-[10px]"></i>
                                         <span>Preview current resume</span>
                                     </a>
-                                    <p class="text-[11px] text-slate-400">PDF format (max 10 MB)</p>
+                                    <div class="pt-2">
+                                        <label class="block text-[11px] font-medium text-slate-500 dark:text-slate-400 mb-1">Or direct Resume link (Google Drive / PDF URL):</label>
+                                        <input id="inputResumeUrl" type="url" placeholder="https://drive.google.com/..." class="form-input text-xs py-2 px-3 rounded-xl w-full bg-white dark:bg-dark-800 border border-slate-200 dark:border-slate-700">
+                                    </div>
+                                    <p class="text-[11px] text-slate-400">PDF format or public cloud URL</p>
                                 </div>
                             </div>
                         </div>
@@ -1074,6 +1078,10 @@
                                 <p class="text-xs text-slate-500 dark:text-slate-400 mt-3">Direct inquiries received via your contact form</p>
                             </div>
                             <div class="flex items-center gap-2">
+                                <button type="button" id="toggleSoundBtn" class="inline-flex items-center gap-1.5 px-3 py-2.5 text-xs font-semibold rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-dark-800 dark:hover:bg-dark-700 text-slate-700 dark:text-slate-200 border border-slate-200/60 dark:border-slate-700/40 transition cursor-pointer" title="Notification sound alert (Click to test)">
+                                    <i id="soundIcon" class="fa-solid fa-bell text-brand-500"></i>
+                                    <span class="hidden sm:inline" id="soundLabel">Sound Alert</span>
+                                </button>
                                 <button type="button" id="exportMessagesBtn" class="inline-flex items-center gap-2 px-4 py-2.5 text-xs font-semibold rounded-xl bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800/40 hover:bg-emerald-100 transition">
                                     <i class="fa-solid fa-file-csv"></i>
                                     <span>Export CSV</span>
@@ -1502,6 +1510,9 @@
                 document.getElementById('overviewAvatar').src = state.profileImage;
                 document.getElementById('formProfileImagePreview').src = state.profileImage;
             }
+
+            const resumeUrlIn = document.getElementById('inputResumeUrl');
+            if (resumeUrlIn) resumeUrlIn.value = state.resumeUrl || '';
 
             if (state.resumeUrl) {
                 const previewLink = document.getElementById('formResumePreviewLink');
@@ -2023,6 +2034,11 @@
             state.facebook = document.getElementById('inputFacebook').value.trim();
             state.instagram = document.getElementById('inputInstagram').value.trim();
 
+            const resumeUrlIn = document.getElementById('inputResumeUrl');
+            if (resumeUrlIn && resumeUrlIn.value.trim()) {
+                state.resumeUrl = resumeUrlIn.value.trim();
+            }
+
             ['linkedin', 'github', 'facebook', 'instagram'].forEach(net => {
                 if (state[net] && !/^https?:\/\//i.test(state[net])) {
                     state[net] = `https://${state[net]}`;
@@ -2063,6 +2079,50 @@
         }
         document.getElementById('topSaveBtn').addEventListener('click', saveAllData);
 
+        let soundAlertsEnabled = localStorage.getItem('soundAlertsEnabled') !== 'false';
+        let previousMessageCount = null;
+
+        function playNotificationChime() {
+            if (!soundAlertsEnabled) return;
+            try {
+                const AudioCtx = window.AudioContext || window.webkitAudioContext;
+                if (!AudioCtx) return;
+                const ctx = new AudioCtx();
+                const now = ctx.currentTime;
+                
+                const osc1 = ctx.createOscillator();
+                const gain1 = ctx.createGain();
+                osc1.type = 'sine';
+                osc1.frequency.setValueAtTime(659.25, now);
+                gain1.gain.setValueAtTime(0.12, now);
+                gain1.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+                osc1.connect(gain1);
+                gain1.connect(ctx.destination);
+                osc1.start(now);
+                osc1.stop(now + 0.35);
+
+                const osc2 = ctx.createOscillator();
+                const gain2 = ctx.createGain();
+                osc2.type = 'sine';
+                osc2.frequency.setValueAtTime(987.77, now + 0.12);
+                gain2.gain.setValueAtTime(0.14, now + 0.12);
+                gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.5);
+                osc2.connect(gain2);
+                gain2.connect(ctx.destination);
+                osc2.start(now + 0.12);
+                osc2.stop(now + 0.5);
+            } catch (e) {}
+        }
+
+        function createGmailReplyUrl(name, email, message) {
+            const clientName = name || 'there';
+            const clientEmail = email || '';
+            const msgQuote = (message || '').trim();
+            const subject = encodeURIComponent(`Re: Inquiry from ${clientName} on Saadman's Portfolio`);
+            const body = encodeURIComponent(`Hi ${clientName},\n\nThank you for reaching out through my website!\n\nRegarding your inquiry:\n"${msgQuote}"\n\nI would be delighted to assist you with this project. When would be a convenient time to discuss the details?\n\n--\nBest regards,\nSaadman Khandker\nOperations & Digital Content Specialist\nWhatsApp: +880 1320-399465`);
+            return `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(clientEmail)}&su=${subject}&body=${body}`;
+        }
+
         // Fetch Messages
         async function fetchMessages() {
             const container = document.getElementById('messagesContainer');
@@ -2079,6 +2139,12 @@
 
                 messages = data || [];
                 updateMetrics();
+
+                if (previousMessageCount !== null && messages.length > previousMessageCount) {
+                    playNotificationChime();
+                    showToast('🔔 New client message received in inbox!', 'info');
+                }
+                previousMessageCount = messages.length;
 
                 if (!messages.length) {
                     container.innerHTML = `<div class="empty-state p-10 text-center rounded-2xl"><i class="fa-solid fa-inbox text-3xl text-slate-300 dark:text-slate-600 mb-3 block"></i><p class="text-sm text-slate-400 font-medium">No messages yet.</p><p class="text-xs text-slate-300 dark:text-slate-600 mt-1">Messages from your contact form will appear here.</p></div>`;
@@ -2101,9 +2167,13 @@
                                     </a>
                                 </div>
                             </div>
-                            <div class="flex items-center gap-3">
+                            <div class="flex flex-wrap items-center gap-2">
+                                <a href="${createGmailReplyUrl(msg.name, msg.email, msg.message)}" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold bg-rose-50 dark:bg-rose-950/40 text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-rose-900/40 hover:bg-rose-100 dark:hover:bg-rose-900/60 transition cursor-pointer" title="Reply to ${escapeHtml(msg.name)} via Gmail">
+                                    <i class="fa-brands fa-google text-xs"></i>
+                                    <span>Reply via Gmail</span>
+                                </a>
                                 <time class="text-[11px] font-mono text-slate-400 bg-slate-100 dark:bg-dark-800 px-2.5 py-1 rounded-lg">${new Date(msg.created_at).toLocaleString()}</time>
-                                <button type="button" onclick="deleteMessage(${msg.id})" class="p-2 text-slate-400 hover:text-rose-500 rounded-xl hover:bg-rose-50 dark:hover:bg-rose-950/30 border border-transparent hover:border-rose-200 dark:hover:border-rose-900/40 transition" title="Delete">
+                                <button type="button" onclick="deleteMessage(${msg.id})" class="p-2 text-slate-400 hover:text-rose-500 rounded-xl hover:bg-rose-50 dark:hover:bg-rose-950/30 border border-transparent hover:border-rose-200 dark:hover:border-rose-900/40 transition cursor-pointer" title="Delete">
                                     <i class="fa-solid fa-trash-can text-xs"></i>
                                 </button>
                             </div>
@@ -2125,7 +2195,12 @@
                                 <p class="text-slate-500 dark:text-slate-400 truncate mt-0.5">${escapeHtml(msg.message)}</p>
                             </div>
                         </div>
-                        <time class="text-[10px] text-slate-400 flex-shrink-0 font-mono bg-slate-100 dark:bg-dark-800 px-2 py-0.5 rounded-lg">${new Date(msg.created_at).toLocaleDateString()}</time>
+                        <div class="flex items-center gap-2 flex-shrink-0">
+                            <a href="${createGmailReplyUrl(msg.name, msg.email, msg.message)}" target="_blank" rel="noopener" class="p-1.5 text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/30 rounded-lg transition" title="Reply via Gmail">
+                                <i class="fa-brands fa-google text-xs"></i>
+                            </a>
+                            <time class="text-[10px] text-slate-400 font-mono bg-slate-100 dark:bg-dark-800 px-2 py-0.5 rounded-lg">${new Date(msg.created_at).toLocaleDateString()}</time>
+                        </div>
                     </div>
                 `).join('');
             } catch (err) {
@@ -2137,6 +2212,33 @@
             fetchMessages();
             showToast('Messages refreshed.');
         });
+
+        const toggleSoundBtn = document.getElementById('toggleSoundBtn');
+        if (toggleSoundBtn) {
+            const updateSoundUI = () => {
+                const icon = document.getElementById('soundIcon');
+                const label = document.getElementById('soundLabel');
+                if (soundAlertsEnabled) {
+                    if (icon) icon.className = 'fa-solid fa-bell text-brand-500';
+                    if (label) label.textContent = 'Sound On';
+                } else {
+                    if (icon) icon.className = 'fa-solid fa-bell-slash text-slate-400';
+                    if (label) label.textContent = 'Sound Muted';
+                }
+            };
+            updateSoundUI();
+            toggleSoundBtn.addEventListener('click', () => {
+                soundAlertsEnabled = !soundAlertsEnabled;
+                localStorage.setItem('soundAlertsEnabled', String(soundAlertsEnabled));
+                updateSoundUI();
+                if (soundAlertsEnabled) {
+                    playNotificationChime();
+                    showToast('Sound alert activated! 🔔');
+                } else {
+                    showToast('Sound alert muted 🔕');
+                }
+            });
+        }
 
         window.deleteMessage = async function(id) {
             if (!confirm('Are you sure you want to delete this message?')) return;
