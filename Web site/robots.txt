@@ -1,5 +1,0 @@
-User-agent: *
-Allow: /
-Disallow: /saadman_khandker.html
-
-Sitemap: https://saadmankhandker.netlify.app/sitemap.xml
