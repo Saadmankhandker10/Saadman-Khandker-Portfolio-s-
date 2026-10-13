@@ -387,7 +387,7 @@
         <p class="px-3 pt-3 pb-1 text-[10px] font-bold uppercase tracking-widest text-slate-400 font-mono">System</p>
         <button type="button" data-tab="blog" class="tab-btn flex items-center justify-between w-full px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-600 dark:text-slate-300">
             <div class="flex items-center gap-3"><i class="fa-solid fa-newspaper w-4 text-slate-400"></i><span>Blog / Updates</span></div>
-            <span id="blogBadge" class="text-[11px] font-mono px-2 py-0.5 rounded-full bg-pink-100 dark:bg-pink-950/60 text-pink-600 dark:text-pink-400 font-bold">0</span>
+            <span id="mobileSidebarBlogBadge" class="text-[11px] font-mono px-2 py-0.5 rounded-full bg-pink-100 dark:bg-pink-950/60 text-pink-600 dark:text-pink-400 font-bold">0</span>
         </button>
         <button type="button" data-tab="stats" class="tab-btn flex items-center gap-3 w-full px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-600 dark:text-slate-300">
             <i class="fa-solid fa-chart-line w-4 text-slate-400"></i><span>Site Stats</span>
@@ -622,7 +622,7 @@
                 <p class="px-3 pt-3 pb-1 text-[10px] font-bold uppercase tracking-widest text-slate-400 font-mono">System</p>
                 <button type="button" data-tab="blog" class="tab-btn flex items-center justify-between w-full px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-600 dark:text-slate-300">
             <div class="flex items-center gap-3"><i class="fa-solid fa-newspaper w-4 text-slate-400"></i><span>Blog / Updates</span></div>
-            <span id="blogBadge" class="text-[11px] font-mono px-2 py-0.5 rounded-full bg-pink-100 dark:bg-pink-950/60 text-pink-600 dark:text-pink-400 font-bold">0</span>
+            <span id="sidebarBlogBadge" class="text-[11px] font-mono px-2 py-0.5 rounded-full bg-pink-100 dark:bg-pink-950/60 text-pink-600 dark:text-pink-400 font-bold">0</span>
         </button>
         <button type="button" data-tab="stats" class="tab-btn flex items-center gap-3 w-full px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-600 dark:text-slate-300">
             <i class="fa-solid fa-chart-line w-4 text-slate-400"></i><span>Site Stats</span>
@@ -1073,15 +1073,16 @@
                                 <h2 class="text-lg font-bold text-slate-900 dark:text-white section-heading">Messages Inbox</h2>
                                 <p class="text-xs text-slate-500 dark:text-slate-400 mt-3">Direct inquiries received via your contact form</p>
                             </div>
-                                                        <div class="flex items-center gap-2">
+                            <div class="flex items-center gap-2">
                                 <button type="button" id="exportMessagesBtn" class="inline-flex items-center gap-2 px-4 py-2.5 text-xs font-semibold rounded-xl bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800/40 hover:bg-emerald-100 transition">
                                     <i class="fa-solid fa-file-csv"></i>
                                     <span>Export CSV</span>
                                 </button>
                                 <button type="button" id="refreshMessagesBtn" class="inline-flex items-center gap-2 px-4 py-2.5 text-xs font-semibold rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-dark-800 dark:hover:bg-dark-700 text-slate-700 dark:text-slate-200 border border-slate-200/60 dark:border-slate-700/40 transition">
-                                <i class="fa-solid fa-arrows-rotate"></i>
-                                <span>Refresh</span>
-                            </button>
+                                    <i class="fa-solid fa-arrows-rotate"></i>
+                                    <span>Refresh</span>
+                                </button>
+                            </div>
                         </div>
                         <div id="messagesContainer" class="space-y-3">
                             <p class="text-xs text-slate-400 flex items-center gap-2"><i class="fa-solid fa-circle-notch animate-spin"></i> Loading inbox...</p>
@@ -2228,7 +2229,10 @@
         function renderBlogAdmin() {
             const list = document.getElementById('blogList'); if (!list) return;
             const posts = state.blog || [];
-            document.getElementById('blogBadge').textContent = posts.length;
+            const badgeM = document.getElementById('mobileSidebarBlogBadge');
+            const badgeD = document.getElementById('sidebarBlogBadge');
+            if (badgeM) badgeM.textContent = posts.length;
+            if (badgeD) badgeD.textContent = posts.length;
             if (!posts.length) { list.innerHTML = '<div class="empty-state p-8 text-center rounded-2xl text-sm text-slate-400">No posts yet.</div>'; return; }
             list.innerHTML = posts.map((p, i) => `
                 <div class="glass-panel p-5 rounded-2xl flex items-start justify-between gap-4">
