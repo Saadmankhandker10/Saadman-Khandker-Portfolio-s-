@@ -6,7 +6,7 @@
     <title>Saadman Khandker | Bangla &amp; English Typing Service, Portfolio</title>
     <meta name="description" content="Saadman Khandker (Khandker Saadman Rafid) - professional Bangla &amp; English typing service in Dhaka, Bangladesh. 65+ WPM, 99.9% accuracy, scanned PDF/handwriting to Word, document retyping and presentation design. বাংলা টাইপিং সার্ভিস.">
     <meta name="keywords" content="Saadman Khandker, Khandker Saadman Rafid, Saadman Rafid, Saadman Khandker Portfolio, bangla typing service, bangla typist, english typing service, typing service bangladesh, typing service dhaka, বাংলা টাইপিং, pdf to word bangla, freelance typist, document retyping, scanned pdf to word, presentation design, bdrcs volunteer, Dhaka Bangladesh">
-    <meta name="theme-color" content="#050817">
+    <meta name="theme-color" content="#060913">
     <meta name="author" content="Khandker Saadman Rafid Saad">
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
     <link rel="canonical" href="https://saadmankhandker10.github.io/Saadman-Khandker-Portfolio-s-/">
@@ -141,7 +141,7 @@
                             700: '#4338ca',
                         },
                         dark: {
-                            950: '#050817',
+                            950: '#060913',
                             900: '#0b0f19',
                             800: '#111827',
                             700: '#1f2937',
@@ -167,7 +167,7 @@
 
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: #050817;
+            background-color: #060913;
             color: #f1f5f9;
             overflow-x: hidden;
             width: 100%;
@@ -833,7 +833,7 @@
             background: rgba(15, 23, 42, 0.65);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 18px;
             overflow: hidden;
         }
@@ -852,14 +852,16 @@
             z-index: 1;
         }
 
-        /* Pop inner icons & headings forward on the Z-axis */
+        /* Pop inner icons, headings & typography forward on the Z-axis */
         .pro-3d-card h3,
         .pro-3d-card span,
-        .pro-3d-card i {
-            transform: translateZ(28px);
+        .pro-3d-card i,
+        .pro-3d-card p,
+        .pro-3d-card .neon-service-tag {
+            transform: translateZ(30px);
         }
         #bgParticles { position:fixed; inset:0; z-index:0; pointer-events:none; }
-        #pageLoader { position:fixed; inset:0; z-index:100000; background:#050817; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:18px; transition:opacity .6s ease, visibility .6s ease; }
+        #pageLoader { position:fixed; inset:0; z-index:100000; background:#060913; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:18px; transition:opacity .6s ease, visibility .6s ease; }
         #pageLoader.done { opacity:0; visibility:hidden; }
         .loader-hello { font-size:.8rem; letter-spacing:.35em; text-transform:uppercase; color:#94a3b8; animation:loaderFade 1s ease both; }
         .loader-tag { font-size:.9rem; color:#c7d2fe; text-shadow:0 0 10px rgba(129,140,248,.8); letter-spacing:.08em; text-align:center; padding:0 20px; animation:loaderFade 1.4s ease .4s both; }
@@ -1220,20 +1222,20 @@
             <div class="lg:w-5/12 flex justify-center">
                 <div class="neon-border-box group">
                     <!-- Image Card with Neon Frame & Holographic Shimmer -->
-                    <div class="relative w-72 sm:w-80 aspect-[3/4] rounded-3xl overflow-hidden border-2 border-indigo-500/40 bg-dark-900 shadow-2xl z-10 holo-card">
+                    <div class="relative w-72 sm:w-80 aspect-[3/4] rounded-3xl overflow-hidden border-2 border-indigo-500/40 bg-dark-900 shadow-2xl z-10 holo-card pro-3d-card">
                         <img id="profileImage" src="./public/img.jpg" alt="Khandker Saadman Rafid" fetchpriority="high" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
                         <div class="holo-shimmer"></div>
                         <div class="cyber-scanline"></div>
                         <div class="absolute inset-0 bg-gradient-to-t from-dark-950/85 via-transparent to-transparent"></div>
                         
                         <!-- Floating Location & Live Status Pill -->
-                        <div class="absolute bottom-4 inset-x-4 p-3 rounded-2xl bg-dark-900/85 backdrop-blur-md border border-indigo-500/30 flex items-center justify-between shadow-lg">
+                        <div class="absolute bottom-4 inset-x-4 p-3 rounded-2xl bg-dark-950/90 backdrop-blur-md border border-emerald-500/40 flex items-center justify-between shadow-xl">
                             <div>
                                 <span class="block text-xs font-bold text-white flex items-center gap-1.5">
-                                    <span class="w-2 h-2 rounded-full bg-indigo-400"></span>
+                                    <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
                                     Saadman Rafid
                                 </span>
-                                <span class="block text-[11px] text-slate-400 mt-0.5">Dhaka, Bangladesh</span>
+                                <span class="block text-[11px] text-slate-300 font-medium mt-0.5">Dhaka, BD &bull; <span class="text-emerald-400 font-bold">LIVE</span> &bull; Response &lt; 30m</span>
                             </div>
                             <span class="w-3 h-3 rounded-full bg-emerald-400 ring-4 ring-emerald-500/30 animate-pulse"></span>
                         </div>
@@ -1292,7 +1294,7 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="glass-card p-7 rounded-3xl space-y-4 group">
+                <div class="glass-card pro-3d-card p-7 rounded-3xl space-y-4 group">
                     <div class="w-12 h-12 rounded-2xl bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 flex items-center justify-center text-xl group-hover:scale-110 group-hover:bg-indigo-500 group-hover:text-white transition-all">
                         <i class="fa-solid fa-globe"></i>
                     </div>
@@ -1308,7 +1310,7 @@
                     </div>
                 </div>
 
-                <div class="glass-card p-7 rounded-3xl space-y-4 group">
+                <div class="glass-card pro-3d-card p-7 rounded-3xl space-y-4 group">
                     <div class="w-12 h-12 rounded-2xl bg-purple-500/10 border border-purple-500/30 text-purple-400 flex items-center justify-center text-xl group-hover:scale-110 group-hover:bg-purple-500 group-hover:text-white transition-all">
                         <i class="fa-solid fa-boxes-stacked"></i>
                     </div>
@@ -1319,7 +1321,7 @@
                     <div class="pt-3"><span class="neon-service-tag neon-purple"><span>Meena Bazar & Agora proven</span><i class="fa-solid fa-arrow-right"></i></span></div>
                 </div>
 
-                <div class="glass-card p-7 rounded-3xl space-y-4 group">
+                <div class="glass-card pro-3d-card p-7 rounded-3xl space-y-4 group">
                     <div class="w-12 h-12 rounded-2xl bg-pink-500/10 border border-pink-500/30 text-pink-400 flex items-center justify-center text-xl group-hover:scale-110 group-hover:bg-pink-500 group-hover:text-white transition-all">
                         <i class="fa-solid fa-chalkboard-user"></i>
                     </div>
@@ -1330,7 +1332,7 @@
                     <div class="pt-3"><span class="neon-service-tag neon-pink"><span>High-accuracy formatting</span><i class="fa-solid fa-arrow-right"></i></span></div>
                 </div>
 
-                <div class="glass-card p-7 rounded-3xl space-y-4 group">
+                <div class="glass-card pro-3d-card p-7 rounded-3xl space-y-4 group">
                     <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 flex items-center justify-center text-xl group-hover:scale-110 group-hover:bg-emerald-500 group-hover:text-white transition-all">
                         <i class="fa-solid fa-users-gear"></i>
                     </div>
@@ -3322,10 +3324,10 @@
         window.addEventListener('load', () => setTimeout(() => document.getElementById('pageLoader').classList.add('done'), Math.max(300, 1800 - (Date.now() - loaderStart))));
         setTimeout(() => document.getElementById('pageLoader').classList.add('done'), 4000);
 
-        // Interactive 3D Keycap & Floating Document Matrix (Three.js Pro Max)
+        // Interactive 3D Keycap & Floating Document Matrix (Three.js + GSAP ScrollTrigger Pro Max)
         (function initPortfolio3D() {
             if (typeof THREE === 'undefined') return;
-            if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+            const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
             const canvas = document.getElementById('bgParticles') || document.querySelector('canvas');
             if (!canvas) return;
 
@@ -3340,136 +3342,297 @@
                 zIndex: '0'
             });
 
+            const isMobile = window.innerWidth < 768;
             const scene = new THREE.Scene();
             const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
             camera.position.z = 16;
+            camera.position.y = 0;
 
-            const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+            const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: !isMobile, powerPreference: 'high-performance' });
             renderer.setSize(window.innerWidth, window.innerHeight);
-            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1.5 : 2));
 
             // Studio Lighting for "Pro Max" Specular Highlights
-            const ambientLight = new THREE.AmbientLight(0xffffff, 0.65);
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
             scene.add(ambientLight);
 
-            const keyLight = new THREE.DirectionalLight(0x38bdf8, 2.2); // Cyan accent
-            keyLight.position.set(8, 10, 8);
+            const keyLight = new THREE.DirectionalLight(0x38bdf8, 2.4); // Electric cyan accent
+            keyLight.position.set(8, 12, 10);
             scene.add(keyLight);
 
-            const rimLight = new THREE.PointLight(0x6366f1, 2.5, 30); // Indigo rim
-            rimLight.position.set(-8, -6, 4);
+            const rimLight = new THREE.PointLight(0x6366f1, 2.6, 40); // Deep indigo rim
+            rimLight.position.set(-10, -6, 6);
             scene.add(rimLight);
+
+            const fillLight = new THREE.PointLight(0x10b981, 1.2, 30); // Emerald availability sheen
+            fillLight.position.set(4, -8, 4);
+            scene.add(fillLight);
 
             const group = new THREE.Group();
             scene.add(group);
 
-            // Shared Materials (Glassmorphic Dark UI Aesthetic)
+            // Shared Materials (Glassmorphic Dark Obsidian UI Aesthetic)
             const keycapMaterial = new THREE.MeshPhysicalMaterial({
-                color: 0x1e293b,
-                metalness: 0.25,
-                roughness: 0.2,
-                clearcoat: 0.8,
-                clearcoatRoughness: 0.15
+                color: 0x0f172a,
+                metalness: 0.35,
+                roughness: 0.18,
+                clearcoat: 0.9,
+                clearcoatRoughness: 0.12
             });
 
             const docMaterial = new THREE.MeshPhysicalMaterial({
                 color: 0x38bdf8,
                 transparent: true,
-                opacity: 0.22,
-                metalness: 0.1,
+                opacity: 0.20,
+                metalness: 0.15,
                 roughness: 0.1,
-                wireframe: false
+                clearcoat: 0.85,
+                side: THREE.DoubleSide
             });
 
-            const edgeMaterial = new THREE.LineBasicMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.55 });
+            const edgeMaterial = new THREE.LineBasicMaterial({
+                color: 0x38bdf8,
+                transparent: true,
+                opacity: 0.55
+            });
 
             const meshes = [];
 
-            // 1. Create Floating 3D Mechanical Keycaps (Symbolizing 65+ WPM Precision)
-            const keyGeo = new THREE.BoxGeometry(1.1, 1.1, 0.55);
-            for (let i = 0; i < 14; i++) {
+            // 1. Create 3D Mechanical Keycaps (65+ WPM Precision)
+            const keycapCount = isMobile ? 7 : 14;
+            const keyGeo = new THREE.BoxGeometry(1.15, 1.15, 0.55);
+            const keyEdgesGeo = new THREE.EdgesGeometry(keyGeo);
+
+            const keyCols = isMobile ? 4 : 7;
+            for (let i = 0; i < keycapCount; i++) {
                 const mesh = new THREE.Mesh(keyGeo, keycapMaterial);
-                const edges = new THREE.LineSegments(new THREE.EdgesGeometry(keyGeo), edgeMaterial);
+                const edges = new THREE.LineSegments(keyEdgesGeo, edgeMaterial);
                 mesh.add(edges);
 
-                mesh.position.set(
-                    (Math.random() - 0.5) * 22,
-                    (Math.random() - 0.5) * 14,
-                    (Math.random() - 0.5) * 8 - 2
-                );
-                mesh.rotation.set(Math.random() * Math.PI, Math.random() * Math.PI, 0);
+                // State 1: Hero Orbit / Floating Cluster (clustered around right-side portrait on desktop)
+                const heroX = isMobile ? (Math.random() - 0.5) * 8 : (Math.random() * 6.5 + 1.5);
+                const heroY = (Math.random() - 0.5) * 8 + 0.5;
+                const heroZ = (Math.random() - 0.5) * 5 + 0.5;
 
+                // State 2: Structured Grid Alignment (Sleek mechanical keyboard matrix row)
+                const col = i % keyCols;
+                const row = Math.floor(i / keyCols);
+                const gridX = (col - (keyCols - 1) / 2) * 1.55;
+                const gridY = -2.2 - (row * 1.5);
+                const gridZ = 0.5;
+
+                mesh.position.set(heroX, heroY, heroZ);
+                mesh.rotation.set(Math.random() * Math.PI, Math.random() * Math.PI, 0);
                 group.add(mesh);
+
                 meshes.push({
                     mesh,
-                    rotSpeedX: (Math.random() - 0.5) * 0.008,
-                    rotSpeedY: (Math.random() - 0.5) * 0.008,
-                    floatOffset: Math.random() * Math.PI * 2
+                    type: 'keycap',
+                    heroPos: new THREE.Vector3(heroX, heroY, heroZ),
+                    gridPos: new THREE.Vector3(gridX, gridY, gridZ),
+                    heroRot: new THREE.Euler(Math.random() * 0.8, Math.random() * 0.8, (Math.random() - 0.5) * 0.6),
+                    gridRot: new THREE.Euler(0.35, 0, 0),
+                    rotSpeedX: (Math.random() - 0.5) * 0.007,
+                    rotSpeedY: (Math.random() - 0.5) * 0.007,
+                    floatOffset: Math.random() * Math.PI * 2,
+                    floatSpeed: 0.8 + Math.random() * 0.6,
+                    orbitRadius: 1.8 + Math.random() * 2.2,
+                    orbitSpeed: 0.25 + Math.random() * 0.25,
+                    orbitOffset: Math.random() * Math.PI * 2
                 });
             }
 
-            // 2. Create Floating 3D Document Planes (Symbolizing Retyping & Formatting)
-            const docGeo = new THREE.PlaneGeometry(1.6, 2.2);
-            for (let i = 0; i < 8; i++) {
+            // 2. Create 3D Translucent .docx Document Planes (Retyping & Formatting Pipeline)
+            const docCount = isMobile ? 4 : 8;
+            const docGeo = new THREE.PlaneGeometry(1.65, 2.3);
+            const docEdgesGeo = new THREE.EdgesGeometry(docGeo);
+
+            const docCols = isMobile ? 2 : 4;
+            for (let i = 0; i < docCount; i++) {
                 const doc = new THREE.Mesh(docGeo, docMaterial);
-                const edges = new THREE.LineSegments(new THREE.EdgesGeometry(docGeo), edgeMaterial);
+                const edges = new THREE.LineSegments(docEdgesGeo, edgeMaterial);
                 doc.add(edges);
 
-                doc.position.set(
-                    (Math.random() - 0.5) * 24,
-                    (Math.random() - 0.5) * 16,
-                    (Math.random() - 0.5) * 6 - 3
-                );
-                doc.rotation.set(Math.random() * 0.6, Math.random() * 0.6, (Math.random() - 0.5) * 0.4);
+                // State 1: Hero Orbit / Floating Translucent Documents
+                const heroX = isMobile ? (Math.random() - 0.5) * 10 : (Math.random() * 7 + 0.5);
+                const heroY = (Math.random() - 0.5) * 10 + 1;
+                const heroZ = (Math.random() - 0.5) * 6 - 1.5;
 
+                // State 2: Structured Document Alignment (Clean, formatted Word document columns)
+                const col = i % docCols;
+                const row = Math.floor(i / docCols);
+                const gridX = (col - (docCols - 1) / 2) * 2.35;
+                const gridY = 1.6 - (row * 2.65);
+                const gridZ = 1.0;
+
+                doc.position.set(heroX, heroY, heroZ);
+                doc.rotation.set(Math.random() * 0.6, Math.random() * 0.6, (Math.random() - 0.5) * 0.4);
                 group.add(doc);
+
                 meshes.push({
-                    mesh: doc,
-                    rotSpeedX: (Math.random() - 0.5) * 0.004,
-                    rotSpeedY: (Math.random() - 0.5) * 0.004,
-                    floatOffset: Math.random() * Math.PI * 2
+                    mesh,
+                    type: 'doc',
+                    heroPos: new THREE.Vector3(heroX, heroY, heroZ),
+                    gridPos: new THREE.Vector3(gridX, gridY, gridZ),
+                    heroRot: new THREE.Euler((Math.random() - 0.5) * 0.7, (Math.random() - 0.5) * 0.7, (Math.random() - 0.5) * 0.5),
+                    gridRot: new THREE.Euler(0, 0, 0),
+                    rotSpeedX: (Math.random() - 0.5) * 0.003,
+                    rotSpeedY: (Math.random() - 0.5) * 0.003,
+                    floatOffset: Math.random() * Math.PI * 2,
+                    floatSpeed: 0.6 + Math.random() * 0.5,
+                    orbitRadius: 2.2 + Math.random() * 2.5,
+                    orbitSpeed: 0.2 + Math.random() * 0.2,
+                    orbitOffset: Math.random() * Math.PI * 2
                 });
             }
 
-            // Mouse Parallax Tracking
-            let mouseX = 0, mouseY = 0;
+            // Damped Spring Cursor Physics (Tactile Apple VisionOS / Linear feel)
+            const cursor = { x: 0, y: 0 };
+            const spring = { x: 0, y: 0, vx: 0, vy: 0 };
             window.addEventListener('mousemove', (e) => {
-                mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
-                mouseY = -(e.clientY / window.innerHeight - 0.5) * 2;
+                cursor.x = (e.clientX / window.innerWidth - 0.5) * 2;
+                cursor.y = -(e.clientY / window.innerHeight - 0.5) * 2;
             }, { passive: true });
 
-            // Scroll-Linked Camera Depth Transition
+            // State Tracking for Scroll Phases
+            const animState = {
+                gridProgress: 0,
+                targetGridProgress: 0,
+                cameraDepthProgress: 0,
+                targetDepthProgress: 0,
+                scrollY: 0
+            };
+
+            // GSAP ScrollTrigger Configuration with Robust Fallback
+            if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+                gsap.registerPlugin(ScrollTrigger);
+
+                // State 2: Services & Typing State (Scroll 25% - 65% / #typing-services)
+                ScrollTrigger.create({
+                    trigger: '#typing-services',
+                    start: 'top 85%',
+                    end: 'bottom 20%',
+                    scrub: 1.2,
+                    onUpdate: (self) => {
+                        animState.targetGridProgress = self.progress;
+                    }
+                });
+
+                // State 3: Workflow & Contact State (Scroll 65% - 100%)
+                ScrollTrigger.create({
+                    trigger: '#workflow',
+                    start: 'top 80%',
+                    endTrigger: '#contact',
+                    end: 'bottom bottom',
+                    scrub: 1.4,
+                    onUpdate: (self) => {
+                        animState.targetDepthProgress = self.progress;
+                    }
+                });
+            }
+
+            // Passive Scroll Listener (Universal Fallback & Parallax Synchronization)
             window.addEventListener('scroll', () => {
-                const scrollY = window.scrollY;
-                camera.position.y = -scrollY * 0.004;
-                group.rotation.y = scrollY * 0.0008;
+                animState.scrollY = window.scrollY;
+                const maxScroll = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
+                const normScroll = Math.min(Math.max(window.scrollY / maxScroll, 0), 1);
+
+                // Fallback calculations if ScrollTrigger is not active
+                if (typeof ScrollTrigger === 'undefined') {
+                    // Typing services state (25% to 65%)
+                    if (normScroll < 0.25) {
+                        animState.targetGridProgress = 0;
+                    } else if (normScroll <= 0.65) {
+                        animState.targetGridProgress = (normScroll - 0.25) / 0.40;
+                    } else {
+                        animState.targetGridProgress = Math.max(0, 1 - (normScroll - 0.65) / 0.15);
+                    }
+
+                    // Depth flythrough state (65% to 100%)
+                    if (normScroll >= 0.60) {
+                        animState.targetDepthProgress = Math.min((normScroll - 0.60) / 0.40, 1);
+                    } else {
+                        animState.targetDepthProgress = 0;
+                    }
+                }
             }, { passive: true });
 
-            // 60fps Animation Loop
+            // 60fps Animation Loop with Damped Spring Physics
             const clock = new THREE.Clock();
             function animate() {
                 requestAnimationFrame(animate);
+
+                if (prefersReduced) {
+                    renderer.render(scene, camera);
+                    return;
+                }
+
                 const elapsed = clock.getElapsedTime();
 
-                // Smoothly interpolate group tilt toward cursor
-                group.rotation.x += (mouseY * 0.18 - group.rotation.x) * 0.05;
-                group.rotation.y += (mouseX * 0.25 - group.rotation.y) * 0.05;
+                // Spring physics update for cursor inertia
+                const stiffness = 0.06;
+                const damping = 0.82;
+                const fx = (cursor.x - spring.x) * stiffness;
+                const fy = (cursor.y - spring.y) * stiffness;
+                spring.vx = (spring.vx + fx) * damping;
+                spring.vy = (spring.vy + fy) * damping;
+                spring.x += spring.vx;
+                spring.y += spring.vy;
 
-                meshes.forEach((item) => {
-                    item.mesh.rotation.x += item.rotSpeedX;
-                    item.mesh.rotation.y += item.rotSpeedY;
-                    item.mesh.position.y += Math.sin(elapsed * 1.5 + item.floatOffset) * 0.003;
-                });
+                // Smoothly interpolate scroll progress states
+                animState.gridProgress += (animState.targetGridProgress - animState.gridProgress) * 0.08;
+                animState.cameraDepthProgress += (animState.targetDepthProgress - animState.cameraDepthProgress) * 0.08;
+
+                const gridP = animState.gridProgress;
+                const depthP = animState.cameraDepthProgress;
+
+                // Group tilt reacting to smoothed cursor spring
+                group.rotation.x = spring.y * 0.14;
+                group.rotation.y = spring.x * 0.18 + (animState.scrollY * 0.00035);
+
+                // State 3: Transition camera depth smoothly through Workflow & Contact
+                camera.position.z = THREE.MathUtils.lerp(16, 11.2, depthP);
+                camera.position.y = -animState.scrollY * 0.0028;
+                camera.position.x = spring.x * 0.4;
+                camera.lookAt(0, camera.position.y, 0);
+
+                // Mesh Position, Orbit & Alignment Updates
+                for (let i = 0; i < meshes.length; i++) {
+                    const item = meshes[i];
+                    const floatBob = Math.sin(elapsed * item.floatSpeed + item.floatOffset) * (0.28 * (1 - gridP * 0.65));
+
+                    // Hero orbit displacement (fades out as gridProgress approaches 1)
+                    const orbitAngle = elapsed * item.orbitSpeed + item.orbitOffset;
+                    const orbitX = Math.cos(orbitAngle) * item.orbitRadius * 0.35 * (1 - gridP);
+                    const orbitY = Math.sin(orbitAngle) * item.orbitRadius * 0.25 * (1 - gridP);
+
+                    // Smooth transition between Hero chaotic orbit and Structured Grid
+                    item.mesh.position.x = THREE.MathUtils.lerp(item.heroPos.x + orbitX, item.gridPos.x, gridP);
+                    item.mesh.position.y = THREE.MathUtils.lerp(item.heroPos.y + orbitY, item.gridPos.y, gridP) + floatBob;
+                    item.mesh.position.z = THREE.MathUtils.lerp(item.heroPos.z, item.gridPos.z, gridP);
+
+                    // Interpolate rotations
+                    if (gridP < 0.95) {
+                        item.mesh.rotation.x += item.rotSpeedX * (1 - gridP);
+                        item.mesh.rotation.y += item.rotSpeedY * (1 - gridP);
+                    } else {
+                        // In structured grid, settle into orderly orientation
+                        item.mesh.rotation.x += (item.gridRot.x - item.mesh.rotation.x) * 0.1;
+                        item.mesh.rotation.y += (item.gridRot.y - item.mesh.rotation.y) * 0.1;
+                        item.mesh.rotation.z += (item.gridRot.z - item.mesh.rotation.z) * 0.1;
+                    }
+                }
 
                 renderer.render(scene, camera);
             }
             animate();
 
-            // Responsive Resize
+            // Responsive Viewport Resize
             window.addEventListener('resize', () => {
                 camera.aspect = window.innerWidth / window.innerHeight;
                 camera.updateProjectionMatrix();
                 renderer.setSize(window.innerWidth, window.innerHeight);
+                renderer.setPixelRatio(Math.min(window.devicePixelRatio, window.innerWidth < 768 ? 1.5 : 2));
             }, { passive: true });
         })();
 
