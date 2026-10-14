@@ -116,8 +116,7 @@
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     <link rel="preload" as="image" href="./public/img.jpg" fetchpriority="high">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" media="print" onload="this.media='all'">
-    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"></noscript>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -716,7 +715,10 @@
                 display: none !important;
             }
             #waBtn {
-                display: none !important;
+                bottom: 85px !important;
+                right: 16px !important;
+                width: 50px !important;
+                height: 50px !important;
             }
             #backToTop {
                 bottom: 1.25rem !important;
@@ -910,10 +912,12 @@
         .faq-item.open .faq-a { max-height:220px; padding-bottom:18px; }
         .faq-item.open .faq-q i { transform:rotate(45deg); color:#f472b6; }
         .faq-q i { transition:transform .3s; }
-        .float-btn { position:fixed; z-index:9998; display:flex; align-items:center; justify-content:center; border-radius:50%; color:#fff; border:none; box-shadow:0 0 18px currentColor; }
-        #waBtn { right:20px; bottom:80px; width:54px; height:54px; font-size:1.6rem; background:#22c55e; color:#22c55e; }
-        #waBtn i { color:#fff; }
-        #waBtn::before { content:''; position:absolute; inset:0; border-radius:50%; border:2px solid #22c55e; animation:waPing 1.8s ease-out infinite; }
+        .float-btn { position:fixed; z-index:99999; display:flex; align-items:center; justify-content:center; border-radius:50%; color:#fff; border:none; cursor:pointer; text-decoration:none; }
+        #waBtn { right:22px; bottom:82px; width:56px; height:56px; background:#25D366; color:#fff; box-shadow:0 4px 20px rgba(37,211,102,.5); transition:transform .25s ease, box-shadow .25s ease; }
+        #waBtn:hover { transform:scale(1.1); box-shadow:0 6px 28px rgba(37,211,102,.7); }
+        #waBtn i { color:#fff; font-size:1.75rem; }
+        #waBtn svg { width:32px; height:32px; fill:#fff; }
+        #waBtn::before { content:''; position:absolute; inset:0; border-radius:50%; border:2px solid #25D366; animation:waPing 1.8s ease-out infinite; pointer-events:none; }
         @keyframes waPing { to { transform:scale(1.7); opacity:0; } }
         #langBtn { padding:0 12px; height:40px; border-radius:12px; font-size:.8rem; font-weight:700; background:rgba(255,255,255,0.05); color:#c084fc; border:1px solid rgba(192,132,252,0.4); text-shadow:0 0 8px rgba(192,132,252,0.5); transition:all 0.2s; display:inline-flex; align-items:center; justify-content:center; } #langBtn:hover { background:rgba(192,132,252,0.15); border-color:#c084fc; }
         .visitor-pill { display:inline-flex; align-items:center; gap:8px; padding:6px 14px; border-radius:99px; font-size:.75rem; font-weight:700; color:#34d399; border:1px solid rgba(52,211,153,.4); text-shadow:0 0 8px #34d399; }
@@ -1059,7 +1063,11 @@
         </div>
     </div>
     <div id="lightbox"><button id="lbClose" aria-label="Close">&times;</button><button id="lbPrev" style="left:10px" aria-label="Previous">&#10094;</button><img id="lbImg" alt=""><button id="lbNext" style="right:10px" aria-label="Next">&#10095;</button></div>
-<a id="waBtn" class="float-btn hidden" target="_blank" rel="noopener" aria-label="Chat on WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+    <a id="waBtn" href="https://wa.me/8801320399465?text=Hello%20Saadman,%20I%20saw%20your%20portfolio%20and%20want%20to%20discuss%20a%20project." class="float-btn" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+        <svg class="w-8 h-8 fill-white" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0012.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 012.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.196 8.196 0 01-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.5c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.02-1.24-.74-.66-1.24-1.48-1.39-1.73-.14-.25-.02-.39.11-.51.11-.11.25-.29.37-.43.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.56-1.35-.77-1.85-.2-.49-.41-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.13.17 1.78 2.71 4.3 3.8.6.26 1.07.41 1.43.53.6.19 1.15.16 1.58.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.1-.23-.17-.48-.29z"/>
+        </svg>
+    </a>
 
 
     <!-- Scroll Progress Indicator -->
@@ -1775,7 +1783,8 @@
             <!-- FAQ Bottom Callout -->
             <div class="mt-8 text-center text-xs text-slate-400">
                 <span>Have a unique project or custom requirement?</span>
-                <a href="https://wa.me/8801320399465?text=Hi%20Saadman,%20I%20have%20a%20question%20about%20your%20typing%20service!" target="_blank" rel="noopener" class="text-brand-400 hover:text-brand-300 font-bold ml-1 inline-flex items-center gap-1">
+                <a href="https://wa.me/8801320399465?text=Hi%20Saadman,%20I%20have%20a%20question%20about%20your%20typing%20service!" target="_blank" rel="noopener" class="text-emerald-400 hover:text-emerald-300 font-bold ml-1 inline-flex items-center gap-1.5">
+                    <i class="fa-brands fa-whatsapp text-sm"></i>
                     <span>Chat on WhatsApp</span>
                     <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
                 </a>
@@ -3981,7 +3990,10 @@
         // WhatsApp
         (function () {
             const b = document.getElementById('waBtn');
-            if (WHATSAPP_NUMBER) { b.href = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent('Hello Saadman, I saw your portfolio.'); b.classList.remove('hidden'); }
+            if (b && typeof WHATSAPP_NUMBER !== 'undefined' && WHATSAPP_NUMBER) {
+                b.href = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent('Hello Saadman, I saw your portfolio and want to discuss a project.');
+                b.style.display = 'flex';
+            }
         })();
 
         // Visitor counter
@@ -4435,7 +4447,7 @@
             </div>
             <div class="flex items-center gap-1.5 flex-shrink-0">
                 <a href="https://wa.me/8801320399465?text=Hello%20Saadman,%20I%20want%20to%20hire%20you%20for%20a%20typing%20or%20document%20project" target="_blank" rel="noopener" class="px-3.5 py-2 rounded-xl text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-500 active:scale-95 shadow-lg shadow-emerald-600/30 transition flex items-center gap-1.5">
-                    <i class="fa-brands fa-whatsapp text-sm"></i>
+                    <svg class="w-4 h-4 fill-white" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0012.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 012.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.196 8.196 0 01-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.5c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.02-1.24-.74-.66-1.24-1.48-1.39-1.73-.14-.25-.02-.39.11-.51.11-.11.25-.29.37-.43.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.56-1.35-.77-1.85-.2-.49-.41-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.13.17 1.78 2.71 4.3 3.8.6.26 1.07.41 1.43.53.6.19 1.15.16 1.58.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.1-.23-.17-.48-.29z"/></svg>
                     <span>Chat on WhatsApp</span>
                 </a>
                 <button type="button" id="closeMobileQuickBar" class="w-7 h-7 rounded-lg text-slate-400 hover:text-white flex items-center justify-center text-xs" aria-label="Dismiss quick bar">
