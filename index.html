@@ -2490,8 +2490,8 @@
                                 </span>
                             </div>
                         </div>
-                    </article>`;
             }).join('');
+            if (window.attach3DTiltPhysics) window.attach3DTiltPhysics();
         };
 
         // Render Experience Function with Interactive Filter & Timeline Nodes
@@ -3489,24 +3489,56 @@
             document.getElementById('marqueeTrack').innerHTML = html + html;
         })();
 
-        // Spotlight + tilt on cards (desktop)
-        (function () {
-            if (!matchMedia('(hover: hover) and (pointer: fine)').matches) return;
-            document.addEventListener('mousemove', e => {
-                const card = e.target.closest && e.target.closest('.glass-card, .pro-3d-card');
-                if (!card) return;
-                const r = card.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
-                card.style.setProperty('--mx', x + 'px'); card.style.setProperty('--my', y + 'px');
-                card.style.setProperty('--mouse-x', x + 'px'); card.style.setProperty('--mouse-y', y + 'px');
-                if (card.matches('form, #contact .glass-card, .faq-item') || r.width > 700) return;
-                const rx = ((y / r.height) - .5) * -10, ry = ((x / r.width) - .5) * 10;
-                card.style.transform = 'perspective(900px) rotateX(' + rx + 'deg) rotateY(' + ry + 'deg) translateY(-4px)';
+        // Attach 3D tilt physics to Hero portrait, KPI stats, and Service cards
+        function attach3DTiltPhysics() {
+            if (window.matchMedia && !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+
+            const targetCards = new Set();
+
+            // 1. Existing cards with pro-3d-card, glass-card, holo-card
+            document.querySelectorAll('.pro-3d-card, .glass-card, .holo-card').forEach(el => targetCards.add(el));
+
+            // 2. Section cards with headings or stats (excluding layout containers)
+            document.querySelectorAll('section > div > div').forEach((card) => {
+                if (card.matches('.lg\\:w-7\\/12, .lg\\:w-5\\/12, .max-w-7xl, .max-w-3xl, .max-w-2xl, .space-y-6, form, #contact > div')) return;
+                if (!card.querySelector('h3, span')) return;
+                targetCards.add(card);
             });
-            document.addEventListener('mouseout', e => {
-                const card = e.target.closest && e.target.closest('.glass-card, .pro-3d-card');
-                if (card && !card.contains(e.relatedTarget)) card.style.transform = '';
+
+            // 3. Hero portrait card in neon border box
+            const portraitCard = document.querySelector('.neon-border-box .holo-card') || document.querySelector('.holo-card');
+            if (portraitCard) targetCards.add(portraitCard);
+
+            targetCards.forEach((card) => {
+                if (card.dataset.tiltInit) return;
+                card.dataset.tiltInit = 'true';
+                card.classList.add('pro-3d-card');
+
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+
+                    // Update spotlight coordinates
+                    card.style.setProperty('--mouse-x', `${x}px`);
+                    card.style.setProperty('--mouse-y', `${y}px`);
+                    card.style.setProperty('--mx', `${x}px`);
+                    card.style.setProperty('--my', `${y}px`);
+
+                    // Calculate 3D rotation (-8deg to +8deg)
+                    const rotateX = ((y - rect.height / 2) / (rect.height / 2)) * -8;
+                    const rotateY = ((x - rect.width / 2) / (rect.width / 2)) * 8;
+
+                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+                });
+
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+                });
             });
-        })();
+        }
+        window.attach3DTiltPhysics = attach3DTiltPhysics;
+        attach3DTiltPhysics();
 
         // Gallery + lightbox
         (function () {
