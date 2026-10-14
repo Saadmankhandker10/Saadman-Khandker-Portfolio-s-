@@ -3241,6 +3241,10 @@
             document.addEventListener('mouseover', e => { ring.classList.toggle('active', !!e.target.closest('a,button,input,textarea,.group')); });
         })();
     </script>
+    <!-- Load Three.js and GSAP via CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script>
         // ===== Extras config (edit these) =====
         const WHATSAPP_NUMBER = '8801320399465';   // e.g. '8801XXXXXXXXX' (country code, no +)
@@ -3281,27 +3285,155 @@
         window.addEventListener('load', () => setTimeout(() => document.getElementById('pageLoader').classList.add('done'), Math.max(300, 1800 - (Date.now() - loaderStart))));
         setTimeout(() => document.getElementById('pageLoader').classList.add('done'), 4000);
 
-        // Particles
-        (function () {
-            const cv = document.getElementById('bgParticles'); const ctx = cv.getContext('2d');
-            if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-            let W, H, pts = [];
-            const colors = ['#818cf8', '#c084fc', '#f472b6', '#34d399'];
-            function size() { W = cv.width = innerWidth; H = cv.height = innerHeight; const n = Math.min(70, Math.floor(W * H / 22000)); pts = Array.from({ length: n }, () => ({ x: Math.random() * W, y: Math.random() * H, r: Math.random() * 2 + .6, vx: (Math.random() - .5) * .35, vy: (Math.random() - .5) * .35, c: colors[Math.floor(Math.random() * colors.length)] })); }
-            size(); addEventListener('resize', size);
-            (function draw() {
-                ctx.clearRect(0, 0, W, H);
-                pts.forEach(p => {
-                    p.x += p.vx; p.y += p.vy; if (p.x < 0 || p.x > W) p.vx *= -1; if (p.y < 0 || p.y > H) p.vy *= -1;
-                    ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.283); ctx.fillStyle = p.c; ctx.shadowColor = p.c; ctx.shadowBlur = 12; ctx.fill();
+        // Interactive 3D Keycap & Floating Document Matrix (Three.js Pro Max)
+        (function initPortfolio3D() {
+            if (typeof THREE === 'undefined') return;
+            if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+            const canvas = document.getElementById('bgParticles') || document.querySelector('canvas');
+            if (!canvas) return;
+
+            // Ensure canvas sits cleanly behind UI content
+            Object.assign(canvas.style, {
+                position: 'fixed',
+                top: '0',
+                left: '0',
+                width: '100vw',
+                height: '100vh',
+                pointerEvents: 'none',
+                zIndex: '0'
+            });
+
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
+            camera.position.z = 16;
+
+            const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+            // Studio Lighting for "Pro Max" Specular Highlights
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.65);
+            scene.add(ambientLight);
+
+            const keyLight = new THREE.DirectionalLight(0x38bdf8, 2.2); // Cyan accent
+            keyLight.position.set(8, 10, 8);
+            scene.add(keyLight);
+
+            const rimLight = new THREE.PointLight(0x6366f1, 2.5, 30); // Indigo rim
+            rimLight.position.set(-8, -6, 4);
+            scene.add(rimLight);
+
+            const group = new THREE.Group();
+            scene.add(group);
+
+            // Shared Materials (Glassmorphic Dark UI Aesthetic)
+            const keycapMaterial = new THREE.MeshPhysicalMaterial({
+                color: 0x1e293b,
+                metalness: 0.25,
+                roughness: 0.2,
+                clearcoat: 0.8,
+                clearcoatRoughness: 0.15
+            });
+
+            const docMaterial = new THREE.MeshPhysicalMaterial({
+                color: 0x38bdf8,
+                transparent: true,
+                opacity: 0.22,
+                metalness: 0.1,
+                roughness: 0.1,
+                wireframe: false
+            });
+
+            const edgeMaterial = new THREE.LineBasicMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.55 });
+
+            const meshes = [];
+
+            // 1. Create Floating 3D Mechanical Keycaps (Symbolizing 65+ WPM Precision)
+            const keyGeo = new THREE.BoxGeometry(1.1, 1.1, 0.55);
+            for (let i = 0; i < 14; i++) {
+                const mesh = new THREE.Mesh(keyGeo, keycapMaterial);
+                const edges = new THREE.LineSegments(new THREE.EdgesGeometry(keyGeo), edgeMaterial);
+                mesh.add(edges);
+
+                mesh.position.set(
+                    (Math.random() - 0.5) * 22,
+                    (Math.random() - 0.5) * 14,
+                    (Math.random() - 0.5) * 8 - 2
+                );
+                mesh.rotation.set(Math.random() * Math.PI, Math.random() * Math.PI, 0);
+
+                group.add(mesh);
+                meshes.push({
+                    mesh,
+                    rotSpeedX: (Math.random() - 0.5) * 0.008,
+                    rotSpeedY: (Math.random() - 0.5) * 0.008,
+                    floatOffset: Math.random() * Math.PI * 2
                 });
-                ctx.shadowBlur = 0;
-                for (let i = 0; i < pts.length; i++) for (let j = i + 1; j < pts.length; j++) {
-                    const dx = pts[i].x - pts[j].x, dy = pts[i].y - pts[j].y, d = dx * dx + dy * dy;
-                    if (d < 14000) { ctx.strokeStyle = 'rgba(129,140,248,' + (0.18 * (1 - d / 14000)) + ')'; ctx.beginPath(); ctx.moveTo(pts[i].x, pts[i].y); ctx.lineTo(pts[j].x, pts[j].y); ctx.stroke(); }
-                }
-                requestAnimationFrame(draw);
-            })();
+            }
+
+            // 2. Create Floating 3D Document Planes (Symbolizing Retyping & Formatting)
+            const docGeo = new THREE.PlaneGeometry(1.6, 2.2);
+            for (let i = 0; i < 8; i++) {
+                const doc = new THREE.Mesh(docGeo, docMaterial);
+                const edges = new THREE.LineSegments(new THREE.EdgesGeometry(docGeo), edgeMaterial);
+                doc.add(edges);
+
+                doc.position.set(
+                    (Math.random() - 0.5) * 24,
+                    (Math.random() - 0.5) * 16,
+                    (Math.random() - 0.5) * 6 - 3
+                );
+                doc.rotation.set(Math.random() * 0.6, Math.random() * 0.6, (Math.random() - 0.5) * 0.4);
+
+                group.add(doc);
+                meshes.push({
+                    mesh: doc,
+                    rotSpeedX: (Math.random() - 0.5) * 0.004,
+                    rotSpeedY: (Math.random() - 0.5) * 0.004,
+                    floatOffset: Math.random() * Math.PI * 2
+                });
+            }
+
+            // Mouse Parallax Tracking
+            let mouseX = 0, mouseY = 0;
+            window.addEventListener('mousemove', (e) => {
+                mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+                mouseY = -(e.clientY / window.innerHeight - 0.5) * 2;
+            }, { passive: true });
+
+            // Scroll-Linked Camera Depth Transition
+            window.addEventListener('scroll', () => {
+                const scrollY = window.scrollY;
+                camera.position.y = -scrollY * 0.004;
+                group.rotation.y = scrollY * 0.0008;
+            }, { passive: true });
+
+            // 60fps Animation Loop
+            const clock = new THREE.Clock();
+            function animate() {
+                requestAnimationFrame(animate);
+                const elapsed = clock.getElapsedTime();
+
+                // Smoothly interpolate group tilt toward cursor
+                group.rotation.x += (mouseY * 0.18 - group.rotation.x) * 0.05;
+                group.rotation.y += (mouseX * 0.25 - group.rotation.y) * 0.05;
+
+                meshes.forEach((item) => {
+                    item.mesh.rotation.x += item.rotSpeedX;
+                    item.mesh.rotation.y += item.rotSpeedY;
+                    item.mesh.position.y += Math.sin(elapsed * 1.5 + item.floatOffset) * 0.003;
+                });
+
+                renderer.render(scene, camera);
+            }
+            animate();
+
+            // Responsive Resize
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            }, { passive: true });
         })();
 
         // Marquee
