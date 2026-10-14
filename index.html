@@ -823,6 +823,41 @@
         html:not(.dark) .bento-dot-grid {
             background-image: radial-gradient(rgba(99, 102, 241, 0.08) 1px, transparent 1px);
         }
+
+        /* Spatial Glassmorphic 3D Card (Apple VisionOS / Linear Depth) */
+        .pro-3d-card {
+            position: relative;
+            transform-style: preserve-3d;
+            will-change: transform;
+            transition: transform 0.15s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease;
+            background: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 18px;
+            overflow: hidden;
+        }
+
+        /* Dynamic Specular Spotlight Layer */
+        .pro-3d-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(
+                450px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+                rgba(56, 189, 248, 0.16),
+                transparent 45%
+            );
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Pop inner icons & headings forward on the Z-axis */
+        .pro-3d-card h3,
+        .pro-3d-card span,
+        .pro-3d-card i {
+            transform: translateZ(28px);
+        }
         #bgParticles { position:fixed; inset:0; z-index:0; pointer-events:none; }
         #pageLoader { position:fixed; inset:0; z-index:100000; background:#050817; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:18px; transition:opacity .6s ease, visibility .6s ease; }
         #pageLoader.done { opacity:0; visibility:hidden; }
@@ -1209,7 +1244,7 @@
         <!-- ==================== IMPACT HIGHLIGHTS COUNTERS ==================== -->
         <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-6 mb-16 relative z-20">
             <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
-                <div class="glass-card p-3.5 sm:p-6 rounded-2xl sm:rounded-3xl relative overflow-hidden group">
+                <div class="glass-card pro-3d-card p-3.5 sm:p-6 rounded-2xl sm:rounded-3xl relative overflow-hidden group">
                     <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 flex items-center justify-center text-base sm:text-lg mb-2 sm:mb-3 group-hover:scale-110 transition-transform">
                         <i class="fa-solid fa-keyboard"></i>
                     </div>
@@ -1218,7 +1253,7 @@
                     <p class="text-[10px] sm:text-[11px] text-slate-400 mt-0.5 font-mono">Fast &amp; steady manual typing</p>
                 </div>
 
-                <div class="glass-card p-3.5 sm:p-6 rounded-2xl sm:rounded-3xl relative overflow-hidden group">
+                <div class="glass-card pro-3d-card p-3.5 sm:p-6 rounded-2xl sm:rounded-3xl relative overflow-hidden group">
                     <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center text-base sm:text-lg mb-2 sm:mb-3 group-hover:scale-110 transition-transform">
                         <i class="fa-solid fa-bullseye"></i>
                     </div>
@@ -1227,7 +1262,7 @@
                     <p class="text-[10px] sm:text-[11px] text-slate-400 mt-0.5 font-mono">Zero typos &amp; clean Word format</p>
                 </div>
 
-                <div class="glass-card p-3.5 sm:p-6 rounded-2xl sm:rounded-3xl relative overflow-hidden group">
+                <div class="glass-card pro-3d-card p-3.5 sm:p-6 rounded-2xl sm:rounded-3xl relative overflow-hidden group">
                     <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-purple-500/10 border border-purple-500/20 text-purple-400 flex items-center justify-center text-base sm:text-lg mb-2 sm:mb-3 group-hover:scale-110 transition-transform">
                         <i class="fa-solid fa-file-word"></i>
                     </div>
@@ -1236,7 +1271,7 @@
                     <p class="text-[10px] sm:text-[11px] text-slate-400 mt-0.5 font-mono">High accuracy digitization</p>
                 </div>
 
-                <div class="glass-card p-3.5 sm:p-6 rounded-2xl sm:rounded-3xl relative overflow-hidden group">
+                <div class="glass-card pro-3d-card p-3.5 sm:p-6 rounded-2xl sm:rounded-3xl relative overflow-hidden group">
                     <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-pink-500/10 border border-pink-500/20 text-pink-400 flex items-center justify-center text-base sm:text-lg mb-2 sm:mb-3 group-hover:scale-110 transition-transform">
                         <i class="fa-solid fa-shield-halved"></i>
                     </div>
@@ -1319,7 +1354,7 @@
 
             <!-- Live Performance Metrics & Guarantee Bar -->
             <div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6 mb-12">
-                <div class="glass-card p-3.5 sm:p-6 rounded-2xl sm:rounded-3xl text-center group border border-brand-500/30">
+                <div class="glass-card pro-3d-card p-3.5 sm:p-6 rounded-2xl sm:rounded-3xl text-center group border border-brand-500/30">
                     <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-brand-500/10 border border-brand-500/20 text-brand-400 flex items-center justify-center text-lg sm:text-xl mx-auto mb-2 sm:mb-3 group-hover:scale-110 transition-transform">
                         <i class="fa-solid fa-keyboard"></i>
                     </div>
@@ -1328,7 +1363,7 @@
                     <p class="text-[10px] sm:text-[11px] text-slate-400 mt-0.5 font-mono">Touch-typing with rapid turnaround</p>
                 </div>
 
-                <div class="glass-card p-3.5 sm:p-6 rounded-2xl sm:rounded-3xl text-center group border border-emerald-500/30">
+                <div class="glass-card pro-3d-card p-3.5 sm:p-6 rounded-2xl sm:rounded-3xl text-center group border border-emerald-500/30">
                     <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center text-lg sm:text-xl mx-auto mb-2 sm:mb-3 group-hover:scale-110 transition-transform">
                         <i class="fa-solid fa-bullseye"></i>
                     </div>
@@ -1337,7 +1372,7 @@
                     <p class="text-[10px] sm:text-[11px] text-slate-400 mt-0.5 font-mono">Zero typos &amp; strict proofreading</p>
                 </div>
 
-                <div class="glass-card p-3.5 sm:p-6 rounded-2xl sm:rounded-3xl text-center group border border-pink-500/30">
+                <div class="glass-card pro-3d-card p-3.5 sm:p-6 rounded-2xl sm:rounded-3xl text-center group border border-pink-500/30">
                     <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-pink-500/10 border border-pink-500/20 text-pink-400 flex items-center justify-center text-lg sm:text-xl mx-auto mb-2 sm:mb-3 group-hover:scale-110 transition-transform">
                         <i class="fa-solid fa-bolt"></i>
                     </div>
@@ -1346,7 +1381,7 @@
                     <p class="text-[10px] sm:text-[11px] text-slate-400 mt-0.5 font-mono">Rush turnaround available on request</p>
                 </div>
 
-                <div class="glass-card p-3.5 sm:p-6 rounded-2xl sm:rounded-3xl text-center group border border-purple-500/30">
+                <div class="glass-card pro-3d-card p-3.5 sm:p-6 rounded-2xl sm:rounded-3xl text-center group border border-purple-500/30">
                     <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-purple-500/10 border border-purple-500/20 text-purple-400 flex items-center justify-center text-lg sm:text-xl mx-auto mb-2 sm:mb-3 group-hover:scale-110 transition-transform">
                         <i class="fa-solid fa-shield-halved"></i>
                     </div>
@@ -3458,16 +3493,17 @@
         (function () {
             if (!matchMedia('(hover: hover) and (pointer: fine)').matches) return;
             document.addEventListener('mousemove', e => {
-                const card = e.target.closest && e.target.closest('.glass-card');
+                const card = e.target.closest && e.target.closest('.glass-card, .pro-3d-card');
                 if (!card) return;
                 const r = card.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
                 card.style.setProperty('--mx', x + 'px'); card.style.setProperty('--my', y + 'px');
+                card.style.setProperty('--mouse-x', x + 'px'); card.style.setProperty('--mouse-y', y + 'px');
                 if (card.matches('form, #contact .glass-card, .faq-item') || r.width > 700) return;
-                const rx = ((y / r.height) - .5) * -8, ry = ((x / r.width) - .5) * 8;
-                card.style.transform = 'perspective(800px) rotateX(' + rx + 'deg) rotateY(' + ry + 'deg) translateY(-4px)';
+                const rx = ((y / r.height) - .5) * -10, ry = ((x / r.width) - .5) * 10;
+                card.style.transform = 'perspective(900px) rotateX(' + rx + 'deg) rotateY(' + ry + 'deg) translateY(-4px)';
             });
             document.addEventListener('mouseout', e => {
-                const card = e.target.closest && e.target.closest('.glass-card');
+                const card = e.target.closest && e.target.closest('.glass-card, .pro-3d-card');
                 if (card && !card.contains(e.relatedTarget)) card.style.transform = '';
             });
         })();
