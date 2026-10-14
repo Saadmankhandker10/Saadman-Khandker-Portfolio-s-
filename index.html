@@ -252,28 +252,29 @@
             100% { transform: translate(-40px, 50px) scale(0.95); }
         }
 
-        /* Modern Frosted Glass Card */
+        /* Modern Frosted Glass Card with Enhanced Spotlight */
         .glass-card {
-            background: rgba(17, 24, 39, 0.65);
+            position: relative;
+            background: rgba(17, 24, 39, 0.7);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(99, 102, 241, 0.18);
-            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05);
-            transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+            border: 1px solid rgba(99, 102, 241, 0.22);
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+            transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
         .glass-card:hover {
-            border-color: rgba(99, 102, 241, 0.4);
+            border-color: rgba(129, 140, 248, 0.6);
             transform: translateY(-4px);
-            box-shadow: 0 20px 40px -15px rgba(79, 70, 229, 0.25);
+            box-shadow: 0 20px 40px -15px rgba(79, 70, 229, 0.35), 0 0 25px rgba(168, 85, 247, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.12);
         }
         html:not(.dark) .glass-card {
-            background: rgba(255, 255, 255, 0.8);
-            border: 1px solid rgba(199, 210, 254, 0.6);
+            background: rgba(255, 255, 255, 0.85);
+            border: 1px solid rgba(199, 210, 254, 0.7);
             box-shadow: 0 10px 30px -10px rgba(79, 70, 229, 0.08);
         }
         html:not(.dark) .glass-card:hover {
-            border-color: rgba(99, 102, 241, 0.4);
-            box-shadow: 0 20px 40px -15px rgba(79, 70, 229, 0.15);
+            border-color: rgba(99, 102, 241, 0.5);
+            box-shadow: 0 20px 40px -15px rgba(79, 70, 229, 0.2), 0 0 20px rgba(168, 85, 247, 0.15);
         }
 
         /* Glass Navbar */
@@ -288,35 +289,78 @@
             border-bottom: 1px solid rgba(226, 232, 240, 0.8);
         }
 
-        /* Gradient Glow Buttons */
+        /* Gradient Glow Buttons with Shimmer Reflection */
         .btn-gradient {
+            position: relative;
+            overflow: hidden;
             background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
             box-shadow: 0 4px 20px rgba(79, 70, 229, 0.35);
-            transition: all 0.25s ease;
+            transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        .btn-gradient::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -150%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+            transform: skewX(-20deg);
+            transition: left 0.75s ease;
+            pointer-events: none;
+        }
+        .btn-gradient:hover::before {
+            left: 150%;
         }
         .btn-gradient:hover {
-            box-shadow: 0 8px 32px rgba(99, 102, 241, 0.7), 0 0 15px rgba(168, 85, 247, 0.5);
-            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(99, 102, 241, 0.75), 0 0 20px rgba(168, 85, 247, 0.6);
+            transform: translateY(-2px) scale(1.02);
         }
         .btn-gradient:active {
             transform: translateY(0) scale(0.98);
         }
 
         .btn-outline {
-            border: 1px solid rgba(99, 102, 241, 0.3);
-            background: rgba(99, 102, 241, 0.05);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(99, 102, 241, 0.35);
+            background: rgba(99, 102, 241, 0.08);
             backdrop-filter: blur(10px);
-            transition: all 0.25s ease;
+            transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        .btn-outline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -150%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(129, 140, 248, 0.25), transparent);
+            transform: skewX(-20deg);
+            transition: left 0.75s ease;
+            pointer-events: none;
+        }
+        .btn-outline:hover::before {
+            left: 150%;
         }
         .btn-outline:hover {
             border-color: #818cf8;
-            background: rgba(99, 102, 241, 0.2);
-            box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
-            transform: translateY(-2px);
+            background: rgba(99, 102, 241, 0.22);
+            box-shadow: 0 0 24px rgba(99, 102, 241, 0.4), inset 0 0 12px rgba(129, 140, 248, 0.15);
+            transform: translateY(-2px) scale(1.02);
         }
         html:not(.dark) .btn-outline {
-            border-color: rgba(99, 102, 241, 0.3);
-            background: rgba(255, 255, 255, 0.6);
+            border-color: rgba(99, 102, 241, 0.35);
+            background: rgba(255, 255, 255, 0.75);
+        }
+        .btn-outline i, .btn-gradient i {
+            transition: transform 0.25s ease;
+        }
+        .btn-outline:hover i.fa-arrow-right, .btn-gradient:hover i.fa-arrow-right {
+            transform: translateX(4px);
+        }
+        .btn-outline:hover i.fa-arrow-down, .btn-gradient:hover i.fa-arrow-down {
+            transform: translateY(3px);
         }
 
         /* Neon Glowing Gradient Text with Shimmer Animation */
@@ -771,7 +815,14 @@
         .neon-cursor-ring.active { width:54px; height:54px; margin:-27px 0 0 -27px; border-color:#f472b6; box-shadow:0 0 18px #f472b6; }
         
         /* ===== Extras: spotlight, marquee, loader, gallery, faq, floating ===== */
-        .glass-card { background-image: radial-gradient(320px circle at var(--mx,-999px) var(--my,-999px), rgba(129,140,248,.18), transparent 60%); will-change: transform; }
+        .glass-card { background-image: radial-gradient(400px circle at var(--mx,-999px) var(--my,-999px), rgba(168,85,247,.22), rgba(129,140,248,.12) 40%, transparent 70%); will-change: transform; }
+        .bento-dot-grid {
+            background-image: radial-gradient(rgba(129, 140, 248, 0.14) 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+        html:not(.dark) .bento-dot-grid {
+            background-image: radial-gradient(rgba(99, 102, 241, 0.08) 1px, transparent 1px);
+        }
         #bgParticles { position:fixed; inset:0; z-index:0; pointer-events:none; }
         #pageLoader { position:fixed; inset:0; z-index:100000; background:#050817; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:18px; transition:opacity .6s ease, visibility .6s ease; }
         #pageLoader.done { opacity:0; visibility:hidden; }
@@ -1058,7 +1109,8 @@
                             <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-80"></span>
                             <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400 shadow-[0_0_8px_#34d399]"></span>
                         </span>
-                        <span class="drop-shadow-[0_0_8px_rgba(52,211,153,0.5)]">Available for Projects</span>
+                        <span class="drop-shadow-[0_0_8px_rgba(52,211,153,0.5)]">Available for Projects &amp; Operations</span>
+                        <span class="hidden sm:inline text-emerald-300/80 font-normal text-xs">&bull; 24/48h Delivery</span>
                     </div>
 
                     <!-- Location & Live Clock Pill -->
@@ -1256,7 +1308,7 @@
         </section>
 
         <!-- ==================== FREELANCE TYPING & DOCUMENT PROCESSING ==================== -->
-        <section id="typing-services" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 relative">
+        <section id="typing-services" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 relative bento-dot-grid rounded-3xl">
             <!-- Header -->
             <div class="text-center max-w-3xl mx-auto mb-14">
                 <span class="section-tag neon-glow-badge">Freelance Typing</span>
@@ -1817,7 +1869,7 @@
         </section>
 
         <!-- ==================== PROJECTS SECTION ==================== -->
-        <section id="projects" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <section id="projects" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative bento-dot-grid rounded-3xl">
             <div class="text-center max-w-2xl mx-auto mb-16">
                 <span class="section-tag neon-glow-badge">02 / Portfolio</span>
                 <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight neon-glow-heading">Featured Projects</h2>
