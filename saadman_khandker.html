@@ -123,6 +123,43 @@
             box-shadow: 0 12px 32px rgba(79,70,229,0.12), 0 2px 8px rgba(0,0,0,0.06);
         }
 
+        /* ===== UI/UX PRO MAX INTELLIGENCE ENHANCEMENTS ===== */
+        /* 1. Resilient Line Balancing */
+        h1, h2, h3, h4, .section-heading {
+            text-wrap: balance;
+            -webkit-text-wrap: balance;
+        }
+
+        /* 2. Accessible Focus Indicator */
+        :focus-visible {
+            outline: 2px solid #818cf8 !important;
+            outline-offset: 2px !important;
+            border-radius: 8px;
+        }
+
+        /* 3. Respect Reduced Motion */
+        @media (prefers-reduced-motion: reduce) {
+            *, ::before, ::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+            .glow-dot, .login-logo-ring {
+                animation: none !important;
+            }
+        }
+
+        /* 4. Touch Targets & Interaction Polish */
+        .cursor-pointer, .tab-btn, .btn-primary, .btn-ghost, button, a {
+            cursor: pointer;
+        }
+
+        /* 5. Resilient Badges & Chips */
+        .stat-card span, [class*="rounded-full"][class*="text-[10px]"], [class*="rounded-full"][class*="text-[11px]"] {
+            white-space: nowrap;
+        }
+
         /* ===== GLOW BADGE ===== */
         .glow-dot {
             box-shadow: 0 0 0 3px rgba(16,185,129,0.25), 0 0 8px rgba(16,185,129,0.4);

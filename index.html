@@ -181,6 +181,51 @@
             color: #0f172a;
         }
 
+        /* ===== UI/UX PRO MAX INTELLIGENCE ENHANCEMENTS ===== */
+        /* 1. Resilient Typography & Line Balancing (Anti-Orphan) */
+        h1, h2, h3, h4, .section-heading, .neon-glow-heading {
+            text-wrap: balance;
+            -webkit-text-wrap: balance;
+        }
+        p, .prose, .hero-bio {
+            text-wrap: pretty;
+        }
+
+        /* 2. Accessible Focus Indicator (WCAG 2.1 AA) */
+        :focus-visible {
+            outline: 2px solid #818cf8 !important;
+            outline-offset: 3px !important;
+            border-radius: 8px;
+        }
+
+        /* 3. Respect Reduced Motion */
+        @media (prefers-reduced-motion: reduce) {
+            *, ::before, ::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+            .aurora-blob, .live-dot, .glow-dot, .gradient-text {
+                animation: none !important;
+            }
+        }
+
+        /* 4. Touch Targets & Interaction Polish */
+        .cursor-pointer, .glass-card, .btn-gradient, .btn-outline, button, a {
+            cursor: pointer;
+        }
+        @media (max-width: 640px) {
+            .btn-gradient, .btn-outline, #mobileMenu a, button[type="button"], button[type="submit"] {
+                min-height: 44px;
+            }
+        }
+
+        /* 5. Resilient Badges & Chips (Prevents awkward word splits on mobile) */
+        .section-tag, .neon-glow-badge, [class*="rounded-full"][class*="text-xs"], [class*="rounded-xl"][class*="text-xs"][class*="font-mono"] {
+            white-space: nowrap;
+        }
+
         /* Aurora Mesh Gradient Background */
         .aurora-bg {
             position: fixed;
