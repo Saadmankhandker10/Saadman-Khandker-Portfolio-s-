@@ -877,15 +877,33 @@
         .marquee-item { font-weight:800; font-size:1.05rem; white-space:nowrap; color:#c7d2fe; text-shadow:0 0 10px rgba(129,140,248,.8); display:inline-flex; align-items:center; gap:48px; }
         .marquee-item::after { content:'\2726'; color:#f472b6; text-shadow:0 0 10px #f472b6; }
         @keyframes marqueeMove { to { transform:translateX(-50%); } }
-        .gallery-grid { columns:2; column-gap:14px; }
-        @media (min-width:768px) { .gallery-grid { columns:3; } }
-        @media (min-width:1024px) { .gallery-grid { columns:4; } }
-        .gallery-grid img { width:100%; margin-bottom:14px; border-radius:18px; cursor:zoom-in; border:1px solid rgba(129,140,248,.25); transition:transform .3s, box-shadow .3s; break-inside:avoid; }
-        .gallery-grid img:hover { transform:scale(1.03); box-shadow:0 0 22px rgba(192,132,252,.6); }
-        #lightbox { position:fixed; inset:0; z-index:100001; background:rgba(3,5,15,.92); display:none; align-items:center; justify-content:center; padding:20px; }
+        .gallery-grid { columns:2; column-gap:16px; }
+        @media (min-width:768px) { .gallery-grid { columns:3; column-gap:18px; } }
+        @media (min-width:1024px) { .gallery-grid { columns:4; column-gap:20px; } }
+        .gallery-grid img {
+            width: 100%;
+            height: auto;
+            display: block;
+            margin-bottom: 18px;
+            border-radius: 18px;
+            cursor: zoom-in;
+            border: 1px solid rgba(129, 140, 248, 0.25);
+            background: rgba(15, 23, 42, 0.6);
+            transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+            break-inside: avoid;
+            box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.5);
+        }
+        .gallery-grid img:hover {
+            transform: scale(1.03) translateY(-2px);
+            border-color: rgba(192, 132, 252, 0.7);
+            box-shadow: 0 0 28px rgba(192, 132, 252, 0.5);
+        }
+        #lightbox { position:fixed; inset:0; z-index:100001; background:rgba(3,5,15,.94); display:none; align-items:center; justify-content:center; padding:20px; backdrop-filter:blur(8px); }
         #lightbox.open { display:flex; }
-        #lightbox img { max-width:94vw; max-height:88vh; border-radius:16px; box-shadow:0 0 40px rgba(192,132,252,.5); }
-        #lightbox button { position:absolute; color:#fff; font-size:2rem; background:none; border:none; padding:10px 16px; text-shadow:0 0 12px #c084fc; }
+        #lightbox img { max-width:92vw; max-height:86vh; border-radius:18px; box-shadow:0 0 50px rgba(192,132,252,.6); border:1px solid rgba(255,255,255,.15); }
+        #lightbox button { position:absolute; color:#fff; font-size:2.2rem; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.15); border-radius:12px; padding:8px 18px; cursor:pointer; text-shadow:0 0 12px #c084fc; transition:all .2s; }
+        #lightbox button:hover { background:rgba(255,255,255,.2); transform:scale(1.08); }
+        #lbClose { top:24px; right:24px; font-size:1.8rem; }
         .faq-item { border:1px solid rgba(129,140,248,.25); border-radius:18px; overflow:hidden; }
         .faq-q { width:100%; text-align:left; padding:18px 22px; font-weight:700; display:flex; justify-content:space-between; align-items:center; gap:12px; }
         .faq-a { max-height:0; overflow:hidden; transition:max-height .4s ease; padding:0 22px; color:#94a3b8; font-size:.95rem; }
@@ -1092,6 +1110,7 @@
                     <a href="#experience" class="px-3.5 py-1.5 rounded-full text-xs font-semibold hover:text-brand-400 hover:bg-white/5 transition">Experience</a>
                     <a href="#projects" class="px-3.5 py-1.5 rounded-full text-xs font-semibold hover:text-brand-400 hover:bg-white/5 transition">Projects</a>
                     <a href="#skills" class="px-3.5 py-1.5 rounded-full text-xs font-semibold hover:text-brand-400 hover:bg-white/5 transition">Skills</a>
+                    <a href="#gallery" class="px-3.5 py-1.5 rounded-full text-xs font-semibold text-pink-300 hover:text-pink-200 hover:bg-white/5 transition flex items-center gap-1"><i class="fa-solid fa-camera-retro text-[10px]"></i><span>Gallery</span></a>
                     <a href="#contact" class="px-3.5 py-1.5 rounded-full text-xs font-semibold hover:text-brand-400 hover:bg-white/5 transition">Contact</a>
                     <a id="navResumeLink" href="#" target="_blank" rel="noopener" class="hidden px-3.5 py-1.5 rounded-full text-xs font-semibold text-rose-300 border border-rose-500/30 bg-rose-500/10 hover:bg-rose-500/20 transition flex items-center gap-1.5"><i class="fa-solid fa-file-pdf text-[10px]"></i><span>Resume</span></a>
                 </nav>
@@ -1126,6 +1145,7 @@
             <a href="#experience" class="block px-4 py-2.5 rounded-xl text-sm font-semibold hover:bg-brand-500/10 hover:text-brand-400 transition flex items-center gap-2.5"><i class="fa-solid fa-user-tie text-xs text-cyan-400 w-4"></i><span>Experience</span></a>
             <a href="#projects" class="block px-4 py-2.5 rounded-xl text-sm font-semibold hover:bg-brand-500/10 hover:text-brand-400 transition flex items-center gap-2.5"><i class="fa-solid fa-laptop-code text-xs text-emerald-400 w-4"></i><span>Projects</span></a>
             <a href="#skills" class="block px-4 py-2.5 rounded-xl text-sm font-semibold hover:bg-brand-500/10 hover:text-brand-400 transition flex items-center gap-2.5"><i class="fa-solid fa-wand-magic-sparkles text-xs text-amber-400 w-4"></i><span>Skills</span></a>
+            <a href="#gallery" class="block px-4 py-2.5 rounded-xl text-sm font-semibold hover:bg-brand-500/10 hover:text-pink-400 transition flex items-center gap-2.5"><i class="fa-solid fa-camera-retro text-xs text-pink-400 w-4"></i><span>Gallery</span></a>
             <a href="#contact" class="block px-4 py-2.5 rounded-xl text-sm font-semibold hover:bg-brand-500/10 hover:text-brand-400 transition flex items-center gap-2.5"><i class="fa-solid fa-envelope text-xs text-rose-400 w-4"></i><span>Contact</span></a>
             <a id="mobileResumeLink" href="#" target="_blank" rel="noopener" class="hidden px-4 py-2.5 rounded-xl text-sm font-semibold text-rose-300 hover:bg-rose-500/10 transition flex items-center gap-2.5"><i class="fa-solid fa-file-pdf text-xs text-rose-400 w-4"></i><span>Download Resume</span></a>
         </div>
@@ -1940,7 +1960,18 @@
                 <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight neon-glow-heading">Gallery</h2>
                 <p class="text-slate-400 mt-3 text-sm sm:text-base">Glimpses from volunteering, events and work. Click any photo to enlarge.</p>
             </div>
-            <div id="galleryGrid" class="gallery-grid"></div>
+            <div id="galleryGrid" class="gallery-grid">
+                <img loading="lazy" decoding="async" src="./public/FB_IMG_1711641936781.jpg" alt="Saadman Khandker volunteering moment 1" data-i="0">
+                <img loading="lazy" decoding="async" src="./public/FB_IMG_1733546681910.jpg" alt="Saadman Khandker event moment 2" data-i="1">
+                <img loading="lazy" decoding="async" src="./public/IMG-20241216-WA0053.jpg" alt="Saadman Khandker work moment 3" data-i="2">
+                <img loading="lazy" decoding="async" src="./public/received_746920023816042.jpeg" alt="Saadman Khandker team activity 4" data-i="3">
+                <img loading="lazy" decoding="async" src="./public/received_3625859141035826.jpeg" alt="Saadman Khandker community work 5" data-i="4">
+                <img loading="lazy" decoding="async" src="./public/IMG_20240209_195403_739.webp" alt="Saadman Khandker session moment 6" data-i="5">
+                <img loading="lazy" decoding="async" src="./public/IMG-20240209-WA0057.jpg" alt="Saadman Khandker volunteering drive 7" data-i="6">
+                <img loading="lazy" decoding="async" src="./public/FB_IMG_1711473777649.jpg" alt="Saadman Khandker field work 8" data-i="7">
+                <img loading="lazy" decoding="async" src="./public/1707486322179.jpg" alt="Saadman Khandker youth engagement 9" data-i="8">
+                <img loading="lazy" decoding="async" src="./public/received_1040871893666925.jpeg" alt="Saadman Khandker team group 10" data-i="9">
+            </div>
         </section>
 
         <!-- Certifications (shown only when entries are added) -->
@@ -3707,20 +3738,67 @@
 
         // Gallery + lightbox
         (function () {
-            const grid = document.getElementById('galleryGrid'); let imgs = [], cur = 0;
+            const grid = document.getElementById('galleryGrid');
+            if (!grid) return;
             const lb = document.getElementById('lightbox'), lbImg = document.getElementById('lbImg');
-            const show = i => { cur = (i + imgs.length) % imgs.length; lbImg.src = imgs[cur]; lb.classList.add('open'); };
-            fetch('./public/project-gallery.json').then(r => r.json()).then(d => {
-                imgs = d.images || [];
-                grid.innerHTML = imgs.map((s, i) => '<img loading="lazy" src="' + s + '" alt="Gallery photo ' + (i + 1) + '" data-i="' + i + '">').join('');
-                if (!imgs.length) document.getElementById('gallery').classList.add('hidden');
-            }).catch(() => document.getElementById('gallery').classList.add('hidden'));
-            grid.addEventListener('click', e => { if (e.target.dataset.i) show(+e.target.dataset.i); });
-            document.getElementById('lbClose').onclick = () => lb.classList.remove('open');
-            document.getElementById('lbPrev').onclick = () => show(cur - 1);
-            document.getElementById('lbNext').onclick = () => show(cur + 1);
-            lb.addEventListener('click', e => { if (e.target === lb) lb.classList.remove('open'); });
-            addEventListener('keydown', e => { if (!lb.classList.contains('open')) return; if (e.key === 'Escape') lb.classList.remove('open'); if (e.key === 'ArrowLeft') show(cur - 1); if (e.key === 'ArrowRight') show(cur + 1); });
+            
+            const fallbackImages = [
+                './public/FB_IMG_1711641936781.jpg',
+                './public/FB_IMG_1733546681910.jpg',
+                './public/IMG-20241216-WA0053.jpg',
+                './public/received_746920023816042.jpeg',
+                './public/received_3625859141035826.jpeg',
+                './public/IMG_20240209_195403_739.webp',
+                './public/IMG-20240209-WA0057.jpg',
+                './public/FB_IMG_1711473777649.jpg',
+                './public/1707486322179.jpg',
+                './public/received_1040871893666925.jpeg'
+            ];
+
+            let imgs = Array.from(grid.querySelectorAll('img')).map(el => el.getAttribute('src')).filter(Boolean);
+            if (!imgs.length) {
+                imgs = fallbackImages;
+                grid.innerHTML = imgs.map((s, i) => `<img loading="lazy" decoding="async" src="${s}" alt="Gallery photo ${i + 1}" data-i="${i}">`).join('');
+            }
+            let cur = 0;
+
+            const show = i => {
+                if (!imgs.length || !lb || !lbImg) return;
+                cur = (i + imgs.length) % imgs.length;
+                lbImg.src = imgs[cur];
+                lb.classList.add('open');
+            };
+
+            // Dynamic fetch fallback without hiding on network error
+            fetch('./public/project-gallery.json')
+                .then(r => r.json())
+                .then(d => {
+                    if (d && Array.isArray(d.images) && d.images.length) {
+                        imgs = d.images;
+                        grid.innerHTML = imgs.map((s, i) => `<img loading="lazy" decoding="async" src="${s}" alt="Gallery photo ${i + 1}" data-i="${i}">`).join('');
+                    }
+                })
+                .catch(() => {
+                    // Do not hide gallery on fetch error; keep rendered photos visible
+                });
+
+            grid.addEventListener('click', e => {
+                const img = e.target.closest('img');
+                if (img && img.dataset.i !== undefined) {
+                    show(parseInt(img.dataset.i, 10));
+                }
+            });
+
+            if (document.getElementById('lbClose')) document.getElementById('lbClose').onclick = () => lb && lb.classList.remove('open');
+            if (document.getElementById('lbPrev')) document.getElementById('lbPrev').onclick = () => show(cur - 1);
+            if (document.getElementById('lbNext')) document.getElementById('lbNext').onclick = () => show(cur + 1);
+            if (lb) lb.addEventListener('click', e => { if (e.target === lb) lb.classList.remove('open'); });
+            addEventListener('keydown', e => {
+                if (!lb || !lb.classList.contains('open')) return;
+                if (e.key === 'Escape') lb.classList.remove('open');
+                if (e.key === 'ArrowLeft') show(cur - 1);
+                if (e.key === 'ArrowRight') show(cur + 1);
+            });
         })();
 
         // Certifications & testimonials (only if data present)
