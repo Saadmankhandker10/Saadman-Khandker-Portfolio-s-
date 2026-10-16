@@ -110,12 +110,13 @@
     }
     </script>
     
-    <!-- Google Fonts: Plus Jakarta Sans & Space Mono -->
+    <!-- Google Fonts: Plus Jakarta Sans, Syne, Instrument Serif & Space Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preload" as="image" href="./public/img.png" fetchpriority="high">
     <link rel="preload" as="image" href="./public/img.jpg" fetchpriority="high">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     
     <!-- Tailwind CSS -->
@@ -127,6 +128,8 @@
                 extend: {
                     fontFamily: {
                         sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        display: ['"Syne"', '"Plus Jakarta Sans"', 'sans-serif'],
+                        serif: ['"Instrument Serif"', 'Georgia', 'serif'],
                         mono: ['"Space Mono"', 'monospace'],
                     },
                     colors: {
@@ -1099,11 +1102,222 @@
             color: #ffffff;
             box-shadow: 0 0 15px rgba(192, 132, 252, 0.4);
         }
+
+        /* ===== CINEMATIC EDITORIAL & REAL-HUMAN LIVING PORTRAIT SYSTEM ===== */
+        #cinematicPortraitStage {
+            position: fixed;
+            inset: 0;
+            z-index: 3;
+            pointer-events: none;
+            overflow: hidden;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+        }
+        #livingPortraitRig {
+            position: relative;
+            width: min(56vw, 660px);
+            height: min(92vh, 860px);
+            will-change: transform, opacity, filter;
+            transform-origin: center bottom;
+            transition: opacity 0.35s ease;
+            mask-image: radial-gradient(ellipse 78% 84% at 50% 48%, #000 58%, rgba(0,0,0,0.65) 76%, transparent 98%),
+                        linear-gradient(to top, transparent 0%, #000 14%, #000 92%, transparent 100%);
+            -webkit-mask-image: radial-gradient(ellipse 78% 84% at 50% 48%, #000 58%, rgba(0,0,0,0.65) 76%, transparent 98%),
+                                linear-gradient(to top, transparent 0%, #000 14%, #000 92%, transparent 100%);
+            mask-composite: intersect;
+            -webkit-mask-composite: source-in;
+        }
+        #livingPortraitCanvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+        /* Studio Rim Aura behind the Living Portrait */
+        #livingPortraitAura {
+            position: absolute;
+            inset: 12% 18% 10% 18%;
+            border-radius: 9999px;
+            background: radial-gradient(circle at 50% 38%, rgba(255, 42, 95, 0.14), rgba(99, 102, 241, 0.12) 45%, transparent 72%);
+            filter: blur(48px);
+            z-index: -1;
+            pointer-events: none;
+            transition: transform 0.4s ease, opacity 0.4s ease;
+        }
+        @media (max-width: 1023px) {
+            #livingPortraitRig {
+                width: min(88vw, 460px);
+                height: min(72vh, 580px);
+            }
+        }
+        html:not(.dark) #cinematicPortraitStage {
+            opacity: 0.22 !important;
+            mix-blend-mode: multiply;
+        }
+
+        /* Editorial Mixed-Font Typography (Luxury Studio Aesthetic) */
+        .editorial-display {
+            font-family: 'Syne', 'Plus Jakarta Sans', sans-serif;
+            font-weight: 800;
+            letter-spacing: -0.035em;
+            line-height: 0.96;
+            text-transform: uppercase;
+        }
+        .editorial-serif {
+            font-family: 'Instrument Serif', Georgia, serif;
+            font-style: italic;
+            font-weight: 400;
+            letter-spacing: 0.01em;
+            text-transform: none;
+            color: #e2e8f0;
+        }
+        html:not(.dark) .editorial-serif {
+            color: #334155;
+        }
+        .crimson-dot {
+            color: #ff2a5f;
+            text-shadow: 0 0 18px rgba(255, 42, 95, 0.65);
+            display: inline-block;
+            margin-left: 2px;
+        }
+        .editorial-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.65rem;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: #94a3b8;
+        }
+        .editorial-eyebrow .idx {
+            color: #ff2a5f;
+            font-weight: 700;
+            text-shadow: 0 0 12px rgba(255, 42, 95, 0.5);
+        }
+        .editorial-eyebrow .line {
+            width: 28px;
+            height: 1px;
+            background: linear-gradient(90deg, #ff2a5f, rgba(255, 255, 255, 0.2));
+        }
+
+        /* Editorial Buttons (from Reel) */
+        .editorial-btn-white {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.65rem;
+            padding: 0.9rem 1.65rem;
+            background: #f8fafc;
+            color: #060913;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.76rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            border: 1px solid #f8fafc;
+            border-radius: 4px;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 10px 30px -8px rgba(248, 250, 252, 0.35);
+        }
+        .editorial-btn-white:hover {
+            background: #ff2a5f;
+            color: #ffffff;
+            border-color: #ff2a5f;
+            transform: translateY(-2px);
+            box-shadow: 0 14px 34px -6px rgba(255, 42, 95, 0.55);
+        }
+        .editorial-btn-ghost {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            padding: 0.9rem 1.5rem;
+            background: rgba(15, 23, 42, 0.55);
+            backdrop-filter: blur(12px);
+            color: #f1f5f9;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 4px;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .editorial-btn-ghost:hover {
+            border-color: #ff2a5f;
+            color: #ffffff;
+            background: rgba(255, 42, 95, 0.12);
+            transform: translateY(-2px);
+        }
+
+        /* Editorial Hairline KPI Counter & Ledger Rows */
+        .editorial-kpi-card {
+            border-top: 1px solid rgba(255, 255, 255, 0.14);
+            padding-top: 1.15rem;
+            position: relative;
+            transition: border-color 0.3s ease, transform 0.3s ease;
+        }
+        .editorial-kpi-card::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: 0;
+            width: 28px;
+            height: 2px;
+            background: #ff2a5f;
+            box-shadow: 0 0 10px #ff2a5f;
+            transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .editorial-kpi-card:hover::before {
+            width: 100%;
+        }
+        .editorial-ledger-row {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1.5rem 0.75rem;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+        }
+        .editorial-ledger-row:last-child {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .editorial-ledger-row:hover {
+            background: linear-gradient(90deg, rgba(255, 42, 95, 0.06), rgba(56, 189, 248, 0.03), transparent);
+            padding-left: 1.25rem;
+            border-top-color: rgba(255, 42, 95, 0.4);
+        }
+        .editorial-tag-pill {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.35rem 0.85rem;
+            border-radius: 4px;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.72rem;
+            color: #e2e8f0;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.25s ease;
+        }
+        .editorial-tag-pill:hover {
+            border-color: #ff2a5f;
+            color: #ffffff;
+            background: rgba(255, 42, 95, 0.14);
+            transform: translateY(-2px);
+        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col relative selection:bg-brand-500 selection:text-white">
 <div id="pageLoader"><div class="loader-hello">Welcome to the portfolio of</div><div class="loader-logo">Khandker Saadman Rafid</div><div class="loader-tag">Where precision meets passion &#10022; Service &#10022; Design &#10022; Impact</div><div class="loader-bar"></div></div>
 <canvas id="bgParticles"></canvas>
+    <!-- Scroll-Synced Real-Human Living Portrait Stage (Hero Right -> About Left -> Content Right) -->
+    <div id="cinematicPortraitStage" aria-hidden="true">
+        <div id="livingPortraitRig">
+            <div id="livingPortraitAura"></div>
+            <canvas id="livingPortraitCanvas"></canvas>
+        </div>
+    </div>
     <!-- Project Case Study Modal -->
     <div id="projectModal" class="fixed inset-0 z-[100002] bg-dark-950/85 backdrop-blur-xl hidden flex items-center justify-center p-4 sm:p-6 overflow-y-auto" role="dialog" aria-modal="true">
         <div class="relative w-full max-w-3xl glass-card rounded-3xl p-6 sm:p-10 border border-brand-500/30 shadow-2xl my-auto animate-modalIn">
@@ -1210,6 +1424,7 @@
                 <!-- Desktop Navigation Links -->
                 <nav class="hidden md:flex items-center gap-1 bg-white/5 dark:bg-dark-800/60 p-1.5 rounded-full border border-white/10 dark:border-brand-500/20 backdrop-blur-md">
                     <a href="#home" class="px-3.5 py-1.5 rounded-full text-xs font-semibold hover:text-brand-400 hover:bg-white/5 transition">Home</a>
+                    <a href="#about" class="px-3.5 py-1.5 rounded-full text-xs font-semibold hover:text-rose-400 hover:bg-white/5 transition">About</a>
                     <a href="#services" class="px-3.5 py-1.5 rounded-full text-xs font-semibold hover:text-brand-400 hover:bg-white/5 transition">Services</a>
                     <a href="#typing-services" class="px-3.5 py-1.5 rounded-full text-xs font-semibold text-brand-300 bg-brand-500/10 border border-brand-500/30 hover:text-brand-200 hover:bg-brand-500/20 transition flex items-center gap-1.5"><i class="fa-solid fa-keyboard text-[10px]"></i><span>Typing</span></a>
                     <a href="#workflow" class="px-3.5 py-1.5 rounded-full text-xs font-semibold hover:text-brand-400 hover:bg-white/5 transition">Workflow</a>
@@ -1246,6 +1461,7 @@
         <!-- Mobile Menu Dropdown -->
         <div id="mobileMenu" class="hidden md:hidden border-t border-white/10 px-4 pt-3 pb-6 space-y-1.5 bg-dark-950/95 backdrop-blur-2xl shadow-2xl transition-all duration-300">
             <a href="#home" class="block px-4 py-2.5 rounded-xl text-sm font-semibold hover:bg-brand-500/10 hover:text-brand-400 transition flex items-center gap-2.5"><i class="fa-solid fa-house text-xs text-brand-400 w-4"></i><span>Home</span></a>
+            <a href="#about" class="block px-4 py-2.5 rounded-xl text-sm font-semibold hover:bg-brand-500/10 hover:text-rose-400 transition flex items-center gap-2.5"><i class="fa-solid fa-user-astronaut text-xs text-rose-400 w-4"></i><span>About Me</span></a>
             <a href="#services" class="block px-4 py-2.5 rounded-xl text-sm font-semibold hover:bg-brand-500/10 hover:text-brand-400 transition flex items-center gap-2.5"><i class="fa-solid fa-briefcase text-xs text-brand-400 w-4"></i><span>Services</span></a>
             <a href="#typing-services" class="block px-4 py-2.5 rounded-xl text-sm font-semibold text-brand-300 hover:bg-brand-500/10 transition flex items-center gap-2.5"><i class="fa-solid fa-keyboard text-xs text-pink-400 w-4"></i><span>Typing &amp; Retyping</span></a>
             <a href="#workflow" class="block px-4 py-2.5 rounded-xl text-sm font-semibold hover:bg-brand-500/10 hover:text-brand-400 transition flex items-center gap-2.5"><i class="fa-solid fa-diagram-project text-xs text-brand-400 w-4"></i><span>4-Step Workflow</span></a>
@@ -1264,11 +1480,17 @@
     <!-- Main Content Container -->
     <main class="flex-grow pt-24 z-10 relative">
 
-        <!-- ==================== HERO SECTION ==================== -->
-        <section id="home" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-20 lg:py-32 flex flex-col-reverse lg:flex-row items-center justify-between gap-10 lg:gap-16">
+        <!-- ==================== HERO SECTION (CINEMATIC EDITORIAL) ==================== -->
+        <section id="home" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16 lg:py-24 min-h-[88vh] flex flex-col-reverse lg:flex-row items-center justify-between gap-10 lg:gap-12">
             
             <!-- Left Info Area -->
-            <div class="lg:w-7/12 space-y-6 sm:space-y-8 text-center lg:text-left">
+            <div class="lg:w-7/12 space-y-6 sm:space-y-7 text-center lg:text-left relative z-20">
+                <!-- Editorial Eyebrow Tag (Reel Style) -->
+                <div class="editorial-eyebrow justify-center lg:justify-start">
+                    <span class="line"></span>
+                    <span>TYPING &amp; OPERATIONS SPECIALIST &middot; DIGITAL CONTENT &amp; WEB ASSISTANCE</span>
+                </div>
+
                 <!-- Cyber HUD Global Status & Live Time Bar -->
                 <div class="cyber-hud-bar inline-flex flex-wrap items-center justify-center lg:justify-start gap-2 sm:gap-3 p-2 rounded-2xl max-w-full mx-auto lg:mx-0">
                     <!-- Live Availability Pill -->
@@ -1296,130 +1518,150 @@
                     </div>
                 </div>
 
-                <!-- Main Headline -->
+                <!-- Main Editorial Headline (Reel Style) -->
                 <div class="space-y-3 sm:space-y-4">
-                    <h1 class="text-3xl sm:text-5xl lg:text-7xl font-extrabold tracking-tight leading-[1.1] break-words">
-                        Hi, I'm <br class="hidden sm:inline" />
-                        <span id="heroName" class="gradient-text">Khandker Sadman Rafid Saad</span>
+                    <h1 class="editorial-display text-4xl sm:text-6xl lg:text-[4.65rem] text-white tracking-tight leading-[0.94] break-words">
+                        <span id="heroName">SAADMAN <br class="hidden sm:inline" />KHANDKER</span><span class="crimson-dot">.</span>
                     </h1>
-                    <div class="text-base sm:text-2xl font-bold neon-typing-line">
+                    <p class="text-xl sm:text-3xl font-light text-slate-200 tracking-tight leading-snug pt-1">
+                        Building flawless documents. <br class="hidden sm:inline" />
+                        <span class="editorial-serif text-2xl sm:text-4xl text-slate-300">Designing rapid operations.</span>
+                    </p>
+                    <div class="text-base sm:text-xl font-bold neon-typing-line">
                         <span class="text-slate-400">I'm a </span><span id="typingText" class="neon-typing-text"></span><span class="typing-caret">|</span>
                     </div>
-                    <p id="heroBio" class="text-sm sm:text-xl text-slate-400 dark:text-slate-300 max-w-2xl font-normal leading-relaxed mx-auto lg:mx-0">
-                        Professional typist &amp; operations specialist delivering 65+ WPM speed, 99.9% accuracy, flawless document formatting, and rapid turnaround for clients worldwide.
+                    <p id="heroBio" class="text-sm sm:text-base text-slate-400 dark:text-slate-300 max-w-xl font-normal leading-relaxed mx-auto lg:mx-0">
+                        Professional typist &amp; operations specialist (Khandker Sadman Rafid Saad) delivering 65+ WPM speed, 99.9% accuracy, flawless document formatting, and rapid turnaround for clients worldwide.
                     </p>
                 </div>
 
-                <!-- Call to Action Buttons -->
+                <!-- Editorial Call to Action Buttons -->
                 <div class="flex flex-wrap items-center justify-center lg:justify-start gap-3 sm:gap-4 pt-2">
-                    <a href="#typing-services" class="w-full sm:w-auto btn-gradient inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl text-sm font-bold text-white shadow-lg shadow-brand-500/25">
+                    <a href="#projects" class="w-full sm:w-auto editorial-btn-white">
+                        <span>EXPLORE MY WORK</span>
+                        <i class="fa-solid fa-arrow-right text-xs"></i>
+                    </a>
+                    <a href="#about" class="w-full sm:w-auto editorial-btn-ghost">
+                        <span>ABOUT ME</span>
+                    </a>
+                    <a href="#typing-services" class="w-full sm:w-auto btn-gradient inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-md text-xs font-mono font-bold uppercase tracking-wider text-white shadow-lg shadow-brand-500/25">
                         <i class="fa-solid fa-keyboard text-xs"></i>
                         <span>Hire for Typing</span>
                     </a>
-                    <a href="#contact" class="w-full sm:w-auto btn-outline inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl text-sm font-semibold">
-                        <span>Get In Touch</span>
-                        <i class="fa-solid fa-arrow-right text-xs"></i>
-                    </a>
-                    <a href="#projects" class="w-full sm:w-auto btn-outline inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl text-sm font-semibold">
-                        <span>View Work</span>
-                        <i class="fa-solid fa-layer-group text-xs text-brand-400"></i>
-                    </a>
-                    <a id="resumeLink" href="#" target="_blank" rel="noopener" class="hidden inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl text-sm font-bold bg-rose-500/10 border border-rose-500/30 text-rose-300 hover:bg-rose-500/20 hover:scale-[1.02] shadow-lg shadow-rose-500/10 transition group">
-                        <i class="fa-solid fa-file-pdf text-rose-400 group-hover:scale-110 transition-transform"></i>
+                    <a id="resumeLink" href="#" target="_blank" rel="noopener" class="hidden inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-md text-xs font-mono font-bold uppercase bg-rose-500/10 border border-rose-500/30 text-rose-300 hover:bg-rose-500/20 transition group">
+                        <i class="fa-solid fa-file-pdf text-rose-400"></i>
                         <span>Download Resume</span>
-                        <i class="fa-solid fa-arrow-down text-xs text-rose-400/80"></i>
                     </a>
                 </div>
 
                 <!-- Live Metrics Summary Pill -->
-                <div class="grid grid-cols-3 gap-2 sm:gap-4 pt-2 sm:pt-4 max-w-lg mx-auto lg:mx-0">
-                    <div class="glass-card p-2.5 sm:p-4 rounded-xl sm:rounded-2xl text-center">
-                        <span id="projectCount" class="block text-xl sm:text-3xl font-extrabold text-white gradient-text">1</span>
+                <div class="grid grid-cols-3 gap-4 sm:gap-6 pt-4 max-w-lg mx-auto lg:mx-0">
+                    <div class="editorial-kpi-card text-center lg:text-left">
+                        <span id="projectCount" class="block text-2xl sm:text-3xl font-extrabold text-white font-display">1</span>
                         <span class="text-[10px] sm:text-[11px] font-mono uppercase text-slate-400 tracking-wider">Projects</span>
                     </div>
-                    <div class="glass-card p-2.5 sm:p-4 rounded-xl sm:rounded-2xl text-center">
-                        <span id="experienceCount" class="block text-xl sm:text-3xl font-extrabold text-white gradient-text">2</span>
+                    <div class="editorial-kpi-card text-center lg:text-left">
+                        <span id="experienceCount" class="block text-2xl sm:text-3xl font-extrabold text-white font-display">2</span>
                         <span class="text-[10px] sm:text-[11px] font-mono uppercase text-slate-400 tracking-wider">Experience</span>
                     </div>
-                    <div class="glass-card p-2.5 sm:p-4 rounded-xl sm:rounded-2xl text-center">
-                        <span id="skillCount" class="block text-xl sm:text-3xl font-extrabold text-white gradient-text">4</span>
-                        <span class="text-[10px] sm:text-[11px] font-mono uppercase text-slate-400 tracking-wider">Skills</span>
+                    <div class="editorial-kpi-card text-center lg:text-left">
+                        <span id="skillCount" class="block text-2xl sm:text-3xl font-extrabold text-white font-display">4</span>
+                        <span class="text-[10px] sm:text-[11px] font-mono uppercase text-slate-400 tracking-wider">Core Domains</span>
                     </div>
                 </div>
             </div>
 
-            <!-- Right Avatar Area -->
-            <div class="lg:w-5/12 flex justify-center">
-                <div class="neon-border-box group">
-                    <!-- Image Card with Neon Frame & Holographic Shimmer -->
-                    <div class="relative w-72 sm:w-80 aspect-[3/4] rounded-3xl overflow-hidden border-2 border-indigo-500/40 bg-dark-900 shadow-2xl z-10 holo-card pro-3d-card">
-                        <img id="profileImage" src="./public/img.jpg" alt="Khandker Saadman Rafid" fetchpriority="high" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-                        <div class="holo-shimmer"></div>
-                        <div class="cyber-scanline"></div>
-                        <div class="absolute inset-0 bg-gradient-to-t from-dark-950/85 via-transparent to-transparent"></div>
-                        
-                        <!-- Floating Location & Live Status Pill -->
-                        <div class="absolute bottom-4 inset-x-4 p-3 rounded-2xl bg-dark-950/90 backdrop-blur-md border border-emerald-500/40 flex items-center justify-between shadow-xl">
-                            <div>
-                                <span class="block text-xs font-bold text-white flex items-center gap-1.5">
-                                    <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-                                    Saadman Rafid
-                                </span>
-                                <span class="block text-[11px] text-slate-300 font-medium mt-0.5">Dhaka, BD &bull; <span class="text-emerald-400 font-bold">LIVE</span> &bull; Response &lt; 30m</span>
-                            </div>
-                            <span class="w-3 h-3 rounded-full bg-emerald-400 ring-4 ring-emerald-500/30 animate-pulse"></span>
+            <!-- Right Living Portrait Stage Anchor (Desktop open stage for #cinematicPortraitStage, Mobile blended fallback) -->
+            <div class="lg:w-5/12 flex flex-col items-center justify-end min-h-[340px] sm:min-h-[420px] lg:min-h-[540px] relative">
+                <!-- Hidden/Blended SEO & Admin Image reference -->
+                <img id="profileImage" src="./public/img.png" alt="Khandker Saadman Rafid" fetchpriority="high" decoding="async" class="lg:opacity-0 w-72 sm:w-80 aspect-[3/4] object-cover rounded-3xl pointer-events-none select-none" style="mask-image: radial-gradient(ellipse 80% 85% at 50% 45%, #000 60%, transparent 98%); -webkit-mask-image: radial-gradient(ellipse 80% 85% at 50% 45%, #000 60%, transparent 98%);">
+                
+                <!-- Floating Location & Live Status Pill anchored below portrait -->
+                <div class="mt-4 lg:mt-auto p-3.5 px-5 rounded-2xl bg-dark-950/85 backdrop-blur-xl border border-white/10 hover:border-rose-500/40 transition-all flex items-center justify-between gap-5 shadow-2xl z-20 max-w-xs w-full">
+                    <div>
+                        <span class="block text-xs font-bold text-white flex items-center gap-1.5">
+                            <span class="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_#10b981]"></span>
+                            Khandker Sadman Rafid
+                        </span>
+                        <span class="block text-[11px] text-slate-300 font-mono mt-0.5">Dhaka, BD &bull; <span class="text-emerald-400 font-bold">LIVE</span> &bull; &lt; 30m</span>
+                    </div>
+                    <span class="w-2.5 h-2.5 rounded-full bg-rose-500 ring-4 ring-rose-500/25 animate-pulse"></span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== 01 / ABOUT (PORTRAIT GLIDES TO LEFT SIDE) ==================== -->
+        <section id="about" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28 relative z-20">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+                <!-- Left Column: Open Stage where Saadman's Living Portrait walks over from Right to Left! -->
+                <div class="hidden lg:flex lg:col-span-5 min-h-[520px] items-end justify-center relative">
+                    <div class="px-4 py-2 rounded-full bg-white/[0.03] border border-white/10 backdrop-blur-md text-[11px] font-mono text-slate-400 flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-rose-500 animate-ping"></span>
+                        <span>01 / INTERACTIVE LIVING PORTRAIT STAGE</span>
+                    </div>
+                </div>
+
+                <!-- Right Column: Editorial Story & Hairline KPI Grid (Reel 00:05 - 00:08) -->
+                <div class="lg:col-span-7 space-y-8 bg-dark-950/65 lg:bg-dark-950/45 backdrop-blur-md p-6 sm:p-10 rounded-3xl border border-white/[0.07]">
+                    <div class="space-y-3">
+                        <div class="editorial-eyebrow">
+                            <span class="idx">01</span>
+                            <span class="line"></span>
+                            <span>ABOUT</span>
+                        </div>
+                        <h2 class="text-3xl sm:text-5xl lg:text-6xl tracking-tight leading-[0.98]">
+                            <span class="editorial-display text-white">SPECIALIST</span>
+                            <span class="editorial-serif text-4xl sm:text-6xl lg:text-[4rem] block sm:inline sm:ml-2">in the making<span class="crimson-dot">.</span></span>
+                        </h2>
+                    </div>
+
+                    <div class="space-y-4 text-sm sm:text-base text-slate-300 leading-relaxed font-normal">
+                        <p>
+                            I'm <strong class="text-white font-semibold">Khandker Sadman Rafid Saad</strong> — a dedicated Operations Specialist, Web Assistant, and High-Speed Bilingual Typist based in Dhaka, Bangladesh. I specialize in turning complex, unstructured scanned manuscripts, handwritten notes, and raw questionnaires into publication-ready Microsoft Word documents and executive presentation decks.
+                        </p>
+                        <p>
+                            At <strong class="text-white font-semibold">Classvel</strong>, I handle web content maintenance, digital data formatting, and educational slide deck workflows. Previously at <strong class="text-white font-semibold">Agora Superstores</strong> and <strong class="text-white font-semibold">Meena Bazar</strong>, I honed strict operational discipline across retail POS systems, inventory control, and customer service precision.
+                        </p>
+                        <p>
+                            Beyond digital and retail operations, I serve as an active <strong class="text-white font-semibold">Volunteer Responder &amp; First Aider at the Bangladesh Red Crescent Society (BDRCS)</strong> — coordinating emergency relief drives, health camps, and rapid crisis response on the ground.
+                        </p>
+                    </div>
+
+                    <!-- 4 Editorial Hairline KPI Counters (Reel Style 2x2 / 4-col) -->
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-6 pt-4">
+                        <div class="editorial-kpi-card">
+                            <span class="block text-2xl sm:text-3xl font-extrabold text-white font-display tracking-tight">65+ WPM</span>
+                            <span class="block text-[10px] sm:text-[11px] font-mono uppercase text-slate-400 mt-1 tracking-wider">BILINGUAL TYPING SPEED</span>
+                        </div>
+                        <div class="editorial-kpi-card">
+                            <span class="block text-2xl sm:text-3xl font-extrabold text-white font-display tracking-tight">99.9%</span>
+                            <span class="block text-[10px] sm:text-[11px] font-mono uppercase text-slate-400 mt-1 tracking-wider">MANUAL ACCURACY RATE</span>
+                        </div>
+                        <div class="editorial-kpi-card">
+                            <span class="block text-2xl sm:text-3xl font-extrabold text-white font-display tracking-tight">100+</span>
+                            <span class="block text-[10px] sm:text-[11px] font-mono uppercase text-slate-400 mt-1 tracking-wider">DOCS &amp; DECKS DELIVERED</span>
+                        </div>
+                        <div class="editorial-kpi-card">
+                            <span class="block text-2xl sm:text-3xl font-extrabold text-white font-display tracking-tight">100%</span>
+                            <span class="block text-[10px] sm:text-[11px] font-mono uppercase text-slate-400 mt-1 tracking-wider">STRICT DATA PRIVACY</span>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- ==================== IMPACT HIGHLIGHTS COUNTERS ==================== -->
-        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-6 mb-16 relative z-20">
-            <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
-                <div class="glass-card pro-3d-card p-3.5 sm:p-6 rounded-2xl sm:rounded-3xl relative overflow-hidden group">
-                    <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 flex items-center justify-center text-base sm:text-lg mb-2 sm:mb-3 group-hover:scale-110 transition-transform">
-                        <i class="fa-solid fa-keyboard"></i>
-                    </div>
-                    <span class="block text-2xl sm:text-4xl font-extrabold text-white gradient-text">65+ WPM</span>
-                    <p class="text-[11px] sm:text-sm font-semibold text-slate-300 mt-1">Touch Typing Speed</p>
-                    <p class="text-[10px] sm:text-[11px] text-slate-400 mt-0.5 font-mono">Fast &amp; steady manual typing</p>
-                </div>
-
-                <div class="glass-card pro-3d-card p-3.5 sm:p-6 rounded-2xl sm:rounded-3xl relative overflow-hidden group">
-                    <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center text-base sm:text-lg mb-2 sm:mb-3 group-hover:scale-110 transition-transform">
-                        <i class="fa-solid fa-bullseye"></i>
-                    </div>
-                    <span class="block text-2xl sm:text-4xl font-extrabold text-white gradient-text">99.9%</span>
-                    <p class="text-[11px] sm:text-sm font-semibold text-slate-300 mt-1">Accuracy &amp; Proofreading</p>
-                    <p class="text-[10px] sm:text-[11px] text-slate-400 mt-0.5 font-mono">Zero typos &amp; clean Word format</p>
-                </div>
-
-                <div class="glass-card pro-3d-card p-3.5 sm:p-6 rounded-2xl sm:rounded-3xl relative overflow-hidden group">
-                    <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-purple-500/10 border border-purple-500/20 text-purple-400 flex items-center justify-center text-base sm:text-lg mb-2 sm:mb-3 group-hover:scale-110 transition-transform">
-                        <i class="fa-solid fa-file-word"></i>
-                    </div>
-                    <span class="block text-2xl sm:text-4xl font-extrabold text-white gradient-text">100+</span>
-                    <p class="text-[11px] sm:text-sm font-semibold text-slate-300 mt-1">Documents &amp; Decks</p>
-                    <p class="text-[10px] sm:text-[11px] text-slate-400 mt-0.5 font-mono">High accuracy digitization</p>
-                </div>
-
-                <div class="glass-card pro-3d-card p-3.5 sm:p-6 rounded-2xl sm:rounded-3xl relative overflow-hidden group">
-                    <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-pink-500/10 border border-pink-500/20 text-pink-400 flex items-center justify-center text-base sm:text-lg mb-2 sm:mb-3 group-hover:scale-110 transition-transform">
-                        <i class="fa-solid fa-shield-halved"></i>
-                    </div>
-                    <span class="block text-2xl sm:text-4xl font-extrabold text-white gradient-text">100%</span>
-                    <p class="text-[11px] sm:text-sm font-semibold text-slate-300 mt-1">Confidential &amp; Private</p>
-                    <p class="text-[10px] sm:text-[11px] text-slate-400 mt-0.5 font-mono">Strict client data protection</p>
-                </div>
-            </div>
-        </section>
-
         <!-- ==================== SERVICES / WHAT I DO ==================== -->
         <section id="services" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-            <div class="text-center max-w-2xl mx-auto mb-16">
-                <span class="section-tag neon-glow-badge">Expertise</span>
-                <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight neon-glow-heading">What I Bring to the Table</h2>
+            <div class="text-center lg:text-left max-w-3xl mb-16">
+                <div class="editorial-eyebrow mb-3">
+                    <span class="idx">02</span>
+                    <span class="line"></span>
+                    <span>EXPERTISE</span>
+                </div>
+                <h2 class="text-3xl sm:text-5xl lg:text-6xl tracking-tight">
+                    <span class="editorial-display text-white">CORE</span>
+                    <span class="editorial-serif text-4xl sm:text-6xl ml-2">capabilities<span class="crimson-dot">.</span></span>
+                </h2>
                 <p class="text-slate-400 mt-3 text-sm sm:text-base">Comprehensive services combining operational discipline, digital precision, and dedicated teamwork.</p>
             </div>
 
@@ -1479,10 +1721,13 @@
         <section id="typing-services" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 relative bento-dot-grid rounded-3xl">
             <!-- Header -->
             <div class="text-center max-w-3xl mx-auto mb-14">
-                <span class="section-tag neon-glow-badge">Freelance Typing</span>
-                <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight neon-glow-heading">Fast Typing &amp; Document Retyping</h2>
-                <p class="text-slate-400 mt-3 text-sm sm:text-base">High-speed, 99.9% accurate manual typing, scanned PDF conversion, and professional document formatting into Microsoft Word and Google Docs.</p>
-                <p class="text-slate-500 mt-2 text-xs sm:text-sm">Bangla Typing &amp; English Typing Service in Bangladesh &bull; বাংলা টাইপিং ও ইংরেজি টাইপিং সার্ভিস &bull; PDF/ছবি থেকে Word ফাইল</p>
+                <span class="editorial-eyebrow justify-center mb-3 inline-flex">03 &mdash; TYPING &amp; RETYPING</span>
+                <h2 class="text-4xl sm:text-5xl lg:text-6xl tracking-tight text-white">
+                    <span class="editorial-display">DOCUMENT</span>
+                    <span class="editorial-serif text-slate-200 ml-1">mastery</span><span class="crimson-dot">.</span>
+                </h2>
+                <p class="text-slate-300 mt-3 text-sm sm:text-base">High-speed, 99.9% accurate manual typing, scanned PDF conversion, and professional document formatting into Microsoft Word and Google Docs.</p>
+                <p class="text-slate-400 mt-2 text-xs sm:text-sm">Bangla Typing &amp; English Typing Service in Bangladesh &bull; বাংলা টাইপিং ও ইংরেজি টাইপিং সার্ভিস &bull; PDF/ছবি থেকে Word ফাইল</p>
             </div>
 
             <!-- Live Performance Metrics & Guarantee Bar -->
@@ -1661,8 +1906,11 @@
         <!-- ==================== RAPID DELIVERY WORKFLOW SECTION ==================== -->
         <section id="workflow" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative">
             <div class="text-center max-w-3xl mx-auto mb-16">
-                <span class="section-tag neon-glow-badge"><i class="fa-solid fa-diagram-project text-xs mr-1 text-brand-400"></i> 4-Step Delivery Roadmap</span>
-                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight neon-glow-heading">How I Work &amp; Deliver</h2>
+                <span class="editorial-eyebrow justify-center mb-3 inline-flex">04 &mdash; PROCESS</span>
+                <h2 class="text-4xl sm:text-5xl lg:text-6xl tracking-tight text-white">
+                    <span class="editorial-display">THE</span>
+                    <span class="editorial-serif text-slate-200 ml-1">workflow</span><span class="crimson-dot">.</span>
+                </h2>
                 <p class="text-slate-300 mt-3 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">A crystal-clear, 4-step process from initial file handover to flawless document delivery — zero stress, lightning turnaround, and guaranteed human precision.</p>
             </div>
 
@@ -1895,9 +2143,12 @@
                 <div class="marquee" aria-hidden="true"><div class="marquee-track" id="marqueeTrack"></div></div>
         <section id="experience" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
             <div class="text-center max-w-2xl mx-auto mb-10">
-                <span class="section-tag neon-glow-badge">01 / Career</span>
-                <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight neon-glow-heading">Work Experience</h2>
-                <p class="text-slate-400 mt-3 text-sm sm:text-base">A track record of high-performance operations, retail discipline, and active humanitarian response.</p>
+                <span class="editorial-eyebrow justify-center mb-3 inline-flex">05 &mdash; EXPERIENCE &amp; LEADERSHIP</span>
+                <h2 class="text-4xl sm:text-5xl lg:text-6xl tracking-tight text-white">
+                    <span class="editorial-display">THE</span>
+                    <span class="editorial-serif text-slate-200 ml-1">journey</span><span class="crimson-dot">.</span>
+                </h2>
+                <p class="text-slate-300 mt-3 text-sm sm:text-base">A track record of high-performance operations, retail discipline, and active humanitarian response.</p>
             </div>
 
             <!-- Interactive Experience Filter Tabs -->
@@ -2040,9 +2291,12 @@
         <!-- ==================== PROJECTS SECTION ==================== -->
         <section id="projects" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative bento-dot-grid rounded-3xl">
             <div class="text-center max-w-2xl mx-auto mb-16">
-                <span class="section-tag neon-glow-badge">02 / Portfolio</span>
-                <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight neon-glow-heading">Featured Projects</h2>
-                <p class="text-slate-400 mt-3 text-sm sm:text-base">Selected projects across digital content digitization, data formatting, and humanitarian leadership.</p>
+                <span class="editorial-eyebrow justify-center mb-3 inline-flex">06 &mdash; SELECTED PROJECTS</span>
+                <h2 class="text-4xl sm:text-5xl lg:text-6xl tracking-tight text-white">
+                    <span class="editorial-display">SELECTED</span>
+                    <span class="editorial-serif text-slate-200 ml-1">works</span><span class="crimson-dot">.</span>
+                </h2>
+                <p class="text-slate-300 mt-3 text-sm sm:text-base">Selected projects across digital content digitization, document formatting, and humanitarian leadership.</p>
             </div>
 
             <div id="projectsGrid" class="space-y-8">
@@ -2050,12 +2304,94 @@
             </div>
         </section>
 
-        <!-- ==================== SKILLS SECTION ==================== -->
-        <section id="skills" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-            <div class="text-center max-w-2xl mx-auto mb-16">
-                <span class="section-tag neon-glow-badge">03 / Competencies</span>
-                <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight neon-glow-heading">Skills & Capabilities</h2>
-                <p class="text-slate-400 mt-3 text-sm sm:text-base">Key technical tools and organizational competencies honed through operations and media work.</p>
+        <!-- ==================== SKILLS SECTION (TOOL KIT.) ==================== -->
+        <section id="skills" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative">
+            <div class="mb-14">
+                <span class="editorial-eyebrow mb-3">07 &mdash; SKILLS &amp; COMPETENCIES</span>
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+                    <h2 class="text-4xl sm:text-5xl lg:text-6xl tracking-tight text-white">
+                        <span class="editorial-display">TOOL</span>
+                        <span class="editorial-serif text-slate-200 ml-1">kit</span><span class="crimson-dot">.</span>
+                    </h2>
+                    <p class="text-slate-400 text-xs sm:text-sm max-w-md font-mono">
+                        Precision software, bilingual typography tools, and operational competencies refined across live projects.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Editorial Hairline Ledger Rows (Instagram Reel "TOOL kit." Architecture) -->
+            <div class="mb-14 border-t border-white/10">
+                <!-- Ledger Row 01 -->
+                <div class="editorial-ledger-row py-6 px-3 sm:px-5 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+                    <div class="flex items-center gap-4">
+                        <span class="text-xs font-mono font-bold text-rose-500">01</span>
+                        <h3 class="text-sm sm:text-base font-mono font-bold tracking-[0.18em] uppercase text-white">Document Typing &amp; Retyping</h3>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="editorial-tag-pill">MS Word (.docx)</span>
+                        <span class="editorial-tag-pill">Google Docs</span>
+                        <span class="editorial-tag-pill">Bijoy 52 (Bangla)</span>
+                        <span class="editorial-tag-pill">Avro Keyboard</span>
+                        <span class="editorial-tag-pill">Scanned PDF Retyping</span>
+                        <span class="editorial-tag-pill">Handwriting Digitization</span>
+                    </div>
+                </div>
+
+                <!-- Ledger Row 02 -->
+                <div class="editorial-ledger-row py-6 px-3 sm:px-5 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+                    <div class="flex items-center gap-4">
+                        <span class="text-xs font-mono font-bold text-rose-500">02</span>
+                        <h3 class="text-sm sm:text-base font-mono font-bold tracking-[0.18em] uppercase text-white">Presentation &amp; Editorial Layout</h3>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="editorial-tag-pill">MS PowerPoint</span>
+                        <span class="editorial-tag-pill">Pitch Deck Design</span>
+                        <span class="editorial-tag-pill">Academic Slide Decks</span>
+                        <span class="editorial-tag-pill">Dynamic TOC &amp; Margins</span>
+                        <span class="editorial-tag-pill">Print-Ready PDF Styling</span>
+                    </div>
+                </div>
+
+                <!-- Ledger Row 03 -->
+                <div class="editorial-ledger-row py-6 px-3 sm:px-5 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+                    <div class="flex items-center gap-4">
+                        <span class="text-xs font-mono font-bold text-rose-500">03</span>
+                        <h3 class="text-sm sm:text-base font-mono font-bold tracking-[0.18em] uppercase text-white">Web Content &amp; Digital Operations</h3>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="editorial-tag-pill">Web Content Management</span>
+                        <span class="editorial-tag-pill">Questionnaire Digitization</span>
+                        <span class="editorial-tag-pill">HTML5 &amp; CSS3</span>
+                        <span class="editorial-tag-pill">Tailwind UI</span>
+                        <span class="editorial-tag-pill">Quality Assurance</span>
+                    </div>
+                </div>
+
+                <!-- Ledger Row 04 -->
+                <div class="editorial-ledger-row py-6 px-3 sm:px-5 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+                    <div class="flex items-center gap-4">
+                        <span class="text-xs font-mono font-bold text-rose-500">04</span>
+                        <h3 class="text-sm sm:text-base font-mono font-bold tracking-[0.18em] uppercase text-white">Retail &amp; Humanitarian Leadership</h3>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="editorial-tag-pill">POS &amp; Checkout Systems</span>
+                        <span class="editorial-tag-pill">Inventory Control</span>
+                        <span class="editorial-tag-pill">Customer Support</span>
+                        <span class="editorial-tag-pill">Emergency First Aid (BDRCS)</span>
+                        <span class="editorial-tag-pill">Team Coordination</span>
+                    </div>
+                </div>
+
+                <!-- Currently Focused On Callout Row (From Reel) -->
+                <div class="py-5 px-4 sm:px-6 bg-white/[0.02] border-b border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <span class="text-[11px] font-mono uppercase tracking-[0.24em] text-slate-400 flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-rose-500 animate-pulse"></span>
+                        Currently Focused On
+                    </span>
+                    <p class="text-xs sm:text-sm font-mono text-slate-200">
+                        High-Volume Document Digitization &bull; Executive Word &amp; Presentation Systems &bull; Rapid Client Operations
+                    </p>
+                </div>
             </div>
 
             <div id="skillsGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5 sm:gap-5">
@@ -2067,9 +2403,12 @@
         <!-- Gallery -->
         <section id="gallery" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
             <div class="text-center max-w-2xl mx-auto mb-12">
-                <span class="section-tag neon-glow-badge">Moments</span>
-                <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight neon-glow-heading">Gallery</h2>
-                <p class="text-slate-400 mt-3 text-sm sm:text-base">Glimpses from volunteering, events and work. Click any photo to enlarge.</p>
+                <span class="editorial-eyebrow justify-center mb-3 inline-flex">08 &mdash; VISUAL ARCHIVE</span>
+                <h2 class="text-4xl sm:text-5xl lg:text-6xl tracking-tight text-white">
+                    <span class="editorial-display">THE</span>
+                    <span class="editorial-serif text-slate-200 ml-1">gallery</span><span class="crimson-dot">.</span>
+                </h2>
+                <p class="text-slate-300 mt-3 text-sm sm:text-base">Glimpses from volunteering, events and work. Click any photo to enlarge.</p>
             </div>
             <div id="galleryGrid" class="gallery-grid">
                 <img loading="lazy" decoding="async" src="./public/FB_IMG_1711641936781.jpg" alt="Saadman Khandker volunteering moment 1" data-i="0">
@@ -2097,9 +2436,12 @@
         <!-- Testimonials (Client Reviews) -->
         <section id="testimonials" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
             <div class="text-center max-w-2xl mx-auto mb-12">
-                <span class="section-tag neon-glow-badge">Social Proof</span>
-                <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight neon-glow-heading">Client Reviews &amp; Testimonials</h2>
-                <p class="text-slate-400 mt-3 text-sm sm:text-base">Real feedback from clients who trusted my typing speed, formatting precision, and rapid turnaround.</p>
+                <span class="editorial-eyebrow justify-center mb-3 inline-flex">09 &mdash; SOCIAL PROOF</span>
+                <h2 class="text-4xl sm:text-5xl lg:text-6xl tracking-tight text-white">
+                    <span class="editorial-display">CLIENT</span>
+                    <span class="editorial-serif text-slate-200 ml-1">stories</span><span class="crimson-dot">.</span>
+                </h2>
+                <p class="text-slate-300 mt-3 text-sm sm:text-base">Real feedback from clients who trusted my typing speed, formatting precision, and rapid turnaround.</p>
             </div>
             <div id="testiGrid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <!-- Testimonial 1 -->
@@ -2446,11 +2788,26 @@
                     <!-- Contact Intro & Links -->
                     <div class="space-y-8">
                         <div>
-                            <span class="section-tag neon-glow-badge">04 / Connect</span>
-                            <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight mt-2 neon-glow-heading">Let's Work Together.</h2>
-                            <p class="text-slate-400 mt-3 text-sm sm:text-base leading-relaxed">
-                                Whether you have an operational opportunity, creative project, or simply want to connect, feel free to drop a message.
+                            <span class="editorial-eyebrow mb-3">10 &mdash; HAVE A PROJECT?</span>
+                            <h2 class="text-4xl sm:text-5xl lg:text-6xl tracking-tight text-white leading-[1.03]">
+                                <span class="editorial-serif text-slate-300 font-normal block">Let's build something</span>
+                                <span class="editorial-display mt-1 block">MEANINGFUL<span class="crimson-dot">.</span></span>
+                            </h2>
+                            <p class="text-slate-300 mt-4 text-sm sm:text-base leading-relaxed">
+                                Ready to turn scanned PDFs, handwritten notes, or raw drafts into executive-grade Word documents and presentations? Reach out directly below.
                             </p>
+
+                            <!-- Reel Signature Giant Email + [ COPY ADDRESS ] Action -->
+                            <div class="mt-6 pt-5 border-t border-b border-white/10 py-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                                <a href="mailto:gamerhindi571@gmail.com" class="text-base sm:text-xl font-mono font-bold text-white hover:text-rose-400 transition break-all flex items-center gap-2">
+                                    <span>gamerhindi571@gmail.com</span>
+                                    <i class="fa-solid fa-arrow-up-right-from-square text-xs text-rose-500"></i>
+                                </a>
+                                <button type="button" id="editorialCopyEmailBtn" data-email="gamerhindi571@gmail.com" class="px-4 py-2 rounded-none border border-white/25 hover:border-rose-500 bg-white/[0.03] hover:bg-rose-500/10 text-[11px] font-mono uppercase tracking-[0.22em] text-slate-200 hover:text-white transition inline-flex items-center gap-2 self-start sm:self-auto">
+                                    <i class="fa-regular fa-copy text-rose-400"></i>
+                                    <span id="editorialCopyEmailText">[ COPY ADDRESS ]</span>
+                                </button>
+                            </div>
                         </div>
 
                         <!-- Direct Links -->
@@ -4621,6 +4978,516 @@
                     bar.classList.add('translate-y-24', 'opacity-0', 'pointer-events-none');
                 });
             }
+        })();
+    </script>
+
+    <!-- ==================== CINEMATIC 2.5D REAL-HUMAN LIVING PORTRAIT & SCROLL CHOREOGRAPHY ENGINE ==================== -->
+    <script>
+        (function () {
+            // 1. Contact [ COPY ADDRESS ] Interactive Button
+            const copyBtn = document.getElementById('editorialCopyEmailBtn');
+            const copyText = document.getElementById('editorialCopyEmailText');
+            if (copyBtn && copyText) {
+                copyBtn.addEventListener('click', () => {
+                    const email = copyBtn.getAttribute('data-email') || 'gamerhindi571@gmail.com';
+                    if (navigator.clipboard && navigator.clipboard.writeText) {
+                        navigator.clipboard.writeText(email).catch(() => {});
+                    } else {
+                        const ta = document.createElement('textarea');
+                        ta.value = email;
+                        document.body.appendChild(ta);
+                        ta.select();
+                        try { document.execCommand('copy'); } catch (e) {}
+                        document.body.removeChild(ta);
+                    }
+                    copyText.textContent = '[ COPIED TO CLIPBOARD ✓ ]';
+                    copyBtn.classList.add('border-emerald-400', 'text-emerald-300');
+                    setTimeout(() => {
+                        copyText.textContent = '[ COPY ADDRESS ]';
+                        copyBtn.classList.remove('border-emerald-400', 'text-emerald-300');
+                    }, 2400);
+                });
+            }
+
+            // 2. Real-Human Living Portrait Stage & WebGL 2.5D Shader Engine
+            const stage = document.getElementById('cinematicPortraitStage');
+            const rig = document.getElementById('livingPortraitRig');
+            const canvas = document.getElementById('livingPortraitCanvas');
+            const aura = document.getElementById('livingPortraitAura');
+            if (!stage || !rig || !canvas) return;
+
+            const lerp = (a, b, t) => a + (b - a) * t;
+            const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
+            const smoothstep = (e0, e1, x) => {
+                const t = clamp((x - e0) / (e1 - e0), 0, 1);
+                return t * t * (3 - 2 * t);
+            };
+
+            // Size canvas with crisp DPR
+            const dpr = Math.min(window.devicePixelRatio || 1, 2);
+            const BASE_W = 800;
+            const BASE_H = 1000;
+            canvas.width = BASE_W * dpr;
+            canvas.height = BASE_H * dpr;
+
+            // Try WebGL first on http/https; on local file:// protocol use our multi-slice 2.5D Canvas engine (since browsers block WebGL texImage2D on file://)
+            const isFileProtocol = window.location.protocol === 'file:';
+            let gl = !isFileProtocol ? (
+                canvas.getContext('webgl', { alpha: true, antialias: true, premultipliedAlpha: false }) ||
+                canvas.getContext('experimental-webgl', { alpha: true, antialias: true, premultipliedAlpha: false })
+            ) : null;
+
+            let glProgram = null;
+            let glUniforms = {};
+            let textureReady = false;
+            let portraitImg = new Image();
+            if (!isFileProtocol) {
+                portraitImg.crossOrigin = 'anonymous';
+            }
+
+            const vsSource = `
+                attribute vec2 aPosition;
+                varying vec2 vUv;
+                void main() {
+                    vUv = vec2(aPosition.x * 0.5 + 0.5, 0.5 - aPosition.y * 0.5);
+                    gl_Position = vec4(aPosition, 0.0, 1.0);
+                }
+            `;
+
+            // Fragment shader engineered specifically for Saadman's studio portrait (./public/img.png, 1024x1280)
+            // Simulates:
+            // - 2.5D Anatomical Head & Nose Parallax Turn (uHeadYaw, uHeadPitch, uHeadRoll)
+            // - Independent Torso / Shoulder Rotation with natural lag (uTorsoYaw)
+            // - Organic Human Chest & Shoulder Breathing wave (uBreath)
+            // - Walking Stride Cadence & Shoulder Sway during scroll travel (uStridePhase, uStrideAmp)
+            // - Natural Eyelid Micro-Blink behind glasses (uBlink)
+            // - Dynamic Studio Rim Light & Glasses Lens Specular Glint
+            const fsSource = `
+                precision highp float;
+                varying vec2 vUv;
+                uniform sampler2D uTexture;
+                uniform float uTime;
+                uniform float uBreath;
+                uniform float uHeadYaw;
+                uniform float uHeadPitch;
+                uniform float uHeadRoll;
+                uniform float uTorsoYaw;
+                uniform float uStridePhase;
+                uniform float uStrideAmp;
+                uniform float uBlink;
+
+                float gauss(vec2 p, vec2 center, vec2 radii) {
+                    vec2 d = (p - center) / radii;
+                    return exp(-dot(d, d) * 1.35);
+                }
+
+                void main() {
+                    vec2 uv = vUv;
+
+                    // 1. Anatomical Zone Masks (Calibrated to ./public/img.png 1024x1280)
+                    // Head center is around (0.50, 0.29), Nose/Glasses around (0.50, 0.285), Torso around (0.50, 0.72)
+                    float headZone = gauss(uv, vec2(0.50, 0.285), vec2(0.21, 0.185));
+                    float noseBridge = gauss(uv, vec2(0.50, 0.295), vec2(0.085, 0.085));
+                    float jawChin = gauss(uv, vec2(0.50, 0.385), vec2(0.13, 0.075));
+                    float neckZone = gauss(uv, vec2(0.50, 0.455), vec2(0.12, 0.065));
+                    float torsoZone = gauss(uv, vec2(0.50, 0.74), vec2(0.38, 0.31));
+                    float chestHeart = gauss(uv, vec2(0.50, 0.62), vec2(0.24, 0.16));
+
+                    // Composite 2.5D depth field (0 = background, 1 = nose tip)
+                    float depth = clamp(
+                        torsoZone * 0.48 +
+                        neckZone * 0.52 +
+                        headZone * 0.76 +
+                        jawChin * 0.22 +
+                        noseBridge * 0.34,
+                        0.0, 1.15
+                    );
+
+                    // 2. Subtle Head Roll (Tilt around neck pivot (0.50, 0.43))
+                    vec2 neckPivot = vec2(0.50, 0.43);
+                    float rollAngle = uHeadRoll * smoothstep(0.50, 0.18, uv.y);
+                    float cR = cos(rollAngle);
+                    float sR = sin(rollAngle);
+                    vec2 relHead = uv - neckPivot;
+                    vec2 rotatedHead = vec2(relHead.x * cR - relHead.y * sR, relHead.x * sR + relHead.y * cR) + neckPivot;
+                    uv = mix(uv, rotatedHead, clamp(headZone * 1.15, 0.0, 1.0));
+
+                    // 3. 2.5D Perspective Head & Torso Turn (Parallax Displacement)
+                    // When turning right (uHeadYaw > 0), foreground features shift right relative to back of head,
+                    // and the far side of the face compresses slightly while the near side expands (true 3D foreshortening)
+                    float faceRelX = uv.x - 0.50;
+                    float foreshortenHead = 1.0 - faceRelX * uHeadYaw * 0.42 * headZone;
+                    float headShiftX = -uHeadYaw * (0.026 * headZone + 0.015 * noseBridge + 0.008 * jawChin) * foreshortenHead;
+                    float headShiftY = -uHeadPitch * (0.016 * headZone + 0.009 * noseBridge);
+
+                    // Torso 3D turn & walking shoulder weight shift
+                    float torsoRelX = uv.x - 0.50;
+                    float shoulderAlternating = sin(uStridePhase) * uStrideAmp * 0.0075 * sign(torsoRelX) * torsoZone;
+                    float torsoShiftX = -uTorsoYaw * (0.020 * torsoZone) * (1.0 - torsoRelX * uTorsoYaw * 0.28);
+                    float torsoShiftY = shoulderAlternating - abs(sin(uStridePhase)) * uStrideAmp * 0.009 * torsoZone;
+
+                    // 4. Organic Human Breathing (Chest expansion + shoulder rise)
+                    // Inhalation lifts shoulders (uv.y sampled slightly lower) and expands chest outward
+                    float breathLift = uBreath * (0.0068 * torsoZone + 0.0042 * chestHeart + 0.0018 * headZone);
+                    float breathExpand = -uBreath * torsoRelX * (0.018 * chestHeart + 0.011 * torsoZone);
+
+                    // 5. Natural Eyelid Micro-Blink behind glasses (y around 0.268)
+                    float leftEye = gauss(uv, vec2(0.445, 0.270), vec2(0.032, 0.016));
+                    float rightEye = gauss(uv, vec2(0.555, 0.270), vec2(0.032, 0.016));
+                    float eyeMask = clamp(leftEye + rightEye, 0.0, 1.0);
+                    float blinkOffset = uBlink * eyeMask * (0.272 - uv.y) * 0.55;
+
+                    // Combine all anatomical UV displacements
+                    vec2 sampleUv = uv;
+                    sampleUv.x += headShiftX + torsoShiftX + breathExpand;
+                    sampleUv.y += headShiftY + torsoShiftY + breathLift + blinkOffset;
+                    sampleUv = clamp(sampleUv, vec2(0.002), vec2(0.998));
+
+                    vec4 texColor = texture2D(uTexture, sampleUv);
+
+                    // 6. Studio Rim-Light, Dynamic 3D Shading & Glasses Lens Glint
+                    // Directional key light shifts with head/torso turn
+                    float sideNorm = (uv.x - 0.50) * 2.0;
+                    float directionalLight = 1.0 + sideNorm * (uHeadYaw * 0.16 * headZone + uTorsoYaw * 0.12 * torsoZone);
+
+                    // Subtle specular glint sweeping across the glasses lenses as head turns
+                    float glassesBand = gauss(uv, vec2(0.50, 0.272), vec2(0.115, 0.026));
+                    float glintLine = exp(-pow((uv.x - (0.50 + uHeadYaw * 0.22 + sin(uTime * 0.7) * 0.04)) * 18.0 + (uv.y - 0.27) * 8.0, 2.0));
+                    float glassesGlint = glassesBand * glintLine * 0.11;
+
+                    // Crimson & Indigo studio rim light along shoulders and jawline
+                    float edgeDist = abs(uv.x - 0.50);
+                    float shoulderRimMask = smoothstep(0.18, 0.38, edgeDist) * smoothstep(0.48, 0.34, edgeDist) * torsoZone;
+                    vec3 rimColor = mix(vec3(0.38, 0.40, 0.95), vec3(1.0, 0.16, 0.37), smoothstep(-0.3, 0.3, sideNorm * uHeadYaw));
+
+                    vec3 finalRgb = texColor.rgb * directionalLight + vec3(glassesGlint) + rimColor * shoulderRimMask * 0.14;
+
+                    // 7. Seamless Studio Backdrop Vignette & Alpha Feathering into #060913
+                    float radX = (uv.x - 0.50) / 0.47;
+                    float radY = (uv.y - 0.52) / 0.48;
+                    float radialDist = sqrt(radX * radX + radY * radY);
+                    float vignetteAlpha = 1.0 - smoothstep(0.68, 1.02, radialDist);
+                    float bottomFade = 1.0 - smoothstep(0.84, 0.995, uv.y);
+                    float topFade = smoothstep(0.005, 0.08, uv.y);
+
+                    // Soften dark studio backdrop so the figure emerges organically from the page
+                    float luma = dot(texColor.rgb, vec3(0.299, 0.587, 0.114));
+                    float subjectPresence = clamp(headZone * 1.4 + torsoZone * 1.25 + smoothstep(0.07, 0.20, luma) * 0.65, 0.0, 1.0);
+                    float finalAlpha = texColor.a * vignetteAlpha * bottomFade * topFade * mix(0.25, 1.0, subjectPresence);
+
+                    gl_FragColor = vec4(finalRgb, finalAlpha);
+                }
+            `;
+
+            function compileShader(ctx, type, source) {
+                const shader = ctx.createShader(type);
+                ctx.shaderSource(shader, source);
+                ctx.compileShader(shader);
+                if (!ctx.getShaderParameter(shader, ctx.COMPILE_STATUS)) {
+                    ctx.deleteShader(shader);
+                    return null;
+                }
+                return shader;
+            }
+
+            if (gl) {
+                const vs = compileShader(gl, gl.VERTEX_SHADER, vsSource);
+                const fs = compileShader(gl, gl.FRAGMENT_SHADER, fsSource);
+                if (vs && fs) {
+                    glProgram = gl.createProgram();
+                    gl.attachShader(glProgram, vs);
+                    gl.attachShader(glProgram, fs);
+                    gl.linkProgram(glProgram);
+                    if (gl.getProgramParameter(glProgram, gl.LINK_STATUS)) {
+                        gl.useProgram(glProgram);
+                        const posBuf = gl.createBuffer();
+                        gl.bindBuffer(gl.ARRAY_BUFFER, posBuf);
+                        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
+                            -1, -1,  1, -1, -1,  1,
+                            -1,  1,  1, -1,  1,  1
+                        ]), gl.STATIC_DRAW);
+                        const aPos = gl.getAttribLocation(glProgram, 'aPosition');
+                        gl.enableVertexAttribArray(aPos);
+                        gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
+
+                        glUniforms = {
+                            uTexture: gl.getUniformLocation(glProgram, 'uTexture'),
+                            uTime: gl.getUniformLocation(glProgram, 'uTime'),
+                            uBreath: gl.getUniformLocation(glProgram, 'uBreath'),
+                            uHeadYaw: gl.getUniformLocation(glProgram, 'uHeadYaw'),
+                            uHeadPitch: gl.getUniformLocation(glProgram, 'uHeadPitch'),
+                            uHeadRoll: gl.getUniformLocation(glProgram, 'uHeadRoll'),
+                            uTorsoYaw: gl.getUniformLocation(glProgram, 'uTorsoYaw'),
+                            uStridePhase: gl.getUniformLocation(glProgram, 'uStridePhase'),
+                            uStrideAmp: gl.getUniformLocation(glProgram, 'uStrideAmp'),
+                            uBlink: gl.getUniformLocation(glProgram, 'uBlink')
+                        };
+                    } else {
+                        gl = null;
+                    }
+                } else {
+                    gl = null;
+                }
+            }
+
+            const ctx2d = !gl ? canvas.getContext('2d') : null;
+
+            portraitImg.onload = () => {
+                if (gl && glProgram) {
+                    const tex = gl.createTexture();
+                    gl.bindTexture(gl.TEXTURE_2D, tex);
+                    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+                    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+                    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+                    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+                    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, portraitImg);
+                }
+                textureReady = true;
+            };
+            portraitImg.src = './public/img.png';
+
+            // 3. Mouse Gaze & Scroll Choreography State
+            let mouseTargetX = 0;
+            let mouseTargetY = 0;
+            let smoothMouseX = 0;
+            let smoothMouseY = 0;
+
+            window.addEventListener('pointermove', (e) => {
+                mouseTargetX = (e.clientX / Math.max(window.innerWidth, 1) - 0.5) * 2;
+                mouseTargetY = (e.clientY / Math.max(window.innerHeight, 1) - 0.5) * 2;
+            }, { passive: true });
+
+            // Scroll Choreography State (Right in Hero -> Left in About -> Right in Services/Toolkit/Journey -> Right in Contact)
+            let currentX = 22;      // vw offset from center
+            let currentY = 2;       // vh offset
+            let currentScale = 1.04;
+            let currentOpacity = 0.95;
+            let prevX = 22;
+            let stridePhase = 0;
+            let strideAmp = 0;
+            let headYaw = -0.25;
+            let headPitch = 0;
+            let headRoll = 0;
+            let torsoYaw = -0.20;
+
+            // Natural human blink scheduler
+            let nextBlinkTime = 2.2;
+            let blinkStart = -10;
+            let isDoubleBlink = false;
+
+            const heroEl = document.getElementById('home');
+            const aboutEl = document.getElementById('about');
+            const servicesEl = document.getElementById('services');
+            const contactEl = document.getElementById('contact');
+
+            function computeScrollTargets() {
+                const vw = window.innerWidth;
+                const vh = Math.max(window.innerHeight, 1);
+                const isMobile = vw < 1024;
+
+                // Default Hero pose: Standing on the RIGHT side
+                let targetX = isMobile ? 10 : 22.5;
+                let targetY = isMobile ? 6 : 2.5;
+                let targetScale = isMobile ? 0.94 : 1.05;
+                let targetOpacity = isMobile ? 0.34 : 0.96;
+                let targetBaseYaw = -0.32; // Facing slightly left toward Hero typography
+
+                if (aboutEl) {
+                    const aboutRect = aboutEl.getBoundingClientRect();
+                    // Transition 1: Hero (#home) -> 01 / ABOUT (#about)
+                    // As #about enters viewport, Saadman walks from RIGHT (+22.5vw) to LEFT (-22.5vw)
+                    const enterAbout = smoothstep(vh * 0.92, vh * 0.18, aboutRect.top);
+                    // Transition 2: 01 / ABOUT (#about) -> 02 / EXPERTISE (#services) and beyond
+                    // As #about scrolls up past the top, Saadman walks from LEFT (-22.5vw) back to RIGHT (+25vw)
+                    const exitAbout = smoothstep(vh * 0.15, -vh * 0.55, aboutRect.bottom - vh * 0.35);
+
+                    const leftX = isMobile ? -8 : -22.5;
+                    const rightContentX = isMobile ? 12 : 25.5;
+
+                    // Interpolate Hero -> About
+                    targetX = lerp(targetX, leftX, enterAbout);
+                    targetY = lerp(targetY, isMobile ? 5 : 1.5, enterAbout);
+                    targetScale = lerp(targetScale, isMobile ? 0.95 : 1.07, enterAbout);
+                    targetOpacity = lerp(targetOpacity, isMobile ? 0.42 : 0.98, enterAbout);
+                    targetBaseYaw = lerp(targetBaseYaw, 0.38, enterAbout); // In About, facing right toward "SPECIALIST in the making."
+
+                    // Interpolate About -> Services / Toolkit / Journey
+                    targetX = lerp(targetX, rightContentX, exitAbout);
+                    targetY = lerp(targetY, isMobile ? 7 : 3.5, exitAbout);
+                    targetScale = lerp(targetScale, isMobile ? 0.90 : 0.97, exitAbout);
+                    targetOpacity = lerp(targetOpacity, isMobile ? 0.22 : 0.38, exitAbout);
+                    targetBaseYaw = lerp(targetBaseYaw, -0.35, exitAbout);
+                }
+
+                // Transition 3: Brighten & step forward at 10 / CONTACT ("HAVE A PROJECT? Let's build something MEANINGFUL.")
+                if (contactEl) {
+                    const contactRect = contactEl.getBoundingClientRect();
+                    const enterContact = smoothstep(vh * 0.95, vh * 0.25, contactRect.top);
+                    targetX = lerp(targetX, isMobile ? 8 : 23.0, enterContact);
+                    targetScale = lerp(targetScale, isMobile ? 0.94 : 1.03, enterContact);
+                    targetOpacity = lerp(targetOpacity, isMobile ? 0.32 : 0.62, enterContact);
+                    targetBaseYaw = lerp(targetBaseYaw, -0.28, enterContact);
+                }
+
+                return { targetX, targetY, targetScale, targetOpacity, targetBaseYaw };
+            }
+
+            let startTime = performance.now();
+
+            function animateLivingPortrait(now) {
+                const t = (now - startTime) * 0.001;
+
+                smoothMouseX = lerp(smoothMouseX, mouseTargetX, 0.055);
+                smoothMouseY = lerp(smoothMouseY, mouseTargetY, 0.055);
+
+                const { targetX, targetY, targetScale, targetOpacity, targetBaseYaw } = computeScrollTargets();
+
+                // Smooth spring-like horizontal travel across the viewport
+                prevX = currentX;
+                currentX = lerp(currentX, targetX, 0.065);
+                currentY = lerp(currentY, targetY, 0.065);
+                currentScale = lerp(currentScale, targetScale, 0.065);
+                currentOpacity = lerp(currentOpacity, targetOpacity, 0.065);
+
+                // Horizontal travel velocity drives realistic walking stride cadence & body turn!
+                const vx = currentX - prevX;
+                const speed = Math.min(Math.abs(vx) * 2.4, 1.2);
+                strideAmp = lerp(strideAmp, clamp(speed, 0, 1), 0.12);
+                stridePhase += (0.045 + strideAmp * 0.19);
+
+                // Natural organic breathing wave ( ~15.5 breaths/min with realistic inhalation/exhalation asymmetry )
+                const rawSin = Math.sin(t * 1.62);
+                const breathWave = rawSin + 0.22 * Math.sin(t * 3.24 - 0.4);
+
+                // Idle organic figure-8 head micro-motion so Saadman always feels alive even when cursor is still
+                const idleYaw = Math.sin(t * 0.78) * 0.11 + Math.cos(t * 0.43) * 0.06;
+                const idlePitch = Math.sin(t * 0.64 + 1.1) * 0.08;
+                const idleRoll = Math.sin(t * 0.52) * 0.018;
+
+                // Turn head into the direction of walking travel + base pose + mouse gaze
+                const travelTurnYaw = clamp(vx * 1.45, -0.65, 0.65);
+                const desiredHeadYaw = clamp(targetBaseYaw + travelTurnYaw + smoothMouseX * 0.42 + idleYaw, -0.95, 0.95);
+                const desiredHeadPitch = clamp(smoothMouseY * 0.28 + idlePitch - strideAmp * 0.06, -0.55, 0.55);
+                const desiredHeadRoll = clamp(idleRoll + smoothMouseX * 0.025 + Math.cos(stridePhase) * strideAmp * 0.022, -0.08, 0.08);
+                const desiredTorsoYaw = clamp(targetBaseYaw * 0.85 + travelTurnYaw * 1.1 + smoothMouseX * 0.22, -0.80, 0.80);
+
+                // Head responds faster than torso (natural human neck-before-shoulders kinematics)
+                headYaw = lerp(headYaw, desiredHeadYaw, 0.09);
+                headPitch = lerp(headPitch, desiredHeadPitch, 0.09);
+                headRoll = lerp(headRoll, desiredHeadRoll, 0.08);
+                torsoYaw = lerp(torsoYaw, desiredTorsoYaw, 0.055);
+
+                // Natural Eyelid Blink state
+                if (t > nextBlinkTime) {
+                    blinkStart = t;
+                    isDoubleBlink = Math.random() < 0.26;
+                    nextBlinkTime = t + 3.4 + Math.random() * 3.2;
+                }
+                let blinkVal = 0;
+                const dtBlink = t - blinkStart;
+                if (dtBlink >= 0 && dtBlink < 0.18) {
+                    blinkVal = Math.sin((dtBlink / 0.18) * Math.PI);
+                } else if (isDoubleBlink && dtBlink >= 0.22 && dtBlink < 0.38) {
+                    blinkVal = Math.sin(((dtBlink - 0.22) / 0.16) * Math.PI);
+                }
+
+                // Apply 3D Stage & Rig CSS transforms (Walking stride bobbing + 3D perspective tilt)
+                const strideBobPx = -Math.abs(Math.sin(stridePhase)) * strideAmp * 14 + breathWave * 2.2;
+                const strideSwayDeg = Math.cos(stridePhase) * strideAmp * 1.4;
+                const perspectiveRotateY = headYaw * 9.5;
+                const perspectiveRotateX = -headPitch * 5.5;
+
+                stage.style.opacity = currentOpacity.toFixed(3);
+                rig.style.transform = `translate3d(${currentX.toFixed(2)}vw, calc(${currentY.toFixed(2)}vh + ${strideBobPx.toFixed(1)}px), 0px) scale(${currentScale.toFixed(3)}) rotateY(${perspectiveRotateY.toFixed(2)}deg) rotateX(${perspectiveRotateX.toFixed(2)}deg) rotateZ(${strideSwayDeg.toFixed(2)}deg)`;
+
+                if (aura) {
+                    const auraShiftX = -headYaw * 18;
+                    const auraScale = 1 + breathWave * 0.04 + strideAmp * 0.08;
+                    aura.style.transform = `translate3d(${auraShiftX.toFixed(1)}px, 0px, 0px) scale(${auraScale.toFixed(3)})`;
+                }
+
+                // Render WebGL 2.5D Living Shader (or 2D fallback)
+                if (textureReady) {
+                    if (gl && glProgram) {
+                        gl.viewport(0, 0, canvas.width, canvas.height);
+                        gl.clearColor(0, 0, 0, 0);
+                        gl.clear(gl.COLOR_BUFFER_BIT);
+                        gl.useProgram(glProgram);
+
+                        gl.uniform1f(glUniforms.uTime, t);
+                        gl.uniform1f(glUniforms.uBreath, breathWave);
+                        gl.uniform1f(glUniforms.uHeadYaw, headYaw);
+                        gl.uniform1f(glUniforms.uHeadPitch, headPitch);
+                        gl.uniform1f(glUniforms.uHeadRoll, headRoll);
+                        gl.uniform1f(glUniforms.uTorsoYaw, torsoYaw);
+                        gl.uniform1f(glUniforms.uStridePhase, stridePhase);
+                        gl.uniform1f(glUniforms.uStrideAmp, strideAmp);
+                        gl.uniform1f(glUniforms.uBlink, blinkVal);
+
+                        gl.drawArrays(gl.TRIANGLES, 0, 6);
+                    } else if (ctx2d) {
+                        const w = canvas.width;
+                        const h = canvas.height;
+                        const imgW = portraitImg.naturalWidth || 1024;
+                        const imgH = portraitImg.naturalHeight || 1280;
+                        ctx2d.clearRect(0, 0, w, h);
+
+                        // 32-Band Anatomical 2.5D Scanline Renderer (for local file:// protocol or non-WebGL browsers)
+                        const SLICES = 36;
+                        const sliceSrcH = imgH / SLICES;
+                        const sliceDstH = h / SLICES;
+
+                        for (let i = 0; i < SLICES; i++) {
+                            const v = (i + 0.5) / SLICES; // 0 = top of head, 1 = bottom of torso
+                            const headWeight = Math.exp(-Math.pow((v - 0.285) / 0.17, 2));
+                            const torsoWeight = Math.exp(-Math.pow((v - 0.72) / 0.28, 2));
+                            const chestWeight = Math.exp(-Math.pow((v - 0.60) / 0.16, 2));
+
+                            // Horizontal parallax shift (head turns further & faster than shoulders)
+                            const shiftX = (headYaw * 24 * headWeight + torsoYaw * 15 * torsoWeight) * dpr;
+                            // Vertical breathing lift + pitch nod
+                            const liftY = (-breathWave * (5.5 * torsoWeight + 3.5 * chestWeight + 1.8 * headWeight) + headPitch * 11 * headWeight) * dpr;
+                            // Chest breathing expansion + 3D perspective width modulation
+                            const scaleX = 1 + breathWave * (0.014 * chestWeight + 0.008 * torsoWeight) - Math.abs(headYaw) * 0.018 * headWeight;
+
+                            const dstW = w * scaleX;
+                            const dstX = (w - dstW) * 0.5 + shiftX;
+                            const dstY = i * sliceDstH + liftY;
+
+                            ctx2d.drawImage(
+                                portraitImg,
+                                0, i * sliceSrcH, imgW, sliceSrcH + 1.5,
+                                dstX, dstY, dstW, sliceDstH + 1.5 * dpr
+                            );
+                        }
+
+                        // Subtle glasses specular studio glint on head turn
+                        const glintAlpha = 0.08 + Math.abs(headYaw) * 0.06;
+                        const glintX = w * (0.5 + headYaw * 0.09);
+                        const glintY = h * 0.272;
+                        const glintGrad = ctx2d.createRadialGradient(glintX, glintY, 2 * dpr, glintX, glintY, 75 * dpr);
+                        glintGrad.addColorStop(0, `rgba(255, 255, 255, ${glintAlpha.toFixed(3)})`);
+                        glintGrad.addColorStop(1, 'rgba(255, 255, 255, 0)');
+                        ctx2d.fillStyle = glintGrad;
+                        ctx2d.fillRect(0, h * 0.20, w, h * 0.15);
+
+                        // Soft radial studio vignette mask so portrait blends seamlessly into #060913
+                        ctx2d.save();
+                        ctx2d.globalCompositeOperation = 'destination-in';
+                        const maskGrad = ctx2d.createRadialGradient(w * 0.5, h * 0.48, h * 0.24, w * 0.5, h * 0.50, h * 0.52);
+                        maskGrad.addColorStop(0, 'rgba(0,0,0,1)');
+                        maskGrad.addColorStop(0.76, 'rgba(0,0,0,0.92)');
+                        maskGrad.addColorStop(1, 'rgba(0,0,0,0)');
+                        ctx2d.fillStyle = maskGrad;
+                        ctx2d.fillRect(0, 0, w, h);
+                        ctx2d.restore();
+                    }
+                }
+
+                requestAnimationFrame(animateLivingPortrait);
+            }
+
+            requestAnimationFrame(animateLivingPortrait);
         })();
     </script>
 </body>
