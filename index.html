@@ -169,7 +169,7 @@
 
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: #060913;
+            background-color: #060609;
             color: #f1f5f9;
             overflow-x: hidden;
             width: 100%;
@@ -239,13 +239,13 @@
         .aurora-blob {
             position: absolute;
             border-radius: 9999px;
-            filter: blur(100px);
-            opacity: 0.25;
+            filter: blur(140px);
+            opacity: 0.04;
             animation: float 20s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
         }
         html:not(.dark) .aurora-blob {
-            opacity: 0.15;
-            filter: blur(120px);
+            opacity: 0.08;
+            filter: blur(140px);
         }
 
         @keyframes float {
@@ -522,60 +522,52 @@
             color: color-mix(in srgb, var(--neon) 70%, #1e1b4b);
         }
 
-        /* Cyber HUD Global Status & Glow */
+        /* Luxury Studio Editorial Live HUD Bar */
         .cyber-hud-bar {
-            background: rgba(11, 15, 25, 0.85);
-            border: 1px solid rgba(99, 102, 241, 0.4);
-            box-shadow: 0 0 25px rgba(99, 102, 241, 0.25), inset 0 0 15px rgba(99, 102, 241, 0.1);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            background: rgba(12, 12, 18, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.09);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            transition: all 0.3s ease;
         }
         .cyber-hud-bar:hover {
-            border-color: rgba(129, 140, 248, 0.7);
-            box-shadow: 0 0 35px rgba(99, 102, 241, 0.4), inset 0 0 20px rgba(99, 102, 241, 0.2);
-            transform: translateY(-2px);
+            border-color: rgba(255, 42, 95, 0.35);
+            transform: translateY(-1px);
         }
         .cyber-pill {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.25s ease;
         }
         .cyber-pill:hover {
-            transform: translateY(-2px) scale(1.03);
+            transform: translateY(-1px);
         }
         .cyber-pill-avail {
-            background: rgba(16, 185, 129, 0.14);
-            border: 1px solid rgba(52, 211, 153, 0.5);
-            box-shadow: 0 0 16px rgba(16, 185, 129, 0.25), inset 0 0 10px rgba(16, 185, 129, 0.1);
+            background: rgba(16, 185, 129, 0.08);
+            border: 1px solid rgba(52, 211, 153, 0.25);
         }
         .cyber-pill-avail:hover {
-            background: rgba(16, 185, 129, 0.25);
-            border-color: rgba(52, 211, 153, 0.8);
-            box-shadow: 0 0 26px rgba(16, 185, 129, 0.55), inset 0 0 15px rgba(16, 185, 129, 0.2);
+            background: rgba(16, 185, 129, 0.16);
+            border-color: rgba(52, 211, 153, 0.5);
         }
         .cyber-pill-location {
-            background: rgba(99, 102, 241, 0.12);
-            border: 1px solid rgba(129, 140, 248, 0.4);
-            box-shadow: 0 0 16px rgba(99, 102, 241, 0.22), inset 0 0 10px rgba(99, 102, 241, 0.08);
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
         .cyber-pill-location:hover {
-            background: rgba(99, 102, 241, 0.22);
-            border-color: rgba(129, 140, 248, 0.75);
-            box-shadow: 0 0 26px rgba(99, 102, 241, 0.45), inset 0 0 15px rgba(99, 102, 241, 0.18);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
         }
         .cyber-pill-response {
-            background: rgba(245, 158, 11, 0.14);
-            border: 1px solid rgba(251, 191, 36, 0.45);
-            box-shadow: 0 0 16px rgba(245, 158, 11, 0.25), inset 0 0 10px rgba(245, 158, 11, 0.1);
+            background: rgba(245, 158, 11, 0.08);
+            border: 1px solid rgba(251, 191, 36, 0.25);
         }
         .cyber-pill-response:hover {
-            background: rgba(245, 158, 11, 0.25);
-            border-color: rgba(251, 191, 36, 0.8);
-            box-shadow: 0 0 26px rgba(245, 158, 11, 0.55), inset 0 0 15px rgba(245, 158, 11, 0.2);
+            background: rgba(245, 158, 11, 0.16);
+            border-color: rgba(251, 191, 36, 0.5);
         }
         .cyber-glow-clock {
-            color: #38bdf8;
+            color: #34d399;
             font-weight: 800;
-            text-shadow: 0 0 10px rgba(56, 189, 248, 0.75), 0 0 20px rgba(56, 189, 248, 0.4);
         }
 
         /* Guestbook Active Tag and Card Styles */
@@ -960,11 +952,13 @@
         #lightbox button { position:absolute; color:#fff; font-size:2.2rem; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.15); border-radius:12px; padding:8px 18px; cursor:pointer; text-shadow:0 0 12px #c084fc; transition:all .2s; }
         #lightbox button:hover { background:rgba(255,255,255,.2); transform:scale(1.08); }
         #lbClose { top:24px; right:24px; font-size:1.8rem; }
-        .faq-item { border:1px solid rgba(129,140,248,.25); border-radius:18px; overflow:hidden; }
-        .faq-q { width:100%; text-align:left; padding:18px 22px; font-weight:700; display:flex; justify-content:space-between; align-items:center; gap:12px; }
-        .faq-a { max-height:0; overflow:hidden; transition:max-height .4s ease; padding:0 22px; color:#94a3b8; font-size:.95rem; }
-        .faq-item.open .faq-a { max-height:220px; padding-bottom:18px; }
-        .faq-item.open .faq-q i { transform:rotate(45deg); color:#f472b6; }
+        .faq-item { border:1px solid rgba(255,255,255,.08); background:rgba(255,255,255,.02); border-radius:18px; overflow:hidden; transition:all .3s ease; }
+        .faq-item:hover { border-color:rgba(255,42,95,.3); }
+        .faq-q { width:100%; text-align:left; padding:18px 22px; font-weight:700; display:flex; justify-content:space-between; align-items:center; gap:12px; cursor:pointer; }
+        .faq-a { max-height:0; overflow:hidden; transition:max-height .4s cubic-bezier(0.4,0,0.2,1); padding:0 22px; color:#94a3b8; font-size:.92rem; line-height:1.65; }
+        .faq-item.open { border-color:rgba(255,42,95,.4); background:rgba(255,42,95,.02); }
+        .faq-item.open .faq-a { max-height:260px; padding-bottom:18px; }
+        .faq-item.open .faq-q i { transform:rotate(45deg); color:#ff2a5f; }
         .faq-q i { transition:transform .3s; }
         .float-btn { position:fixed; z-index:99999; display:flex; align-items:center; justify-content:center; border-radius:50%; color:#fff; border:none; cursor:pointer; text-decoration:none; }
         #waBtn { right:22px; bottom:82px; width:56px; height:56px; background:#25D366; color:#fff; box-shadow:0 4px 20px rgba(37,211,102,.5); transition:transform .25s ease, box-shadow .25s ease; }
@@ -1413,32 +1407,28 @@
     <header class="fixed top-0 inset-x-0 glass-header z-50 transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
-                <!-- Brand / Logo -->
+                <!-- Brand / Logo (Reel Luxury Minimalist Badge) -->
                 <a href="#home" class="flex items-center gap-3 group">
-                    <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-brand-600 via-indigo-500 to-purple-500 text-white flex items-center justify-center font-bold text-sm shadow-md shadow-brand-500/25 group-hover:scale-105 transition-transform">
-                        SK
+                    <div class="w-10 h-10 rounded-xl bg-white/[0.04] border border-white/15 text-white flex items-center justify-center font-mono font-bold text-xs tracking-wider group-hover:border-rose-500/50 group-hover:bg-rose-500/10 transition-all duration-300">
+                        [SK]
                     </div>
-                    <span id="siteName" class="font-bold text-lg tracking-tight group-hover:text-brand-400 transition-colors">
-                        Khandker Sadman Rafid Saad
+                    <span id="siteName" class="font-bold text-sm sm:text-base font-mono uppercase tracking-[0.12em] text-white group-hover:text-rose-400 transition-colors">
+                        Saadman Khandker
                     </span>
                 </a>
 
-                <!-- Desktop Navigation Links -->
-                <nav class="hidden md:flex items-center gap-1 bg-white/5 dark:bg-dark-800/60 p-1.5 rounded-full border border-white/10 dark:border-brand-500/20 backdrop-blur-md">
-                    <a href="#home" class="px-3.5 py-1.5 rounded-full text-xs font-semibold hover:text-brand-400 hover:bg-white/5 transition">Home</a>
-                    <a href="#about" class="px-3.5 py-1.5 rounded-full text-xs font-semibold hover:text-rose-400 hover:bg-white/5 transition">About</a>
-                    <a href="#services" class="px-3.5 py-1.5 rounded-full text-xs font-semibold hover:text-brand-400 hover:bg-white/5 transition">Services</a>
-                    <a href="#typing-services" class="px-3.5 py-1.5 rounded-full text-xs font-semibold text-brand-300 bg-brand-500/10 border border-brand-500/30 hover:text-brand-200 hover:bg-brand-500/20 transition flex items-center gap-1.5"><i class="fa-solid fa-keyboard text-[10px]"></i><span>Typing</span></a>
-                    <a href="#workflow" class="px-3.5 py-1.5 rounded-full text-xs font-semibold hover:text-brand-400 hover:bg-white/5 transition">Workflow</a>
-                    <a href="#faq" class="px-3.5 py-1.5 rounded-full text-xs font-semibold hover:text-brand-400 hover:bg-white/5 transition">FAQ</a>
-                    <a href="#guestbook" class="px-3.5 py-1.5 rounded-full text-xs font-semibold text-purple-300 hover:text-purple-200 hover:bg-white/5 transition flex items-center gap-1"><i class="fa-solid fa-comments text-[10px]"></i><span>Guestbook</span></a>
-                    <a href="#experience" class="px-3.5 py-1.5 rounded-full text-xs font-semibold hover:text-brand-400 hover:bg-white/5 transition">Experience</a>
-                    <a href="#projects" class="px-3.5 py-1.5 rounded-full text-xs font-semibold hover:text-brand-400 hover:bg-white/5 transition">Projects</a>
-                    <a href="#skills" class="px-3.5 py-1.5 rounded-full text-xs font-semibold hover:text-brand-400 hover:bg-white/5 transition">Skills</a>
-                    <a href="#gallery" class="px-3.5 py-1.5 rounded-full text-xs font-semibold text-pink-300 hover:text-pink-200 hover:bg-white/5 transition flex items-center gap-1"><i class="fa-solid fa-camera-retro text-[10px]"></i><span>Gallery</span></a>
-                    <a href="#testimonials" class="px-3.5 py-1.5 rounded-full text-xs font-semibold text-amber-300 hover:text-amber-200 hover:bg-white/5 transition flex items-center gap-1"><i class="fa-solid fa-star text-[10px]"></i><span>Reviews</span></a>
-                    <a href="#contact" class="px-3.5 py-1.5 rounded-full text-xs font-semibold hover:text-brand-400 hover:bg-white/5 transition">Contact</a>
-                    <a id="navResumeLink" href="#" target="_blank" rel="noopener" class="hidden px-3.5 py-1.5 rounded-full text-xs font-semibold text-rose-300 border border-rose-500/30 bg-rose-500/10 hover:bg-rose-500/20 transition flex items-center gap-1.5"><i class="fa-solid fa-file-pdf text-[10px]"></i><span>Resume</span></a>
+                <!-- Desktop Navigation Links (Reel Minimalist Mono Tracked) -->
+                <nav class="hidden md:flex items-center gap-1 bg-white/[0.03] p-1.5 rounded-full border border-white/10 backdrop-blur-xl">
+                    <a href="#home" class="px-3 py-1 rounded-full text-[11px] font-mono uppercase tracking-wider text-slate-300 hover:text-white hover:bg-white/10 transition">Home</a>
+                    <a href="#about" class="px-3 py-1 rounded-full text-[11px] font-mono uppercase tracking-wider text-slate-300 hover:text-rose-400 hover:bg-white/10 transition">About</a>
+                    <a href="#services" class="px-3 py-1 rounded-full text-[11px] font-mono uppercase tracking-wider text-slate-300 hover:text-white hover:bg-white/10 transition">Services</a>
+                    <a href="#typing-services" class="px-3 py-1 rounded-full text-[11px] font-mono uppercase tracking-wider text-rose-300 bg-rose-500/10 border border-rose-500/30 hover:bg-rose-500/20 transition">Typing</a>
+                    <a href="#workflow" class="px-3 py-1 rounded-full text-[11px] font-mono uppercase tracking-wider text-slate-300 hover:text-white hover:bg-white/10 transition">Workflow</a>
+                    <a href="#experience" class="px-3 py-1 rounded-full text-[11px] font-mono uppercase tracking-wider text-slate-300 hover:text-white hover:bg-white/10 transition">Journey</a>
+                    <a href="#projects" class="px-3 py-1 rounded-full text-[11px] font-mono uppercase tracking-wider text-slate-300 hover:text-white hover:bg-white/10 transition">Projects</a>
+                    <a href="#skills" class="px-3 py-1 rounded-full text-[11px] font-mono uppercase tracking-wider text-slate-300 hover:text-white hover:bg-white/10 transition">Toolkit</a>
+                    <a href="#contact" class="px-3.5 py-1 rounded-full text-[11px] font-mono uppercase tracking-wider text-white bg-white/10 hover:bg-rose-500 hover:text-white transition">Contact</a>
+                    <a id="navResumeLink" href="#" target="_blank" rel="noopener" class="hidden px-3 py-1 rounded-full text-[11px] font-mono uppercase tracking-wider text-rose-300 border border-rose-500/30 bg-rose-500/10 hover:bg-rose-500/20 transition">Resume</a>
                 </nav>
 
                 <!-- Actions: Theme Toggle -->
@@ -1668,53 +1658,92 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="glass-card pro-3d-card p-7 rounded-3xl space-y-4 group">
-                    <div class="w-12 h-12 rounded-2xl bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 flex items-center justify-center text-xl group-hover:scale-110 group-hover:bg-indigo-500 group-hover:text-white transition-all">
-                        <i class="fa-solid fa-globe"></i>
+                <!-- Service 01 -->
+                <div class="glass-card p-7 sm:p-8 rounded-3xl space-y-4 group border border-white/10 hover:border-rose-500/40 transition-all duration-300 flex flex-col justify-between">
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-mono font-bold text-rose-500">01</span>
+                            <div class="w-10 h-10 rounded-xl bg-white/[0.04] border border-white/10 text-white flex items-center justify-center text-base group-hover:scale-105 group-hover:border-rose-500/50 group-hover:bg-rose-500/10 transition-all">
+                                <i class="fa-solid fa-globe"></i>
+                            </div>
+                        </div>
+                        <h3 class="text-lg font-bold text-white group-hover:text-rose-300 transition-colors">Web Assistance &amp; Content</h3>
+                        <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                            Website maintenance, digital data formatting, real-time updates, and workflow optimization for streamlined web operations.
+                        </p>
                     </div>
-                    <h3 class="text-lg font-bold text-white">Web Assistance & Content</h3>
-                    <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                        Website maintenance, digital data formatting, real-time updates, and workflow optimization for streamlined web operations.
-                    </p>
-                    <div class="pt-3">
-                        <span class="neon-service-tag neon-indigo">
-                            <span>Classvel standard</span>
-                            <i class="fa-solid fa-arrow-right"></i>
+                    <div class="pt-3 border-t border-white/10">
+                        <span class="editorial-tag-pill inline-flex items-center gap-1.5">
+                            <span>Classvel Standard</span>
+                            <i class="fa-solid fa-arrow-right text-[9px] text-rose-400"></i>
                         </span>
                     </div>
                 </div>
 
-                <div class="glass-card pro-3d-card p-7 rounded-3xl space-y-4 group">
-                    <div class="w-12 h-12 rounded-2xl bg-purple-500/10 border border-purple-500/30 text-purple-400 flex items-center justify-center text-xl group-hover:scale-110 group-hover:bg-purple-500 group-hover:text-white transition-all">
-                        <i class="fa-solid fa-boxes-stacked"></i>
+                <!-- Service 02 -->
+                <div class="glass-card p-7 sm:p-8 rounded-3xl space-y-4 group border border-white/10 hover:border-rose-500/40 transition-all duration-300 flex flex-col justify-between">
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-mono font-bold text-rose-500">02</span>
+                            <div class="w-10 h-10 rounded-xl bg-white/[0.04] border border-white/10 text-white flex items-center justify-center text-base group-hover:scale-105 group-hover:border-rose-500/50 group-hover:bg-rose-500/10 transition-all">
+                                <i class="fa-solid fa-boxes-stacked"></i>
+                            </div>
+                        </div>
+                        <h3 class="text-lg font-bold text-white group-hover:text-rose-300 transition-colors">Store &amp; Inventory Operations</h3>
+                        <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                            Stock reconciliation, inventory tracking, quality inspection, and store shelf organization with strict retail precision.
+                        </p>
                     </div>
-                    <h3 class="text-lg font-bold text-white">Store & Inventory Operations</h3>
-                    <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                        Stock reconciliation, inventory tracking, quality inspection, and store shelf organization with strict retail precision.
-                    </p>
-                    <div class="pt-3"><span class="neon-service-tag neon-purple"><span>Meena Bazar & Agora proven</span><i class="fa-solid fa-arrow-right"></i></span></div>
+                    <div class="pt-3 border-t border-white/10">
+                        <span class="editorial-tag-pill inline-flex items-center gap-1.5">
+                            <span>Meena Bazar &amp; Agora Proven</span>
+                            <i class="fa-solid fa-arrow-right text-[9px] text-rose-400"></i>
+                        </span>
+                    </div>
                 </div>
 
-                <div class="glass-card pro-3d-card p-7 rounded-3xl space-y-4 group">
-                    <div class="w-12 h-12 rounded-2xl bg-pink-500/10 border border-pink-500/30 text-pink-400 flex items-center justify-center text-xl group-hover:scale-110 group-hover:bg-pink-500 group-hover:text-white transition-all">
-                        <i class="fa-solid fa-chalkboard-user"></i>
+                <!-- Service 03 -->
+                <div class="glass-card p-7 sm:p-8 rounded-3xl space-y-4 group border border-white/10 hover:border-rose-500/40 transition-all duration-300 flex flex-col justify-between">
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-mono font-bold text-rose-500">03</span>
+                            <div class="w-10 h-10 rounded-xl bg-white/[0.04] border border-white/10 text-white flex items-center justify-center text-base group-hover:scale-105 group-hover:border-rose-500/50 group-hover:bg-rose-500/10 transition-all">
+                                <i class="fa-solid fa-chalkboard-user"></i>
+                            </div>
+                        </div>
+                        <h3 class="text-lg font-bold text-white group-hover:text-rose-300 transition-colors">Digital Content &amp; Slide Decks</h3>
+                        <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                            Converting raw data &amp; questionnaires into clean, engaging, visually digestible PowerPoint presentations for end-users.
+                        </p>
                     </div>
-                    <h3 class="text-lg font-bold text-white">Digital Content & Slide Decks</h3>
-                    <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                        Converting raw data & questionnaires into clean, engaging, visually digestible PowerPoint presentations for end-users.
-                    </p>
-                    <div class="pt-3"><span class="neon-service-tag neon-pink"><span>High-accuracy formatting</span><i class="fa-solid fa-arrow-right"></i></span></div>
+                    <div class="pt-3 border-t border-white/10">
+                        <span class="editorial-tag-pill inline-flex items-center gap-1.5">
+                            <span>High-Accuracy Formatting</span>
+                            <i class="fa-solid fa-arrow-right text-[9px] text-rose-400"></i>
+                        </span>
+                    </div>
                 </div>
 
-                <div class="glass-card pro-3d-card p-7 rounded-3xl space-y-4 group">
-                    <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 flex items-center justify-center text-xl group-hover:scale-110 group-hover:bg-emerald-500 group-hover:text-white transition-all">
-                        <i class="fa-solid fa-users-gear"></i>
+                <!-- Service 04 -->
+                <div class="glass-card p-7 sm:p-8 rounded-3xl space-y-4 group border border-white/10 hover:border-rose-500/40 transition-all duration-300 flex flex-col justify-between">
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-mono font-bold text-rose-500">04</span>
+                            <div class="w-10 h-10 rounded-xl bg-white/[0.04] border border-white/10 text-white flex items-center justify-center text-base group-hover:scale-105 group-hover:border-rose-500/50 group-hover:bg-rose-500/10 transition-all">
+                                <i class="fa-solid fa-users-gear"></i>
+                            </div>
+                        </div>
+                        <h3 class="text-lg font-bold text-white group-hover:text-rose-300 transition-colors">Crisis Response &amp; Team Support</h3>
+                        <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                            Calm execution in fast-paced scenarios, community health &amp; relief drive coordination, and customer-centric support.
+                        </p>
                     </div>
-                    <h3 class="text-lg font-bold text-white">Crisis Response & Team Support</h3>
-                    <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                        Calm execution in fast-paced scenarios, community health & relief drive coordination, and customer-centric support.
-                    </p>
-                    <div class="pt-3"><span class="neon-service-tag neon-emerald"><span>BDRCS emergency volunteer</span><i class="fa-solid fa-arrow-right"></i></span></div>
+                    <div class="pt-3 border-t border-white/10">
+                        <span class="editorial-tag-pill inline-flex items-center gap-1.5">
+                            <span>BDRCS Emergency Volunteer</span>
+                            <i class="fa-solid fa-arrow-right text-[9px] text-rose-400"></i>
+                        </span>
+                    </div>
                 </div>
             </div>
         </section>
@@ -2052,10 +2081,13 @@
 
         <!-- ==================== FAQ SECTION (TYPING & SERVICES) ==================== -->
         <section id="faq" class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative">
-            <div class="text-center max-w-2xl mx-auto mb-12">
-                <span class="section-tag neon-glow-badge">Got Questions?</span>
-                <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight neon-glow-heading">Frequently Asked Questions</h2>
-                <p class="text-slate-400 mt-3 text-sm sm:text-base">Everything you need to know about typing turnaround, supported file formats, and strict confidentiality.</p>
+            <div class="text-center max-w-2xl mx-auto mb-14">
+                <span class="editorial-eyebrow justify-center mb-3 inline-flex">INQUIRIES &amp; CLARITY</span>
+                <h2 class="text-4xl sm:text-5xl lg:text-6xl tracking-tight text-white">
+                    <span class="editorial-display">FREQUENT</span>
+                    <span class="editorial-serif text-slate-200 ml-1">questions</span><span class="crimson-dot">.</span>
+                </h2>
+                <p class="text-slate-300 mt-3 text-sm sm:text-base">Everything you need to know about typing turnaround, supported file formats, and strict confidentiality.</p>
             </div>
             
             <div class="space-y-4" id="faqList">
@@ -2656,10 +2688,13 @@
 
         <!-- ==================== VISITOR GUESTBOOK & FAN WALL ==================== -->
         <section id="guestbook" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative">
-            <div class="text-center max-w-2xl mx-auto mb-12">
-                <span class="section-tag neon-glow-badge">Community Wall</span>
-                <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight neon-glow-heading">Visitor Guestbook &amp; Fan Wall</h2>
-                <p class="text-slate-400 mt-3 text-sm sm:text-base">Leave a quick shoutout, compliment, or note for Saadman! Share your good vibes with the community.</p>
+            <div class="text-center max-w-2xl mx-auto mb-14">
+                <span class="editorial-eyebrow justify-center mb-3 inline-flex">COMMUNITY NOTES</span>
+                <h2 class="text-4xl sm:text-5xl lg:text-6xl tracking-tight text-white">
+                    <span class="editorial-display">VISITOR</span>
+                    <span class="editorial-serif text-slate-200 ml-1">guestbook</span><span class="crimson-dot">.</span>
+                </h2>
+                <p class="text-slate-300 mt-3 text-sm sm:text-base">Leave a quick shoutout, compliment, or note for Saadman! Share your good vibes with the community.</p>
             </div>
 
             <!-- Guestbook Card Box -->
@@ -3126,26 +3161,27 @@
                         </div>
                     </div>`;
 
+                const idxFormatted = String(sortedProjects.indexOf(proj) + 1).padStart(2, '0');
                 return `
-                    <article class="glass-card rounded-3xl overflow-hidden flex flex-col lg:flex-row items-stretch group cursor-pointer hover:border-brand-500/50 transition-all duration-300" data-project-idx="${sortedProjects.indexOf(proj)}">
+                    <article class="glass-card rounded-3xl overflow-hidden flex flex-col lg:flex-row items-stretch group cursor-pointer hover:border-rose-500/40 border border-white/10 transition-all duration-300" data-project-idx="${sortedProjects.indexOf(proj)}">
                         ${visualArea}
                         <div class="lg:w-1/2 p-8 lg:p-10 flex flex-col justify-center space-y-4">
                             <div class="flex items-center justify-between">
-                                <span class="inline-block px-3 py-1 rounded-full text-xs font-mono font-bold bg-brand-500/10 text-brand-400 border border-brand-500/20 w-fit">
-                                    ${escapeHTML(proj.category)}
+                                <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono font-bold bg-white/5 text-slate-300 border border-white/10">
+                                    <span class="text-rose-500 font-bold">${idxFormatted}</span> &mdash; ${escapeHTML(proj.category)}
                                 </span>
-                                <span class="text-xs font-mono text-purple-400 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                                <span class="text-xs font-mono text-slate-400 group-hover:text-rose-400 flex items-center gap-1 group-hover:translate-x-1 transition-all">
                                     Case Study <i class="fa-solid fa-arrow-right text-[10px]"></i>
                                 </span>
                             </div>
-                            <h3 class="text-2xl sm:text-3xl font-extrabold text-white group-hover:text-brand-300 transition-colors">${escapeHTML(proj.title)}</h3>
-                            <p class="text-slate-400 text-sm leading-relaxed">${escapeHTML(proj.description)}</p>
+                            <h3 class="text-2xl sm:text-3xl font-extrabold text-white group-hover:text-rose-300 transition-colors">${escapeHTML(proj.title)}</h3>
+                            <p class="text-slate-300 text-sm leading-relaxed">${escapeHTML(proj.description)}</p>
                             <div class="flex flex-wrap gap-2 pt-2">
-                                ${(proj.tags || []).map(t => `<span class="px-2.5 py-1 rounded-lg text-xs font-mono bg-white/5 border border-white/10 text-slate-300">${escapeHTML(t)}</span>`).join('')}
+                                ${(proj.tags || []).map(t => `<span class="editorial-tag-pill">${escapeHTML(t)}</span>`).join('')}
                             </div>
                             <div class="pt-2">
-                                <span class="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold bg-brand-500/20 border border-brand-500/40 text-brand-300 group-hover:bg-brand-500 group-hover:text-white transition">
-                                    <i class="fa-solid fa-magnifying-glass-plus"></i> View Full Case Study
+                                <span class="inline-flex items-center gap-2 px-4 py-2 text-xs font-mono uppercase tracking-[0.16em] text-white border border-white/20 group-hover:border-rose-500 group-hover:bg-rose-500/10 transition">
+                                    [ VIEW CASE STUDY &rarr; ]
                                 </span>
                             </div>
                         </div>
@@ -3980,12 +4016,11 @@
         window.addEventListener('load', () => setTimeout(() => document.getElementById('pageLoader').classList.add('done'), Math.max(300, 1800 - (Date.now() - loaderStart))));
         setTimeout(() => document.getElementById('pageLoader').classList.add('done'), 4000);
 
-        // Interactive 3D Keycap & Floating Document Matrix (Three.js + GSAP ScrollTrigger Pro Max)
+        // Minimalist Studio Canvas (Three.js disabled to preserve pure dark obsidian background)
         (function initPortfolio3D() {
-            if (typeof THREE === 'undefined') return;
-            const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-            const canvas = document.getElementById('bgParticles') || document.querySelector('canvas');
-            if (!canvas) return;
+            const canvas = document.getElementById('bgParticles');
+            if (canvas) canvas.style.display = 'none';
+            return;
 
             // Ensure canvas sits cleanly behind UI content
             Object.assign(canvas.style, {
