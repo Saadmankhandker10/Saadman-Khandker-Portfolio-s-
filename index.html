@@ -1116,39 +1116,40 @@
         }
         #livingPortraitRig {
             position: relative;
-            width: min(56vw, 660px);
-            height: min(92vh, 860px);
-            will-change: transform, opacity, filter;
+            width: min(40vw, 600px);
+            height: min(94vh, 760px);
+            will-change: transform;
             transform-origin: center bottom;
-            transition: opacity 0.35s ease;
-            mask-image: radial-gradient(ellipse 78% 84% at 50% 48%, #000 58%, rgba(0,0,0,0.65) 76%, transparent 98%),
-                        linear-gradient(to top, transparent 0%, #000 14%, #000 92%, transparent 100%);
-            -webkit-mask-image: radial-gradient(ellipse 78% 84% at 50% 48%, #000 58%, rgba(0,0,0,0.65) 76%, transparent 98%),
-                                linear-gradient(to top, transparent 0%, #000 14%, #000 92%, transparent 100%);
+            mask-image: radial-gradient(ellipse 80% 86% at 50% 46%, #000 60%, rgba(0,0,0,0.7) 78%, transparent 98%),
+                        linear-gradient(to top, transparent 0%, #000 12%, #000 94%, transparent 100%);
+            -webkit-mask-image: radial-gradient(ellipse 80% 86% at 50% 46%, #000 60%, rgba(0,0,0,0.7) 78%, transparent 98%),
+                                linear-gradient(to top, transparent 0%, #000 12%, #000 94%, transparent 100%);
             mask-composite: intersect;
             -webkit-mask-composite: source-in;
         }
-        #livingPortraitCanvas {
+        .portrait-video {
+            position: absolute;
+            inset: 0;
             width: 100%;
             height: 100%;
-            display: block;
+            object-fit: cover;
+            object-position: center top;
+            opacity: 0;
+            transition: opacity 0.9s cubic-bezier(0.4, 0, 0.2, 1);
         }
+        .portrait-video.is-active { opacity: 1; }
         /* Studio Rim Aura behind the Living Portrait */
         #livingPortraitAura {
             position: absolute;
             inset: 12% 18% 10% 18%;
             border-radius: 9999px;
-            background: radial-gradient(circle at 50% 38%, rgba(255, 42, 95, 0.14), rgba(99, 102, 241, 0.12) 45%, transparent 72%);
+            background: radial-gradient(circle at 50% 38%, rgba(255, 42, 95, 0.10), rgba(99, 102, 241, 0.08) 45%, transparent 72%);
             filter: blur(48px);
             z-index: -1;
             pointer-events: none;
-            transition: transform 0.4s ease, opacity 0.4s ease;
         }
         @media (max-width: 1023px) {
-            #livingPortraitRig {
-                width: min(88vw, 460px);
-                height: min(72vh, 580px);
-            }
+            #cinematicPortraitStage { display: none; }
         }
         html:not(.dark) #cinematicPortraitStage {
             opacity: 0.22 !important;
@@ -1315,7 +1316,8 @@
     <div id="cinematicPortraitStage" aria-hidden="true">
         <div id="livingPortraitRig">
             <div id="livingPortraitAura"></div>
-            <canvas id="livingPortraitCanvas"></canvas>
+            <video id="portraitVideoHero" class="portrait-video is-active" src="./public/hero-studio.mp4" poster="./public/pose-hero.jpg" autoplay muted loop playsinline preload="auto"></video>
+            <video id="portraitVideoAbout" class="portrait-video" src="./public/about-studio.mp4" poster="./public/pose-about.jpg" autoplay muted loop playsinline preload="auto"></video>
         </div>
     </div>
     <!-- Project Case Study Modal -->
@@ -1574,7 +1576,8 @@
             <!-- Right Living Portrait Stage Anchor (Desktop open stage for #cinematicPortraitStage, Mobile blended fallback) -->
             <div class="lg:w-5/12 flex flex-col items-center justify-end min-h-[340px] sm:min-h-[420px] lg:min-h-[540px] relative">
                 <!-- Hidden/Blended SEO & Admin Image reference -->
-                <img id="profileImage" src="./public/img.png" alt="Khandker Saadman Rafid" fetchpriority="high" decoding="async" class="lg:opacity-0 w-72 sm:w-80 aspect-[3/4] object-cover rounded-3xl pointer-events-none select-none" style="mask-image: radial-gradient(ellipse 80% 85% at 50% 45%, #000 60%, transparent 98%); -webkit-mask-image: radial-gradient(ellipse 80% 85% at 50% 45%, #000 60%, transparent 98%);">
+                <img id="profileImage" src="./public/img.png" alt="Khandker Saadman Rafid" decoding="async" class="hidden">
+                <video class="lg:hidden w-72 sm:w-80 aspect-[4/5] object-cover rounded-3xl" src="./public/hero-studio.mp4" poster="./public/pose-hero.jpg" autoplay muted loop playsinline preload="auto" aria-label="Khandker Saadman Rafid" style="mask-image: radial-gradient(ellipse 80% 85% at 50% 45%, #000 62%, transparent 98%); -webkit-mask-image: radial-gradient(ellipse 80% 85% at 50% 45%, #000 62%, transparent 98%);"></video>
                 
                 <!-- Floating Location & Live Status Pill anchored below portrait -->
                 <div class="mt-4 lg:mt-auto p-3.5 px-5 rounded-2xl bg-dark-950/85 backdrop-blur-xl border border-white/10 hover:border-rose-500/40 transition-all flex items-center justify-between gap-5 shadow-2xl z-20 max-w-xs w-full">
@@ -1594,11 +1597,10 @@
         <section id="about" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28 relative z-20">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
                 <!-- Left Column: Open Stage where Saadman's Living Portrait walks over from Right to Left! -->
-                <div class="hidden lg:flex lg:col-span-5 min-h-[520px] items-end justify-center relative">
-                    <div class="px-4 py-2 rounded-full bg-white/[0.03] border border-white/10 backdrop-blur-md text-[11px] font-mono text-slate-400 flex items-center gap-2">
-                        <span class="w-2 h-2 rounded-full bg-rose-500 animate-ping"></span>
-                        <span>01 / INTERACTIVE LIVING PORTRAIT STAGE</span>
-                    </div>
+                <div class="hidden lg:block lg:col-span-5 min-h-[560px] relative" aria-hidden="true"></div>
+                <!-- Mobile: inline studio video (desktop uses the fixed scroll stage) -->
+                <div class="lg:hidden flex justify-center">
+                    <video class="w-72 sm:w-80 aspect-[4/5] object-cover rounded-3xl" src="./public/about-studio.mp4" poster="./public/pose-about.jpg" autoplay muted loop playsinline preload="metadata" style="mask-image: radial-gradient(ellipse 80% 85% at 50% 45%, #000 62%, transparent 98%); -webkit-mask-image: radial-gradient(ellipse 80% 85% at 50% 45%, #000 62%, transparent 98%);"></video>
                 </div>
 
                 <!-- Right Column: Editorial Story & Hairline KPI Grid (Reel 00:05 - 00:08) -->
@@ -5009,12 +5011,14 @@
                 });
             }
 
-            // 2. Real-Human Living Portrait Stage & WebGL 2.5D Shader Engine
+            // 2. Scroll-choreographed REAL studio video portrait (no shader warping)
+            //    Hero: stands RIGHT (hero-studio.mp4) -> About: glides LEFT and crossfades to about-studio.mp4
+            //    -> Rest of page: returns RIGHT as a dim cinematic backdrop -> Contact: brightens again.
             const stage = document.getElementById('cinematicPortraitStage');
             const rig = document.getElementById('livingPortraitRig');
-            const canvas = document.getElementById('livingPortraitCanvas');
-            const aura = document.getElementById('livingPortraitAura');
-            if (!stage || !rig || !canvas) return;
+            const vHero = document.getElementById('portraitVideoHero');
+            const vAbout = document.getElementById('portraitVideoAbout');
+            if (!stage || !rig || !vHero || !vAbout) return;
 
             const lerp = (a, b, t) => a + (b - a) * t;
             const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
@@ -5023,471 +5027,69 @@
                 return t * t * (3 - 2 * t);
             };
 
-            // Size canvas with crisp DPR
-            const dpr = Math.min(window.devicePixelRatio || 1, 2);
-            const BASE_W = 800;
-            const BASE_H = 1000;
-            canvas.width = BASE_W * dpr;
-            canvas.height = BASE_H * dpr;
-
-            // Try WebGL first on http/https; on local file:// protocol use our multi-slice 2.5D Canvas engine (since browsers block WebGL texImage2D on file://)
-            const isFileProtocol = window.location.protocol === 'file:';
-            let gl = !isFileProtocol ? (
-                canvas.getContext('webgl', { alpha: true, antialias: true, premultipliedAlpha: false }) ||
-                canvas.getContext('experimental-webgl', { alpha: true, antialias: true, premultipliedAlpha: false })
-            ) : null;
-
-            let glProgram = null;
-            let glUniforms = {};
-            let textureReady = false;
-            let portraitImg = new Image();
-            if (!isFileProtocol) {
-                portraitImg.crossOrigin = 'anonymous';
-            }
-
-            const vsSource = `
-                attribute vec2 aPosition;
-                varying vec2 vUv;
-                void main() {
-                    vUv = vec2(aPosition.x * 0.5 + 0.5, 0.5 - aPosition.y * 0.5);
-                    gl_Position = vec4(aPosition, 0.0, 1.0);
-                }
-            `;
-
-            // Fragment shader engineered specifically for Saadman's studio portrait (./public/img.png, 1024x1280)
-            // Simulates:
-            // - 2.5D Anatomical Head & Nose Parallax Turn (uHeadYaw, uHeadPitch, uHeadRoll)
-            // - Independent Torso / Shoulder Rotation with natural lag (uTorsoYaw)
-            // - Organic Human Chest & Shoulder Breathing wave (uBreath)
-            // - Walking Stride Cadence & Shoulder Sway during scroll travel (uStridePhase, uStrideAmp)
-            // - Natural Eyelid Micro-Blink behind glasses (uBlink)
-            // - Dynamic Studio Rim Light & Glasses Lens Specular Glint
-            const fsSource = `
-                precision highp float;
-                varying vec2 vUv;
-                uniform sampler2D uTexture;
-                uniform float uTime;
-                uniform float uBreath;
-                uniform float uHeadYaw;
-                uniform float uHeadPitch;
-                uniform float uHeadRoll;
-                uniform float uTorsoYaw;
-                uniform float uStridePhase;
-                uniform float uStrideAmp;
-                uniform float uBlink;
-
-                float gauss(vec2 p, vec2 center, vec2 radii) {
-                    vec2 d = (p - center) / radii;
-                    return exp(-dot(d, d) * 1.35);
-                }
-
-                void main() {
-                    vec2 uv = vUv;
-
-                    // 1. Anatomical Zone Masks (Calibrated to ./public/img.png 1024x1280)
-                    // Head center is around (0.50, 0.29), Nose/Glasses around (0.50, 0.285), Torso around (0.50, 0.72)
-                    float headZone = gauss(uv, vec2(0.50, 0.285), vec2(0.21, 0.185));
-                    float noseBridge = gauss(uv, vec2(0.50, 0.295), vec2(0.085, 0.085));
-                    float jawChin = gauss(uv, vec2(0.50, 0.385), vec2(0.13, 0.075));
-                    float neckZone = gauss(uv, vec2(0.50, 0.455), vec2(0.12, 0.065));
-                    float torsoZone = gauss(uv, vec2(0.50, 0.74), vec2(0.38, 0.31));
-                    float chestHeart = gauss(uv, vec2(0.50, 0.62), vec2(0.24, 0.16));
-
-                    // Composite 2.5D depth field (0 = background, 1 = nose tip)
-                    float depth = clamp(
-                        torsoZone * 0.48 +
-                        neckZone * 0.52 +
-                        headZone * 0.76 +
-                        jawChin * 0.22 +
-                        noseBridge * 0.34,
-                        0.0, 1.15
-                    );
-
-                    // 2. Subtle Head Roll (Tilt around neck pivot (0.50, 0.43))
-                    vec2 neckPivot = vec2(0.50, 0.43);
-                    float rollAngle = uHeadRoll * smoothstep(0.50, 0.18, uv.y);
-                    float cR = cos(rollAngle);
-                    float sR = sin(rollAngle);
-                    vec2 relHead = uv - neckPivot;
-                    vec2 rotatedHead = vec2(relHead.x * cR - relHead.y * sR, relHead.x * sR + relHead.y * cR) + neckPivot;
-                    uv = mix(uv, rotatedHead, clamp(headZone * 1.15, 0.0, 1.0));
-
-                    // 3. 2.5D Perspective Head & Torso Turn (Parallax Displacement)
-                    // When turning right (uHeadYaw > 0), foreground features shift right relative to back of head,
-                    // and the far side of the face compresses slightly while the near side expands (true 3D foreshortening)
-                    float faceRelX = uv.x - 0.50;
-                    float foreshortenHead = 1.0 - faceRelX * uHeadYaw * 0.42 * headZone;
-                    float headShiftX = -uHeadYaw * (0.026 * headZone + 0.015 * noseBridge + 0.008 * jawChin) * foreshortenHead;
-                    float headShiftY = -uHeadPitch * (0.016 * headZone + 0.009 * noseBridge);
-
-                    // Torso 3D turn & walking shoulder weight shift
-                    float torsoRelX = uv.x - 0.50;
-                    float shoulderAlternating = sin(uStridePhase) * uStrideAmp * 0.0075 * sign(torsoRelX) * torsoZone;
-                    float torsoShiftX = -uTorsoYaw * (0.020 * torsoZone) * (1.0 - torsoRelX * uTorsoYaw * 0.28);
-                    float torsoShiftY = shoulderAlternating - abs(sin(uStridePhase)) * uStrideAmp * 0.009 * torsoZone;
-
-                    // 4. Organic Human Breathing (Chest expansion + shoulder rise)
-                    // Inhalation lifts shoulders (uv.y sampled slightly lower) and expands chest outward
-                    float breathLift = uBreath * (0.0068 * torsoZone + 0.0042 * chestHeart + 0.0018 * headZone);
-                    float breathExpand = -uBreath * torsoRelX * (0.018 * chestHeart + 0.011 * torsoZone);
-
-                    // 5. Natural Eyelid Micro-Blink behind glasses (y around 0.268)
-                    float leftEye = gauss(uv, vec2(0.445, 0.270), vec2(0.032, 0.016));
-                    float rightEye = gauss(uv, vec2(0.555, 0.270), vec2(0.032, 0.016));
-                    float eyeMask = clamp(leftEye + rightEye, 0.0, 1.0);
-                    float blinkOffset = uBlink * eyeMask * (0.272 - uv.y) * 0.55;
-
-                    // Combine all anatomical UV displacements
-                    vec2 sampleUv = uv;
-                    sampleUv.x += headShiftX + torsoShiftX + breathExpand;
-                    sampleUv.y += headShiftY + torsoShiftY + breathLift + blinkOffset;
-                    sampleUv = clamp(sampleUv, vec2(0.002), vec2(0.998));
-
-                    vec4 texColor = texture2D(uTexture, sampleUv);
-
-                    // 6. Studio Rim-Light, Dynamic 3D Shading & Glasses Lens Glint
-                    // Directional key light shifts with head/torso turn
-                    float sideNorm = (uv.x - 0.50) * 2.0;
-                    float directionalLight = 1.0 + sideNorm * (uHeadYaw * 0.16 * headZone + uTorsoYaw * 0.12 * torsoZone);
-
-                    // Subtle specular glint sweeping across the glasses lenses as head turns
-                    float glassesBand = gauss(uv, vec2(0.50, 0.272), vec2(0.115, 0.026));
-                    float glintLine = exp(-pow((uv.x - (0.50 + uHeadYaw * 0.22 + sin(uTime * 0.7) * 0.04)) * 18.0 + (uv.y - 0.27) * 8.0, 2.0));
-                    float glassesGlint = glassesBand * glintLine * 0.11;
-
-                    // Crimson & Indigo studio rim light along shoulders and jawline
-                    float edgeDist = abs(uv.x - 0.50);
-                    float shoulderRimMask = smoothstep(0.18, 0.38, edgeDist) * smoothstep(0.48, 0.34, edgeDist) * torsoZone;
-                    vec3 rimColor = mix(vec3(0.38, 0.40, 0.95), vec3(1.0, 0.16, 0.37), smoothstep(-0.3, 0.3, sideNorm * uHeadYaw));
-
-                    vec3 finalRgb = texColor.rgb * directionalLight + vec3(glassesGlint) + rimColor * shoulderRimMask * 0.14;
-
-                    // 7. Seamless Studio Backdrop Vignette & Alpha Feathering into #060913
-                    float radX = (uv.x - 0.50) / 0.47;
-                    float radY = (uv.y - 0.52) / 0.48;
-                    float radialDist = sqrt(radX * radX + radY * radY);
-                    float vignetteAlpha = 1.0 - smoothstep(0.68, 1.02, radialDist);
-                    float bottomFade = 1.0 - smoothstep(0.84, 0.995, uv.y);
-                    float topFade = smoothstep(0.005, 0.08, uv.y);
-
-                    // Soften dark studio backdrop so the figure emerges organically from the page
-                    float luma = dot(texColor.rgb, vec3(0.299, 0.587, 0.114));
-                    float subjectPresence = clamp(headZone * 1.4 + torsoZone * 1.25 + smoothstep(0.07, 0.20, luma) * 0.65, 0.0, 1.0);
-                    float finalAlpha = texColor.a * vignetteAlpha * bottomFade * topFade * mix(0.25, 1.0, subjectPresence);
-
-                    gl_FragColor = vec4(finalRgb, finalAlpha);
-                }
-            `;
-
-            function compileShader(ctx, type, source) {
-                const shader = ctx.createShader(type);
-                ctx.shaderSource(shader, source);
-                ctx.compileShader(shader);
-                if (!ctx.getShaderParameter(shader, ctx.COMPILE_STATUS)) {
-                    ctx.deleteShader(shader);
-                    return null;
-                }
-                return shader;
-            }
-
-            if (gl) {
-                const vs = compileShader(gl, gl.VERTEX_SHADER, vsSource);
-                const fs = compileShader(gl, gl.FRAGMENT_SHADER, fsSource);
-                if (vs && fs) {
-                    glProgram = gl.createProgram();
-                    gl.attachShader(glProgram, vs);
-                    gl.attachShader(glProgram, fs);
-                    gl.linkProgram(glProgram);
-                    if (gl.getProgramParameter(glProgram, gl.LINK_STATUS)) {
-                        gl.useProgram(glProgram);
-                        const posBuf = gl.createBuffer();
-                        gl.bindBuffer(gl.ARRAY_BUFFER, posBuf);
-                        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
-                            -1, -1,  1, -1, -1,  1,
-                            -1,  1,  1, -1,  1,  1
-                        ]), gl.STATIC_DRAW);
-                        const aPos = gl.getAttribLocation(glProgram, 'aPosition');
-                        gl.enableVertexAttribArray(aPos);
-                        gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
-
-                        glUniforms = {
-                            uTexture: gl.getUniformLocation(glProgram, 'uTexture'),
-                            uTime: gl.getUniformLocation(glProgram, 'uTime'),
-                            uBreath: gl.getUniformLocation(glProgram, 'uBreath'),
-                            uHeadYaw: gl.getUniformLocation(glProgram, 'uHeadYaw'),
-                            uHeadPitch: gl.getUniformLocation(glProgram, 'uHeadPitch'),
-                            uHeadRoll: gl.getUniformLocation(glProgram, 'uHeadRoll'),
-                            uTorsoYaw: gl.getUniformLocation(glProgram, 'uTorsoYaw'),
-                            uStridePhase: gl.getUniformLocation(glProgram, 'uStridePhase'),
-                            uStrideAmp: gl.getUniformLocation(glProgram, 'uStrideAmp'),
-                            uBlink: gl.getUniformLocation(glProgram, 'uBlink')
-                        };
-                    } else {
-                        gl = null;
-                    }
-                } else {
-                    gl = null;
-                }
-            }
-
-            const ctx2d = !gl ? canvas.getContext('2d') : null;
-
-            portraitImg.onload = () => {
-                if (gl && glProgram) {
-                    const tex = gl.createTexture();
-                    gl.bindTexture(gl.TEXTURE_2D, tex);
-                    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-                    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-                    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
-                    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-                    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, portraitImg);
-                }
-                textureReady = true;
-            };
-            portraitImg.src = './public/img.png';
-
-            // 3. Mouse Gaze & Scroll Choreography State
-            let mouseTargetX = 0;
-            let mouseTargetY = 0;
-            let smoothMouseX = 0;
-            let smoothMouseY = 0;
-
-            window.addEventListener('pointermove', (e) => {
-                mouseTargetX = (e.clientX / Math.max(window.innerWidth, 1) - 0.5) * 2;
-                mouseTargetY = (e.clientY / Math.max(window.innerHeight, 1) - 0.5) * 2;
-            }, { passive: true });
-
-            // Scroll Choreography State (Right in Hero -> Left in About -> Right in Services/Toolkit/Journey -> Right in Contact)
-            let currentX = 22;      // vw offset from center
-            let currentY = 2;       // vh offset
-            let currentScale = 1.04;
-            let currentOpacity = 0.95;
-            let prevX = 22;
-            let stridePhase = 0;
-            let strideAmp = 0;
-            let headYaw = -0.25;
-            let headPitch = 0;
-            let headRoll = 0;
-            let torsoYaw = -0.20;
-
-            // Natural human blink scheduler
-            let nextBlinkTime = 2.2;
-            let blinkStart = -10;
-            let isDoubleBlink = false;
-
-            const heroEl = document.getElementById('home');
             const aboutEl = document.getElementById('about');
-            const servicesEl = document.getElementById('services');
             const contactEl = document.getElementById('contact');
+            const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-            function computeScrollTargets() {
-                const vw = window.innerWidth;
+            [vHero, vAbout].forEach(v => {
+                v.muted = true;
+                const p = v.play();
+                if (p && p.catch) p.catch(() => {});
+            });
+
+            let activeKey = 'hero';
+            const setActive = key => {
+                if (key === activeKey) return;
+                activeKey = key;
+                vHero.classList.toggle('is-active', key === 'hero');
+                vAbout.classList.toggle('is-active', key === 'about');
+            };
+
+            const RIGHT_X = 24;
+            const LEFT_X = -24;
+            let curX = RIGHT_X;
+            let curOp = 1;
+            let curScale = 1;
+
+            function computeTargets() {
                 const vh = Math.max(window.innerHeight, 1);
-                const isMobile = vw < 1024;
-
-                // Default Hero pose: Standing on the RIGHT side
-                let targetX = isMobile ? 10 : 22.5;
-                let targetY = isMobile ? 6 : 2.5;
-                let targetScale = isMobile ? 0.94 : 1.05;
-                let targetOpacity = isMobile ? 0.34 : 0.96;
-                let targetBaseYaw = -0.32; // Facing slightly left toward Hero typography
+                let x = RIGHT_X;
+                let op = 1;
+                let scale = 1;
+                let key = 'hero';
 
                 if (aboutEl) {
-                    const aboutRect = aboutEl.getBoundingClientRect();
-                    // Transition 1: Hero (#home) -> 01 / ABOUT (#about)
-                    // As #about enters viewport, Saadman walks from RIGHT (+22.5vw) to LEFT (-22.5vw)
-                    const enterAbout = smoothstep(vh * 0.92, vh * 0.18, aboutRect.top);
-                    // Transition 2: 01 / ABOUT (#about) -> 02 / EXPERTISE (#services) and beyond
-                    // As #about scrolls up past the top, Saadman walks from LEFT (-22.5vw) back to RIGHT (+25vw)
-                    const exitAbout = smoothstep(vh * 0.15, -vh * 0.55, aboutRect.bottom - vh * 0.35);
-
-                    const leftX = isMobile ? -8 : -22.5;
-                    const rightContentX = isMobile ? 12 : 25.5;
-
-                    // Interpolate Hero -> About
-                    targetX = lerp(targetX, leftX, enterAbout);
-                    targetY = lerp(targetY, isMobile ? 5 : 1.5, enterAbout);
-                    targetScale = lerp(targetScale, isMobile ? 0.95 : 1.07, enterAbout);
-                    targetOpacity = lerp(targetOpacity, isMobile ? 0.42 : 0.98, enterAbout);
-                    targetBaseYaw = lerp(targetBaseYaw, 0.38, enterAbout); // In About, facing right toward "SPECIALIST in the making."
-
-                    // Interpolate About -> Services / Toolkit / Journey
-                    targetX = lerp(targetX, rightContentX, exitAbout);
-                    targetY = lerp(targetY, isMobile ? 7 : 3.5, exitAbout);
-                    targetScale = lerp(targetScale, isMobile ? 0.90 : 0.97, exitAbout);
-                    targetOpacity = lerp(targetOpacity, isMobile ? 0.22 : 0.38, exitAbout);
-                    targetBaseYaw = lerp(targetBaseYaw, -0.35, exitAbout);
+                    const r = aboutEl.getBoundingClientRect();
+                    const enter = smoothstep(vh * 0.9, vh * 0.2, r.top);
+                    const exit = smoothstep(vh * 0.55, -vh * 0.05, r.bottom);
+                    x = lerp(RIGHT_X, LEFT_X, enter);
+                    x = lerp(x, RIGHT_X + 2, exit);
+                    op = lerp(1, 0.28, exit);
+                    scale = lerp(1, 0.94, exit);
+                    key = (enter > 0.5 && exit < 0.5) ? 'about' : 'hero';
                 }
 
-                // Transition 3: Brighten & step forward at 10 / CONTACT ("HAVE A PROJECT? Let's build something MEANINGFUL.")
                 if (contactEl) {
-                    const contactRect = contactEl.getBoundingClientRect();
-                    const enterContact = smoothstep(vh * 0.95, vh * 0.25, contactRect.top);
-                    targetX = lerp(targetX, isMobile ? 8 : 23.0, enterContact);
-                    targetScale = lerp(targetScale, isMobile ? 0.94 : 1.03, enterContact);
-                    targetOpacity = lerp(targetOpacity, isMobile ? 0.32 : 0.62, enterContact);
-                    targetBaseYaw = lerp(targetBaseYaw, -0.28, enterContact);
+                    const c = contactEl.getBoundingClientRect();
+                    const e = smoothstep(vh * 0.9, vh * 0.25, c.top);
+                    op = lerp(op, 0.55, e);
+                    scale = lerp(scale, 1, e);
                 }
-
-                return { targetX, targetY, targetScale, targetOpacity, targetBaseYaw };
+                return { x, op, scale, key };
             }
 
-            let startTime = performance.now();
-
-            function animateLivingPortrait(now) {
-                const t = (now - startTime) * 0.001;
-
-                smoothMouseX = lerp(smoothMouseX, mouseTargetX, 0.055);
-                smoothMouseY = lerp(smoothMouseY, mouseTargetY, 0.055);
-
-                const { targetX, targetY, targetScale, targetOpacity, targetBaseYaw } = computeScrollTargets();
-
-                // Smooth spring-like horizontal travel across the viewport
-                prevX = currentX;
-                currentX = lerp(currentX, targetX, 0.065);
-                currentY = lerp(currentY, targetY, 0.065);
-                currentScale = lerp(currentScale, targetScale, 0.065);
-                currentOpacity = lerp(currentOpacity, targetOpacity, 0.065);
-
-                // Horizontal travel velocity drives realistic walking stride cadence & body turn!
-                const vx = currentX - prevX;
-                const speed = Math.min(Math.abs(vx) * 2.4, 1.2);
-                strideAmp = lerp(strideAmp, clamp(speed, 0, 1), 0.12);
-                stridePhase += (0.045 + strideAmp * 0.19);
-
-                // Natural organic breathing wave ( ~15.5 breaths/min with realistic inhalation/exhalation asymmetry )
-                const rawSin = Math.sin(t * 1.62);
-                const breathWave = rawSin + 0.22 * Math.sin(t * 3.24 - 0.4);
-
-                // Idle organic figure-8 head micro-motion so Saadman always feels alive even when cursor is still
-                const idleYaw = Math.sin(t * 0.78) * 0.11 + Math.cos(t * 0.43) * 0.06;
-                const idlePitch = Math.sin(t * 0.64 + 1.1) * 0.08;
-                const idleRoll = Math.sin(t * 0.52) * 0.018;
-
-                // Turn head into the direction of walking travel + base pose + mouse gaze
-                const travelTurnYaw = clamp(vx * 1.45, -0.65, 0.65);
-                const desiredHeadYaw = clamp(targetBaseYaw + travelTurnYaw + smoothMouseX * 0.42 + idleYaw, -0.95, 0.95);
-                const desiredHeadPitch = clamp(smoothMouseY * 0.28 + idlePitch - strideAmp * 0.06, -0.55, 0.55);
-                const desiredHeadRoll = clamp(idleRoll + smoothMouseX * 0.025 + Math.cos(stridePhase) * strideAmp * 0.022, -0.08, 0.08);
-                const desiredTorsoYaw = clamp(targetBaseYaw * 0.85 + travelTurnYaw * 1.1 + smoothMouseX * 0.22, -0.80, 0.80);
-
-                // Head responds faster than torso (natural human neck-before-shoulders kinematics)
-                headYaw = lerp(headYaw, desiredHeadYaw, 0.09);
-                headPitch = lerp(headPitch, desiredHeadPitch, 0.09);
-                headRoll = lerp(headRoll, desiredHeadRoll, 0.08);
-                torsoYaw = lerp(torsoYaw, desiredTorsoYaw, 0.055);
-
-                // Natural Eyelid Blink state
-                if (t > nextBlinkTime) {
-                    blinkStart = t;
-                    isDoubleBlink = Math.random() < 0.26;
-                    nextBlinkTime = t + 3.4 + Math.random() * 3.2;
-                }
-                let blinkVal = 0;
-                const dtBlink = t - blinkStart;
-                if (dtBlink >= 0 && dtBlink < 0.18) {
-                    blinkVal = Math.sin((dtBlink / 0.18) * Math.PI);
-                } else if (isDoubleBlink && dtBlink >= 0.22 && dtBlink < 0.38) {
-                    blinkVal = Math.sin(((dtBlink - 0.22) / 0.16) * Math.PI);
-                }
-
-                // Apply 3D Stage & Rig CSS transforms (Walking stride bobbing + 3D perspective tilt)
-                const strideBobPx = -Math.abs(Math.sin(stridePhase)) * strideAmp * 14 + breathWave * 2.2;
-                const strideSwayDeg = Math.cos(stridePhase) * strideAmp * 1.4;
-                const perspectiveRotateY = headYaw * 9.5;
-                const perspectiveRotateX = -headPitch * 5.5;
-
-                stage.style.opacity = currentOpacity.toFixed(3);
-                rig.style.transform = `translate3d(${currentX.toFixed(2)}vw, calc(${currentY.toFixed(2)}vh + ${strideBobPx.toFixed(1)}px), 0px) scale(${currentScale.toFixed(3)}) rotateY(${perspectiveRotateY.toFixed(2)}deg) rotateX(${perspectiveRotateX.toFixed(2)}deg) rotateZ(${strideSwayDeg.toFixed(2)}deg)`;
-
-                if (aura) {
-                    const auraShiftX = -headYaw * 18;
-                    const auraScale = 1 + breathWave * 0.04 + strideAmp * 0.08;
-                    aura.style.transform = `translate3d(${auraShiftX.toFixed(1)}px, 0px, 0px) scale(${auraScale.toFixed(3)})`;
-                }
-
-                // Render WebGL 2.5D Living Shader (or 2D fallback)
-                if (textureReady) {
-                    if (gl && glProgram) {
-                        gl.viewport(0, 0, canvas.width, canvas.height);
-                        gl.clearColor(0, 0, 0, 0);
-                        gl.clear(gl.COLOR_BUFFER_BIT);
-                        gl.useProgram(glProgram);
-
-                        gl.uniform1f(glUniforms.uTime, t);
-                        gl.uniform1f(glUniforms.uBreath, breathWave);
-                        gl.uniform1f(glUniforms.uHeadYaw, headYaw);
-                        gl.uniform1f(glUniforms.uHeadPitch, headPitch);
-                        gl.uniform1f(glUniforms.uHeadRoll, headRoll);
-                        gl.uniform1f(glUniforms.uTorsoYaw, torsoYaw);
-                        gl.uniform1f(glUniforms.uStridePhase, stridePhase);
-                        gl.uniform1f(glUniforms.uStrideAmp, strideAmp);
-                        gl.uniform1f(glUniforms.uBlink, blinkVal);
-
-                        gl.drawArrays(gl.TRIANGLES, 0, 6);
-                    } else if (ctx2d) {
-                        const w = canvas.width;
-                        const h = canvas.height;
-                        const imgW = portraitImg.naturalWidth || 1024;
-                        const imgH = portraitImg.naturalHeight || 1280;
-                        ctx2d.clearRect(0, 0, w, h);
-
-                        // 32-Band Anatomical 2.5D Scanline Renderer (for local file:// protocol or non-WebGL browsers)
-                        const SLICES = 36;
-                        const sliceSrcH = imgH / SLICES;
-                        const sliceDstH = h / SLICES;
-
-                        for (let i = 0; i < SLICES; i++) {
-                            const v = (i + 0.5) / SLICES; // 0 = top of head, 1 = bottom of torso
-                            const headWeight = Math.exp(-Math.pow((v - 0.285) / 0.17, 2));
-                            const torsoWeight = Math.exp(-Math.pow((v - 0.72) / 0.28, 2));
-                            const chestWeight = Math.exp(-Math.pow((v - 0.60) / 0.16, 2));
-
-                            // Horizontal parallax shift (head turns further & faster than shoulders)
-                            const shiftX = (headYaw * 24 * headWeight + torsoYaw * 15 * torsoWeight) * dpr;
-                            // Vertical breathing lift + pitch nod
-                            const liftY = (-breathWave * (5.5 * torsoWeight + 3.5 * chestWeight + 1.8 * headWeight) + headPitch * 11 * headWeight) * dpr;
-                            // Chest breathing expansion + 3D perspective width modulation
-                            const scaleX = 1 + breathWave * (0.014 * chestWeight + 0.008 * torsoWeight) - Math.abs(headYaw) * 0.018 * headWeight;
-
-                            const dstW = w * scaleX;
-                            const dstX = (w - dstW) * 0.5 + shiftX;
-                            const dstY = i * sliceDstH + liftY;
-
-                            ctx2d.drawImage(
-                                portraitImg,
-                                0, i * sliceSrcH, imgW, sliceSrcH + 1.5,
-                                dstX, dstY, dstW, sliceDstH + 1.5 * dpr
-                            );
-                        }
-
-                        // Subtle glasses specular studio glint on head turn
-                        const glintAlpha = 0.08 + Math.abs(headYaw) * 0.06;
-                        const glintX = w * (0.5 + headYaw * 0.09);
-                        const glintY = h * 0.272;
-                        const glintGrad = ctx2d.createRadialGradient(glintX, glintY, 2 * dpr, glintX, glintY, 75 * dpr);
-                        glintGrad.addColorStop(0, `rgba(255, 255, 255, ${glintAlpha.toFixed(3)})`);
-                        glintGrad.addColorStop(1, 'rgba(255, 255, 255, 0)');
-                        ctx2d.fillStyle = glintGrad;
-                        ctx2d.fillRect(0, h * 0.20, w, h * 0.15);
-
-                        // Soft radial studio vignette mask so portrait blends seamlessly into #060913
-                        ctx2d.save();
-                        ctx2d.globalCompositeOperation = 'destination-in';
-                        const maskGrad = ctx2d.createRadialGradient(w * 0.5, h * 0.48, h * 0.24, w * 0.5, h * 0.50, h * 0.52);
-                        maskGrad.addColorStop(0, 'rgba(0,0,0,1)');
-                        maskGrad.addColorStop(0.76, 'rgba(0,0,0,0.92)');
-                        maskGrad.addColorStop(1, 'rgba(0,0,0,0)');
-                        ctx2d.fillStyle = maskGrad;
-                        ctx2d.fillRect(0, 0, w, h);
-                        ctx2d.restore();
-                    }
-                }
-
-                requestAnimationFrame(animateLivingPortrait);
+            function tick() {
+                const t = computeTargets();
+                const k = reduceMotion ? 1 : 0.08;
+                curX = lerp(curX, t.x, k);
+                curOp = lerp(curOp, t.op, k);
+                curScale = lerp(curScale, t.scale, k);
+                rig.style.transform = `translate3d(${curX.toFixed(2)}vw, 0, 0) scale(${curScale.toFixed(3)})`;
+                stage.style.opacity = curOp.toFixed(3);
+                setActive(t.key);
+                requestAnimationFrame(tick);
             }
-
-            requestAnimationFrame(animateLivingPortrait);
+            requestAnimationFrame(tick);
         })();
     </script>
 </body>
