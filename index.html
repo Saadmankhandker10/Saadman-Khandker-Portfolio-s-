@@ -183,12 +183,19 @@
 
         /* Exact Reel Display Typography: Tight Bold Grotesque Uppercase + Editorial Italic Serif */
         .reel-display {
-            font-family: 'Inter', 'Plus Jakarta Sans', sans-serif;
+            font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
             font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: -0.045em;
+            letter-spacing: -0.042em;
             line-height: 0.91;
             color: #f4f4f6;
+        }
+
+        .hero-name-title {
+            font-size: clamp(3.15rem, 6.15vw, 6.4rem);
+            line-height: 0.92;
+            letter-spacing: -0.042em;
+            white-space: nowrap;
         }
 
         .reel-serif-italic {
@@ -222,10 +229,18 @@
         }
 
         .reel-eyebrow-dash {
-            width: 1.5rem;
-            height: 1px;
+            width: 1.65rem;
+            height: 1.5px;
             background: var(--crimson);
             display: inline-block;
+            transform: scaleX(0);
+            transform-origin: left center;
+            transition: transform 0.75s cubic-bezier(0.16, 1, 0.3, 1) 0.12s;
+        }
+
+        .is-visible .reel-eyebrow-dash,
+        .reel-eyebrow.is-visible .reel-eyebrow-dash {
+            transform: scaleX(1);
         }
 
         /* Fixed Top Minimal Editorial Bar (Matches frame_02.jpg) */
@@ -447,16 +462,72 @@
             transform: scale(1.25);
         }
 
-        /* Scroll Reveal Choreography */
+        /* Exact Reel Slit-Mask Character-Wave & Staggered Text Animation Choreography (Matches hero_f00.jpg -> sec_162.jpg) */
+        .reel-line-mask {
+            display: block;
+            overflow: hidden;
+            padding-bottom: 0.11em;
+            margin-bottom: -0.11em;
+        }
+
+        .reel-char {
+            display: inline-block;
+            transform: translate3d(0, 118%, 0);
+            opacity: 0;
+            transition: transform 0.82s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.45s ease;
+            transition-delay: var(--char-delay, 0s);
+            will-change: transform, opacity;
+        }
+
+        .reel-char-group.is-visible .reel-char,
+        .reel-reveal.is-visible .reel-char {
+            transform: translate3d(0, 0%, 0);
+            opacity: 1;
+        }
+
+        .reel-slit-item {
+            display: block;
+            transform: translate3d(0, 114%, 0);
+            opacity: 0;
+            transition: transform 0.84s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
+            transition-delay: var(--slit-delay, 0s);
+            will-change: transform, opacity;
+        }
+
+        .is-visible .reel-slit-item,
+        .reel-reveal.is-visible .reel-slit-item {
+            transform: translate3d(0, 0%, 0);
+            opacity: 1;
+        }
+
         .reel-reveal {
             opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: translate3d(0, 26px, 0);
+            filter: blur(3px);
+            transition: opacity 0.78s cubic-bezier(0.16, 1, 0.3, 1), transform 0.78s cubic-bezier(0.16, 1, 0.3, 1), filter 0.78s cubic-bezier(0.16, 1, 0.3, 1);
+            transition-delay: var(--reveal-delay, 0s);
+            will-change: opacity, transform, filter;
         }
 
         .reel-reveal.is-visible {
             opacity: 1;
-            transform: translateY(0);
+            transform: translate3d(0, 0, 0);
+            filter: blur(0px);
+        }
+
+        /* Staggered child cascade for paragraphs, skill pills, timeline bullets, and social links */
+        .reel-stagger-children > * {
+            opacity: 0;
+            transform: translate3d(0, 22px, 0);
+            filter: blur(2.5px);
+            transition: opacity 0.72s cubic-bezier(0.16, 1, 0.3, 1), transform 0.72s cubic-bezier(0.16, 1, 0.3, 1), filter 0.72s cubic-bezier(0.16, 1, 0.3, 1);
+            transition-delay: var(--item-delay, 0s);
+        }
+
+        .reel-stagger-children.is-visible > * {
+            opacity: 1;
+            transform: translate3d(0, 0, 0);
+            filter: blur(0px);
         }
 
         /* Footer Horizon Burgundy Glow (Matches sec_170.jpg) */
@@ -554,30 +625,30 @@
 
                     <!-- LEFT COLUMN (7 Cols): Branding, Giant Name, Dual Tagline, Bio, 2 Rectangular Buttons -->
                     <div class="lg:col-span-7 space-y-6 py-10 lg:py-0 z-10">
-                        <div class="reel-eyebrow reel-reveal is-visible">
+                        <div class="reel-eyebrow reel-reveal" style="--reveal-delay: 0.56s;">
                             <span class="reel-eyebrow-dash"></span>
                             <span id="heroRoleBadge">TYPING &amp; OPERATIONS SPECIALIST &middot; WEB &amp; DIGITAL CONTENT</span>
                         </div>
 
-                        <h1 id="heroTitle" class="reel-display text-[3.3rem] sm:text-[4.8rem] md:text-[5.8rem] xl:text-[6.8rem] reel-reveal is-visible">
-                            SAADMAN<br>
-                            KHANDKER<span class="reel-dot">.</span>
+                        <h1 id="heroTitle" class="reel-display hero-name-title reel-char-group" data-base-delay="0.04" data-line-stagger="0.14" data-char-stagger="0.022">
+                            <span class="reel-line-mask"><span class="reel-split-chars">SAADMAN</span></span>
+                            <span class="reel-line-mask"><span class="reel-split-chars">KHANDKER.</span></span>
                         </h1>
 
-                        <div class="space-y-0.5 pt-1 reel-reveal is-visible">
+                        <div class="space-y-0.5 pt-1 reel-char-group" data-base-delay="0.34" data-line-stagger="0.14" data-char-stagger="0.011">
                             <p class="text-xl sm:text-2xl md:text-[1.85rem] font-bold tracking-tight text-zinc-100 leading-snug">
-                                Building flawless documents.
+                                <span class="reel-line-mask"><span class="reel-split-chars">Building flawless documents.</span></span>
                             </p>
                             <p class="reel-serif-italic text-2xl sm:text-3xl md:text-[2.15rem] leading-snug text-zinc-300">
-                                Designing rapid operations.
+                                <span class="reel-line-mask"><span class="reel-split-chars">Designing rapid operations.</span></span>
                             </p>
                         </div>
 
-                        <p id="heroBio" class="text-sm sm:text-[15px] text-zinc-400 max-w-xl leading-relaxed font-normal reel-reveal is-visible">
+                        <p id="heroBio" class="text-sm sm:text-[15px] text-zinc-400 max-w-xl leading-relaxed font-normal reel-reveal" style="--reveal-delay: 0.68s;">
                             BSS student in Social Work at Tejgaon College, Dhaka. I build high-speed bilingual documents (<strong class="text-zinc-200 font-medium">65+ WPM</strong>, <strong class="text-zinc-200 font-medium">99.9% accuracy</strong> in Bangla &amp; English), executive presentation decks at <strong class="text-zinc-200 font-medium">Classvel</strong>, and emergency field operations with <strong class="text-zinc-200 font-medium">BDRCS</strong>.
                         </p>
 
-                        <div class="pt-3 flex flex-wrap items-center gap-4 reel-reveal is-visible">
+                        <div class="pt-3 flex flex-wrap items-center gap-4 reel-reveal" style="--reveal-delay: 0.80s;">
                             <a href="#projects" class="reel-btn-primary">
                                 <span>EXPLORE MY WORK</span>
                                 <span>&rarr;</span>
@@ -588,7 +659,7 @@
                         </div>
 
                         <!-- Subtle Live Status Strip -->
-                        <div id="liveWidget" class="pt-6 flex flex-wrap items-center gap-x-6 gap-y-2 font-mono text-[10px] tracking-[0.2em] uppercase text-zinc-500">
+                        <div id="liveWidget" class="pt-6 flex flex-wrap items-center gap-x-6 gap-y-2 font-mono text-[10px] tracking-[0.2em] uppercase text-zinc-500 reel-reveal" style="--reveal-delay: 0.92s;">
                             <span class="inline-flex items-center gap-2 text-zinc-300">
                                 <span id="widgetDot" class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
                                 <span id="widgetStatusText">AVAILABLE FOR PROJECTS</span>
@@ -645,12 +716,14 @@
                             <span>ABOUT</span>
                         </div>
 
-                        <h2 class="reel-display text-4xl sm:text-5xl md:text-6xl leading-[0.94] reel-reveal">
-                            SPECIALIST<br>
-                            IN <span class="reel-serif-italic font-normal text-[1.04em]">the making</span><span class="reel-dot">.</span>
+                        <h2 class="reel-display text-4xl sm:text-5xl md:text-6xl leading-[0.94] reel-char-group" data-base-delay="0.06" data-line-stagger="0.14" data-char-stagger="0.02">
+                            <span class="reel-line-mask"><span class="reel-split-chars">SPECIALIST</span></span>
+                            <span class="reel-line-mask">
+                                <span class="reel-split-chars">IN </span><span class="reel-serif-italic font-normal text-[1.04em] reel-split-chars">the making.</span>
+                            </span>
                         </h2>
 
-                        <div id="aboutParagraphs" class="space-y-5 text-sm sm:text-[15.5px] text-zinc-400 leading-relaxed max-w-2xl reel-reveal">
+                        <div id="aboutParagraphs" class="space-y-5 text-sm sm:text-[15.5px] text-zinc-400 leading-relaxed max-w-2xl reel-stagger-children" data-stagger-base="0.18" data-stagger-step="0.12">
                             <p>
                                 I'm <strong class="text-zinc-100 font-semibold">Saadman Khandker</strong> (<strong class="text-zinc-200 font-medium">Khandker Sadman Rafid Saad</strong>) — a Social Work undergraduate at <strong class="text-zinc-100 font-semibold">Tejgaon College, Dhaka</strong>, where I combine rapid bilingual document engineering with structured organizational operations.
                             </p>
@@ -666,27 +739,27 @@
                         </div>
 
                         <!-- 2x2 Hairline Top-Bordered KPI Grid (Exact Match to r_75.jpg: 9.10 / 350+ / Tech Fellow / Semi-Finalist) -->
-                        <div class="grid grid-cols-2 gap-x-10 gap-y-10 pt-8 max-w-xl reel-reveal">
+                        <div class="grid grid-cols-2 gap-x-10 gap-y-10 pt-8 max-w-xl reel-stagger-children" data-stagger-base="0.22" data-stagger-step="0.12">
                             <div class="border-t border-white/15 pt-4">
-                                <div class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">65+ WPM</div>
+                                <div class="reel-line-mask"><div class="reel-slit-item text-2xl sm:text-3xl font-extrabold text-white tracking-tight" style="--slit-delay: 0.24s;">65+ WPM</div></div>
                                 <div class="font-mono text-[10px] tracking-[0.2em] uppercase text-zinc-500 mt-1.5">
                                     SPEED &middot; BANGLA &amp; ENGLISH
                                 </div>
                             </div>
                             <div class="border-t border-white/15 pt-4">
-                                <div class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">99.9%</div>
+                                <div class="reel-line-mask"><div class="reel-slit-item text-2xl sm:text-3xl font-extrabold text-white tracking-tight" style="--slit-delay: 0.34s;">99.9%</div></div>
                                 <div class="font-mono text-[10px] tracking-[0.2em] uppercase text-zinc-500 mt-1.5">
                                     DOCUMENT PRECISION RATE
                                 </div>
                             </div>
                             <div class="border-t border-white/15 pt-4">
-                                <div class="text-xl sm:text-2xl font-extrabold text-white tracking-tight">Design Intern</div>
+                                <div class="reel-line-mask"><div class="reel-slit-item text-xl sm:text-2xl font-extrabold text-white tracking-tight" style="--slit-delay: 0.44s;">Design Intern</div></div>
                                 <div class="font-mono text-[10px] tracking-[0.2em] uppercase text-zinc-500 mt-1.5">
                                     CLASSVEL &middot; WEB &amp; DECKS
                                 </div>
                             </div>
                             <div class="border-t border-white/15 pt-4">
-                                <div class="text-xl sm:text-2xl font-extrabold text-white tracking-tight">Youth Leader</div>
+                                <div class="reel-line-mask"><div class="reel-slit-item text-xl sm:text-2xl font-extrabold text-white tracking-tight" style="--slit-delay: 0.54s;">Youth Leader</div></div>
                                 <div class="font-mono text-[10px] tracking-[0.2em] uppercase text-zinc-500 mt-1.5">
                                     BDRCS HUMANITARIAN CORPS
                                 </div>
@@ -704,19 +777,19 @@
             <div class="max-w-[1380px] mx-auto w-full px-5 sm:px-10 lg:px-14">
 
                 <!-- Header Row: 02 SKILLS + Giant TOOL kit. on Left / Intro Paragraph on Far Right (Exact Match to sec_095.jpg) -->
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end pb-14 reel-reveal">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end pb-14">
                     <div class="lg:col-span-7">
-                        <div class="reel-eyebrow mb-5">
+                        <div class="reel-eyebrow mb-5 reel-reveal">
                             <span class="reel-eyebrow-num">02</span>
                             <span class="reel-eyebrow-dash"></span>
                             <span>SKILLS</span>
                         </div>
-                        <h2 class="reel-display text-6xl sm:text-7xl md:text-[5.6rem] leading-[0.88]">
-                            TOOL<br>
-                            <span class="reel-serif-italic font-normal text-[1.06em]">kit</span><span class="reel-dot">.</span>
+                        <h2 class="reel-display text-6xl sm:text-7xl md:text-[5.6rem] leading-[0.88] reel-char-group" data-base-delay="0.05" data-line-stagger="0.14" data-char-stagger="0.025">
+                            <span class="reel-line-mask"><span class="reel-split-chars">TOOL</span></span>
+                            <span class="reel-line-mask"><span class="reel-serif-italic font-normal text-[1.06em] reel-split-chars">kit.</span></span>
                         </h2>
                     </div>
-                    <div class="lg:col-span-5 lg:pb-3">
+                    <div class="lg:col-span-5 lg:pb-3 reel-reveal" style="--reveal-delay: 0.25s;">
                         <p class="text-xs sm:text-sm text-zinc-400 leading-relaxed max-w-md lg:ml-auto">
                             The tools, workflows and operational systems I build with — straight from the work. Hover a capability to see which projects it shaped.
                         </p>
@@ -724,15 +797,15 @@
                 </div>
 
                 <!-- 7 Full-Width Hairline Skill Rows (Exact Match to sec_102.jpg & sec_112.jpg) -->
-                <div id="skillsGrid" class="reel-reveal">
+                <div id="skillsGrid">
 
                     <!-- Row 01 -->
-                    <div class="reel-skill-row grid grid-cols-1 lg:grid-cols-12 gap-4 items-baseline">
+                    <div class="reel-skill-row grid grid-cols-1 lg:grid-cols-12 gap-4 items-baseline reel-reveal">
                         <div class="lg:col-span-5 flex items-baseline gap-4">
                             <span class="font-mono text-xs text-studio-crimson font-semibold">01</span>
-                            <h3 class="text-2xl sm:text-3xl font-semibold text-zinc-100 tracking-tight">Document Typing</h3>
+                            <h3 class="text-2xl sm:text-3xl font-semibold text-zinc-100 tracking-tight reel-line-mask"><span class="reel-slit-item" style="--slit-delay: 0.06s;">Document Typing</span></h3>
                         </div>
-                        <div class="lg:col-span-7 flex flex-wrap items-center gap-x-8 gap-y-2 text-sm sm:text-base text-zinc-300">
+                        <div class="lg:col-span-7 flex flex-wrap items-center gap-x-8 gap-y-2 text-sm sm:text-base text-zinc-300 reel-stagger-children" data-stagger-base="0.1" data-stagger-step="0.06">
                             <span class="font-semibold text-white">MS Word <span class="reel-primary-badge">PRIMARY</span></span>
                             <span>Google Docs</span>
                             <span>Scanned PDF to Word</span>
@@ -741,12 +814,12 @@
                     </div>
 
                     <!-- Row 02 -->
-                    <div class="reel-skill-row grid grid-cols-1 lg:grid-cols-12 gap-4 items-baseline">
+                    <div class="reel-skill-row grid grid-cols-1 lg:grid-cols-12 gap-4 items-baseline reel-reveal">
                         <div class="lg:col-span-5 flex items-baseline gap-4">
                             <span class="font-mono text-xs text-studio-crimson font-semibold">02</span>
-                            <h3 class="text-2xl sm:text-3xl font-semibold text-zinc-100 tracking-tight">Bilingual Typography</h3>
+                            <h3 class="text-2xl sm:text-3xl font-semibold text-zinc-100 tracking-tight reel-line-mask"><span class="reel-slit-item" style="--slit-delay: 0.06s;">Bilingual Typography</span></h3>
                         </div>
-                        <div class="lg:col-span-7 flex flex-wrap items-center gap-x-8 gap-y-2 text-sm sm:text-base text-zinc-300">
+                        <div class="lg:col-span-7 flex flex-wrap items-center gap-x-8 gap-y-2 text-sm sm:text-base text-zinc-300 reel-stagger-children" data-stagger-base="0.1" data-stagger-step="0.06">
                             <span class="font-semibold text-white">Bangla (Bijoy / Avro) <span class="reel-primary-badge">PRIMARY</span></span>
                             <span>English (65+ WPM)</span>
                             <span>Unicode Conversion</span>
@@ -755,12 +828,12 @@
                     </div>
 
                     <!-- Row 03 -->
-                    <div class="reel-skill-row grid grid-cols-1 lg:grid-cols-12 gap-4 items-baseline">
+                    <div class="reel-skill-row grid grid-cols-1 lg:grid-cols-12 gap-4 items-baseline reel-reveal">
                         <div class="lg:col-span-5 flex items-baseline gap-4">
                             <span class="font-mono text-xs text-studio-crimson font-semibold">03</span>
-                            <h3 class="text-2xl sm:text-3xl font-semibold text-zinc-100 tracking-tight">Presentations &amp; Decks</h3>
+                            <h3 class="text-2xl sm:text-3xl font-semibold text-zinc-100 tracking-tight reel-line-mask"><span class="reel-slit-item" style="--slit-delay: 0.06s;">Presentations &amp; Decks</span></h3>
                         </div>
-                        <div class="lg:col-span-7 flex flex-wrap items-center gap-x-8 gap-y-2 text-sm sm:text-base text-zinc-300">
+                        <div class="lg:col-span-7 flex flex-wrap items-center gap-x-8 gap-y-2 text-sm sm:text-base text-zinc-300 reel-stagger-children" data-stagger-base="0.1" data-stagger-step="0.06">
                             <span>MS PowerPoint</span>
                             <span>Executive Pitch Decks</span>
                             <span>Slide Master Systems</span>
@@ -769,12 +842,12 @@
                     </div>
 
                     <!-- Row 04 -->
-                    <div class="reel-skill-row grid grid-cols-1 lg:grid-cols-12 gap-4 items-baseline">
+                    <div class="reel-skill-row grid grid-cols-1 lg:grid-cols-12 gap-4 items-baseline reel-reveal">
                         <div class="lg:col-span-5 flex items-baseline gap-4">
                             <span class="font-mono text-xs text-studio-crimson font-semibold">04</span>
-                            <h3 class="text-2xl sm:text-3xl font-semibold text-zinc-100 tracking-tight">Editorial &amp; Layout</h3>
+                            <h3 class="text-2xl sm:text-3xl font-semibold text-zinc-100 tracking-tight reel-line-mask"><span class="reel-slit-item" style="--slit-delay: 0.06s;">Editorial &amp; Layout</span></h3>
                         </div>
-                        <div class="lg:col-span-7 flex flex-wrap items-center gap-x-8 gap-y-2 text-sm sm:text-base text-zinc-300">
+                        <div class="lg:col-span-7 flex flex-wrap items-center gap-x-8 gap-y-2 text-sm sm:text-base text-zinc-300 reel-stagger-children" data-stagger-base="0.1" data-stagger-step="0.06">
                             <span>Academic Theses</span>
                             <span>Corporate Reports</span>
                             <span>Table Structuring</span>
@@ -783,12 +856,12 @@
                     </div>
 
                     <!-- Row 05 -->
-                    <div class="reel-skill-row grid grid-cols-1 lg:grid-cols-12 gap-4 items-baseline">
+                    <div class="reel-skill-row grid grid-cols-1 lg:grid-cols-12 gap-4 items-baseline reel-reveal">
                         <div class="lg:col-span-5 flex items-baseline gap-4">
                             <span class="font-mono text-xs text-studio-crimson font-semibold">05</span>
-                            <h3 class="text-2xl sm:text-3xl font-semibold text-zinc-100 tracking-tight">Web &amp; Digital Content</h3>
+                            <h3 class="text-2xl sm:text-3xl font-semibold text-zinc-100 tracking-tight reel-line-mask"><span class="reel-slit-item" style="--slit-delay: 0.06s;">Web &amp; Digital Content</span></h3>
                         </div>
-                        <div class="lg:col-span-7 flex flex-wrap items-center gap-x-8 gap-y-2 text-sm sm:text-base text-zinc-300">
+                        <div class="lg:col-span-7 flex flex-wrap items-center gap-x-8 gap-y-2 text-sm sm:text-base text-zinc-300 reel-stagger-children" data-stagger-base="0.1" data-stagger-step="0.06">
                             <span>HTML5</span>
                             <span>Tailwind CSS</span>
                             <span>UI/UX Layouts</span>
@@ -797,12 +870,12 @@
                     </div>
 
                     <!-- Row 06 -->
-                    <div class="reel-skill-row grid grid-cols-1 lg:grid-cols-12 gap-4 items-baseline">
+                    <div class="reel-skill-row grid grid-cols-1 lg:grid-cols-12 gap-4 items-baseline reel-reveal">
                         <div class="lg:col-span-5 flex items-baseline gap-4">
                             <span class="font-mono text-xs text-studio-crimson font-semibold">06</span>
-                            <h3 class="text-2xl sm:text-3xl font-semibold text-zinc-100 tracking-tight">Retail &amp; Store Ops</h3>
+                            <h3 class="text-2xl sm:text-3xl font-semibold text-zinc-100 tracking-tight reel-line-mask"><span class="reel-slit-item" style="--slit-delay: 0.06s;">Retail &amp; Store Ops</span></h3>
                         </div>
-                        <div class="lg:col-span-7 flex flex-wrap items-center gap-x-8 gap-y-2 text-sm sm:text-base text-zinc-300">
+                        <div class="lg:col-span-7 flex flex-wrap items-center gap-x-8 gap-y-2 text-sm sm:text-base text-zinc-300 reel-stagger-children" data-stagger-base="0.1" data-stagger-step="0.06">
                             <span>POS Billing</span>
                             <span>Inventory Audits</span>
                             <span>Floor Supervision</span>
@@ -811,12 +884,12 @@
                     </div>
 
                     <!-- Row 07 -->
-                    <div class="reel-skill-row grid grid-cols-1 lg:grid-cols-12 gap-4 items-baseline">
+                    <div class="reel-skill-row grid grid-cols-1 lg:grid-cols-12 gap-4 items-baseline reel-reveal">
                         <div class="lg:col-span-5 flex items-baseline gap-4">
                             <span class="font-mono text-xs text-studio-crimson font-semibold">07</span>
-                            <h3 class="text-2xl sm:text-3xl font-semibold text-zinc-100 tracking-tight">Crisis &amp; Field Leadership</h3>
+                            <h3 class="text-2xl sm:text-3xl font-semibold text-zinc-100 tracking-tight reel-line-mask"><span class="reel-slit-item" style="--slit-delay: 0.06s;">Crisis &amp; Field Leadership</span></h3>
                         </div>
-                        <div class="lg:col-span-7 flex flex-wrap items-center gap-x-8 gap-y-2 text-sm sm:text-base text-zinc-300">
+                        <div class="lg:col-span-7 flex flex-wrap items-center gap-x-8 gap-y-2 text-sm sm:text-base text-zinc-300 reel-stagger-children" data-stagger-base="0.1" data-stagger-step="0.06">
                             <span>Disaster Response (BDRCS)</span>
                             <span>First Aid Certified</span>
                             <span>Team Mobilization</span>
@@ -832,9 +905,9 @@
                         CURRENTLY DRAWN TO
                     </div>
                     <div class="lg:col-span-7 flex flex-wrap gap-x-10 gap-y-3 text-2xl sm:text-3xl font-light text-zinc-200 tracking-tight">
-                        <span>Document Digitization</span>
-                        <span>Executive Deck Systems</span>
-                        <span>Web Operations</span>
+                        <span class="reel-line-mask"><span class="reel-slit-item" style="--slit-delay: 0.08s;">Document Digitization</span></span>
+                        <span class="reel-line-mask"><span class="reel-slit-item" style="--slit-delay: 0.18s;">Executive Deck Systems</span></span>
+                        <span class="reel-line-mask"><span class="reel-slit-item" style="--slit-delay: 0.28s;">Web Operations</span></span>
                     </div>
                 </div>
 
@@ -846,20 +919,20 @@
             <div class="max-w-[1380px] mx-auto w-full px-5 sm:px-10 lg:px-14">
 
                 <!-- Header Row: 03 SELECTED PROJECTS + Giant SELECTED work. on Left / ALL REPOSITORIES ↗ on Far Right -->
-                <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pb-14 reel-reveal">
+                <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pb-14">
                     <div>
-                        <div class="reel-eyebrow mb-5">
+                        <div class="reel-eyebrow mb-5 reel-reveal">
                             <span class="reel-eyebrow-num">03</span>
                             <span class="reel-eyebrow-dash"></span>
                             <span>SELECTED PROJECTS</span>
                         </div>
-                        <h2 class="reel-display text-6xl sm:text-7xl md:text-[5.6rem] leading-[0.88]">
-                            SELECTED<br>
-                            <span class="reel-serif-italic font-normal text-[1.06em]">work</span><span class="reel-dot">.</span>
+                        <h2 class="reel-display text-6xl sm:text-7xl md:text-[5.6rem] leading-[0.88] reel-char-group" data-base-delay="0.05" data-line-stagger="0.14" data-char-stagger="0.022">
+                            <span class="reel-line-mask"><span class="reel-split-chars">SELECTED</span></span>
+                            <span class="reel-line-mask"><span class="reel-serif-italic font-normal text-[1.06em] reel-split-chars">work.</span></span>
                         </h2>
                     </div>
 
-                    <div class="flex items-center gap-6 lg:pb-3">
+                    <div class="flex items-center gap-6 lg:pb-3 reel-reveal" style="--reveal-delay: 0.25s;">
                         <a
                             href="https://github.com/Saadmankhandker10"
                             target="_blank"
@@ -874,17 +947,17 @@
                 </div>
 
                 <!-- Full-Width 12-Column Project Rows (Exact Match to PolicyGuard AI / Payment Gateway / Multi-Tenant SaaS in sec_122.jpg & sec_132.jpg) -->
-                <div id="projectsGrid" class="reel-reveal">
+                <div id="projectsGrid">
 
                     <!-- Project Row 01 (Active Crimson Sweep by Default) -->
-                    <article class="reel-project-row is-featured" data-project-idx="0">
+                    <article class="reel-project-row is-featured reel-reveal" data-project-idx="0">
                         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
                             <div class="lg:col-span-1 font-mono text-xs text-zinc-400">
                                 01
                             </div>
                             <div class="lg:col-span-6 space-y-2.5">
-                                <h3 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight">
-                                    Classvel Deck &amp; Web Platform
+                                <h3 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight reel-line-mask">
+                                    <span class="reel-slit-item" style="--slit-delay: 0.06s;">Classvel Deck &amp; Web Platform</span>
                                 </h3>
                                 <p class="text-xs sm:text-sm text-zinc-400 leading-relaxed max-w-xl">
                                     Modular presentation deck architecture, visual educational workflows, and responsive web content systems built as Product Design &amp; Web Intern at Classvel.
@@ -894,7 +967,7 @@
                                 <div class="text-[11px] tracking-[0.18em] uppercase text-zinc-400">
                                     PRODUCT DESIGN &middot; WEB OPS &nbsp; 2025
                                 </div>
-                                <div class="flex flex-wrap gap-x-4 gap-y-1 text-xs text-zinc-300">
+                                <div class="flex flex-wrap gap-x-4 gap-y-1 text-xs text-zinc-300 reel-stagger-children" data-stagger-base="0.14" data-stagger-step="0.06">
                                     <span>PowerPoint</span>
                                     <span>UI/UX</span>
                                     <span>HTML/CSS</span>
@@ -908,14 +981,15 @@
                     </article>
 
                     <!-- Project Row 02 -->
-                    <article class="reel-project-row" data-project-idx="1">
+                    <article class="reel-project-row reel-reveal" data-project-idx="1">
                         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
                             <div class="lg:col-span-1 font-mono text-xs text-zinc-400">
                                 02
                             </div>
                             <div class="lg:col-span-6 space-y-2.5">
                                 <h3 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight">
-                                    Bilingual Document Digitization<br class="hidden sm:inline"> Engine
+                                    <span class="reel-line-mask"><span class="reel-slit-item" style="--slit-delay: 0.06s;">Bilingual Document Digitization</span></span>
+                                    <span class="reel-line-mask"><span class="reel-slit-item" style="--slit-delay: 0.14s;">Engine</span></span>
                                 </h3>
                                 <p class="text-xs sm:text-sm text-zinc-400 leading-relaxed max-w-xl">
                                     High-velocity Bangla (Bijoy &amp; Avro) and English transcription workflow converting scanned PDFs, handwritten manuscripts, and academic theses into print-ready Word files.
@@ -925,7 +999,7 @@
                                 <div class="text-[11px] tracking-[0.18em] uppercase text-zinc-400">
                                     TYPOGRAPHY &middot; PRODUCTION &nbsp; 2025
                                 </div>
-                                <div class="flex flex-wrap gap-x-4 gap-y-1 text-xs text-zinc-300">
+                                <div class="flex flex-wrap gap-x-4 gap-y-1 text-xs text-zinc-300 reel-stagger-children" data-stagger-base="0.14" data-stagger-step="0.06">
                                     <span>MS Word</span>
                                     <span>Bijoy</span>
                                     <span>Avro Unicode</span>
@@ -939,14 +1013,15 @@
                     </article>
 
                     <!-- Project Row 03 -->
-                    <article class="reel-project-row" data-project-idx="2">
+                    <article class="reel-project-row reel-reveal" data-project-idx="2">
                         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
                             <div class="lg:col-span-1 font-mono text-xs text-zinc-400">
                                 03
                             </div>
                             <div class="lg:col-span-6 space-y-2.5">
                                 <h3 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight">
-                                    BDRCS Emergency Field<br class="hidden sm:inline"> Response Operations
+                                    <span class="reel-line-mask"><span class="reel-slit-item" style="--slit-delay: 0.06s;">BDRCS Emergency Field</span></span>
+                                    <span class="reel-line-mask"><span class="reel-slit-item" style="--slit-delay: 0.14s;">Response Operations</span></span>
                                 </h3>
                                 <p class="text-xs sm:text-sm text-zinc-400 leading-relaxed max-w-xl">
                                     Frontline youth mobilization, emergency first-aid station deployment, and rapid relief distribution across 15+ documented humanitarian missions in Dhaka.
@@ -956,7 +1031,7 @@
                                 <div class="text-[11px] tracking-[0.18em] uppercase text-zinc-400">
                                     HUMANITARIAN &middot; LOGISTICS &nbsp; 2024
                                 </div>
-                                <div class="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-zinc-300">
+                                <div class="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-zinc-300 reel-stagger-children" data-stagger-base="0.14" data-stagger-step="0.06">
                                     <span>Crisis Ops</span>
                                     <span>First Aid</span>
                                     <span>Field Squad</span>
@@ -976,14 +1051,15 @@
                     </article>
 
                     <!-- Project Row 04 -->
-                    <article class="reel-project-row" data-project-idx="3">
+                    <article class="reel-project-row reel-reveal" data-project-idx="3">
                         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
                             <div class="lg:col-span-1 font-mono text-xs text-zinc-400">
                                 04
                             </div>
                             <div class="lg:col-span-6 space-y-2.5">
                                 <h3 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight">
-                                    Retail Floor &amp; POS Billing<br class="hidden sm:inline"> Operations
+                                    <span class="reel-line-mask"><span class="reel-slit-item" style="--slit-delay: 0.06s;">Retail Floor &amp; POS Billing</span></span>
+                                    <span class="reel-line-mask"><span class="reel-slit-item" style="--slit-delay: 0.14s;">Operations</span></span>
                                 </h3>
                                 <p class="text-xs sm:text-sm text-zinc-400 leading-relaxed max-w-xl">
                                     High-throughput POS checkout execution, real-time stock reconciliation, and frontline customer service at Agora Superstores and Meena Bazar.
@@ -993,7 +1069,7 @@
                                 <div class="text-[11px] tracking-[0.18em] uppercase text-zinc-400">
                                     RETAIL OPS &middot; SUPERVISION &nbsp; 2023
                                 </div>
-                                <div class="flex flex-wrap gap-x-4 gap-y-1 text-xs text-zinc-300">
+                                <div class="flex flex-wrap gap-x-4 gap-y-1 text-xs text-zinc-300 reel-stagger-children" data-stagger-base="0.14" data-stagger-step="0.06">
                                     <span>POS Billing</span>
                                     <span>Inventory</span>
                                     <span>Agora</span>
@@ -1018,35 +1094,35 @@
                 <!-- PART A: 04 EXPERIENCE & EDUCATION — THE journey. (Left Col-5) + Crimson Timeline (Right Col-7) (Exact Match to sec_140.jpg) -->
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
                     <!-- Left 5 Cols -->
-                    <div class="lg:col-span-5 reel-reveal">
-                        <div class="reel-eyebrow mb-5">
+                    <div class="lg:col-span-5">
+                        <div class="reel-eyebrow mb-5 reel-reveal">
                             <span class="reel-eyebrow-num">04</span>
                             <span class="reel-eyebrow-dash"></span>
                             <span>EXPERIENCE &amp; EDUCATION</span>
                         </div>
-                        <h2 class="reel-display text-6xl sm:text-7xl md:text-[5.4rem] leading-[0.88]">
-                            THE<br>
-                            <span class="reel-serif-italic font-normal text-[1.06em]">journey</span><span class="reel-dot">.</span>
+                        <h2 class="reel-display text-6xl sm:text-7xl md:text-[5.4rem] leading-[0.88] reel-char-group" data-base-delay="0.05" data-line-stagger="0.14" data-char-stagger="0.022">
+                            <span class="reel-line-mask"><span class="reel-split-chars">THE</span></span>
+                            <span class="reel-line-mask"><span class="reel-serif-italic font-normal text-[1.06em] reel-split-chars">journey.</span></span>
                         </h2>
                     </div>
 
                     <!-- Right 7 Cols: Vertical Crimson Timeline with Right-Aligned Dates & Dash Bullets -->
-                    <div id="experienceTimeline" class="lg:col-span-7 reel-timeline reel-reveal">
+                    <div id="experienceTimeline" class="lg:col-span-7 reel-timeline">
 
                         <!-- Node 1: Experience -->
-                        <div class="reel-timeline-item">
+                        <div class="reel-timeline-item reel-reveal">
                             <span class="reel-timeline-node"></span>
                             <div class="flex flex-wrap items-baseline justify-between gap-2">
                                 <span class="font-mono text-[10px] tracking-[0.22em] uppercase text-studio-crimson font-semibold">EXPERIENCE</span>
                                 <span class="font-mono text-xs text-zinc-400">2024 — Present</span>
                             </div>
-                            <h3 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight mt-1">
-                                Classvel
+                            <h3 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight mt-1 reel-line-mask">
+                                <span class="reel-slit-item" style="--slit-delay: 0.06s;">Classvel</span>
                             </h3>
                             <div class="text-xs sm:text-sm text-zinc-400 mt-0.5">
                                 Product Design &amp; Web Operations Intern — Dhaka
                             </div>
-                            <ul class="mt-4 space-y-2 text-xs sm:text-sm text-zinc-300 leading-relaxed">
+                            <ul class="mt-4 space-y-2 text-xs sm:text-sm text-zinc-300 leading-relaxed reel-stagger-children" data-stagger-base="0.14" data-stagger-step="0.08">
                                 <li class="flex items-start gap-3">
                                     <span class="text-studio-crimson font-mono">—</span>
                                     <span>Designed modular presentation decks, visual educational assets, and clean web interfaces for product launches.</span>
@@ -1059,19 +1135,19 @@
                         </div>
 
                         <!-- Node 2: Humanitarian Leadership -->
-                        <div class="reel-timeline-item">
+                        <div class="reel-timeline-item reel-reveal">
                             <span class="reel-timeline-node"></span>
                             <div class="flex flex-wrap items-baseline justify-between gap-2">
                                 <span class="font-mono text-[10px] tracking-[0.22em] uppercase text-studio-crimson font-semibold">LEADERSHIP</span>
                                 <span class="font-mono text-xs text-zinc-400">2022 — Present</span>
                             </div>
-                            <h3 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight mt-1">
-                                Bangladesh Red Crescent Society (BDRCS)
+                            <h3 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight mt-1 reel-line-mask">
+                                <span class="reel-slit-item" style="--slit-delay: 0.06s;">Bangladesh Red Crescent Society (BDRCS)</span>
                             </h3>
                             <div class="text-xs sm:text-sm text-zinc-400 mt-0.5">
                                 Youth Volunteer &amp; Emergency Field Leader — Dhaka
                             </div>
-                            <ul class="mt-4 space-y-2 text-xs sm:text-sm text-zinc-300 leading-relaxed">
+                            <ul class="mt-4 space-y-2 text-xs sm:text-sm text-zinc-300 leading-relaxed reel-stagger-children" data-stagger-base="0.14" data-stagger-step="0.08">
                                 <li class="flex items-start gap-3">
                                     <span class="text-studio-crimson font-mono">—</span>
                                     <span>Mobilized rapid-response youth squads for disaster relief, first-aid logistics, and national emergency campaigns.</span>
@@ -1084,19 +1160,19 @@
                         </div>
 
                         <!-- Node 3: Retail Operations -->
-                        <div class="reel-timeline-item">
+                        <div class="reel-timeline-item reel-reveal">
                             <span class="reel-timeline-node"></span>
                             <div class="flex flex-wrap items-baseline justify-between gap-2">
                                 <span class="font-mono text-[10px] tracking-[0.22em] uppercase text-studio-crimson font-semibold">EXPERIENCE</span>
                                 <span class="font-mono text-xs text-zinc-400">2021 — 2023</span>
                             </div>
-                            <h3 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight mt-1">
-                                Agora Superstores &amp; Meena Bazar
+                            <h3 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight mt-1 reel-line-mask">
+                                <span class="reel-slit-item" style="--slit-delay: 0.06s;">Agora Superstores &amp; Meena Bazar</span>
                             </h3>
                             <div class="text-xs sm:text-sm text-zinc-400 mt-0.5">
                                 Retail Operations &amp; Customer Service Executive — Dhaka
                             </div>
-                            <ul class="mt-4 space-y-2 text-xs sm:text-sm text-zinc-300 leading-relaxed">
+                            <ul class="mt-4 space-y-2 text-xs sm:text-sm text-zinc-300 leading-relaxed reel-stagger-children" data-stagger-base="0.14" data-stagger-step="0.08">
                                 <li class="flex items-start gap-3">
                                     <span class="text-studio-crimson font-mono">—</span>
                                     <span>Executed high-speed POS billing, daily inventory reconciliation, and frontline customer service across peak retail shifts.</span>
@@ -1105,14 +1181,14 @@
                         </div>
 
                         <!-- Node 4: Education -->
-                        <div class="reel-timeline-item">
+                        <div class="reel-timeline-item reel-reveal">
                             <span class="reel-timeline-node"></span>
                             <div class="flex flex-wrap items-baseline justify-between gap-2">
                                 <span class="font-mono text-[10px] tracking-[0.22em] uppercase text-studio-crimson font-semibold">EDUCATION</span>
                                 <span class="font-mono text-xs text-zinc-400">Present</span>
                             </div>
-                            <h3 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight mt-1">
-                                Tejgaon College, Dhaka
+                            <h3 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight mt-1 reel-line-mask">
+                                <span class="reel-slit-item" style="--slit-delay: 0.06s;">Tejgaon College, Dhaka</span>
                             </h3>
                             <div class="text-xs sm:text-sm text-zinc-400 mt-0.5">
                                 Bachelor of Social Science (BSS) in Social Work
@@ -1126,20 +1202,20 @@
                 </div>
 
                 <!-- PART B: ACHIEVEments. Full-Width 2-Column Editorial Grid (Exact Match to sec_150.jpg) -->
-                <div class="reel-reveal">
+                <div>
                     <div class="pb-10 border-b border-white/10">
-                        <h3 class="reel-display text-5xl sm:text-6xl leading-[0.9]">
-                            ACHIEVE<br>
-                            <span class="reel-serif-italic font-normal text-[1.06em]">ments</span><span class="reel-dot">.</span>
+                        <h3 class="reel-display text-5xl sm:text-6xl leading-[0.9] reel-char-group" data-base-delay="0.05" data-line-stagger="0.14" data-char-stagger="0.022">
+                            <span class="reel-line-mask"><span class="reel-split-chars">ACHIEVE</span></span>
+                            <span class="reel-line-mask"><span class="reel-serif-italic font-normal text-[1.06em] reel-split-chars">ments.</span></span>
                         </h3>
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 border-b border-white/10">
+                    <div class="grid grid-cols-1 md:grid-cols-2 border-b border-white/10 reel-stagger-children" data-stagger-base="0.1" data-stagger-step="0.12">
                         <!-- Item 01 -->
                         <div class="py-10 md:pr-12 border-b border-white/10">
                             <div class="font-mono text-xs text-studio-crimson font-bold mb-2">01</div>
-                            <h4 class="text-xl sm:text-2xl font-extrabold text-white tracking-tight">
-                                65+ WPM Bilingual Typing Benchmark
+                            <h4 class="text-xl sm:text-2xl font-extrabold text-white tracking-tight reel-line-mask">
+                                <span class="reel-slit-item" style="--slit-delay: 0.14s;">65+ WPM Bilingual Typing Benchmark</span>
                             </h4>
                             <p class="text-xs sm:text-sm text-zinc-400 mt-2 leading-relaxed">
                                 Verified high-speed document production across Bangla (Bijoy &amp; Avro Unicode) and English with 99.9% formatting precision.
@@ -1149,8 +1225,8 @@
                         <!-- Item 02 -->
                         <div class="py-10 md:pl-12 md:border-l border-b border-white/10">
                             <div class="font-mono text-xs text-studio-crimson font-bold mb-2">02</div>
-                            <h4 class="text-xl sm:text-2xl font-extrabold text-white tracking-tight">
-                                Youth Humanitarian Leader, BDRCS
+                            <h4 class="text-xl sm:text-2xl font-extrabold text-white tracking-tight reel-line-mask">
+                                <span class="reel-slit-item" style="--slit-delay: 0.24s;">Youth Humanitarian Leader, BDRCS</span>
                             </h4>
                             <p class="text-xs sm:text-sm text-zinc-400 mt-2 leading-relaxed">
                                 Recognized frontline coordinator across national emergency relief, blood drives, and first-aid deployments in Dhaka.
@@ -1164,8 +1240,8 @@
                         <!-- Item 03 -->
                         <div class="py-10 md:pr-12 border-b md:border-b-0 border-white/10">
                             <div class="font-mono text-xs text-studio-crimson font-bold mb-2">03</div>
-                            <h4 class="text-xl sm:text-2xl font-extrabold text-white tracking-tight">
-                                50+ Complex Document Deliveries
+                            <h4 class="text-xl sm:text-2xl font-extrabold text-white tracking-tight reel-line-mask">
+                                <span class="reel-slit-item" style="--slit-delay: 0.34s;">50+ Complex Document Deliveries</span>
                             </h4>
                             <p class="text-xs sm:text-sm text-zinc-400 mt-2 leading-relaxed">
                                 100% on-time completion of scanned PDF conversions, academic theses, and executive presentation systems.
@@ -1175,8 +1251,8 @@
                         <!-- Item 04 -->
                         <div class="py-10 md:pl-12 md:border-l border-white/10">
                             <div class="font-mono text-xs text-studio-crimson font-bold mb-2">04</div>
-                            <h4 class="text-xl sm:text-2xl font-extrabold text-white tracking-tight">
-                                Quantum Cosmo Athletic &amp; Leadership Alumni
+                            <h4 class="text-xl sm:text-2xl font-extrabold text-white tracking-tight reel-line-mask">
+                                <span class="reel-slit-item" style="--slit-delay: 0.44s;">Quantum Cosmo Athletic &amp; Leadership Alumni</span>
                             </h4>
                             <p class="text-xs sm:text-sm text-zinc-400 mt-2 leading-relaxed">
                                 Trained in discipline, parade leadership, and team resilience at Quantum Cosmo School &amp; College, Bandarban.
@@ -1186,26 +1262,26 @@
                 </div>
 
                 <!-- PART C: SERVICE standards & archive. Full-Width 3-Column Table (Exact Match to CERTifications in frame_16.jpg) -->
-                <div id="typing-services" class="reel-reveal">
+                <div id="typing-services">
                     <div class="pb-10 border-b border-white/10">
-                        <h3 class="reel-display text-5xl sm:text-6xl leading-[0.9]">
-                            SERVICE<br>
-                            <span class="reel-serif-italic font-normal text-[1.06em]">standards</span><span class="reel-dot">.</span>
+                        <h3 class="reel-display text-5xl sm:text-6xl leading-[0.9] reel-char-group" data-base-delay="0.05" data-line-stagger="0.14" data-char-stagger="0.022">
+                            <span class="reel-line-mask"><span class="reel-split-chars">SERVICE</span></span>
+                            <span class="reel-line-mask"><span class="reel-serif-italic font-normal text-[1.06em] reel-split-chars">standards.</span></span>
                         </h3>
                     </div>
 
                     <div class="divide-y divide-white/10 border-b border-white/10">
                         <!-- Group 1: Document Production -->
-                        <div class="py-6 grid grid-cols-1 md:grid-cols-12 gap-4 items-start">
+                        <div class="py-6 grid grid-cols-1 md:grid-cols-12 gap-4 items-start reel-reveal">
                             <div class="md:col-span-3 font-mono text-xs tracking-[0.2em] uppercase text-zinc-400 pt-1">
                                 BILINGUAL TYPING
                             </div>
-                            <div class="md:col-span-6 space-y-3">
+                            <div class="md:col-span-6 space-y-3 reel-stagger-children" data-stagger-base="0.08" data-stagger-step="0.08">
                                 <div class="text-sm sm:text-base font-medium text-zinc-100">Bangla (Bijoy / Avro Unicode) &amp; English Retyping (65+ WPM)</div>
                                 <div class="text-sm sm:text-base font-medium text-zinc-100">Scanned PDF &amp; Handwritten Manuscript to MS Word Conversion</div>
                                 <div class="text-sm sm:text-base font-medium text-zinc-100">Academic Thesis, Equation &amp; Print-Ready Layout Formatting</div>
                             </div>
-                            <div class="md:col-span-3 flex flex-col md:items-end space-y-3 font-mono text-[11px] tracking-[0.18em] uppercase">
+                            <div class="md:col-span-3 flex flex-col md:items-end space-y-3 font-mono text-[11px] tracking-[0.18em] uppercase reel-stagger-children" data-stagger-base="0.14" data-stagger-step="0.08">
                                 <button type="button" onclick="window.openArchiveDrawer('quote')" class="text-zinc-400 hover:text-studio-crimson transition">ESTIMATE &#8599;</button>
                                 <button type="button" onclick="window.openArchiveDrawer('quote')" class="text-zinc-400 hover:text-studio-crimson transition">ESTIMATE &#8599;</button>
                                 <button type="button" onclick="window.openArchiveDrawer('quote')" class="text-zinc-400 hover:text-studio-crimson transition">ESTIMATE &#8599;</button>
@@ -1213,16 +1289,16 @@
                         </div>
 
                         <!-- Group 2: Decks & Field Archive -->
-                        <div class="py-6 grid grid-cols-1 md:grid-cols-12 gap-4 items-start">
+                        <div class="py-6 grid grid-cols-1 md:grid-cols-12 gap-4 items-start reel-reveal">
                             <div class="md:col-span-3 font-mono text-xs tracking-[0.2em] uppercase text-zinc-400 pt-1">
                                 DECKS &amp; ARCHIVE
                             </div>
-                            <div class="md:col-span-6 space-y-3">
+                            <div class="md:col-span-6 space-y-3 reel-stagger-children" data-stagger-base="0.08" data-stagger-step="0.08">
                                 <div class="text-sm sm:text-base font-medium text-zinc-100">Executive PowerPoint Pitch Decks &amp; Slide Master Systems (Classvel)</div>
                                 <div class="text-sm sm:text-base font-medium text-zinc-100">BDRCS Humanitarian Field Photo Archive (15 Verified Missions)</div>
                                 <div class="text-sm sm:text-base font-medium text-zinc-100">Verified Client Reviews &amp; Live Community Guestbook Wall</div>
                             </div>
-                            <div class="md:col-span-3 flex flex-col md:items-end space-y-3 font-mono text-[11px] tracking-[0.18em] uppercase">
+                            <div class="md:col-span-3 flex flex-col md:items-end space-y-3 font-mono text-[11px] tracking-[0.18em] uppercase reel-stagger-children" data-stagger-base="0.14" data-stagger-step="0.08">
                                 <button type="button" onclick="window.openProjectModal(0)" class="text-zinc-400 hover:text-studio-crimson transition">CASE STUDY &#8599;</button>
                                 <button type="button" onclick="window.openArchiveDrawer('gallery')" class="text-zinc-400 hover:text-studio-crimson transition">OPEN GALLERY &#8599;</button>
                                 <button type="button" onclick="window.openArchiveDrawer('guestbook')" class="text-zinc-400 hover:text-studio-crimson transition">GUESTBOOK &#8599;</button>
@@ -1244,30 +1320,33 @@
                     <span>CONTACT</span>
                 </div>
 
-                <!-- Giant 3-Line Editorial Statement (Exact Match to sec_170.jpg: HAVE AN IDEA? / Let's build something / MEANINGFUL.) -->
-                <h2 class="reel-display text-5xl sm:text-7xl md:text-[5.5rem] xl:text-[6.4rem] leading-[0.92] reel-reveal">
-                    HAVE AN IDEA?<br>
-                    <span class="reel-serif-italic font-normal text-zinc-300 text-[0.96em]">Let's build something</span><br>
-                    MEANINGFUL<span class="reel-dot">.</span>
+                <!-- Giant 3-Line Editorial Statement (Exact Match to sec_162.jpg & sec_170.jpg: HAVE AN IDEA? / Let's build something / MEANINGFUL.) -->
+                <h2 class="reel-display text-5xl sm:text-7xl md:text-[5.5rem] xl:text-[6.4rem] leading-[0.92] reel-char-group" data-base-delay="0.04" data-line-stagger="0.14" data-char-stagger="0.02">
+                    <span class="reel-line-mask"><span class="reel-split-chars">HAVE AN IDEA?</span></span>
+                    <span class="reel-line-mask"><span class="reel-serif-italic font-normal text-zinc-300 text-[0.96em] reel-split-chars">Let's build something</span></span>
+                    <span class="reel-line-mask"><span class="reel-split-chars">MEANINGFUL.</span></span>
                 </h2>
 
                 <!-- Full-Width Split Contact Row (WRITE TO ME on Left Col-6 / FIND ME ON on Right Col-5) -->
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 mt-14 pt-10 border-t border-white/10 items-start reel-reveal">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 mt-14 pt-10 border-t border-white/10 items-start">
 
                     <!-- Left 6 Cols: WRITE TO ME + Large Email + 2 Rectangular Buttons -->
-                    <div class="lg:col-span-6 space-y-6">
+                    <div class="lg:col-span-6 space-y-6 reel-reveal" style="--reveal-delay: 0.28s;">
                         <div class="font-mono text-[10px] tracking-[0.24em] uppercase text-zinc-500">
                             WRITE TO ME
                         </div>
 
                         <div>
-                            <a
-                                id="contactEmailText"
-                                href="mailto:gamerhindi571@gmail.com"
-                                class="text-xl sm:text-3xl md:text-[2rem] font-extrabold text-white hover:text-studio-crimson transition tracking-tight break-all"
-                            >
-                                gamerhindi571@gmail.com
-                            </a>
+                            <div class="reel-line-mask">
+                                <a
+                                    id="contactEmailText"
+                                    href="mailto:gamerhindi571@gmail.com"
+                                    class="reel-slit-item text-xl sm:text-3xl md:text-[2rem] font-extrabold text-white hover:text-studio-crimson transition tracking-tight break-all"
+                                    style="--slit-delay: 0.34s;"
+                                >
+                                    gamerhindi571@gmail.com
+                                </a>
+                            </div>
                             <div class="font-mono text-xs text-zinc-400 mt-2">
                                 Direct / WhatsApp: <a href="https://wa.me/8801320399465" target="_blank" rel="noopener" class="text-zinc-200 hover:text-studio-crimson transition">+880 1320-399465</a> &middot; Dhaka, Bangladesh
                             </div>
@@ -1296,11 +1375,11 @@
                     </div>
 
                     <!-- Right 5 Cols (Col-Start-8): FIND ME ON Social Ledger with Icons & ↗ Arrows (Exact Match to sec_170.jpg) -->
-                    <div class="lg:col-span-5 lg:col-start-8">
+                    <div class="lg:col-span-5 lg:col-start-8 reel-reveal" style="--reveal-delay: 0.35s;">
                         <div class="font-mono text-[10px] tracking-[0.24em] uppercase text-zinc-500 mb-3">
                             FIND ME ON
                         </div>
-                        <div class="divide-y divide-white/10 border-t border-b border-white/10 text-sm">
+                        <div class="divide-y divide-white/10 border-t border-b border-white/10 text-sm reel-stagger-children" data-stagger-base="0.38" data-stagger-step="0.08">
                             <a href="https://linkedin.com/in/ksrafid" target="_blank" rel="noopener" class="py-3.5 flex items-center justify-between text-zinc-200 hover:text-white hover:pl-2 transition-all">
                                 <span class="inline-flex items-center gap-3">
                                     <i class="fa-brands fa-linkedin-in text-zinc-400 w-4"></i>
@@ -1342,7 +1421,7 @@
                 </div>
 
                 <!-- Minimal Bottom Editorial Footer Bar (Exact Match to sec_170.jpg) -->
-                <footer class="mt-20 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 font-mono text-[10px] tracking-[0.22em] uppercase text-zinc-500">
+                <footer class="mt-20 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 font-mono text-[10px] tracking-[0.22em] uppercase text-zinc-500 reel-reveal" style="--reveal-delay: 0.48s;">
                     <div>
                         &copy; <span id="year">2026</span> SAADMAN KHANDKER &middot; DESIGNED &amp; BUILT FOR PRECISION
                     </div>
@@ -1698,21 +1777,77 @@
             }, { passive: true });
         })();
 
-        // 3. Staggered Scroll-Reveal Observer
+        // 3. Reel Slit-Mask Character-Wave & Staggered Scroll-Reveal Engine
         (function initReveal() {
-            const items = document.querySelectorAll('.reel-reveal');
+            // A. Split .reel-split-chars into individual .reel-char spans inside each .reel-char-group
+            document.querySelectorAll('.reel-char-group').forEach(group => {
+                const baseDelay = parseFloat(group.dataset.baseDelay || '0.04');
+                const lineStagger = parseFloat(group.dataset.lineStagger || '0.14');
+                const charStagger = parseFloat(group.dataset.charStagger || '0.022');
+                const isDisplayHeading = group.classList.contains('reel-display');
+
+                const lines = group.querySelectorAll('.reel-line-mask');
+                lines.forEach((lineEl, lineIdx) => {
+                    let charIndexInLine = 0;
+                    const splitTargets = lineEl.querySelectorAll('.reel-split-chars');
+                    splitTargets.forEach((target, targetIdx) => {
+                        const rawText = target.textContent || '';
+                        const chars = Array.from(rawText);
+                        const frag = document.createDocumentFragment();
+                        chars.forEach((ch, idx) => {
+                            const span = document.createElement('span');
+                            const isTrailingDot = isDisplayHeading &&
+                                targetIdx === splitTargets.length - 1 &&
+                                idx === chars.length - 1 &&
+                                ch === '.';
+                            span.className = isTrailingDot ? 'reel-char reel-dot' : 'reel-char';
+                            const delaySec = baseDelay + (lineIdx * lineStagger) + (charIndexInLine * charStagger);
+                            span.style.setProperty('--char-delay', delaySec.toFixed(3) + 's');
+                            if (ch === ' ') {
+                                span.innerHTML = '&nbsp;';
+                            } else {
+                                span.textContent = ch;
+                            }
+                            frag.appendChild(span);
+                            charIndexInLine++;
+                        });
+                        target.textContent = '';
+                        target.appendChild(frag);
+                    });
+                });
+            });
+
+            // B. Assign staggered --item-delay to direct children of .reel-stagger-children
+            document.querySelectorAll('.reel-stagger-children').forEach(container => {
+                const base = parseFloat(container.dataset.staggerBase || '0.1');
+                const step = parseFloat(container.dataset.staggerStep || '0.08');
+                Array.from(container.children).forEach((child, idx) => {
+                    child.style.setProperty('--item-delay', (base + idx * step).toFixed(3) + 's');
+                });
+            });
+
+            // C. Observe all animated elements and trigger after initial paint so Hero animates on page load
+            const animatedTargets = document.querySelectorAll('.reel-reveal, .reel-char-group, .reel-stagger-children');
             if (!('IntersectionObserver' in window)) {
-                items.forEach(el => el.classList.add('is-visible'));
+                animatedTargets.forEach(el => el.classList.add('is-visible'));
                 return;
             }
+
             const io = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('is-visible');
+                    } else if (entry.boundingClientRect.top > window.innerHeight * 0.95 || entry.boundingClientRect.bottom < 0) {
+                        entry.target.classList.remove('is-visible');
                     }
                 });
-            }, { threshold: 0.1 });
-            items.forEach(el => io.observe(el));
+            }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    animatedTargets.forEach(el => io.observe(el));
+                });
+            });
         })();
 
         // 4. Drawers & Lightbox Controls
