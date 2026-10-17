@@ -556,8 +556,8 @@
             <video
                 id="portraitVideoBg"
                 class="studio-video-seamless"
-                src="./public/hero-studio.mp4?v=6"
-                poster="./public/pose-hero.jpg?v=6"
+                src="./public/hero-studio.mp4?v=7"
+                poster="./public/pose-hero.jpg?v=7"
                 autoplay
                 loop
                 muted
@@ -668,19 +668,38 @@
                         </div>
                     </div>
 
-                    <!-- RIGHT COLUMN (5 Cols): The Actual Supplied Hero Studio Video (Preserves Original Composition on RIGHT) -->
+                    <!-- RIGHT COLUMN (5 Cols): The Actual Supplied Hero Studio Video + Live Synced Subtitles & Audio Toggle -->
                     <div class="lg:col-span-5 relative flex items-end justify-center lg:justify-end h-[460px] sm:h-[580px] lg:h-[calc(100vh-4.5rem)]">
                         <video
                             id="portraitVideoHero"
                             class="studio-video-seamless max-h-full w-auto"
-                            src="./public/hero-studio.mp4?v=6"
-                            poster="./public/pose-hero.jpg?v=6"
+                            src="./public/hero-studio.mp4?v=7"
+                            poster="./public/pose-hero.jpg?v=7"
                             autoplay
                             loop
                             muted
                             playsinline
                             preload="auto"
                         ></video>
+
+                        <!-- Time-Synced Live Studio Subtitle Bar + Sound Toggle -->
+                        <div id="heroSubtitleBar" class="absolute bottom-5 sm:bottom-8 left-1/2 -translate-x-1/2 z-20 w-[94%] max-w-[400px] flex items-center justify-between gap-2.5 px-3.5 py-2.5 rounded-full bg-[#07070c]/88 backdrop-blur-md border border-white/15 shadow-[0_12px_34px_rgba(0,0,0,0.75)] transition-all duration-300">
+                            <div class="flex items-center gap-2.5 min-w-0 flex-1">
+                                <span id="heroSubtitlePulse" class="w-2 h-2 rounded-full bg-studio-crimson shrink-0 animate-pulse"></span>
+                                <p id="heroLiveSubtitleText" class="text-xs sm:text-[13.5px] font-medium text-zinc-100 tracking-wide truncate transition-all duration-200">
+                                    "Welcome to my website."
+                                </p>
+                            </div>
+                            <button
+                                type="button"
+                                id="heroAudioToggleBtn"
+                                class="shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/10 hover:bg-studio-crimson border border-white/15 hover:border-studio-crimson text-[10px] font-mono tracking-[0.15em] uppercase text-zinc-200 hover:text-white transition-all focus:outline-none cursor-pointer"
+                                aria-label="Toggle Video Audio"
+                            >
+                                <i id="heroAudioIcon" class="fa-solid fa-volume-xmark text-[10px]"></i>
+                                <span id="heroAudioLabel">SOUND OFF</span>
+                            </button>
+                        </div>
                     </div>
 
                 </div>
@@ -697,8 +716,8 @@
                         <video
                             id="portraitVideoAbout"
                             class="studio-video-seamless max-h-full w-auto"
-                            src="./public/about-studio.mp4?v=6"
-                            poster="./public/pose-about.jpg?v=6"
+                            src="./public/about-studio.mp4?v=7"
+                            poster="./public/pose-about.jpg?v=7"
                             autoplay
                             loop
                             muted
@@ -2186,6 +2205,72 @@
                 const p = v.play();
                 if (p && p.catch) p.catch(() => {});
             });
+
+            // Live Time-Synced Subtitles & Audio Toggle for Hero Video
+            const subTextEl = document.getElementById('heroLiveSubtitleText');
+            const subPulseEl = document.getElementById('heroSubtitlePulse');
+            const audioBtn = document.getElementById('heroAudioToggleBtn');
+            const audioIcon = document.getElementById('heroAudioIcon');
+            const audioLabel = document.getElementById('heroAudioLabel');
+
+            const subtitleCues = [
+                { start: 0.0, end: 1.48, text: '"Welcome to my website."' },
+                { start: 1.48, end: 2.68, text: '"I\'m glad you\'re here."' },
+                { start: 2.68, end: 6.20, text: '"Let\'s explore together."' }
+            ];
+            let lastCueText = '';
+
+            function syncHeroSubtitles() {
+                if (!vHero || !subTextEl) return;
+                const t = vHero.currentTime || 0;
+                let activeCue = subtitleCues[0].text;
+                for (let i = 0; i < subtitleCues.length; i++) {
+                    if (t >= subtitleCues[i].start && t < subtitleCues[i].end) {
+                        activeCue = subtitleCues[i].text;
+                        break;
+                    }
+                }
+                if (activeCue !== lastCueText) {
+                    lastCueText = activeCue;
+                    subTextEl.style.opacity = '0.25';
+                    subTextEl.style.transform = 'translateY(4px)';
+                    setTimeout(() => {
+                        subTextEl.textContent = activeCue;
+                        subTextEl.style.opacity = '1';
+                        subTextEl.style.transform = 'translateY(0)';
+                    }, 90);
+                }
+                if (subPulseEl) {
+                    // Pulse crimson while speaking (0.0s - 4.15s), calm emerald during confident smile hold (4.15s - 6.04s)
+                    if (t <= 4.15) {
+                        subPulseEl.className = 'w-2 h-2 rounded-full bg-studio-crimson shrink-0 animate-pulse';
+                    } else {
+                        subPulseEl.className = 'w-2 h-2 rounded-full bg-emerald-400 shrink-0';
+                    }
+                }
+            }
+
+            if (vHero) {
+                vHero.addEventListener('timeupdate', syncHeroSubtitles);
+                setInterval(syncHeroSubtitles, 120);
+            }
+
+            if (audioBtn && vHero) {
+                audioBtn.addEventListener('click', () => {
+                    vHero.muted = !vHero.muted;
+                    if (!vHero.muted) {
+                        vHero.volume = 1.0;
+                        vHero.play().catch(() => {});
+                        if (audioIcon) audioIcon.className = 'fa-solid fa-volume-high text-[10px] text-white';
+                        if (audioLabel) audioLabel.textContent = 'SOUND ON';
+                        audioBtn.classList.add('bg-studio-crimson', 'border-studio-crimson', 'text-white');
+                    } else {
+                        if (audioIcon) audioIcon.className = 'fa-solid fa-volume-xmark text-[10px]';
+                        if (audioLabel) audioLabel.textContent = 'SOUND OFF';
+                        audioBtn.classList.remove('bg-studio-crimson', 'border-studio-crimson', 'text-white');
+                    }
+                });
+            }
 
             function updateBgStage() {
                 if (!bgStage || !skillsEl) return;
