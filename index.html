@@ -546,6 +546,86 @@
             background: radial-gradient(ellipse at center, rgba(225, 29, 72, 0.28) 0%, rgba(225, 29, 72, 0) 72%);
             pointer-events: none;
         }
+
+        /* ==================== CINEMATIC FLOATING EDITORIAL SUBTITLES (REEL VIBE) ==================== */
+        .reel-cinema-caption {
+            position: absolute;
+            bottom: 1.75rem;
+            left: 50%;
+            transform: translate3d(-50%, 0, 0);
+            z-index: 25;
+            width: 94%;
+            max-width: 420px;
+            padding: 0.85rem 1.25rem 0.95rem;
+            background: radial-gradient(ellipse 90% 85% at 50% 60%, rgba(7, 7, 12, 0.88) 0%, rgba(7, 7, 12, 0.52) 68%, rgba(7, 7, 12, 0) 100%);
+            pointer-events: none;
+            user-select: none;
+            transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), filter 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reel-cinema-caption.is-resting {
+            opacity: 0;
+            transform: translate3d(-50%, 10px, 0) scale(0.97);
+            filter: blur(5px);
+        }
+
+        .reel-sub-word {
+            display: inline-block;
+            color: rgba(244, 244, 246, 0.28);
+            transform: translate3d(0, 6px, 0) scale(0.96);
+            filter: blur(1.5px);
+            transition: color 0.26s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 0.32s cubic-bezier(0.16, 1, 0.3, 1),
+                        filter 0.26s cubic-bezier(0.16, 1, 0.3, 1),
+                        text-shadow 0.26s cubic-bezier(0.16, 1, 0.3, 1);
+            margin-right: 0.26em;
+        }
+
+        .reel-sub-word.is-spoken {
+            color: #ffffff;
+            transform: translate3d(0, 0, 0) scale(1);
+            filter: blur(0px);
+            text-shadow: 0 4px 22px rgba(0, 0, 0, 0.95), 0 0 18px rgba(255, 255, 255, 0.16);
+        }
+
+        .reel-sub-word.is-accent {
+            font-family: 'Instrument Serif', Georgia, serif;
+            font-style: italic;
+            font-weight: 400;
+            font-size: 1.24em;
+            letter-spacing: 0.01em;
+            line-height: 1;
+        }
+
+        .reel-sub-word.is-accent.is-spoken {
+            color: #fda4af;
+            text-shadow: 0 4px 22px rgba(0, 0, 0, 0.95), 0 0 24px rgba(225, 29, 72, 0.55);
+        }
+
+        .reel-eq-bars {
+            display: inline-flex;
+            align-items: flex-end;
+            gap: 2.5px;
+            height: 11px;
+        }
+
+        .reel-eq-bar {
+            width: 2px;
+            background: #e11d48;
+            border-radius: 999px;
+            box-shadow: 0 0 8px rgba(225, 29, 72, 0.7);
+            animation: reelEqBounce 0.75s ease-in-out infinite alternate;
+        }
+
+        .reel-eq-bar:nth-child(1) { height: 5px; animation-delay: 0.0s; }
+        .reel-eq-bar:nth-child(2) { height: 11px; animation-delay: 0.16s; }
+        .reel-eq-bar:nth-child(3) { height: 7px; animation-delay: 0.32s; }
+        .reel-eq-bar:nth-child(4) { height: 10px; animation-delay: 0.11s; }
+
+        @keyframes reelEqBounce {
+            0% { transform: scaleY(0.35); opacity: 0.65; }
+            100% { transform: scaleY(1.05); opacity: 1; }
+        }
     </style>
 </head>
 <body class="selection:bg-rose-600 selection:text-white">
@@ -682,23 +762,31 @@
                             preload="auto"
                         ></video>
 
-                        <!-- Time-Synced Live Studio Subtitle Bar + Sound Toggle -->
-                        <div id="heroSubtitleBar" class="absolute bottom-5 sm:bottom-8 left-1/2 -translate-x-1/2 z-20 w-[94%] max-w-[400px] flex items-center justify-between gap-2.5 px-3.5 py-2.5 rounded-full bg-[#07070c]/88 backdrop-blur-md border border-white/15 shadow-[0_12px_34px_rgba(0,0,0,0.75)] transition-all duration-300">
-                            <div class="flex items-center gap-2.5 min-w-0 flex-1">
-                                <span id="heroSubtitlePulse" class="w-2 h-2 rounded-full bg-studio-crimson shrink-0 animate-pulse"></span>
-                                <p id="heroLiveSubtitleText" class="text-xs sm:text-[13.5px] font-medium text-zinc-100 tracking-wide truncate transition-all duration-200">
-                                    "Welcome to my website."
-                                </p>
+                        <!-- Frameless Cinematic Editorial Kinetic Subtitles (No Sound Button) -->
+                        <div id="heroSubtitleBar" class="reel-cinema-caption text-center">
+                            <div class="flex items-center justify-center gap-2.5 mb-2">
+                                <span class="reel-eq-bars" aria-hidden="true">
+                                    <span class="reel-eq-bar"></span>
+                                    <span class="reel-eq-bar"></span>
+                                    <span class="reel-eq-bar"></span>
+                                    <span class="reel-eq-bar"></span>
+                                </span>
+                                <span class="font-mono text-[9.5px] tracking-[0.28em] uppercase text-zinc-400/90">
+                                    VOICE NOTE &middot; <span id="heroSubCueIndex" class="text-rose-400 font-semibold">01 / 03</span>
+                                </span>
                             </div>
-                            <button
-                                type="button"
-                                id="heroAudioToggleBtn"
-                                class="shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/10 hover:bg-studio-crimson border border-white/15 hover:border-studio-crimson text-[10px] font-mono tracking-[0.15em] uppercase text-zinc-200 hover:text-white transition-all focus:outline-none cursor-pointer"
-                                aria-label="Toggle Video Audio"
-                            >
-                                <i id="heroAudioIcon" class="fa-solid fa-volume-xmark text-[10px]"></i>
-                                <span id="heroAudioLabel">SOUND OFF</span>
-                            </button>
+
+                            <div id="heroLiveSubtitleText" class="text-lg sm:text-[22px] font-bold tracking-tight leading-snug min-h-[2.2rem] flex flex-wrap items-baseline justify-center">
+                                <span class="reel-sub-word is-spoken">Welcome</span>
+                                <span class="reel-sub-word is-spoken">to</span>
+                                <span class="reel-sub-word is-spoken">my</span>
+                                <span class="reel-sub-word is-accent is-spoken">website.</span>
+                            </div>
+
+                            <!-- Subtle Crimson Timeline Filament -->
+                            <div class="w-24 h-[1.5px] bg-white/10 mx-auto mt-2.5 overflow-hidden rounded-full">
+                                <div id="heroSubProgressFill" class="h-full bg-gradient-to-r from-rose-600 via-rose-400 to-rose-600 w-0 transition-all duration-100"></div>
+                            </div>
                         </div>
                     </div>
 
@@ -2206,70 +2294,99 @@
                 if (p && p.catch) p.catch(() => {});
             });
 
-            // Live Time-Synced Subtitles & Audio Toggle for Hero Video
+            // Word-by-Word Kinetic Editorial Subtitles for Hero Video (No Sound Toggle Button)
+            const subBarEl = document.getElementById('heroSubtitleBar');
             const subTextEl = document.getElementById('heroLiveSubtitleText');
-            const subPulseEl = document.getElementById('heroSubtitlePulse');
-            const audioBtn = document.getElementById('heroAudioToggleBtn');
-            const audioIcon = document.getElementById('heroAudioIcon');
-            const audioLabel = document.getElementById('heroAudioLabel');
+            const subIdxEl = document.getElementById('heroSubCueIndex');
+            const subFillEl = document.getElementById('heroSubProgressFill');
 
-            const subtitleCues = [
-                { start: 0.0, end: 1.48, text: '"Welcome to my website."' },
-                { start: 1.48, end: 2.68, text: '"I\'m glad you\'re here."' },
-                { start: 2.68, end: 6.20, text: '"Let\'s explore together."' }
+            const subtitlePhrases = [
+                {
+                    num: '01 / 03',
+                    start: 0.0,
+                    end: 1.48,
+                    words: [
+                        { text: 'Welcome', at: 0.04, accent: false },
+                        { text: 'to', at: 0.34, accent: false },
+                        { text: 'my', at: 0.54, accent: false },
+                        { text: 'website.', at: 0.76, accent: true }
+                    ]
+                },
+                {
+                    num: '02 / 03',
+                    start: 1.48,
+                    end: 2.68,
+                    words: [
+                        { text: "I'm", at: 1.50, accent: false },
+                        { text: 'glad', at: 1.72, accent: false },
+                        { text: "you're", at: 1.96, accent: true },
+                        { text: 'here.', at: 2.20, accent: true }
+                    ]
+                },
+                {
+                    num: '03 / 03',
+                    start: 2.68,
+                    end: 4.35,
+                    words: [
+                        { text: "Let's", at: 2.70, accent: false },
+                        { text: 'explore', at: 2.96, accent: true },
+                        { text: 'together.', at: 3.36, accent: false }
+                    ]
+                }
             ];
-            let lastCueText = '';
+
+            let currentPhraseIdx = -1;
 
             function syncHeroSubtitles() {
-                if (!vHero || !subTextEl) return;
+                if (!vHero || !subTextEl || !subBarEl) return;
                 const t = vHero.currentTime || 0;
-                let activeCue = subtitleCues[0].text;
-                for (let i = 0; i < subtitleCues.length; i++) {
-                    if (t >= subtitleCues[i].start && t < subtitleCues[i].end) {
-                        activeCue = subtitleCues[i].text;
+
+                // During the silent studio smile hold (4.35s - 5.95s), smoothly dissolve out the caption
+                if (t > 4.35 && t < 5.95) {
+                    subBarEl.classList.add('is-resting');
+                    if (subFillEl) subFillEl.style.width = '100%';
+                    return;
+                }
+                subBarEl.classList.remove('is-resting');
+
+                let activeIdx = 0;
+                for (let i = 0; i < subtitlePhrases.length; i++) {
+                    if (t >= subtitlePhrases[i].start && t < subtitlePhrases[i].end) {
+                        activeIdx = i;
                         break;
                     }
                 }
-                if (activeCue !== lastCueText) {
-                    lastCueText = activeCue;
-                    subTextEl.style.opacity = '0.25';
-                    subTextEl.style.transform = 'translateY(4px)';
-                    setTimeout(() => {
-                        subTextEl.textContent = activeCue;
-                        subTextEl.style.opacity = '1';
-                        subTextEl.style.transform = 'translateY(0)';
-                    }, 90);
+
+                const phrase = subtitlePhrases[activeIdx];
+                if (activeIdx !== currentPhraseIdx) {
+                    currentPhraseIdx = activeIdx;
+                    if (subIdxEl) subIdxEl.textContent = phrase.num;
+                    subTextEl.innerHTML = phrase.words
+                        .map((w, wi) => `<span class="reel-sub-word${w.accent ? ' is-accent' : ''}" data-word-idx="${wi}">${w.text}</span>`)
+                        .join('');
                 }
-                if (subPulseEl) {
-                    // Pulse crimson while speaking (0.0s - 4.15s), calm emerald during confident smile hold (4.15s - 6.04s)
-                    if (t <= 4.15) {
-                        subPulseEl.className = 'w-2 h-2 rounded-full bg-studio-crimson shrink-0 animate-pulse';
+
+                // Illuminate each word as Saadman's lips reach its timestamp
+                const wordSpans = subTextEl.querySelectorAll('.reel-sub-word');
+                phrase.words.forEach((w, wi) => {
+                    const el = wordSpans[wi];
+                    if (!el) return;
+                    if (t >= w.at || t >= 5.95) {
+                        el.classList.add('is-spoken');
                     } else {
-                        subPulseEl.className = 'w-2 h-2 rounded-full bg-emerald-400 shrink-0';
+                        el.classList.remove('is-spoken');
                     }
+                });
+
+                if (subFillEl) {
+                    const pct = Math.min(100, Math.max(0, (t / 4.15) * 100));
+                    subFillEl.style.width = pct.toFixed(1) + '%';
                 }
             }
 
             if (vHero) {
                 vHero.addEventListener('timeupdate', syncHeroSubtitles);
-                setInterval(syncHeroSubtitles, 120);
-            }
-
-            if (audioBtn && vHero) {
-                audioBtn.addEventListener('click', () => {
-                    vHero.muted = !vHero.muted;
-                    if (!vHero.muted) {
-                        vHero.volume = 1.0;
-                        vHero.play().catch(() => {});
-                        if (audioIcon) audioIcon.className = 'fa-solid fa-volume-high text-[10px] text-white';
-                        if (audioLabel) audioLabel.textContent = 'SOUND ON';
-                        audioBtn.classList.add('bg-studio-crimson', 'border-studio-crimson', 'text-white');
-                    } else {
-                        if (audioIcon) audioIcon.className = 'fa-solid fa-volume-xmark text-[10px]';
-                        if (audioLabel) audioLabel.textContent = 'SOUND OFF';
-                        audioBtn.classList.remove('bg-studio-crimson', 'border-studio-crimson', 'text-white');
-                    }
-                });
+                setInterval(syncHeroSubtitles, 55);
             }
 
             function updateBgStage() {
