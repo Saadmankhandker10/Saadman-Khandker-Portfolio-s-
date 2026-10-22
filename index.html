@@ -668,6 +668,7 @@
                 <a href="#skills" class="reel-nav-link" data-section="skills">SKILLS</a>
                 <a href="#projects" class="reel-nav-link" data-section="projects">PROJECTS</a>
                 <a href="#experience" class="reel-nav-link" data-section="experience">JOURNEY</a>
+                <a href="#gallery" class="reel-nav-link" data-section="gallery">GALLERY</a>
                 <a href="#contact" class="reel-nav-link" data-section="contact">CONTACT</a>
             </nav>
 
@@ -690,7 +691,8 @@
                 <a href="#skills" class="mobile-nav-item font-mono text-xs tracking-[0.22em] uppercase text-zinc-300 py-1.5 border-b border-white/5">02 — SKILLS</a>
                 <a href="#projects" class="mobile-nav-item font-mono text-xs tracking-[0.22em] uppercase text-zinc-300 py-1.5 border-b border-white/5">03 — PROJECTS</a>
                 <a href="#experience" class="mobile-nav-item font-mono text-xs tracking-[0.22em] uppercase text-zinc-300 py-1.5 border-b border-white/5">04 — JOURNEY</a>
-                <a href="#contact" class="mobile-nav-item font-mono text-xs tracking-[0.22em] uppercase text-zinc-300 py-1.5 border-b border-white/5">05 — CONTACT</a>
+                <a href="#gallery" class="mobile-nav-item font-mono text-xs tracking-[0.22em] uppercase text-zinc-300 py-1.5 border-b border-white/5">05 — GALLERY</a>
+                <a href="#contact" class="mobile-nav-item font-mono text-xs tracking-[0.22em] uppercase text-zinc-300 py-1.5 border-b border-white/5">06 — CONTACT</a>
             </div>
         </div>
     </header>
@@ -1166,13 +1168,13 @@
                                     <span>Crisis Ops</span>
                                     <span>First Aid</span>
                                     <span>Field Squad</span>
-                                    <button
-                                        type="button"
-                                        onclick="event.stopPropagation(); window.openArchiveDrawer('gallery');"
+                                    <a
+                                        href="#gallery"
+                                        onclick="event.stopPropagation();"
                                         class="bdrcs-slide-control text-[10px] tracking-[0.15em] uppercase text-rose-400 hover:text-white underline underline-offset-4"
                                     >
-                                        [12 PHOTOS &#8599;]
-                                    </button>
+                                        [VIEW GALLERY &#8599;]
+                                    </a>
                                 </div>
                             </div>
                             <div class="lg:col-span-1 flex lg:justify-end">
@@ -1402,10 +1404,10 @@
                             <p class="text-xs sm:text-sm text-zinc-400 mt-2 leading-relaxed">
                                 Recognized frontline coordinator across national emergency relief, blood drives, and first-aid deployments in Dhaka.
                             </p>
-                            <button type="button" onclick="window.openArchiveDrawer('gallery')" class="mt-3 font-mono text-xs text-zinc-300 hover:text-studio-crimson inline-flex items-center gap-1.5 transition">
+                            <a href="#gallery" class="mt-3 font-mono text-xs text-zinc-300 hover:text-studio-crimson inline-flex items-center gap-1.5 transition">
                                 <span>Field Archive</span>
                                 <span>&#8599;</span>
-                            </button>
+                            </a>
                         </div>
 
                         <!-- Item 03 -->
@@ -1471,7 +1473,7 @@
                             </div>
                             <div class="md:col-span-3 flex flex-col md:items-end space-y-3 font-mono text-[11px] tracking-[0.18em] uppercase reel-stagger-children" data-stagger-base="0.14" data-stagger-step="0.08">
                                 <button type="button" onclick="window.openProjectModal(0)" class="text-zinc-400 hover:text-studio-crimson transition">CASE STUDY &#8599;</button>
-                                <button type="button" onclick="window.openArchiveDrawer('gallery')" class="text-zinc-400 hover:text-studio-crimson transition">OPEN GALLERY &#8599;</button>
+                                <a href="#gallery" class="text-zinc-400 hover:text-studio-crimson transition">VIEW GALLERY &#8599;</a>
                                 <button type="button" onclick="window.openArchiveDrawer('guestbook')" class="text-zinc-400 hover:text-studio-crimson transition">GUESTBOOK &#8599;</button>
                             </div>
                         </div>
@@ -1481,12 +1483,139 @@
             </div>
         </section>
 
-        <!-- ==================== SECTION 05 — CONTACT: FULL-WIDTH STATEMENT & SPLIT LEDGER (EXACT MATCH TO sec_162.jpg & sec_170.jpg) ==================== -->
+        <!-- ==================== SECTION 05 — VISUAL GALLERY: FIELD MISSIONS & STUDIO ARCHIVE ==================== -->
+        <section id="gallery" class="py-28 lg:py-36 relative border-t border-white/10">
+            <div class="max-w-[1380px] mx-auto w-full px-5 sm:px-10 lg:px-14">
+
+                <!-- Header Row: 05 GALLERY + Giant VISUAL archive. on Left / Description on Far Right -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end pb-14">
+                    <div class="lg:col-span-7">
+                        <div class="reel-eyebrow mb-5 reel-reveal">
+                            <span class="reel-eyebrow-num">05</span>
+                            <span class="reel-eyebrow-dash"></span>
+                            <span>VISUAL GALLERY &middot; FIELD &amp; STUDIO</span>
+                        </div>
+                        <h2 class="reel-display text-6xl sm:text-7xl md:text-[5.6rem] leading-[0.88] reel-char-group" data-base-delay="0.05" data-line-stagger="0.14" data-char-stagger="0.022">
+                            <span class="reel-line-mask"><span class="reel-split-chars">VISUAL</span></span>
+                            <span class="reel-line-mask"><span class="reel-serif-italic font-normal text-[1.06em] reel-split-chars">archive.</span></span>
+                        </h2>
+                    </div>
+                    <div class="lg:col-span-5 lg:pb-3 reel-reveal" style="--reveal-delay: 0.25s;">
+                        <p class="text-xs sm:text-sm text-zinc-400 leading-relaxed max-w-md lg:ml-auto">
+                            Documentary field photography across Bangladesh Red Crescent Society (BDRCS) humanitarian operations, youth squads, and studio milestones. Click any image to view in full resolution.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Curated 12-Photo Editorial Visual Grid -->
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 sm:gap-4 reel-stagger-children" data-stagger-base="0.1" data-stagger-step="0.05">
+                    <button type="button" onclick="window.openLightbox('./public/img.jpg', 'Official Studio Portrait — Khandker Sadman Rafid Saad')" class="group relative aspect-[4/5] bg-[#07070c] border border-white/10 overflow-hidden text-left hover:border-studio-crimson hover:shadow-[0_0_22px_rgba(225,29,72,0.35)] transition-all duration-300">
+                        <img src="./public/img.jpg" alt="Saadman Khandker Studio Portrait" loading="lazy" class="w-full h-full object-cover group-hover:scale-108 transition duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity"></div>
+                        <div class="absolute bottom-0 inset-x-0 p-2.5 space-y-0.5">
+                            <span class="font-mono text-[9px] text-studio-crimson tracking-widest uppercase block">01 &middot; PORTRAIT</span>
+                            <span class="font-sans text-xs text-white font-semibold truncate block">Studio Portrait</span>
+                        </div>
+                    </button>
+                    <button type="button" onclick="window.openLightbox('./public/FB_IMG_1711641936781.jpg', 'BDRCS Humanitarian Relief Mission — Field Duty')" class="group relative aspect-[4/5] bg-[#07070c] border border-white/10 overflow-hidden text-left hover:border-studio-crimson hover:shadow-[0_0_22px_rgba(225,29,72,0.35)] transition-all duration-300">
+                        <img src="./public/FB_IMG_1711641936781.jpg" alt="BDRCS Relief Mission" loading="lazy" class="w-full h-full object-cover group-hover:scale-108 transition duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity"></div>
+                        <div class="absolute bottom-0 inset-x-0 p-2.5 space-y-0.5">
+                            <span class="font-mono text-[9px] text-studio-crimson tracking-widest uppercase block">02 &middot; BDRCS RELIEF</span>
+                            <span class="font-sans text-xs text-white font-semibold truncate block">Relief Mission</span>
+                        </div>
+                    </button>
+                    <button type="button" onclick="window.openLightbox('./public/FB_IMG_1733546681910.jpg', 'BDRCS Youth Volunteer Squad — Field Coordination')" class="group relative aspect-[4/5] bg-[#07070c] border border-white/10 overflow-hidden text-left hover:border-studio-crimson hover:shadow-[0_0_22px_rgba(225,29,72,0.35)] transition-all duration-300">
+                        <img src="./public/FB_IMG_1733546681910.jpg" alt="BDRCS Squad Coordination" loading="lazy" class="w-full h-full object-cover group-hover:scale-108 transition duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity"></div>
+                        <div class="absolute bottom-0 inset-x-0 p-2.5 space-y-0.5">
+                            <span class="font-mono text-[9px] text-studio-crimson tracking-widest uppercase block">03 &middot; BDRCS SQUAD</span>
+                            <span class="font-sans text-xs text-white font-semibold truncate block">Squad Coordination</span>
+                        </div>
+                    </button>
+                    <button type="button" onclick="window.openLightbox('./public/IMG-20241216-WA0053.jpg', 'BDRCS Emergency Logistics & Community Mobilization')" class="group relative aspect-[4/5] bg-[#07070c] border border-white/10 overflow-hidden text-left hover:border-studio-crimson hover:shadow-[0_0_22px_rgba(225,29,72,0.35)] transition-all duration-300">
+                        <img src="./public/IMG-20241216-WA0053.jpg" alt="BDRCS Field Logistics" loading="lazy" class="w-full h-full object-cover group-hover:scale-108 transition duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity"></div>
+                        <div class="absolute bottom-0 inset-x-0 p-2.5 space-y-0.5">
+                            <span class="font-mono text-[9px] text-studio-crimson tracking-widest uppercase block">04 &middot; LOGISTICS</span>
+                            <span class="font-sans text-xs text-white font-semibold truncate block">Emergency Logistics</span>
+                        </div>
+                    </button>
+                    <button type="button" onclick="window.openLightbox('./public/received_746920023816042.jpeg', 'Emergency First Aid & Health Post Operations')" class="group relative aspect-[4/5] bg-[#07070c] border border-white/10 overflow-hidden text-left hover:border-studio-crimson hover:shadow-[0_0_22px_rgba(225,29,72,0.35)] transition-all duration-300">
+                        <img src="./public/received_746920023816042.jpeg" alt="First Aid Unit" loading="lazy" class="w-full h-full object-cover group-hover:scale-108 transition duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity"></div>
+                        <div class="absolute bottom-0 inset-x-0 p-2.5 space-y-0.5">
+                            <span class="font-mono text-[9px] text-studio-crimson tracking-widest uppercase block">05 &middot; FIRST AID</span>
+                            <span class="font-sans text-xs text-white font-semibold truncate block">First Aid Operations</span>
+                        </div>
+                    </button>
+                    <button type="button" onclick="window.openLightbox('./public/received_3625859141035826.jpeg', 'Community Outreach & Relief Distribution Camp')" class="group relative aspect-[4/5] bg-[#07070c] border border-white/10 overflow-hidden text-left hover:border-studio-crimson hover:shadow-[0_0_22px_rgba(225,29,72,0.35)] transition-all duration-300">
+                        <img src="./public/received_3625859141035826.jpeg" alt="Outreach Camp" loading="lazy" class="w-full h-full object-cover group-hover:scale-108 transition duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity"></div>
+                        <div class="absolute bottom-0 inset-x-0 p-2.5 space-y-0.5">
+                            <span class="font-mono text-[9px] text-studio-crimson tracking-widest uppercase block">06 &middot; OUTREACH</span>
+                            <span class="font-sans text-xs text-white font-semibold truncate block">Relief Camp</span>
+                        </div>
+                    </button>
+                    <button type="button" onclick="window.openLightbox('./public/IMG_20240209_195403_739.webp', 'Disaster Preparedness & Field Response Briefing')" class="group relative aspect-[4/5] bg-[#07070c] border border-white/10 overflow-hidden text-left hover:border-studio-crimson hover:shadow-[0_0_22px_rgba(225,29,72,0.35)] transition-all duration-300">
+                        <img src="./public/IMG_20240209_195403_739.webp" alt="Field Briefing" loading="lazy" class="w-full h-full object-cover group-hover:scale-108 transition duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity"></div>
+                        <div class="absolute bottom-0 inset-x-0 p-2.5 space-y-0.5">
+                            <span class="font-mono text-[9px] text-studio-crimson tracking-widest uppercase block">07 &middot; BRIEFING</span>
+                            <span class="font-sans text-xs text-white font-semibold truncate block">Field Briefing</span>
+                        </div>
+                    </button>
+                    <button type="button" onclick="window.openLightbox('./public/IMG-20240209-WA0057.jpg', 'Volunteer Squad Assembly & Operations Duty')" class="group relative aspect-[4/5] bg-[#07070c] border border-white/10 overflow-hidden text-left hover:border-studio-crimson hover:shadow-[0_0_22px_rgba(225,29,72,0.35)] transition-all duration-300">
+                        <img src="./public/IMG-20240209-WA0057.jpg" alt="Volunteer Squad Assembly" loading="lazy" class="w-full h-full object-cover group-hover:scale-108 transition duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity"></div>
+                        <div class="absolute bottom-0 inset-x-0 p-2.5 space-y-0.5">
+                            <span class="font-mono text-[9px] text-studio-crimson tracking-widest uppercase block">08 &middot; SQUAD DUTY</span>
+                            <span class="font-sans text-xs text-white font-semibold truncate block">Volunteer Assembly</span>
+                        </div>
+                    </button>
+                    <button type="button" onclick="window.openLightbox('./public/FB_IMG_1711473777649.jpg', 'Youth Leadership & Community Service Recognition')" class="group relative aspect-[4/5] bg-[#07070c] border border-white/10 overflow-hidden text-left hover:border-studio-crimson hover:shadow-[0_0_22px_rgba(225,29,72,0.35)] transition-all duration-300">
+                        <img src="./public/FB_IMG_1711473777649.jpg" alt="Youth Leadership Recognition" loading="lazy" class="w-full h-full object-cover group-hover:scale-108 transition duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity"></div>
+                        <div class="absolute bottom-0 inset-x-0 p-2.5 space-y-0.5">
+                            <span class="font-mono text-[9px] text-studio-crimson tracking-widest uppercase block">09 &middot; RECOGNITION</span>
+                            <span class="font-sans text-xs text-white font-semibold truncate block">Leadership Duty</span>
+                        </div>
+                    </button>
+                    <button type="button" onclick="window.openLightbox('./public/1707486322179.jpg', 'Operational Field Mobility & Supply Inspection')" class="group relative aspect-[4/5] bg-[#07070c] border border-white/10 overflow-hidden text-left hover:border-studio-crimson hover:shadow-[0_0_22px_rgba(225,29,72,0.35)] transition-all duration-300">
+                        <img src="./public/1707486322179.jpg" alt="Field Operations Mobility" loading="lazy" class="w-full h-full object-cover group-hover:scale-108 transition duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity"></div>
+                        <div class="absolute bottom-0 inset-x-0 p-2.5 space-y-0.5">
+                            <span class="font-mono text-[9px] text-studio-crimson tracking-widest uppercase block">10 &middot; FIELD DUTY</span>
+                            <span class="font-sans text-xs text-white font-semibold truncate block">Field Inspection</span>
+                        </div>
+                    </button>
+                    <button type="button" onclick="window.openLightbox('./public/received_1040871893666925.jpeg', 'Squad Tactical Debriefing & Mission Completion')" class="group relative aspect-[4/5] bg-[#07070c] border border-white/10 overflow-hidden text-left hover:border-studio-crimson hover:shadow-[0_0_22px_rgba(225,29,72,0.35)] transition-all duration-300">
+                        <img src="./public/received_1040871893666925.jpeg" alt="Tactical Squad Debriefing" loading="lazy" class="w-full h-full object-cover group-hover:scale-108 transition duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity"></div>
+                        <div class="absolute bottom-0 inset-x-0 p-2.5 space-y-0.5">
+                            <span class="font-mono text-[9px] text-studio-crimson tracking-widest uppercase block">11 &middot; TACTICAL SQUAD</span>
+                            <span class="font-sans text-xs text-white font-semibold truncate block">Squad Debriefing</span>
+                        </div>
+                    </button>
+                    <button type="button" onclick="window.openLightbox('./public/pose-hero.jpg', 'Cinematic Studio Capture — Saadman Khandker')" class="group relative aspect-[4/5] bg-[#07070c] border border-white/10 overflow-hidden text-left hover:border-studio-crimson hover:shadow-[0_0_22px_rgba(225,29,72,0.35)] transition-all duration-300">
+                        <img src="./public/pose-hero.jpg" alt="Cinematic Studio Capture" loading="lazy" class="w-full h-full object-cover group-hover:scale-108 transition duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity"></div>
+                        <div class="absolute bottom-0 inset-x-0 p-2.5 space-y-0.5">
+                            <span class="font-mono text-[9px] text-studio-crimson tracking-widest uppercase block">12 &middot; STUDIO</span>
+                            <span class="font-sans text-xs text-white font-semibold truncate block">Cinematic Studio</span>
+                        </div>
+                    </button>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ==================== SECTION 06 — CONTACT: FULL-WIDTH STATEMENT & SPLIT LEDGER (EXACT MATCH TO sec_162.jpg & sec_170.jpg) ==================== -->
         <section id="contact" class="pt-28 pb-16 lg:pt-36 lg:pb-20 relative reel-footer-horizon">
             <div class="max-w-[1380px] mx-auto w-full px-5 sm:px-10 lg:px-14">
 
                 <div class="reel-eyebrow pb-6 reel-reveal">
-                    <span class="reel-eyebrow-num">05</span>
+                    <span class="reel-eyebrow-num">06</span>
                     <span class="reel-eyebrow-dash"></span>
                     <span>CONTACT</span>
                 </div>
@@ -1607,7 +1736,7 @@
                         &copy; <span id="year">2026</span> SAADMAN KHANDKER &middot; DESIGNED &amp; BUILT FOR PRECISION
                     </div>
                     <div class="flex flex-wrap items-center gap-6">
-                        <button type="button" onclick="window.openArchiveDrawer('gallery')" class="hover:text-white transition">FIELD ARCHIVE (15) &#8599;</button>
+                        <a href="#gallery" class="hover:text-white transition">VISUAL GALLERY (12) &#8599;</a>
                         <button type="button" onclick="window.openArchiveDrawer('quote')" class="hover:text-white transition">INSTANT QUOTE &#8599;</button>
                         <button type="button" onclick="window.openArchiveDrawer('guestbook')" class="hover:text-white transition">GUESTBOOK &#8599;</button>
                     </div>
@@ -1930,7 +2059,7 @@
             }
 
             const navLinks = document.querySelectorAll('.reel-nav-link');
-            const sections = ['home', 'about', 'skills', 'projects', 'experience', 'contact']
+            const sections = ['home', 'about', 'skills', 'projects', 'experience', 'gallery', 'contact']
                 .map(id => document.getElementById(id))
                 .filter(Boolean);
 
