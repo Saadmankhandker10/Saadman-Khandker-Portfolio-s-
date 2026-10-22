@@ -1700,16 +1700,23 @@
                 return;
             }
 
-            container.innerHTML = projects.map(proj => `
+            container.innerHTML = projects.map(proj => {
+                const branding = getOrgBranding(proj.title + ' ' + (proj.category || ''), proj.title);
+                return `
                 <div class="glass-panel p-5 rounded-2xl flex flex-col sm:flex-row justify-between items-start gap-4 msg-card">
-                    <div class="space-y-2 flex-1">
-                        <div class="flex items-center gap-2 flex-wrap">
-                            <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-indigo-100 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 border border-indigo-200/60 dark:border-indigo-800/40">${escapeHtml(proj.category)}</span>
-                            <h3 class="text-base font-extrabold text-slate-900 dark:text-white">${escapeHtml(proj.title)}</h3>
+                    <div class="flex items-start gap-3.5 flex-1 min-w-0">
+                        <div class="w-12 h-12 rounded-xl ${branding.badgeBg} p-1.5 border ${branding.badgeBorder} shadow-sm flex items-center justify-center flex-shrink-0">
+                            <img src="${branding.src}" alt="${branding.alt}" class="w-full h-full object-contain">
                         </div>
-                        <p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 leading-relaxed">${escapeHtml(proj.description)}</p>
-                        <div class="flex flex-wrap gap-1.5 pt-1">
-                            ${(proj.tags || []).map(t => `<span class="skill-chip px-2.5 py-1 rounded-lg text-[11px] font-mono text-indigo-700 dark:text-indigo-300">${escapeHtml(t)}</span>`).join('')}
+                        <div class="space-y-2 flex-1 min-w-0">
+                            <div class="flex items-center gap-2 flex-wrap">
+                                <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-indigo-100 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 border border-indigo-200/60 dark:border-indigo-800/40">${escapeHtml(proj.category)}</span>
+                                <h3 class="text-base font-extrabold text-slate-900 dark:text-white">${escapeHtml(proj.title)}</h3>
+                            </div>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 leading-relaxed">${escapeHtml(proj.description)}</p>
+                            <div class="flex flex-wrap gap-1.5 pt-1">
+                                ${(proj.tags || []).map(t => `<span class="skill-chip px-2.5 py-1 rounded-lg text-[11px] font-mono text-indigo-700 dark:text-indigo-300">${escapeHtml(t)}</span>`).join('')}
+                            </div>
                         </div>
                     </div>
                     <div class="flex items-center gap-2 flex-shrink-0 self-end sm:self-center">
@@ -1721,7 +1728,8 @@
                         </button>
                     </div>
                 </div>
-            `).join('');
+            `;
+            }).join('');
         }
 
         // Helper: Resolve Real Official Brand Logos for Organizations
@@ -1761,6 +1769,15 @@
                     displayName: 'Red Crescent Society',
                     badgeBg: 'bg-white/95 dark:bg-white/95',
                     badgeBorder: 'border-red-500/40 shadow-sm'
+                };
+            }
+            if (s.includes('digitization') || s.includes('typing') || s.includes('word') || s.includes('document')) {
+                return {
+                    src: './public/img.jpg',
+                    alt: 'Document Digitization Engine',
+                    displayName: 'Document Engine',
+                    badgeBg: 'bg-blue-500/10 dark:bg-blue-500/20',
+                    badgeBorder: 'border-blue-500/40 shadow-sm'
                 };
             }
             if (s.includes('graphic') || s.includes('arts') || s.includes('institute') || s.includes('ggai')) {
