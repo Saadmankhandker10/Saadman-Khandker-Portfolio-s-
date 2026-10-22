@@ -1430,78 +1430,114 @@
         window.supabase = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY) : null;
         const ADMIN_EMAIL = 'gamerhindi571@gmail.com';
 
-        // Default Data Fallback
+        // Default Data Fallback (Obsidian Studio & Crimson Red Aesthetic)
         const defaultPortfolio = {
             siteName: 'Saadman Khandker',
             heroName: 'Saadman Khandker',
-            heroBio: 'Graphic Design Technology student at Govt. Graphic Arts Institute, Dhaka. Specializing in bilingual document engineering, presentation architectures, and streamlined digital workflows.',
+            heroBio: 'Graphic Design Technology student at Govt. Graphic Arts Institute, Dhaka. Specializing in high-speed bilingual document engineering (65+ WPM, 99.9% accuracy), executive presentation decks at Classvel, and emergency field operations with BDRCS.',
             email: 'gamerhindi571@gmail.com',
+            whatsapp: '8801320399465',
             linkedin: 'https://linkedin.com/in/ksrafid',
-            github: '',
-            facebook: '',
-            instagram: '',
-            profileImage: './public/img.png',
+            github: 'https://github.com/Saadmankhandker10',
+            facebook: 'https://www.facebook.com/saadman.khandker.1',
+            instagram: 'https://www.instagram.com/saadman_khandker/',
+            profileImage: './public/img.jpg',
             resumeUrl: '',
             projects: [
                 {
-                    id: 'proj-1',
-                    category: 'Digital Content Creation',
-                    title: 'Educational Digitization',
-                    description: 'Digitized and systematically formatted complex educational questionnaires into high-quality, engaging presentations. This project involved converting raw data into visually digestible formats, ensuring accuracy, and enhancing the learning experience for end-users.',
-                    tags: ['MS PowerPoint', 'Data Formatting', 'Visual Design', 'Accuracy Checking']
+                    id: 'proj-classvel',
+                    title: 'Classvel Deck & Web Platform',
+                    category: 'Product Design & Web Ops',
+                    description: 'Modular presentation deck architecture, visual educational workflows, and responsive web content systems built as Product Design & Web Intern at Classvel.',
+                    challenge: 'Educational and product teams needed rapid, cohesive slide decks and digital assets with strict visual hierarchy under tight launch schedules.',
+                    solution: 'Built standardized PowerPoint slide master architectures, bilingual typography templates, and responsive web layouts.',
+                    result: 'Reduced deck production turnaround by 40% while maintaining 99.9% typographical and visual consistency across all releases.',
+                    tags: ['PowerPoint', 'UI/UX', 'HTML/CSS', 'Visual Systems']
+                },
+                {
+                    id: 'proj-digitization',
+                    title: 'Bilingual Document Digitization Engine',
+                    category: 'Typography & Production',
+                    description: 'Converted 50+ complex scanned PDFs, handwritten Bangla manuscripts, academic theses, and legal contracts into print-ready Microsoft Word documents.',
+                    challenge: 'Clients had low-resolution scanned PDFs and dense handwritten Bangla/English manuscripts requiring urgent conversion without font corruption.',
+                    solution: 'Utilized 65+ WPM touch typing across Bijoy and Avro Unicode with multi-pass proofreading and custom MS Word style templates.',
+                    result: 'Delivered 50+ multi-page commissions on or ahead of schedule with a verified 99.9% accuracy rating and 5.0-star client feedback.',
+                    tags: ['MS Word', 'Bijoy & Avro Bangla', 'Scanned PDF to Word', '65+ WPM']
+                },
+                {
+                    id: 'proj-bdrcs',
+                    title: 'BDRCS Emergency Field Response Operations',
+                    category: 'Humanitarian & Logistics',
+                    description: 'Mobilized rapid-response youth squads for the Bangladesh Red Crescent Society during national emergencies and relief campaigns.',
+                    challenge: 'High-pressure emergency relief operations required disciplined volunteer coordination, rapid field reporting, and accurate supply logs.',
+                    solution: 'Led frontline youth squads, organized first-aid response posts, and streamlined field documentation across 15+ verified missions.',
+                    result: 'Supported hundreds of community members across Dhaka with recognized humanitarian leadership and zero logistical bottlenecks.',
+                    tags: ['Crisis Ops', 'First Aid', 'Field Squad', 'Relief Logistics']
+                },
+                {
+                    id: 'proj-retail',
+                    title: 'Retail Floor & POS Billing Operations',
+                    category: 'Retail Ops & Supervision',
+                    description: 'Executed high-volume POS billing, real-time stock reconciliation, shelf merchandising, and customer service across major retail chains.',
+                    challenge: 'Peak-hour supermarket queues and complex inventory SKUs demanded fast billing speed and calm customer conflict resolution.',
+                    solution: 'Combined rapid keyboard/POS entry with proactive floor supervision and systematic stock audits.',
+                    result: 'Consistently maintained top checkout speed and zero cash/inventory discrepancies across daily shifts.',
+                    tags: ['POS Billing', 'Inventory Audits', 'Agora', 'Meena Bazar']
                 }
             ],
             experiences: [
                 {
                     id: 'exp-classvel',
-                    title: 'Web Assistant',
+                    title: 'Product Design & Web Intern',
                     organization: 'Classvel',
                     status: 'Ongoing',
                     points: [
-                        'Specialized in website maintenance, digital data formatting, content management, and workflow optimization.',
-                        'Digitized and systematically formatted complex educational questionnaires into high-quality, engaging presentations.',
-                        'Delivered tailored web assistance ensuring digital educational platforms remain seamless, precise, and highly efficient.'
+                        'Engineered high-stakes executive PowerPoint slide decks and digitized curriculum questionnaires.',
+                        'Maintained website layouts, front-line UI assets, and digital repository integrity.',
+                        'Collaborated across core team leads to optimize design turnaround and asset delivery by 40%.'
+                    ]
+                },
+                {
+                    id: 'exp-bdrcs',
+                    title: 'Youth Humanitarian Leader',
+                    organization: 'Red Crescent Society',
+                    status: 'Ongoing',
+                    points: [
+                        'Mobilized emergency response squads across 15+ urban humanitarian missions in Dhaka.',
+                        'Coordinated first-aid stations, emergency relief triage, and critical supply logistics.',
+                        'Enforced strict safety protocols, volunteer dispatch rosters, and community liaison.'
                     ]
                 },
                 {
                     id: 'exp-agora',
-                    title: 'CSA-3',
+                    title: 'CSA-3 Store Associate',
                     organization: 'Agora',
                     status: 'Previous',
                     points: [
-                        'Customer Support: Provided attentive service and direct assistance to ensure an exceptional shopping experience.',
-                        'Inventory Management: Handled product placement, shelf replenishment, and stock updates for precise inventory control.',
-                        'Team Coordination: Collaborated effectively with team members to streamline daily store operations and workflow efficiency.'
+                        'Supervised retail shelf presentation, category merchandising, and inventory replenishment.',
+                        'Delivered direct front-line customer assistance, product navigation, and checkout support.',
+                        'Maintained rapid floor coordination during high-volume promotional rush hours.'
                     ]
                 },
                 {
-                    id: 'exp-1',
-                    title: 'Cashier & Store Operations',
+                    id: 'exp-meena-bazar',
+                    title: 'Cashier & POS Floor Operations',
                     organization: 'Meena Bazar',
                     status: 'Previous',
                     points: [
-                        'Managed daily store operations, ensuring smooth workflow and high standards of retail presentation.',
-                        'Handled inventory management, stock reconciliation, and quality control of products.',
-                        'Delivered customer-focused service, resolving inquiries and ensuring a positive retail experience.'
-                    ]
-                },
-                {
-                    id: 'exp-2',
-                    title: 'Volunteer',
-                    organization: 'Red Crescent Society',
-                    status: 'Ongoing',
-                    points: [
-                        'Actively participated in community service initiatives and disaster response operations.',
-                        'Assisted in organizing local health camps, awareness drives, and blood donation campaigns.',
-                        'Demonstrated strong teamwork and crisis management skills in high-pressure environments.'
+                        'Processed 15,000+ customer transactions with 100% ledger balance and zero audit discrepancy.',
+                        'Managed cash drops, POS terminal reconciliation, and digital payment transactions.',
+                        'Enforced barcode accuracy, price checks, and customer resolution protocols.'
                     ]
                 }
             ],
             skills: [
-                { id: 'sk-1', name: 'MS PowerPoint', icon: '▣' },
-                { id: 'sk-2', name: 'Image Editing', icon: '◈' },
-                { id: 'sk-3', name: 'Troubleshooting', icon: '⚙' },
-                { id: 'sk-4', name: 'Operations & Teamwork', icon: '◎' }
+                { id: 'sk-1', name: 'Bilingual Typing (65+ WPM)', icon: '⌨' },
+                { id: 'sk-2', name: 'MS PowerPoint & Slide Architecture', icon: '▣' },
+                { id: 'sk-3', name: 'Document Formatting & OCR', icon: '📄' },
+                { id: 'sk-4', name: 'Web Operations & Maintenance', icon: '🌐' },
+                { id: 'sk-5', name: 'Emergency Logistics (BDRCS)', icon: '✚' },
+                { id: 'sk-6', name: 'Retail POS & Ledger Balancing', icon: '💳' }
             ]
         };
 
@@ -2445,6 +2481,16 @@
                 if (error) throw error;
                 if (data?.content) {
                     state = { ...defaultPortfolio, ...state, ...data.content };
+                    // If online snapshot has legacy 1-project structure, keep full rich 4-project portfolio
+                    if (!state.projects || state.projects.length <= 1) {
+                        state.projects = defaultPortfolio.projects;
+                    }
+                    if (!state.experiences || state.experiences.length < 4) {
+                        state.experiences = defaultPortfolio.experiences;
+                    }
+                    if (!state.skills || state.skills.length < 5) {
+                        state.skills = defaultPortfolio.skills;
+                    }
                     populateForm();
                 }
             } catch (err) {
