@@ -1,10 +1,14 @@
 {
-  "name": "Saadman Khandker | Typing & Portfolio",
+  "name": "Saadman Khandker | Bilingual Typing & Operations Specialist",
   "short_name": "Saadman",
+  "description": "65+ WPM Bangla & English document typing, PDF to Word conversion, presentation design, and operations portfolio in Dhaka, Bangladesh.",
   "start_url": "./",
+  "scope": "./",
   "display": "standalone",
-  "background_color": "#050817",
-  "theme_color": "#050817",
+  "orientation": "portrait-primary",
+  "background_color": "#07070c",
+  "theme_color": "#07070c",
+  "categories": ["productivity", "business", "utilities"],
   "icons": [
     {
       "src": "favicon.svg",
