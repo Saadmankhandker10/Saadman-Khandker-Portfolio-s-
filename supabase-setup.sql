@@ -92,7 +92,7 @@ values (1, '{
   "projectTitle": "Educational Digitization",
   "projectDescription": "Digitized and systematically formatted complex educational questionnaires into high-quality, engaging presentations. This project involved converting raw data into visually digestible formats, ensuring accuracy, and enhancing the learning experience for end-users.",
   "email": "gamerhindi571@gmail.com",
-  "linkedin": "https://linkedin.com/in/ksrafid"
+  "linkedin": "https://www.linkedin.com/in/khandker-saadman-rafid-34140622a/"
 }'::jsonb)
 on conflict (id) do nothing;
 

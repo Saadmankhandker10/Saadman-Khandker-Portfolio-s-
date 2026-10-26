@@ -17,9 +17,12 @@ if ($stagedChanges) {
 }
 
 $sitePaths = @(
+    '404.html',
     'admin.html',
+    'favicon.svg',
     'google1093e83ae0034777.html',
     'index.html',
+    'manifest.json',
     'public/',
     'robots.txt',
     'saadman_khandker.html',

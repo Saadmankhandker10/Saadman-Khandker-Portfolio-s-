@@ -1,7 +1,7 @@
 Set-Location $PSScriptRoot
 
 $siteRoot = [System.IO.Path]::GetFullPath($PSScriptRoot)
-$siteFilesPattern = '^(admin\.html|google1093e83ae0034777\.html|index\.html|robots\.txt|saadman_khandker\.html|sitemap\.xml|public[\\/].+)$'
+$siteFilesPattern = '^(404\.html|admin\.html|favicon\.svg|manifest\.json|google1093e83ae0034777\.html|index\.html|robots\.txt|saadman_khandker\.html|sitemap\.xml|public[\\/].+)$'
 
 $watcher = New-Object IO.FileSystemWatcher
 $watcher.Path = $siteRoot

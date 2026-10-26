@@ -19,12 +19,9 @@
 
     <!-- Favicon & Brand Icons -->
     <link rel="icon" type="image/svg+xml" href="./favicon.svg">
-    <link rel="icon" type="image/jpeg" href="./public/img.jpg">
-    <link rel="apple-touch-icon" href="./public/img.jpg">
+    <link rel="icon" type="image/png" sizes="192x192" href="./public/icon-192.png">
+    <link rel="apple-touch-icon" href="./public/icon-192.png">
     <link rel="manifest" href="./manifest.json">
-
-    <!-- Google Search Verification -->
-    <meta name="google-site-verification" content="google1093e83ae0034777">
 
     <!-- Open Graph / Facebook / WhatsApp / LinkedIn -->
     <meta property="og:type" content="website">
@@ -32,8 +29,8 @@
     <meta property="og:url" content="https://saadmankhandker10.github.io/Saadman-Khandker-Portfolio-s-/">
     <meta property="og:title" content="Saadman Khandker — Bilingual Typing &amp; Operations Specialist">
     <meta property="og:description" content="65+ WPM, 99.9% accurate Bangla &amp; English document typing, PDF/handwriting to Word transcription, presentation deck design, and operations portfolio in Dhaka.">
-    <meta property="og:image" content="https://saadmankhandker10.github.io/Saadman-Khandker-Portfolio-s-/public/img.jpg">
-    <meta property="og:image:secure_url" content="https://saadmankhandker10.github.io/Saadman-Khandker-Portfolio-s-/public/img.jpg">
+    <meta property="og:image" content="https://saadmankhandker10.github.io/Saadman-Khandker-Portfolio-s-/public/og-image.jpg">
+    <meta property="og:image:secure_url" content="https://saadmankhandker10.github.io/Saadman-Khandker-Portfolio-s-/public/og-image.jpg">
     <meta property="og:image:type" content="image/jpeg">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -43,11 +40,9 @@
 
     <!-- Twitter Card Meta -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:site" content="@Saadmankhandker10">
-    <meta name="twitter:creator" content="@Saadmankhandker10">
     <meta name="twitter:title" content="Saadman Khandker | Bilingual Typing &amp; Operations Specialist">
     <meta name="twitter:description" content="Explore Khandker Sadman Rafid Saad's cinematic portfolio: 65+ WPM bilingual typing, document formatting, presentation decks, and BDRCS operations.">
-    <meta name="twitter:image" content="https://saadmankhandker10.github.io/Saadman-Khandker-Portfolio-s-/public/img.jpg">
+    <meta name="twitter:image" content="https://saadmankhandker10.github.io/Saadman-Khandker-Portfolio-s-/public/og-image.jpg">
     <meta name="twitter:image:alt" content="Saadman Khandker Portfolio">
 
     <!-- Schema.org Comprehensive JSON-LD Structured Data -->
@@ -106,7 +101,7 @@
           "sameAs": [
             "https://www.facebook.com/saadman.khandker.1",
             "https://www.instagram.com/saadman_khandker/",
-            "https://linkedin.com/in/ksrafid",
+            "https://www.linkedin.com/in/khandker-saadman-rafid-34140622a/",
             "https://github.com/Saadmankhandker10"
           ]
         },
@@ -247,9 +242,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
-    <link rel="preload" as="image" href="./public/pose-hero.jpg?v=3" fetchpriority="high">
-    <link rel="preload" as="video" href="./public/hero-studio.mp4?v=3" type="video/mp4">
-    <link rel="preload" as="video" href="./public/about-studio.mp4?v=3" type="video/mp4">
+    <link rel="preload" as="image" href="./public/pose-hero.jpg?v=7" fetchpriority="high">
+    <link rel="preload" as="video" href="./public/hero-studio.mp4?v=7" type="video/mp4">
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -781,13 +775,13 @@
             <video
                 id="portraitVideoBg"
                 class="studio-video-seamless"
-                src="./public/hero-studio.mp4?v=7"
+                data-src="./public/hero-studio.mp4?v=7"
                 poster="./public/pose-hero.jpg?v=7"
                 autoplay
                 loop
                 muted
                 playsinline
-                preload="auto"
+                preload="none"
             ></video>
         </div>
     </div>
@@ -955,13 +949,13 @@
                         <video
                             id="portraitVideoAbout"
                             class="studio-video-seamless max-h-full w-auto"
-                            src="./public/about-studio.mp4?v=7"
+                            data-src="./public/about-studio.mp4?v=7"
                             poster="./public/pose-about.jpg?v=7"
                             autoplay
                             loop
                             muted
                             playsinline
-                            preload="auto"
+                            preload="none"
                         ></video>
                     </div>
 
@@ -1655,7 +1649,7 @@
                 <!-- Curated 12-Photo Editorial Visual Grid -->
                 <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 sm:gap-4 reel-stagger-children" data-stagger-base="0.1" data-stagger-step="0.05">
                     <button type="button" onclick="window.openLightbox('./public/img.jpg', 'Official Studio Portrait — Khandker Sadman Rafid Saad')" class="group relative aspect-[4/5] bg-[#07070c] border border-white/10 overflow-hidden text-left hover:border-studio-crimson hover:shadow-[0_0_22px_rgba(225,29,72,0.35)] transition-all duration-300">
-                        <img src="./public/img.jpg" alt="Saadman Khandker Studio Portrait" loading="lazy" class="w-full h-full object-cover group-hover:scale-108 transition duration-500">
+                        <img src="./public/img.jpg" alt="Saadman Khandker Studio Portrait" loading="lazy" class="w-full h-full object-cover group-hover:scale-[1.08] transition duration-500">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity"></div>
                         <div class="absolute bottom-0 inset-x-0 p-2.5 space-y-0.5">
                             <span class="font-mono text-[9px] text-studio-crimson tracking-widest uppercase block">01 &middot; PORTRAIT</span>
@@ -1663,7 +1657,7 @@
                         </div>
                     </button>
                     <button type="button" onclick="window.openLightbox('./public/FB_IMG_1711641936781.jpg', 'BDRCS Humanitarian Relief Mission — Field Duty')" class="group relative aspect-[4/5] bg-[#07070c] border border-white/10 overflow-hidden text-left hover:border-studio-crimson hover:shadow-[0_0_22px_rgba(225,29,72,0.35)] transition-all duration-300">
-                        <img src="./public/FB_IMG_1711641936781.jpg" alt="BDRCS Relief Mission" loading="lazy" class="w-full h-full object-cover group-hover:scale-108 transition duration-500">
+                        <img src="./public/FB_IMG_1711641936781.jpg" alt="BDRCS Relief Mission" loading="lazy" class="w-full h-full object-cover group-hover:scale-[1.08] transition duration-500">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity"></div>
                         <div class="absolute bottom-0 inset-x-0 p-2.5 space-y-0.5">
                             <span class="font-mono text-[9px] text-studio-crimson tracking-widest uppercase block">02 &middot; BDRCS RELIEF</span>
@@ -1671,7 +1665,7 @@
                         </div>
                     </button>
                     <button type="button" onclick="window.openLightbox('./public/FB_IMG_1733546681910.jpg', 'BDRCS Youth Volunteer Squad — Field Coordination')" class="group relative aspect-[4/5] bg-[#07070c] border border-white/10 overflow-hidden text-left hover:border-studio-crimson hover:shadow-[0_0_22px_rgba(225,29,72,0.35)] transition-all duration-300">
-                        <img src="./public/FB_IMG_1733546681910.jpg" alt="BDRCS Squad Coordination" loading="lazy" class="w-full h-full object-cover group-hover:scale-108 transition duration-500">
+                        <img src="./public/FB_IMG_1733546681910.jpg" alt="BDRCS Squad Coordination" loading="lazy" class="w-full h-full object-cover group-hover:scale-[1.08] transition duration-500">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity"></div>
                         <div class="absolute bottom-0 inset-x-0 p-2.5 space-y-0.5">
                             <span class="font-mono text-[9px] text-studio-crimson tracking-widest uppercase block">03 &middot; BDRCS SQUAD</span>
@@ -1679,7 +1673,7 @@
                         </div>
                     </button>
                     <button type="button" onclick="window.openLightbox('./public/IMG-20241216-WA0053.jpg', 'BDRCS Emergency Logistics & Community Mobilization')" class="group relative aspect-[4/5] bg-[#07070c] border border-white/10 overflow-hidden text-left hover:border-studio-crimson hover:shadow-[0_0_22px_rgba(225,29,72,0.35)] transition-all duration-300">
-                        <img src="./public/IMG-20241216-WA0053.jpg" alt="BDRCS Field Logistics" loading="lazy" class="w-full h-full object-cover group-hover:scale-108 transition duration-500">
+                        <img src="./public/IMG-20241216-WA0053.jpg" alt="BDRCS Field Logistics" loading="lazy" class="w-full h-full object-cover group-hover:scale-[1.08] transition duration-500">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity"></div>
                         <div class="absolute bottom-0 inset-x-0 p-2.5 space-y-0.5">
                             <span class="font-mono text-[9px] text-studio-crimson tracking-widest uppercase block">04 &middot; LOGISTICS</span>
@@ -1687,7 +1681,7 @@
                         </div>
                     </button>
                     <button type="button" onclick="window.openLightbox('./public/received_746920023816042.jpeg', 'Emergency First Aid & Health Post Operations')" class="group relative aspect-[4/5] bg-[#07070c] border border-white/10 overflow-hidden text-left hover:border-studio-crimson hover:shadow-[0_0_22px_rgba(225,29,72,0.35)] transition-all duration-300">
-                        <img src="./public/received_746920023816042.jpeg" alt="First Aid Unit" loading="lazy" class="w-full h-full object-cover group-hover:scale-108 transition duration-500">
+                        <img src="./public/received_746920023816042.jpeg" alt="First Aid Unit" loading="lazy" class="w-full h-full object-cover group-hover:scale-[1.08] transition duration-500">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity"></div>
                         <div class="absolute bottom-0 inset-x-0 p-2.5 space-y-0.5">
                             <span class="font-mono text-[9px] text-studio-crimson tracking-widest uppercase block">05 &middot; FIRST AID</span>
@@ -1695,7 +1689,7 @@
                         </div>
                     </button>
                     <button type="button" onclick="window.openLightbox('./public/received_3625859141035826.jpeg', 'Community Outreach & Relief Distribution Camp')" class="group relative aspect-[4/5] bg-[#07070c] border border-white/10 overflow-hidden text-left hover:border-studio-crimson hover:shadow-[0_0_22px_rgba(225,29,72,0.35)] transition-all duration-300">
-                        <img src="./public/received_3625859141035826.jpeg" alt="Outreach Camp" loading="lazy" class="w-full h-full object-cover group-hover:scale-108 transition duration-500">
+                        <img src="./public/received_3625859141035826.jpeg" alt="Outreach Camp" loading="lazy" class="w-full h-full object-cover group-hover:scale-[1.08] transition duration-500">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity"></div>
                         <div class="absolute bottom-0 inset-x-0 p-2.5 space-y-0.5">
                             <span class="font-mono text-[9px] text-studio-crimson tracking-widest uppercase block">06 &middot; OUTREACH</span>
@@ -1703,7 +1697,7 @@
                         </div>
                     </button>
                     <button type="button" onclick="window.openLightbox('./public/IMG_20240209_195403_739.webp', 'Disaster Preparedness & Field Response Briefing')" class="group relative aspect-[4/5] bg-[#07070c] border border-white/10 overflow-hidden text-left hover:border-studio-crimson hover:shadow-[0_0_22px_rgba(225,29,72,0.35)] transition-all duration-300">
-                        <img src="./public/IMG_20240209_195403_739.webp" alt="Field Briefing" loading="lazy" class="w-full h-full object-cover group-hover:scale-108 transition duration-500">
+                        <img src="./public/IMG_20240209_195403_739.webp" alt="Field Briefing" loading="lazy" class="w-full h-full object-cover group-hover:scale-[1.08] transition duration-500">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity"></div>
                         <div class="absolute bottom-0 inset-x-0 p-2.5 space-y-0.5">
                             <span class="font-mono text-[9px] text-studio-crimson tracking-widest uppercase block">07 &middot; BRIEFING</span>
@@ -1711,7 +1705,7 @@
                         </div>
                     </button>
                     <button type="button" onclick="window.openLightbox('./public/IMG-20240209-WA0057.jpg', 'Volunteer Squad Assembly & Operations Duty')" class="group relative aspect-[4/5] bg-[#07070c] border border-white/10 overflow-hidden text-left hover:border-studio-crimson hover:shadow-[0_0_22px_rgba(225,29,72,0.35)] transition-all duration-300">
-                        <img src="./public/IMG-20240209-WA0057.jpg" alt="Volunteer Squad Assembly" loading="lazy" class="w-full h-full object-cover group-hover:scale-108 transition duration-500">
+                        <img src="./public/IMG-20240209-WA0057.jpg" alt="Volunteer Squad Assembly" loading="lazy" class="w-full h-full object-cover group-hover:scale-[1.08] transition duration-500">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity"></div>
                         <div class="absolute bottom-0 inset-x-0 p-2.5 space-y-0.5">
                             <span class="font-mono text-[9px] text-studio-crimson tracking-widest uppercase block">08 &middot; SQUAD DUTY</span>
@@ -1719,7 +1713,7 @@
                         </div>
                     </button>
                     <button type="button" onclick="window.openLightbox('./public/FB_IMG_1711473777649.jpg', 'Youth Leadership & Community Service Recognition')" class="group relative aspect-[4/5] bg-[#07070c] border border-white/10 overflow-hidden text-left hover:border-studio-crimson hover:shadow-[0_0_22px_rgba(225,29,72,0.35)] transition-all duration-300">
-                        <img src="./public/FB_IMG_1711473777649.jpg" alt="Youth Leadership Recognition" loading="lazy" class="w-full h-full object-cover group-hover:scale-108 transition duration-500">
+                        <img src="./public/FB_IMG_1711473777649.jpg" alt="Youth Leadership Recognition" loading="lazy" class="w-full h-full object-cover group-hover:scale-[1.08] transition duration-500">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity"></div>
                         <div class="absolute bottom-0 inset-x-0 p-2.5 space-y-0.5">
                             <span class="font-mono text-[9px] text-studio-crimson tracking-widest uppercase block">09 &middot; RECOGNITION</span>
@@ -1727,7 +1721,7 @@
                         </div>
                     </button>
                     <button type="button" onclick="window.openLightbox('./public/1707486322179.jpg', 'Operational Field Mobility & Supply Inspection')" class="group relative aspect-[4/5] bg-[#07070c] border border-white/10 overflow-hidden text-left hover:border-studio-crimson hover:shadow-[0_0_22px_rgba(225,29,72,0.35)] transition-all duration-300">
-                        <img src="./public/1707486322179.jpg" alt="Field Operations Mobility" loading="lazy" class="w-full h-full object-cover group-hover:scale-108 transition duration-500">
+                        <img src="./public/1707486322179.jpg" alt="Field Operations Mobility" loading="lazy" class="w-full h-full object-cover group-hover:scale-[1.08] transition duration-500">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity"></div>
                         <div class="absolute bottom-0 inset-x-0 p-2.5 space-y-0.5">
                             <span class="font-mono text-[9px] text-studio-crimson tracking-widest uppercase block">10 &middot; FIELD DUTY</span>
@@ -1735,7 +1729,7 @@
                         </div>
                     </button>
                     <button type="button" onclick="window.openLightbox('./public/received_1040871893666925.jpeg', 'Squad Tactical Debriefing & Mission Completion')" class="group relative aspect-[4/5] bg-[#07070c] border border-white/10 overflow-hidden text-left hover:border-studio-crimson hover:shadow-[0_0_22px_rgba(225,29,72,0.35)] transition-all duration-300">
-                        <img src="./public/received_1040871893666925.jpeg" alt="Tactical Squad Debriefing" loading="lazy" class="w-full h-full object-cover group-hover:scale-108 transition duration-500">
+                        <img src="./public/received_1040871893666925.jpeg" alt="Tactical Squad Debriefing" loading="lazy" class="w-full h-full object-cover group-hover:scale-[1.08] transition duration-500">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity"></div>
                         <div class="absolute bottom-0 inset-x-0 p-2.5 space-y-0.5">
                             <span class="font-mono text-[9px] text-studio-crimson tracking-widest uppercase block">11 &middot; TACTICAL SQUAD</span>
@@ -1743,7 +1737,7 @@
                         </div>
                     </button>
                     <button type="button" onclick="window.openLightbox('./public/pose-hero.jpg', 'Cinematic Studio Capture — Saadman Khandker')" class="group relative aspect-[4/5] bg-[#07070c] border border-white/10 overflow-hidden text-left hover:border-studio-crimson hover:shadow-[0_0_22px_rgba(225,29,72,0.35)] transition-all duration-300">
-                        <img src="./public/pose-hero.jpg" alt="Cinematic Studio Capture" loading="lazy" class="w-full h-full object-cover group-hover:scale-108 transition duration-500">
+                        <img src="./public/pose-hero.jpg" alt="Cinematic Studio Capture" loading="lazy" class="w-full h-full object-cover group-hover:scale-[1.08] transition duration-500">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity"></div>
                         <div class="absolute bottom-0 inset-x-0 p-2.5 space-y-0.5">
                             <span class="font-mono text-[9px] text-studio-crimson tracking-widest uppercase block">12 &middot; STUDIO</span>
@@ -1825,7 +1819,7 @@
                             FIND ME ON
                         </div>
                         <div class="divide-y divide-white/10 border-t border-b border-white/10 text-sm reel-stagger-children" data-stagger-base="0.38" data-stagger-step="0.08">
-                            <a id="socialLinkLinkedin" href="https://linkedin.com/in/ksrafid" target="_blank" rel="noopener" class="py-3.5 flex items-center justify-between text-zinc-200 hover:text-white hover:pl-2 transition-all group">
+                            <a id="socialLinkLinkedin" href="https://www.linkedin.com/in/khandker-saadman-rafid-34140622a/" target="_blank" rel="noopener" class="py-3.5 flex items-center justify-between text-zinc-200 hover:text-white hover:pl-2 transition-all group">
                                 <span class="inline-flex items-center gap-3.5">
                                     <span class="w-9 h-9 rounded-xl bg-[#0A66C2]/15 border border-[#0A66C2]/50 text-[#0A66C2] flex items-center justify-center shadow-[0_0_16px_rgba(10,102,194,0.5)] group-hover:shadow-[0_0_26px_rgba(10,102,194,0.9)] group-hover:border-[#0A66C2] group-hover:scale-110 transition-all duration-300">
                                         <i class="fa-brands fa-linkedin-in text-base drop-shadow-[0_0_8px_rgba(10,102,194,0.95)]"></i>
@@ -1905,7 +1899,7 @@
             </button>
 
             <div class="reel-eyebrow mb-2">
-                <span class="reel-eyebrow-num">05</span>
+                <span class="reel-eyebrow-num">06</span>
                 <span class="reel-eyebrow-dash"></span>
                 <span>DIRECT TRANSMISSION</span>
             </div>
@@ -1917,6 +1911,11 @@
             </p>
 
             <form id="contactForm" class="space-y-4">
+                <!-- Honeypot: hidden from people, bots fill it in -->
+                <div class="hidden" aria-hidden="true">
+                    <label for="contactWebsite">Website</label>
+                    <input type="text" id="contactWebsite" name="website" tabindex="-1" autocomplete="off">
+                </div>
                 <div>
                     <label for="contactName" class="block font-mono text-[10px] tracking-[0.2em] uppercase text-zinc-400 mb-1.5">YOUR NAME *</label>
                     <input
@@ -1969,7 +1968,7 @@
         </div>
     </div>
 
-    <!-- ==================== SLEEK EDITORIAL DRAWER 2: FIELD ARCHIVE (15 PHOTOS), QUOTE CALCULATOR & GUESTBOOK ==================== -->
+    <!-- ==================== SLEEK EDITORIAL DRAWER 2: FIELD ARCHIVE (12 PHOTOS), QUOTE CALCULATOR & GUESTBOOK ==================== -->
     <div id="archiveDrawerModal" class="fixed inset-0 z-50 hidden bg-black/90 backdrop-blur-md overflow-y-auto">
         <div class="max-w-5xl mx-auto my-8 sm:my-14 bg-[#0a0a12] border border-white/15 p-5 sm:p-10 relative">
             <div class="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-white/10">
@@ -1995,7 +1994,7 @@
 
             <div class="flex flex-wrap gap-2 py-5 border-b border-white/10 font-mono text-[11px] tracking-[0.18em] uppercase">
                 <button type="button" onclick="window.switchArchiveTab('gallery')" id="tabBtnGallery" class="px-4 py-2 border border-studio-crimson bg-studio-crimson/15 text-white">
-                    01 &middot; FIELD GALLERY (15)
+                    01 &middot; FIELD GALLERY (12)
                 </button>
                 <button type="button" onclick="window.switchArchiveTab('quote')" id="tabBtnQuote" class="px-4 py-2 border border-white/15 text-zinc-400 hover:text-white">
                     02 &middot; INSTANT QUOTE CALCULATOR
@@ -2338,6 +2337,35 @@
             if (lb) lb.classList.add('hidden');
         };
 
+        // Close overlays with Escape or by clicking the dimmed backdrop (topmost overlay first)
+        (function initOverlayDismiss() {
+            const isOpen = id => {
+                const el = document.getElementById(id);
+                return el && !el.classList.contains('hidden');
+            };
+            const closeProject = () => {
+                document.getElementById('projectModal').classList.add('hidden');
+                document.body.style.overflow = '';
+            };
+            const overlays = [
+                ['lightbox', () => window.closeLightbox()],
+                ['projectModal', closeProject],
+                ['contactDrawerModal', () => window.closeContactDrawer()],
+                ['archiveDrawerModal', () => window.closeArchiveDrawer()]
+            ];
+
+            document.addEventListener('keydown', e => {
+                if (e.key !== 'Escape') return;
+                const top = overlays.find(([id]) => isOpen(id));
+                if (top) top[1]();
+            });
+
+            overlays.forEach(([id, close]) => {
+                const el = document.getElementById(id);
+                if (el) el.addEventListener('click', e => { if (e.target === el) close(); });
+            });
+        })();
+
         // 5. Instant Quote Estimator Logic
         (function initQuoteCalc() {
             const serviceEl = document.getElementById('calcService');
@@ -2512,12 +2540,29 @@
                 const message = document.getElementById('contactMessage').value.trim();
                 if (!name || !email || !message) return;
 
+                const showAlert = (ok, text) => {
+                    if (!alertBox) return;
+                    alertBox.className = ok
+                        ? 'text-xs font-mono p-3 border border-emerald-500/40 bg-emerald-500/10 text-emerald-300'
+                        : 'text-xs font-mono p-3 border border-rose-500/40 bg-rose-500/10 text-rose-300';
+                    alertBox.textContent = text;
+                    alertBox.classList.remove('hidden');
+                };
+
+                // Bots fill the hidden honeypot field; pretend success without sending anything
+                const honeypot = document.getElementById('contactWebsite');
+                if (honeypot && honeypot.value) {
+                    showAlert(true, '✓ TRANSMISSION RECEIVED — Saadman will reply shortly.');
+                    form.reset();
+                    return;
+                }
+
                 submitBtn.disabled = true;
                 const origHtml = submitBtn.innerHTML;
                 submitBtn.innerHTML = '<span>SENDING...</span>';
 
                 try {
-                    await Promise.allSettled([
+                    const results = await Promise.allSettled([
                         fetch('https://oiruilsgqfqpmhradcrm.supabase.co/rest/v1/contact_messages', {
                             method: 'POST',
                             headers: {
@@ -2539,18 +2584,14 @@
                         })
                     ]);
 
-                    if (alertBox) {
-                        alertBox.className = 'text-xs font-mono p-3 border border-emerald-500/40 bg-emerald-500/10 text-emerald-300';
-                        alertBox.textContent = '✓ TRANSMISSION RECEIVED — Saadman will reply shortly.';
-                        alertBox.classList.remove('hidden');
-                    }
+                    // fetch() does not reject on HTTP errors, so check each response status
+                    const delivered = results.some(r => r.status === 'fulfilled' && r.value.ok);
+                    if (!delivered) throw new Error('Message could not be delivered');
+
+                    showAlert(true, '✓ TRANSMISSION RECEIVED — Saadman will reply shortly.');
                     form.reset();
                 } catch (err) {
-                    if (alertBox) {
-                        alertBox.className = 'text-xs font-mono p-3 border border-rose-500/40 bg-rose-500/10 text-rose-300';
-                        alertBox.textContent = 'Saved locally — you can also message directly on WhatsApp.';
-                        alertBox.classList.remove('hidden');
-                    }
+                    showAlert(false, '✕ Message could not be sent. Please try again, or message directly on WhatsApp.');
                 } finally {
                     submitBtn.disabled = false;
                     submitBtn.innerHTML = origHtml;
@@ -2657,12 +2698,34 @@
             const bgStage = document.getElementById('cinematicPortraitStage');
             const skillsEl = document.getElementById('skills');
 
-            [vHero, vAbout, vBg].forEach(v => {
+            const playMuted = v => {
                 if (!v) return;
                 v.muted = true;
                 const p = v.play();
                 if (p && p.catch) p.catch(() => {});
-            });
+            };
+            // About & background videos attach their src only when needed, so first load downloads just the hero video
+            const loadDeferredVideo = v => {
+                if (!v || !v.dataset.src) return;
+                v.src = v.dataset.src;
+                delete v.dataset.src;
+                playMuted(v);
+            };
+            playMuted(vHero);
+
+            if (vAbout) {
+                if ('IntersectionObserver' in window) {
+                    const vio = new IntersectionObserver(entries => {
+                        if (entries.some(e => e.isIntersecting)) {
+                            loadDeferredVideo(vAbout);
+                            vio.disconnect();
+                        }
+                    }, { rootMargin: '200px 0px' });
+                    vio.observe(vAbout);
+                } else {
+                    loadDeferredVideo(vAbout);
+                }
+            }
 
             // Word-by-Word Kinetic Editorial Subtitles for Hero Video (No Sound Toggle Button)
             const subBarEl = document.getElementById('heroSubtitleBar');
@@ -2763,6 +2826,7 @@
                 if (!bgStage || !skillsEl) return;
                 const r = skillsEl.getBoundingClientRect();
                 const vh = window.innerHeight || 1;
+                if (r.top < vh * 1.6) loadDeferredVideo(vBg);
                 // Fade in fixed right background portrait as #skills enters viewport
                 if (r.top < vh * 0.75) {
                     const t = Math.min(1, Math.max(0, (vh * 0.75 - r.top) / (vh * 0.45)));
