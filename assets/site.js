@@ -9,11 +9,10 @@
      6. Accessible dialogs (focus trap, Escape, backdrop)
      7. Photo lightbox
      8. Projects & case-study dialog
-     9. Quote calculator
-    10. Typing-speed test
-    11. Contact form (validation, honeypot, delivery check)
-    12. Studio videos & hero subtitles
-    13. Supabase content sync (admin panel)
+     9. Typing-speed test
+    10. Contact form (validation, honeypot, delivery check)
+    11. Studio videos & hero subtitles
+    12. Supabase content sync (admin panel)
    ===================================================================== */
 (function () {
     'use strict';
@@ -33,10 +32,10 @@
     const BN = {
         'a11y.skip': 'মূল অংশে যান',
         'nav.about': 'পরিচিতি', 'nav.skills': 'দক্ষতা', 'nav.work': 'কাজ', 'nav.proof': 'প্রমাণ',
-        'nav.pricing': 'মূল্য', 'nav.journey': 'যাত্রা', 'nav.gallery': 'গ্যালারি', 'nav.contact': 'যোগাযোগ',
+        'nav.journey': 'যাত্রা', 'nav.gallery': 'গ্যালারি', 'nav.contact': 'যোগাযোগ',
         'navm.home': '০০ — হোম', 'navm.about': '০১ — পরিচিতি', 'navm.skills': '০২ — দক্ষতা', 'navm.work': '০৩ — কাজ',
-        'navm.proof': '০৪ — প্রমাণ', 'navm.testimonials': '০৫ — মতামত', 'navm.pricing': '০৬ — মূল্য',
-        'navm.journey': '০৭ — যাত্রা', 'navm.gallery': '০৮ — গ্যালারি', 'navm.contact': '০৯ — যোগাযোগ',
+        'navm.proof': '০৪ — প্রমাণ', 'navm.testimonials': '০৫ — মতামত',
+        'navm.journey': '০৬ — যাত্রা', 'navm.gallery': '০৭ — গ্যালারি', 'navm.contact': '০৮ — যোগাযোগ',
 
         'hero.role1': 'বাংলা ও ইংরেজি টাইপিং এবং ডকুমেন্ট কনভার্শন',
         'hero.role2': 'বাংলা · ইংরেজি · স্ক্যান PDF → ওয়ার্ড',
@@ -110,20 +109,6 @@
         'testi.name': '[ক্লায়েন্টের নাম]', 'testi.role': '[পদ, প্রতিষ্ঠান]', 'testi.project': 'প্রজেক্ট:',
         'testi.type1': '[যেমন: বাংলা থিসিস টাইপিং]', 'testi.type2': '[যেমন: স্ক্যান PDF থেকে ওয়ার্ড]', 'testi.type3': '[যেমন: PowerPoint ডেক]',
 
-        'pricing.eyebrow': 'মূল্য', 'pricing.h1': 'স্পষ্ট', 'pricing.h2': 'মূল্য।',
-        'pricing.intro': 'টাইপিং ও কনভার্শনের রেট প্রতি পৃষ্ঠা, প্রেজেন্টেশনের রেট প্রতি স্লাইড। নিচে খরচ হিসাব করে WhatsApp-এ বুক করুন।',
-        'rate.en': 'ইংরেজি ডকুমেন্ট টাইপিং', 'rate.bn': 'বাংলা টাইপিং (অভ্র ইউনিকোড / বিজয়)',
-        'rate.scan': 'স্ক্যান PDF / হাতের লেখা থেকে ওয়ার্ড', 'rate.deck': 'PowerPoint স্লাইড ডিজাইন',
-        'rate.perPage': '/ পৃষ্ঠা', 'rate.perSlide': '/ স্লাইড',
-        'calc.title': 'তাৎক্ষণিক কোটেশন', 'calc.service': 'সার্ভিস',
-        'calc.optEn': 'ইংরেজি ডকুমেন্ট টাইপিং (BDT 30 / পৃষ্ঠা)', 'calc.optBn': 'বাংলা অভ্র / বিজয় টাইপিং (BDT 45 / পৃষ্ঠা)',
-        'calc.optScan': 'স্ক্যান PDF / হাতের লেখা থেকে ওয়ার্ড (BDT 60 / পৃষ্ঠা)', 'calc.optDeck': 'PowerPoint স্লাইড ডিজাইন (BDT 150 / স্লাইড)',
-        'calc.volume': 'পরিমাণ (পৃষ্ঠা / স্লাইড)', 'calc.express': 'এক্সপ্রেস ২৪ ঘণ্টায় ডেলিভারি (+২৫%)',
-        'calc.total': 'আনুমানিক মোট', 'calc.book': 'এই হিসাবে WhatsApp-এ বুক করুন',
-        'terms.title': 'মূল্য সংক্রান্ত শর্ত', 'terms.minT': 'সর্বনিম্ন অর্ডার', 'terms.minV': '[যেমন: BDT 300]',
-        'terms.revT': 'রিভিশন', 'terms.revV': '[যেমন: ৩ দিনের মধ্যে ১টি ফ্রি রিভিশন]',
-        'terms.payT': 'পেমেন্ট', 'terms.payV': 'বিকাশ, Nagad, ব্যাংক ট্রান্সফার বা ক্যাশ।', 'terms.payPh': '[যেমন: ৫০% অগ্রিম, বাকি ডেলিভারিতে]',
-        'terms.note': 'এটি আনুমানিক হিসাব; ফাইল দেখে চূড়ান্ত মূল্য নিশ্চিত করা হবে। USD অঙ্কটি আনুমানিক।',
 
         'exp.eyebrow': 'অভিজ্ঞতা ও শিক্ষা', 'exp.h1': 'আমার', 'exp.h2': 'যাত্রা।',
         'exp.tagFreelance': 'ফ্রিল্যান্স', 'exp.tagExp': 'অভিজ্ঞতা', 'exp.tagVol': 'স্বেচ্ছাসেবা', 'exp.tagEdu': 'শিক্ষা',
@@ -178,7 +163,7 @@
     const STR = {
         en: {
             'status.available': 'AVAILABLE FOR PROJECTS', 'status.queued': 'ACCEPTING QUEUED ORDERS',
-            'unit.pages': 'Pages', 'unit.slides': 'Slides', 'calc.usd': '≈ ${usd} USD (approx.)',
+           
             'copy.done': 'COPIED ✓',
             'err.name': 'Please enter your name (at least 2 characters).',
             'err.email': 'Please enter a valid email address, e.g. name@example.com.',
@@ -196,7 +181,7 @@
         },
         bn: {
             'status.available': 'নতুন কাজের জন্য প্রস্তুত', 'status.queued': 'অর্ডার নেওয়া হচ্ছে (সকালে উত্তর)',
-            'unit.pages': 'পৃষ্ঠা', 'unit.slides': 'স্লাইড', 'calc.usd': '≈ ${usd} USD (আনুমানিক)',
+           
             'copy.done': 'কপি হয়েছে ✓',
             'err.name': 'অনুগ্রহ করে আপনার নাম লিখুন (কমপক্ষে ২ অক্ষর)।',
             'err.email': 'অনুগ্রহ করে সঠিক ইমেইল লিখুন, যেমন name@example.com।',
@@ -303,7 +288,7 @@
         });
 
         const links = $$('.reel-nav-link');
-        const sections = ['home', 'about', 'skills', 'projects', 'proof', 'testimonials', 'pricing', 'experience', 'gallery', 'contact']
+        const sections = ['home', 'about', 'skills', 'projects', 'proof', 'testimonials', 'experience', 'gallery', 'contact']
             .map(id => document.getElementById(id)).filter(Boolean);
         // Testimonials have no top-level link; highlight PROOF while reading them
         const navTarget = id => (id === 'testimonials' ? 'proof' : id);
@@ -620,35 +605,7 @@
         window.setCloudProjects = list => { cloudProjects = list; };
     })();
 
-    /* ---------- 9. QUOTE CALCULATOR ---------- */
-    (function initQuoteCalc() {
-        const service = $('#calcService'), pages = $('#calcPages'), pagesVal = $('#calcPagesVal');
-        const urgent = $('#calcUrgent'), totalBdt = $('#calcTotalBdt'), totalUsd = $('#calcTotalUsd'), waBtn = $('#waBtn');
-
-        function recalc() {
-            const opt = service.options[service.selectedIndex];
-            const rate = parseInt(opt.dataset.rate || '30', 10);
-            const n = parseInt(pages.value || '10', 10);
-            const isDeck = service.value === 'deck';
-            let total = rate * n;
-            if (urgent.checked) total = Math.round(total * 1.25);
-            const usd = Math.max(1, Math.round(total / 118));
-            pagesVal.textContent = `${n} ${t(isDeck ? 'unit.slides' : 'unit.pages')}`;
-            pages.setAttribute('aria-valuetext', pagesVal.textContent);
-            totalBdt.textContent = `BDT ${total.toLocaleString('en-US')}`;
-            totalUsd.textContent = t('calc.usd', { usd });
-            const enLabel = EN_TEXT.get(opt) || opt.text;
-            const msg = `Hello Saadman, I'd like to book: ${enLabel} — ${n} ${isDeck ? 'slides' : 'pages'}${urgent.checked ? ', express 24h' : ''}. Estimate: BDT ${total}`;
-            waBtn.href = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`;
-        }
-        service.addEventListener('change', recalc);
-        pages.addEventListener('input', recalc);
-        urgent.addEventListener('change', recalc);
-        langListeners.push(recalc);
-        recalc();
-    })();
-
-    /* ---------- 10. TYPING-SPEED TEST ---------- */
+    /* ---------- 9. TYPING-SPEED TEST ---------- */
     (function initTypingTest() {
         const PASSAGES = {
             en: 'Clear documents save time. A well typed page has consistent headings, tidy tables and no spelling mistakes. When a scanned file becomes an editable Word document, it can be searched, updated and printed again without losing its layout.',
@@ -738,7 +695,7 @@
         reset(false);
     })();
 
-    /* ---------- 11. CONTACT FORM ---------- */
+    /* ---------- 10. CONTACT FORM ---------- */
     (function initContact() {
         const modal = $('#contactDrawerModal');
         $('#openContactBtn').addEventListener('click', e => Dialog.open(modal, e.currentTarget));
@@ -822,7 +779,7 @@
         });
     })();
 
-    /* ---------- 12. STUDIO VIDEOS & HERO SUBTITLES ---------- */
+    /* ---------- 11. STUDIO VIDEOS & HERO SUBTITLES ---------- */
     (function initVideos() {
         const vHero = $('#portraitVideoHero'), vAbout = $('#portraitVideoAbout'), vBg = $('#portraitVideoBg');
         const stage = $('#cinematicPortraitStage'), skills = $('#skills');
@@ -914,7 +871,7 @@
         }
     })();
 
-    /* ---------- 13. SUPABASE CONTENT SYNC (ADMIN PANEL) ---------- */
+    /* ---------- 12. SUPABASE CONTENT SYNC (ADMIN PANEL) ---------- */
     (async function initCloudContentSync() {
         const SUPABASE_URL = 'https://oiruilsgqfqpmhradcrm.supabase.co';
         const SUPABASE_KEY = 'sb_publishable_eejxo50gMcgeLDFM91a70A_trAfjMPm';
