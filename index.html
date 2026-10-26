@@ -362,6 +362,29 @@
             gap: 0.65rem;
         }
 
+        /* Larger, brighter role line above the hero name */
+        .hero-role-eyebrow {
+            font-size: clamp(0.74rem, 1.15vw, 1rem);
+            letter-spacing: 0.18em;
+            line-height: 1.65;
+            color: #f4f4f6;
+            font-weight: 600;
+            gap: 0.85rem;
+            align-items: flex-start;
+        }
+
+        .hero-role-eyebrow .reel-eyebrow-dash {
+            width: 2.25rem;
+            height: 2px;
+            margin-top: 0.8em;
+            flex-shrink: 0;
+        }
+
+        .hero-role-sub {
+            color: var(--crimson-bright);
+            font-weight: 500;
+        }
+
         .reel-eyebrow-num {
             color: var(--crimson);
             font-weight: 600;
@@ -846,9 +869,12 @@
 
                     <!-- LEFT COLUMN (7 Cols): Branding, Giant Name, Dual Tagline, Bio, 2 Rectangular Buttons -->
                     <div class="lg:col-span-7 space-y-6 py-10 lg:py-0 z-10">
-                        <div class="reel-eyebrow reel-reveal" style="--reveal-delay: 0.56s;">
+                        <div class="reel-eyebrow hero-role-eyebrow reel-reveal" style="--reveal-delay: 0.56s;">
                             <span class="reel-eyebrow-dash"></span>
-                            <span id="heroRoleBadge">TYPING &amp; OPERATIONS SPECIALIST &middot; WEB &amp; DIGITAL CONTENT</span>
+                            <span id="heroRoleBadge">
+                                <span class="block">TYPING &amp; OPERATIONS SPECIALIST</span>
+                                <span class="block hero-role-sub">WEB &amp; DIGITAL CONTENT</span>
+                            </span>
                         </div>
 
                         <h1 id="heroTitle" class="reel-display hero-name-title reel-char-group" data-base-delay="0.04" data-line-stagger="0.14" data-char-stagger="0.022">
