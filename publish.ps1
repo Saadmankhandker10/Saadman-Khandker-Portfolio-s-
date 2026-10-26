@@ -16,9 +16,17 @@ if ($stagedChanges) {
     exit 1
 }
 
+# Regenerate assets/tailwind.css so new Tailwind classes are styled
+try {
+    & "$PSScriptRoot\build-css.ps1"
+} catch {
+    Write-Warning "CSS build failed ($_). Publishing with the existing assets/tailwind.css."
+}
+
 $sitePaths = @(
     '404.html',
     'admin.html',
+    'assets/',
     'favicon.svg',
     'google1093e83ae0034777.html',
     'index.html',
