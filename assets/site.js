@@ -9,7 +9,7 @@
      6. Accessible dialogs (focus trap, Escape, backdrop)
      7. Photo lightbox
      8. Projects & case-study dialog
-     9. Typing-speed test
+     9. Live typing demo (auto-types itself)
     10. Contact form (validation, honeypot, delivery check)
     11. Studio videos & hero subtitles
     12. Supabase content sync (admin panel)
@@ -89,13 +89,12 @@
         'p3.gallery': '[গ্যালারি দেখুন ↗]',
 
         'proof.eyebrow': 'প্রমাণ', 'proof.h1': 'নিজেই', 'proof.h2': 'দেখে নিন।',
-        'proof.intro': 'বাংলা বা ইংরেজিতে নিজের টাইপিং গতি যাচাই করুন, তারপর একটি স্ক্যান করা পাতা ও তৈরি ওয়ার্ড ফাইল পাশাপাশি মিলিয়ে দেখুন।',
-        'test.title': 'টাইপিং স্পিড টেস্ট',
-        'test.help': 'ভাষা বেছে নিন, টাইপ শুরু করলেই টাইমার চালু হবে। বাংলার জন্য অভ্র, বিজয় (ইউনিকোড) বা ফোনের বাংলা কিবোর্ড ব্যবহার করতে পারেন।',
-        'test.srNote': 'উপরের লেখাটি নিচের বক্সে টাইপ করুন।',
-        'test.inputLabel': 'এখানে টাইপ করুন', 'test.restart': 'আবার শুরু',
+        'proof.intro': 'বাংলা ও ইংরেজিতে আসল কাজের গতিতে একটি লেখা নিজে নিজে টাইপ হতে দেখুন, তারপর একটি স্ক্যান করা পাতা ও তৈরি ওয়ার্ড ফাইল পাশাপাশি মিলিয়ে দেখুন।',
+        'test.title': 'লাইভ টাইপিং ডেমো',
+        'test.help': 'একটি আসল লেখা সাদমানের কাজের গতিতে অক্ষরে অক্ষরে নিজে টাইপ হচ্ছে — প্রথমে ইংরেজিতে, তারপর বাংলায় (অভ্র / বিজয় ইউনিকোড)। কাউন্টারগুলো লাইভ মাপা হচ্ছে।',
+        'test.replay': 'আবার দেখুন',
         'test.formula': 'WPM = প্রতি মিনিটে সঠিক অক্ষর ÷ ৫',
-        'test.accuracy': 'নির্ভুলতা', 'test.seconds': 'সেকেন্ড বাকি',
+        'test.accuracy': 'নির্ভুলতা', 'test.chars': 'অক্ষর',
         'test.benchmark': 'সাদমানের বেঞ্চমার্ক: ৬৫+ WPM · ৯৯.৯% নির্ভুলতা',
         'ba.title': 'আগে / পরে',
         'ba.help': 'বাঁয়ে: এডিট করা যায় না এমন একটি স্ক্যান করা পাতা। ডানে: একই লেখা নতুন করে টাইপ করা, স্টাইল করা ও সার্চযোগ্য ওয়ার্ড ডকুমেন্ট।',
@@ -174,7 +173,8 @@
             'form.fail': '✕ Your message could not be sent. Please try again, or message on WhatsApp.',
             'case.problem': 'THE PROBLEM', 'case.process': 'THE PROCESS', 'case.tools': 'TOOLS', 'case.result': 'THE RESULT',
             'case.discuss': 'DISCUSS A SIMILAR PROJECT', 'case.demo': 'SEE THE DEMO SAMPLE',
-            'test.result': '{wpm} WPM at {acc}% accuracy — {chars} correct characters in {secs} seconds. Saadman\'s benchmark is 65+ WPM.',
+            'test.typing': 'TYPING…', 'test.done': 'SAVED ✓', 'test.paused': 'PAUSED',
+            'test.pause': 'PAUSE', 'test.play': 'PLAY',
             'lb.count': 'Photo {i} of {n}',
             'lang.label': 'বাংলায় দেখুন (Switch to Bangla)', 'lang.text': 'বাংলা',
             'menu.open': 'Open menu', 'menu.close': 'Close menu'
@@ -192,7 +192,8 @@
             'form.fail': '✕ মেসেজ পাঠানো যায়নি। আবার চেষ্টা করুন, অথবা WhatsApp-এ লিখুন।',
             'case.problem': 'সমস্যা', 'case.process': 'প্রক্রিয়া', 'case.tools': 'টুল', 'case.result': 'ফলাফল',
             'case.discuss': 'এমন প্রজেক্ট নিয়ে কথা বলুন', 'case.demo': 'ডেমো নমুনা দেখুন',
-            'test.result': '{acc}% নির্ভুলতায় {wpm} WPM — {secs} সেকেন্ডে {chars}টি সঠিক অক্ষর। সাদমানের বেঞ্চমার্ক ৬৫+ WPM।',
+            'test.typing': 'টাইপ হচ্ছে…', 'test.done': 'সেভ হয়েছে ✓', 'test.paused': 'বিরতি',
+            'test.pause': 'বিরতি', 'test.play': 'চালু করুন',
             'lb.count': '{n}টির মধ্যে {i} নম্বর ছবি',
             'lang.label': 'Switch to English (ইংরেজিতে দেখুন)', 'lang.text': 'EN',
             'menu.open': 'মেনু খুলুন', 'menu.close': 'মেনু বন্ধ করুন'
@@ -605,94 +606,195 @@
         window.setCloudProjects = list => { cloudProjects = list; };
     })();
 
-    /* ---------- 9. TYPING-SPEED TEST ---------- */
-    (function initTypingTest() {
+    /* ---------- 9. LIVE TYPING DEMO (types itself) ---------- */
+    // A passage is typed one character at a time at a realistic human rhythm (~70 WPM), with one
+    // slip that gets corrected with backspace. WPM / accuracy are measured from the animation itself.
+    // English and Bangla alternate in a loop; it only runs while visible and can be paused.
+    (function initTypingDemo() {
         const PASSAGES = {
             en: 'Clear documents save time. A well typed page has consistent headings, tidy tables and no spelling mistakes. When a scanned file becomes an editable Word document, it can be searched, updated and printed again without losing its layout.',
             bn: 'পরিষ্কার ডকুমেন্ট সময় বাঁচায়। ভালোভাবে টাইপ করা পাতায় শিরোনাম একই রকম থাকে, টেবিল গোছানো থাকে এবং কোনো বানান ভুল থাকে না। স্ক্যান করা ফাইল যখন এডিটযোগ্য ওয়ার্ড ডকুমেন্টে পরিণত হয়, তখন সেটি খোঁজা, বদলানো এবং আবার ছাপানো সহজ হয়।'
         };
-        const passageEl = $('#testPassage'), input = $('#testInput');
-        const wpmEl = $('#testWpm'), accEl = $('#testAcc'), timeEl = $('#testTime'), resultEl = $('#testResult');
-        const langBtns = $$('[data-test-lang]'), timeBtns = $$('[data-test-time]');
+        const FILES = { en: 'english-sample.docx', bn: 'bangla-sample.docx' };
+        const BASE = 150; // ms per character inside a word; spaces and punctuation add natural pauses
 
-        let testLang = 'en', duration = 60, words = [], startAt = 0, timer = null, finished = false;
-        // NFC normalisation makes precomposed and decomposed Bangla letters (e.g. য় / য়) compare equal
+        const box = $('#speed-test'), passageEl = $('#testPassage'), fullEl = $('#testPassageFull');
+        const fileEl = $('#testFile'), statusEl = $('#testStatus'), progressEl = $('#testProgress');
+        const wpmEl = $('#testWpm'), accEl = $('#testAcc'), charsEl = $('#testChars');
+        const pauseBtn = $('#testPause'), replayBtn = $('#testReplay'), langBtns = $$('[data-test-lang]');
+
+        // NFC keeps Bangla letters such as য় in one consistent form
         const norm = s => s.normalize('NFC');
+        // Type whole grapheme clusters so Bangla vowel signs never appear detached from their letter
+        const seg = window.Intl && Intl.Segmenter ? new Intl.Segmenter('bn', { granularity: 'grapheme' }) : null;
+        const graphemes = s => seg ? Array.from(seg.segment(s), x => x.segment) : Array.from(s);
+        const rand = (a, b) => a + Math.random() * (b - a);
+        const press = active => langBtns.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.testLang === active)));
 
-        function renderPassage() {
-            words = norm(PASSAGES[testLang]).split(' ');
-            passageEl.lang = input.lang = testLang;
-            passageEl.innerHTML = words.map((w, i) => `<span class="tw" data-w="${i}">${esc(w)}</span>`).join(' ');
-        }
+        const caret = document.createElement('span');
+        caret.className = 'type-caret';
 
-        function score() {
-            const typed = norm(input.value).replace(/\s+/g, ' ').replace(/^ /, '');
-            const typedWords = typed.split(' ');
-            let correct = 0, total = 0;
-            const spans = passageEl.children;
-            typedWords.forEach((tw, i) => {
-                const target = words[i] || '';
-                const done = i < typedWords.length - 1;
-                for (let c = 0; c < tw.length; c++) { total++; if (tw[c] === target[c]) correct++; }
-                if (done) { total++; if (tw === target) correct++; } // the space after a finished word
-                const span = spans[i];
-                if (span) span.className = 'tw ' + (done ? (tw === target ? 'ok' : 'bad') : ('current' + (target.startsWith(tw) ? '' : ' bad')));
-            });
-            for (let i = typedWords.length; i < spans.length; i++) spans[i].className = 'tw';
-            const lastDone = typedWords.length >= words.length && typedWords[words.length - 1] === words[words.length - 1];
-            return { correct, total, lastDone };
-        }
-
-        function update() {
-            if (!startAt) return;
-            const elapsed = Math.min(duration, (performance.now() - startAt) / 1000);
-            const { correct, total, lastDone } = score();
-            const wpm = elapsed > 0 ? Math.round((correct / 5) / (elapsed / 60)) : 0;
-            const acc = total ? Math.round((correct / total) * 1000) / 10 : 100;
-            wpmEl.textContent = wpm;
-            accEl.textContent = acc + '%';
-            timeEl.textContent = Math.max(0, Math.ceil(duration - elapsed));
-            if (elapsed >= duration || lastDone) finish(wpm, acc, correct, Math.round(elapsed));
-        }
-
-        function finish(wpm, acc, correct, secs) {
-            if (finished) return;
-            finished = true;
-            clearInterval(timer);
-            input.disabled = true;
-            resultEl.textContent = t('test.result', { wpm, acc, chars: correct, secs });
-            resultEl.classList.remove('hidden');
-        }
-
-        function reset(focus) {
-            clearInterval(timer);
-            startAt = 0; finished = false;
-            input.value = ''; input.disabled = false;
-            wpmEl.textContent = '0'; accEl.textContent = '100%'; timeEl.textContent = duration;
-            resultEl.classList.add('hidden');
-            renderPassage();
-            if (focus) input.focus();
-        }
-
-        input.addEventListener('input', () => {
-            if (finished) return;
-            if (!startAt && input.value.length) {
-                startAt = performance.now();
-                timer = setInterval(update, 250);
-            }
-            update();
+        // Invisible copies of both passages reserve the finished height, so nothing below shifts while typing
+        Object.keys(PASSAGES).forEach(code => {
+            const ghost = document.createElement('p');
+            ghost.className = 'typing-passage type-ghost';
+            ghost.lang = code;
+            ghost.setAttribute('aria-hidden', 'true');
+            ghost.innerHTML = esc(norm(PASSAGES[code])) + '<span class="type-caret"></span>';
+            passageEl.before(ghost);
         });
-        // Block pasting so the result reflects real typing
-        input.addEventListener('paste', e => e.preventDefault());
 
-        const press = (btns, active) => btns.forEach(b => b.setAttribute('aria-pressed', String(b === active)));
-        langBtns.forEach(b => b.addEventListener('click', () => { testLang = b.dataset.testLang; press(langBtns, b); reset(true); }));
-        timeBtns.forEach(b => b.addEventListener('click', () => { duration = parseInt(b.dataset.testTime, 10); press(timeBtns, b); reset(true); }));
-        $('#testRestart').addEventListener('click', () => reset(true));
+        let demoLang = 'en', chars = [], total = 0, pos = 0, typed = 0, keys = 0, errors = 0, typoAt = -1, typoDone = false;
+        let state = 'typing', timer = null, next = null, running = false, userPaused = false, inView = false;
+        // A clock that only advances while the demo is running, so pauses don't skew the WPM
+        let clockAcc = 0, clockSince = 0, startClock = 0, endClock = 0;
+        const clock = () => clockAcc + (running ? performance.now() - clockSince : 0);
 
-        // Default the test to the page language
-        if (lang === 'bn') { testLang = 'bn'; press(langBtns, langBtns.find(b => b.dataset.testLang === 'bn')); }
-        reset(false);
+        // Pausable scheduler: the next step is remembered while paused and resumed later
+        function later(fn, ms) { next = fn; clearTimeout(timer); if (running) timer = setTimeout(fire, ms); }
+        function fire() { const fn = next; next = null; if (fn) fn(); }
+        function setRunning(on) {
+            if (on === running) return;
+            running = on;
+            if (on) { clockSince = performance.now(); if (next) timer = setTimeout(fire, 180); }
+            else { clockAcc += performance.now() - clockSince; clearTimeout(timer); }
+            renderStatus();
+        }
+        const sync = () => setRunning(inView && !userPaused && !document.hidden);
+
+        function renderStatus() {
+            const s = userPaused ? 'paused' : state === 'typing' ? 'typing' : 'done';
+            statusEl.dataset.state = s;
+            statusEl.textContent = t('test.' + s);
+            pauseBtn.textContent = t(userPaused ? 'test.play' : 'test.pause');
+            pauseBtn.setAttribute('aria-pressed', String(userPaused));
+        }
+
+        function renderStats() {
+            const secs = startClock ? ((endClock || clock()) - startClock) / 1000 : 0;
+            wpmEl.textContent = secs > 1.5 ? Math.round((typed / 5) / (secs / 60)) : 0;
+            accEl.textContent = (keys ? Math.floor(((keys - errors) / keys) * 1000) / 10 : 100) + '%';
+            charsEl.textContent = typed;
+            progressEl.style.width = (total ? (typed / total) * 100 : 0) + '%';
+        }
+
+        function load(code) {
+            demoLang = code;
+            const text = norm(PASSAGES[code]);
+            chars = graphemes(text);
+            total = text.length;
+            pos = typed = keys = errors = startClock = endClock = 0;
+            // One slip about 40% of the way in, inside a word, like a real typist
+            typoAt = chars.findIndex((c, i) => i > chars.length * 0.4 && /\p{L}/u.test(c) && /\p{L}/u.test(chars[i - 1]));
+            typoDone = false;
+            passageEl.lang = fullEl.lang = code;
+            fullEl.textContent = text;
+            fileEl.textContent = FILES[code];
+            passageEl.classList.remove('is-selected');
+            passageEl.textContent = '';
+            passageEl.appendChild(caret);
+            press(code);
+            state = 'typing';
+            renderStats();
+            renderStatus();
+        }
+
+        function addChar(c, typo) {
+            if (c === ' ') { passageEl.insertBefore(document.createTextNode(' '), caret); return; }
+            const span = document.createElement('span');
+            span.className = typo ? 'tk typo' : 'tk';
+            span.textContent = c;
+            passageEl.insertBefore(span, caret);
+        }
+
+        // A neighbouring key for the deliberate slip
+        function wrongKey(c) {
+            if (demoLang === 'bn') return c === 'ন' ? 'ম' : 'ন';
+            const row = 'qwertyuiopasdfghjklzxcvbnm', i = row.indexOf(c.toLowerCase());
+            return i >= 0 ? row[(i + 1) % row.length] : 'x';
+        }
+
+        function typeStep() {
+            if (!startClock) startClock = clock();
+            passageEl.classList.add('is-typing');
+
+            if (pos === typoAt && !typoDone) {
+                typoDone = true;
+                addChar(wrongKey(chars[pos]), true);
+                keys++; errors++;
+                renderStats();
+                // Notice the mistake, backspace, carry on
+                return later(() => { caret.previousSibling.remove(); later(typeStep, rand(120, 200)); }, rand(380, 520));
+            }
+
+            const c = chars[pos++];
+            addChar(c, false);
+            typed += c.length; keys += c.length;
+            renderStats();
+            if (pos >= chars.length) return finish();
+
+            let delay = c === ' ' ? BASE * rand(1.1, 2.5) : BASE * c.length * rand(0.55, 1.25);
+            if (/[.,;:!?।]/.test(c)) delay += rand(260, 460);
+            later(typeStep, delay);
+        }
+
+        function finish() {
+            endClock = clock();
+            state = 'done';
+            passageEl.classList.remove('is-typing');
+            renderStats();
+            renderStatus();
+            // Hold the finished page, select it all, clear it and type the other language
+            later(() => {
+                passageEl.classList.add('is-selected');
+                later(() => { load(demoLang === 'en' ? 'bn' : 'en'); later(typeStep, 650); }, 700);
+            }, 2800);
+        }
+
+        function restart(code) {
+            clearTimeout(timer);
+            load(code);
+            later(typeStep, 450);
+            userPaused = false;
+            sync();
+            renderStatus();
+        }
+
+        // Reduced motion: show the finished passage and the benchmark instead of animating
+        function showStatic(code) {
+            load(code);
+            passageEl.textContent = fullEl.textContent;
+            typed = keys = total;
+            state = 'done';
+            renderStats();
+            wpmEl.textContent = '65+';
+            accEl.textContent = '99.9%';
+            renderStatus();
+        }
+
+        const startLang = lang === 'bn' ? 'bn' : 'en';
+        if (REDUCE) {
+            pauseBtn.hidden = replayBtn.hidden = true;
+            langBtns.forEach(b => b.addEventListener('click', () => showStatic(b.dataset.testLang)));
+            showStatic(startLang);
+            langListeners.push(renderStatus);
+            return;
+        }
+
+        langBtns.forEach(b => b.addEventListener('click', () => restart(b.dataset.testLang)));
+        replayBtn.addEventListener('click', () => restart(demoLang));
+        pauseBtn.addEventListener('click', () => { userPaused = !userPaused; sync(); renderStatus(); });
+        document.addEventListener('visibilitychange', sync);
+        langListeners.push(renderStatus);
+
+        load(startLang);
+        later(typeStep, 500);
+        // Only type while the demo is on screen
+        if ('IntersectionObserver' in window) {
+            new IntersectionObserver(entries => { inView = entries[0].isIntersecting; sync(); }, { threshold: 0.2 }).observe(box);
+        } else {
+            inView = true; sync();
+        }
     })();
 
     /* ---------- 10. CONTACT FORM ---------- */

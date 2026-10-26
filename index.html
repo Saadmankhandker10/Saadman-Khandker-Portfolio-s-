@@ -587,7 +587,7 @@
             box-shadow: 0 8px 22px -4px rgba(225, 29, 72, 0.65);
         }
 
-        /* ==================== PROOF: TYPING TEST ==================== */
+        /* ==================== PROOF: LIVE TYPING DEMO ==================== */
         .panel {
             border: 1px solid var(--hairline-strong);
             background: rgba(10, 10, 18, 0.92);
@@ -604,43 +604,123 @@
             transition: all 0.2s ease;
         }
 
+        .seg-btn:hover { color: #ffffff; border-color: rgba(255, 255, 255, 0.35); }
+
         .seg-btn[aria-pressed="true"] {
             border-color: var(--crimson);
             background: rgba(225, 29, 72, 0.16);
             color: #ffffff;
         }
 
+        /* Editor window that the demo types into */
+        .type-window {
+            position: relative;
+            border: 1px solid var(--hairline-strong);
+            background: #07070c;
+            box-shadow: 0 30px 70px -35px rgba(225, 29, 72, 0.45);
+        }
+
+        .type-bar {
+            display: flex;
+            align-items: center;
+            gap: 0.9rem;
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--hairline-strong);
+            background: rgba(255, 255, 255, 0.03);
+            font: 500 0.68rem/1 'JetBrains Mono', 'Hind Siliguri', monospace;
+            color: #a1a1aa;
+        }
+
+        .type-dots { display: flex; gap: 6px; flex-shrink: 0; }
+        .type-dots i { width: 9px; height: 9px; border-radius: 50%; background: #3f3f46; }
+        .type-dots i:first-child { background: var(--crimson); }
+        .type-file { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; letter-spacing: 0.04em; }
+
+        .type-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-shrink: 0;
+            color: #ffffff;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+        }
+
+        .type-status::before {
+            content: '';
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--crimson-bright);
+            box-shadow: 0 0 10px var(--crimson-bright);
+            animation: typePulse 1s ease-in-out infinite;
+        }
+
+        .type-status[data-state="done"] { color: #6ee7b7; }
+        .type-status[data-state="done"]::before { background: #34d399; box-shadow: 0 0 10px #34d399; animation: none; }
+        .type-status[data-state="paused"] { color: #a1a1aa; }
+        .type-status[data-state="paused"]::before { background: #71717a; box-shadow: none; animation: none; }
+
+        /* The live passage and its invisible full-length copies share one grid cell (copies set the height) */
+        .type-page { display: grid; padding: 1.4rem 1.2rem 1.6rem; }
+        @media (min-width: 640px) { .type-page { padding: 1.9rem 2.1rem 2.1rem; } }
+        .type-page > .typing-passage { grid-area: 1 / 1; }
+        .type-ghost { visibility: hidden; }
+        .type-ghost .type-caret { animation: none; }
+
         .typing-passage {
             font-size: 1.12rem;
             line-height: 1.95;
-            color: #a1a1aa;
-            min-height: 7.5rem;
+            color: #f4f4f6;
+            overflow-wrap: break-word;
         }
 
         .typing-passage:lang(bn) { font-family: 'Hind Siliguri', sans-serif; font-size: 1.22rem; }
 
-        .tw { padding: 0.06em 0.04em; transition: color 0.15s ease, background-color 0.15s ease; }
-        .tw.ok { color: #f4f4f6; }
-        .tw.bad { color: #fda4af; text-decoration: underline wavy rgba(255, 42, 95, 0.8); text-underline-offset: 4px; }
-        .tw.current { background: rgba(225, 29, 72, 0.22); color: #ffffff; box-shadow: inset 0 -2px 0 var(--crimson-bright); }
-
-        .typing-input {
-            width: 100%;
-            min-height: 6.5rem;
-            background: #07070c;
-            border: 1px solid var(--hairline-strong);
-            color: #ffffff;
-            font-size: 1rem;
-            line-height: 1.7;
-            padding: 0.85rem 1rem;
-            resize: vertical;
+        @media (min-width: 1024px) {
+            .typing-passage { font-size: 1.28rem; }
+            .typing-passage:lang(bn) { font-size: 1.38rem; }
         }
 
-        .typing-input:lang(bn) { font-family: 'Hind Siliguri', sans-serif; font-size: 1.1rem; }
-        .typing-input:focus { border-color: var(--crimson); }
-        .typing-input:disabled { opacity: 0.7; }
+        /* Each new keystroke flashes crimson-hot, then cools to white */
+        .tk { animation: keyIn 0.75s ease-out both; }
+        .tk.typo { animation: none; color: #fda4af; text-decoration: underline wavy rgba(255, 42, 95, 0.85); text-underline-offset: 4px; }
+        .typing-passage.is-selected .tk { animation: none; color: #ffffff; background: rgba(225, 29, 72, 0.38); }
 
-        .stat-value { font: 800 2rem/1 'Plus Jakarta Sans', sans-serif; letter-spacing: -0.03em; color: #ffffff; }
+        .type-caret {
+            display: inline-block;
+            width: 2px;
+            height: 1.2em;
+            margin-left: 1px;
+            vertical-align: -0.2em;
+            background: var(--crimson-bright);
+            box-shadow: 0 0 8px var(--crimson-bright), 0 0 18px rgba(255, 42, 95, 0.55);
+            animation: caretBlink 1s steps(1) infinite;
+        }
+
+        /* Solid caret while keys are being pressed, blinking when idle */
+        .typing-passage.is-typing .type-caret { animation: none; }
+
+        .type-progress { height: 3px; background: rgba(255, 255, 255, 0.06); }
+        .type-progress span {
+            display: block;
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, var(--crimson), var(--crimson-bright));
+            box-shadow: 0 0 12px var(--crimson-bright);
+            transition: width 0.2s linear;
+        }
+
+        @keyframes keyIn {
+            0% { color: #ffffff; text-shadow: 0 0 14px rgba(255, 42, 95, 0.95), 0 0 3px #ffffff; }
+            35% { color: #ffc2d1; text-shadow: 0 0 8px rgba(255, 42, 95, 0.6); }
+            100% { color: #f4f4f6; text-shadow: none; }
+        }
+
+        @keyframes caretBlink { 50% { opacity: 0; } }
+        @keyframes typePulse { 50% { opacity: 0.35; } }
+
+        .stat-value { font: 800 2rem/1 'Plus Jakarta Sans', sans-serif; letter-spacing: -0.03em; color: #ffffff; font-variant-numeric: tabular-nums; }
 
         /* ==================== PROOF: BEFORE / AFTER ==================== */
         .word-page {
@@ -1468,39 +1548,43 @@
                         </h2>
                     </div>
                     <p class="lg:col-span-5 text-xs sm:text-sm text-zinc-300 leading-relaxed max-w-md lg:ml-auto lg:pb-3 reel-reveal" style="--reveal-delay: 0.25s;" data-i18n="proof.intro">
-                        Test your own typing speed in Bangla or English, then compare a scanned page with the finished Word output.
+                        Watch a passage type itself in Bangla and English at a real working pace, then compare a scanned page with the finished Word output.
                     </p>
                 </div>
 
-                <!-- A. Live typing-speed test -->
+                <!-- A. Live auto-typing demo: the passage types itself at a real working pace (site.js §9) -->
                 <div id="speed-test" class="panel p-5 sm:p-8 lg:p-10 reel-reveal" aria-labelledby="speedTestTitle">
                     <div class="flex flex-wrap items-start justify-between gap-6 pb-6 border-b border-white/10">
                         <div>
-                            <h3 id="speedTestTitle" class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight" data-i18n="test.title">Typing speed test</h3>
-                            <p class="text-sm text-zinc-300 mt-1.5 max-w-xl" data-i18n="test.help">Pick a language, start typing and the timer begins. Bangla works with Avro, Bijoy (Unicode) or your phone's Bangla keyboard.</p>
+                            <h3 id="speedTestTitle" class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight" data-i18n="test.title">Live typing demo</h3>
+                            <p class="text-sm text-zinc-300 mt-1.5 max-w-xl" data-i18n="test.help">Watch a real passage type itself, letter by letter, at Saadman's working pace — in English, then in Bangla (Avro / Bijoy Unicode). The counters are measured live.</p>
                         </div>
-                        <div class="flex flex-wrap gap-4">
+                        <div class="flex flex-wrap gap-3">
                             <div role="group" aria-label="Language" class="flex" id="testLangGroup">
                                 <button type="button" class="seg-btn" data-test-lang="en" aria-pressed="true">English</button>
                                 <button type="button" class="seg-btn" data-test-lang="bn" aria-pressed="false" lang="bn">বাংলা</button>
                             </div>
-                            <div role="group" aria-label="Duration" class="flex" id="testTimeGroup">
-                                <button type="button" class="seg-btn" data-test-time="30" aria-pressed="false">30s</button>
-                                <button type="button" class="seg-btn" data-test-time="60" aria-pressed="true">60s</button>
-                            </div>
+                            <button type="button" id="testPause" class="seg-btn" aria-pressed="false">PAUSE</button>
+                            <button type="button" id="testReplay" class="seg-btn" data-i18n="test.replay">REPLAY</button>
                         </div>
                     </div>
 
                     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 pt-6">
-                        <div class="lg:col-span-8 space-y-4">
-                            <p id="testPassage" class="typing-passage" lang="en" aria-describedby="testPassageNote"></p>
-                            <p id="testPassageNote" class="sr-only" data-i18n="test.srNote">Type the passage shown above into the text box below.</p>
-                            <label for="testInput" class="block font-mono text-[10px] tracking-[0.2em] uppercase text-zinc-300" data-i18n="test.inputLabel">TYPE THE PASSAGE HERE</label>
-                            <textarea id="testInput" class="typing-input" lang="en" rows="3" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
-                            <div class="flex flex-wrap items-center gap-3">
-                                <button type="button" id="testRestart" class="reel-btn-outline py-2.5 px-5" data-i18n="test.restart">RESTART</button>
-                                <span class="font-mono text-[11px] text-zinc-400" data-i18n="test.formula">WPM = correct characters ÷ 5 per minute</span>
+                        <div class="lg:col-span-8">
+                            <div class="type-window">
+                                <div class="type-bar">
+                                    <span class="type-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+                                    <span class="type-file" id="testFile">english-sample.docx</span>
+                                    <span class="type-status" id="testStatus" data-state="typing">TYPING…</span>
+                                </div>
+                                <div class="type-page">
+                                    <!-- The animated copy is hidden from screen readers; they get the full passage below -->
+                                    <p id="testPassage" class="typing-passage" lang="en" aria-hidden="true"></p>
+                                    <p id="testPassageFull" class="sr-only" lang="en"></p>
+                                </div>
+                                <div class="type-progress" aria-hidden="true"><span id="testProgress"></span></div>
                             </div>
+                            <p class="mt-3 font-mono text-[11px] text-zinc-400" data-i18n="test.formula">WPM = correct characters ÷ 5 per minute</p>
                         </div>
 
                         <div class="lg:col-span-4 grid grid-cols-3 lg:grid-cols-1 gap-4 content-start">
@@ -1513,13 +1597,12 @@
                                 <div class="font-mono text-[10px] tracking-[0.2em] uppercase text-zinc-400 mt-1.5" data-i18n="test.accuracy">ACCURACY</div>
                             </div>
                             <div class="border-t border-white/15 pt-3">
-                                <div class="stat-value" id="testTime">60</div>
-                                <div class="font-mono text-[10px] tracking-[0.2em] uppercase text-zinc-400 mt-1.5" data-i18n="test.seconds">SECONDS LEFT</div>
+                                <div class="stat-value" id="testChars">0</div>
+                                <div class="font-mono text-[10px] tracking-[0.2em] uppercase text-zinc-400 mt-1.5" data-i18n="test.chars">CHARACTERS</div>
                             </div>
                         </div>
                     </div>
 
-                    <div id="testResult" class="mt-6 text-sm text-zinc-200 border-l-2 border-studio-crimson pl-4 hidden" role="status" aria-live="polite"></div>
                     <p class="mt-6 font-mono text-[11px] tracking-[0.12em] uppercase text-zinc-400" data-i18n="test.benchmark">Saadman's benchmark: 65+ WPM · 99.9% accuracy</p>
                 </div>
 
