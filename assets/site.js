@@ -884,7 +884,7 @@
     /* ---------- 11. STUDIO VIDEOS & HERO SUBTITLES ---------- */
     (function initVideos() {
         const vHero = $('#portraitVideoHero'), vAbout = $('#portraitVideoAbout'), vBg = $('#portraitVideoBg');
-        const stage = $('#cinematicPortraitStage'), skills = $('#skills');
+        const stage = $('#cinematicPortraitStage'), skills = $('#skills'), gallery = $('#gallery');
 
         // Videos attach their src only when needed; posters show the same first frame meanwhile
         const attach = v => {
@@ -925,7 +925,17 @@
             const vh = window.innerHeight || 1;
             if (!LITE && r.top < vh * 1.6) attach(vBg);
             const k = r.top < vh * 0.75 ? Math.min(1, Math.max(0, (vh * 0.75 - r.top) / (vh * 0.45))) : 0;
-            stage.style.opacity = (k * 0.48).toFixed(3);
+            // Fade the portrait out while the gallery is on screen, so it never sits behind the photos
+            const g = gallery.getBoundingClientRect();
+            const clamp = x => Math.min(1, Math.max(0, x));
+            const inGallery = Math.min(clamp((vh * 0.9 - g.top) / (vh * 0.35)), clamp((g.bottom - vh * 0.1) / (vh * 0.35)));
+            const opacity = k * 0.48 * (1 - inGallery);
+            stage.style.opacity = opacity.toFixed(3);
+            // Don't spend CPU on a video nobody can see
+            if (vBg.src) {
+                if (opacity === 0 && !vBg.paused) vBg.pause();
+                else if (opacity > 0 && vBg.paused) { const p = vBg.play(); if (p && p.catch) p.catch(() => {}); }
+            }
         }
         window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(updateStage); } }, { passive: true });
         window.addEventListener('resize', updateStage);
