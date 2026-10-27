@@ -1044,7 +1044,7 @@
         <symbol id="i-facebook" viewBox="0 0 24 24"><path d="M9.1 23.7v-8.4H6.2V12h2.9V9.5c0-2.9 1.75-4.5 4.4-4.5 1.27 0 2.6.23 2.6.23v2.85h-1.46c-1.44 0-1.9.9-1.9 1.82V12h3.2l-.5 3.3h-2.7v8.4z"/></symbol>
     </svg>
 
-    <!-- ==================== FIXED BACKGROUND PORTRAIT STAGE (Skills → Contact, hidden over the Gallery) ==================== -->
+    <!-- ==================== FIXED BACKGROUND PORTRAIT STAGE (Skills → Contact) ==================== -->
     <div id="cinematicPortraitStage" aria-hidden="true">
         <div id="livingPortraitRig">
             <video id="portraitVideoBg" class="studio-video-seamless" data-src="./public/hero-studio.mp4?v=7" poster="./public/pose-hero.webp" loop muted playsinline preload="none" tabindex="-1"></video>
@@ -1864,7 +1864,7 @@
                         <div class="reel-eyebrow mb-5 reel-reveal">
                             <span class="reel-eyebrow-num">07</span>
                             <span class="reel-eyebrow-dash" aria-hidden="true"></span>
-                            <span data-i18n="gal.eyebrow">VISUAL GALLERY · FIELD &amp; STUDIO</span>
+                            <span data-i18n="gal.eyebrow">VISUAL GALLERY · FIELD &amp; COMMUNITY</span>
                         </div>
                         <h2 id="galleryTitle" class="reel-display text-6xl sm:text-7xl md:text-[5.6rem] leading-[0.88] reel-char-group" data-base-delay="0.05" data-line-stagger="0.14" data-char-stagger="0.022">
                             <span class="reel-line-mask"><span class="reel-split-chars" data-i18n="gal.h1">VISUAL</span></span>
@@ -1872,71 +1872,61 @@
                         </h2>
                     </div>
                     <p class="lg:col-span-5 lg:pb-3 text-xs sm:text-sm text-zinc-300 leading-relaxed max-w-md lg:ml-auto reel-reveal" style="--reveal-delay: 0.25s;" data-i18n="gal.intro">
-                        Red Crescent Youth activities and studio portraits. Select any photo to view it full size; use the arrow keys to browse.
+                        Red Crescent Youth field work and community activities. Select any photo to view it full size; use the arrow keys to browse.
                     </p>
                 </div>
 
-                <!-- 12 photos: WebP thumbnails, full-size WebP opened in the lightbox -->
-                <ul id="galleryGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 sm:gap-4 reel-stagger-children" data-stagger-base="0.1" data-stagger-step="0.05" role="list">
-                    <li><button type="button" class="gallery-item group relative block w-full aspect-[4/5] bg-[#07070c] border border-white/10 overflow-hidden text-left hover:border-studio-crimson transition-colors" data-full="./public/gallery/01-studio-portrait.webp">
-                        <img src="./public/gallery/thumb/01-studio-portrait.webp" width="600" height="750" loading="lazy" decoding="async" alt="Studio portrait of Saadman Khandker in a black suit and white shirt against a dark background" class="w-full h-full object-cover">
-                        <span class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" aria-hidden="true"></span>
-                        <span class="absolute bottom-0 inset-x-0 p-2.5"><span class="font-mono text-[9px] text-rose-300 tracking-widest uppercase block" data-i18n="g1.k">01 · PORTRAIT</span><span class="text-xs text-white font-semibold truncate block" data-i18n="g1.t">Studio portrait</span></span>
-                    </button></li>
+                <!-- 10 photos: WebP thumbnails, full-size WebP opened in the lightbox -->
+                <ul id="galleryGrid" class="grid grid-cols-2 md:grid-cols-5 gap-3 sm:gap-4 reel-stagger-children" data-stagger-base="0.1" data-stagger-step="0.05" role="list">
                     <li><button type="button" class="gallery-item group relative block w-full aspect-[4/5] bg-[#07070c] border border-white/10 overflow-hidden text-left hover:border-studio-crimson transition-colors" data-full="./public/gallery/02-bdrcs-relief-mission.webp">
                         <img src="./public/gallery/thumb/02-bdrcs-relief-mission.webp" width="600" height="450" loading="lazy" decoding="async" alt="Red Crescent Youth volunteer in uniform handing food packets to two women outside a shop" class="w-full h-full object-cover">
                         <span class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" aria-hidden="true"></span>
-                        <span class="absolute bottom-0 inset-x-0 p-2.5"><span class="font-mono text-[9px] text-rose-300 tracking-widest uppercase block" data-i18n="g2.k">02 · COMMUNITY</span><span class="text-xs text-white font-semibold truncate block" data-i18n="g2.t">Food distribution</span></span>
+                        <span class="absolute bottom-0 inset-x-0 p-2.5"><span class="font-mono text-[9px] text-rose-300 tracking-widest uppercase block" data-i18n="g2.k">01 · COMMUNITY</span><span class="text-xs text-white font-semibold truncate block" data-i18n="g2.t">Food distribution</span></span>
                     </button></li>
                     <li><button type="button" class="gallery-item group relative block w-full aspect-[4/5] bg-[#07070c] border border-white/10 overflow-hidden text-left hover:border-studio-crimson transition-colors" data-full="./public/gallery/03-bdrcs-squad-coordination.webp">
                         <img src="./public/gallery/thumb/03-bdrcs-squad-coordination.webp" width="600" height="450" loading="lazy" decoding="async" alt="Street rally with volunteers carrying floral wreaths and flags while photographers walk in front" class="w-full h-full object-cover">
                         <span class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" aria-hidden="true"></span>
-                        <span class="absolute bottom-0 inset-x-0 p-2.5"><span class="font-mono text-[9px] text-rose-300 tracking-widest uppercase block" data-i18n="g3.k">03 · RALLY</span><span class="text-xs text-white font-semibold truncate block" data-i18n="g3.t">Street rally with wreaths</span></span>
+                        <span class="absolute bottom-0 inset-x-0 p-2.5"><span class="font-mono text-[9px] text-rose-300 tracking-widest uppercase block" data-i18n="g3.k">02 · RALLY</span><span class="text-xs text-white font-semibold truncate block" data-i18n="g3.t">Street rally with wreaths</span></span>
                     </button></li>
                     <li><button type="button" class="gallery-item group relative block w-full aspect-[4/5] bg-[#07070c] border border-white/10 overflow-hidden text-left hover:border-studio-crimson transition-colors" data-full="./public/gallery/04-bdrcs-field-logistics.webp">
                         <img src="./public/gallery/thumb/04-bdrcs-field-logistics.webp" width="600" height="450" loading="lazy" decoding="async" alt="Uniformed Red Crescent Youth member leading a procession of volunteers in red vests carrying a wreath along a city road" class="w-full h-full object-cover">
                         <span class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" aria-hidden="true"></span>
-                        <span class="absolute bottom-0 inset-x-0 p-2.5"><span class="font-mono text-[9px] text-rose-300 tracking-widest uppercase block" data-i18n="g4.k">04 · PROCESSION</span><span class="text-xs text-white font-semibold truncate block" data-i18n="g4.t">Leading a procession</span></span>
+                        <span class="absolute bottom-0 inset-x-0 p-2.5"><span class="font-mono text-[9px] text-rose-300 tracking-widest uppercase block" data-i18n="g4.k">03 · PROCESSION</span><span class="text-xs text-white font-semibold truncate block" data-i18n="g4.t">Leading a procession</span></span>
                     </button></li>
                     <li><button type="button" class="gallery-item group relative block w-full aspect-[4/5] bg-[#07070c] border border-white/10 overflow-hidden text-left hover:border-studio-crimson transition-colors" data-full="./public/gallery/05-first-aid-post.webp">
                         <img src="./public/gallery/thumb/05-first-aid-post.webp" width="600" height="338" loading="lazy" decoding="async" alt="Red Crescent Youth contingent marching with flags on a parade ground beside a scout contingent" class="w-full h-full object-cover">
                         <span class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" aria-hidden="true"></span>
-                        <span class="absolute bottom-0 inset-x-0 p-2.5"><span class="font-mono text-[9px] text-rose-300 tracking-widest uppercase block" data-i18n="g5.k">05 · PARADE</span><span class="text-xs text-white font-semibold truncate block" data-i18n="g5.t">Parade-ground march</span></span>
+                        <span class="absolute bottom-0 inset-x-0 p-2.5"><span class="font-mono text-[9px] text-rose-300 tracking-widest uppercase block" data-i18n="g5.k">04 · PARADE</span><span class="text-xs text-white font-semibold truncate block" data-i18n="g5.t">Parade-ground march</span></span>
                     </button></li>
                     <li><button type="button" class="gallery-item group relative block w-full aspect-[4/5] bg-[#07070c] border border-white/10 overflow-hidden text-left hover:border-studio-crimson transition-colors" data-full="./public/gallery/06-relief-distribution-camp.webp">
                         <img src="./public/gallery/thumb/06-relief-distribution-camp.webp" width="600" height="450" loading="lazy" decoding="async" alt="Saadman in Red Crescent Youth uniform receiving an award crest from two officials" class="w-full h-full object-cover">
                         <span class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" aria-hidden="true"></span>
-                        <span class="absolute bottom-0 inset-x-0 p-2.5"><span class="font-mono text-[9px] text-rose-300 tracking-widest uppercase block" data-i18n="g6.k">06 · RECOGNITION</span><span class="text-xs text-white font-semibold truncate block" data-i18n="g6.t">Receiving an award crest</span></span>
+                        <span class="absolute bottom-0 inset-x-0 p-2.5"><span class="font-mono text-[9px] text-rose-300 tracking-widest uppercase block" data-i18n="g6.k">05 · RECOGNITION</span><span class="text-xs text-white font-semibold truncate block" data-i18n="g6.t">Receiving an award crest</span></span>
                     </button></li>
                     <li><button type="button" class="gallery-item group relative block w-full aspect-[4/5] bg-[#07070c] border border-white/10 overflow-hidden text-left hover:border-studio-crimson transition-colors" data-full="./public/gallery/07-field-briefing.webp">
                         <img src="./public/gallery/thumb/07-field-briefing.webp" width="600" height="450" loading="lazy" decoding="async" alt="Group photo of uniformed Red Crescent Youth members in front of a prize-giving ceremony banner" class="w-full h-full object-cover">
                         <span class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" aria-hidden="true"></span>
-                        <span class="absolute bottom-0 inset-x-0 p-2.5"><span class="font-mono text-[9px] text-rose-300 tracking-widest uppercase block" data-i18n="g7.k">07 · CEREMONY</span><span class="text-xs text-white font-semibold truncate block" data-i18n="g7.t">Prize-giving ceremony</span></span>
+                        <span class="absolute bottom-0 inset-x-0 p-2.5"><span class="font-mono text-[9px] text-rose-300 tracking-widest uppercase block" data-i18n="g7.k">06 · CEREMONY</span><span class="text-xs text-white font-semibold truncate block" data-i18n="g7.t">Prize-giving ceremony</span></span>
                     </button></li>
                     <li><button type="button" class="gallery-item group relative block w-full aspect-[4/5] bg-[#07070c] border border-white/10 overflow-hidden text-left hover:border-studio-crimson transition-colors" data-full="./public/gallery/08-volunteer-assembly.webp">
                         <img src="./public/gallery/thumb/08-volunteer-assembly.webp" width="600" height="800" loading="lazy" decoding="async" alt="Seven Red Crescent Youth members in uniform standing in front of a school building" class="w-full h-full object-cover">
                         <span class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" aria-hidden="true"></span>
-                        <span class="absolute bottom-0 inset-x-0 p-2.5"><span class="font-mono text-[9px] text-rose-300 tracking-widest uppercase block" data-i18n="g8.k">08 · TEAM</span><span class="text-xs text-white font-semibold truncate block" data-i18n="g8.t">Youth team line-up</span></span>
+                        <span class="absolute bottom-0 inset-x-0 p-2.5"><span class="font-mono text-[9px] text-rose-300 tracking-widest uppercase block" data-i18n="g8.k">07 · TEAM</span><span class="text-xs text-white font-semibold truncate block" data-i18n="g8.t">Youth team line-up</span></span>
                     </button></li>
                     <li><button type="button" class="gallery-item group relative block w-full aspect-[4/5] bg-[#07070c] border border-white/10 overflow-hidden text-left hover:border-studio-crimson transition-colors" data-full="./public/gallery/09-youth-leadership.webp">
                         <img src="./public/gallery/thumb/09-youth-leadership.webp" width="600" height="450" loading="lazy" decoding="async" alt="Saadman and a volunteer in a red vest carrying a large floral wreath at the front of a Red Crescent procession" class="w-full h-full object-cover">
                         <span class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" aria-hidden="true"></span>
-                        <span class="absolute bottom-0 inset-x-0 p-2.5"><span class="font-mono text-[9px] text-rose-300 tracking-widest uppercase block" data-i18n="g9.k">09 · PROCESSION</span><span class="text-xs text-white font-semibold truncate block" data-i18n="g9.t">Wreath-laying procession</span></span>
+                        <span class="absolute bottom-0 inset-x-0 p-2.5"><span class="font-mono text-[9px] text-rose-300 tracking-widest uppercase block" data-i18n="g9.k">08 · PROCESSION</span><span class="text-xs text-white font-semibold truncate block" data-i18n="g9.t">Wreath-laying procession</span></span>
                     </button></li>
                     <li><button type="button" class="gallery-item group relative block w-full aspect-[4/5] bg-[#07070c] border border-white/10 overflow-hidden text-left hover:border-studio-crimson transition-colors" data-full="./public/gallery/10-field-inspection.webp">
                         <img src="./public/gallery/thumb/10-field-inspection.webp" width="600" height="450" loading="lazy" decoding="async" alt="Six Red Crescent Youth members in uniform and berets standing in a schoolyard" class="w-full h-full object-cover">
                         <span class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" aria-hidden="true"></span>
-                        <span class="absolute bottom-0 inset-x-0 p-2.5"><span class="font-mono text-[9px] text-rose-300 tracking-widest uppercase block" data-i18n="g10.k">10 · TEAM</span><span class="text-xs text-white font-semibold truncate block" data-i18n="g10.t">Uniformed youth team</span></span>
+                        <span class="absolute bottom-0 inset-x-0 p-2.5"><span class="font-mono text-[9px] text-rose-300 tracking-widest uppercase block" data-i18n="g10.k">09 · TEAM</span><span class="text-xs text-white font-semibold truncate block" data-i18n="g10.t">Uniformed youth team</span></span>
                     </button></li>
                     <li><button type="button" class="gallery-item group relative block w-full aspect-[4/5] bg-[#07070c] border border-white/10 overflow-hidden text-left hover:border-studio-crimson transition-colors" data-full="./public/gallery/11-squad-debriefing.webp">
                         <img src="./public/gallery/thumb/11-squad-debriefing.webp" width="600" height="800" loading="lazy" decoding="async" alt="Saadman in Red Crescent Youth uniform with two fellow cadets, one in a scout uniform, standing under trees" class="w-full h-full object-cover">
                         <span class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" aria-hidden="true"></span>
-                        <span class="absolute bottom-0 inset-x-0 p-2.5"><span class="font-mono text-[9px] text-rose-300 tracking-widest uppercase block" data-i18n="g11.k">11 · CADETS</span><span class="text-xs text-white font-semibold truncate block" data-i18n="g11.t">With fellow cadets</span></span>
-                    </button></li>
-                    <li><button type="button" class="gallery-item group relative block w-full aspect-[4/5] bg-[#07070c] border border-white/10 overflow-hidden text-left hover:border-studio-crimson transition-colors" data-full="./public/gallery/12-cinematic-studio.webp">
-                        <img src="./public/gallery/thumb/12-cinematic-studio.webp" width="600" height="759" loading="lazy" decoding="async" alt="Smiling studio portrait of Saadman Khandker in a black suit with hands clasped" class="w-full h-full object-cover">
-                        <span class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" aria-hidden="true"></span>
-                        <span class="absolute bottom-0 inset-x-0 p-2.5"><span class="font-mono text-[9px] text-rose-300 tracking-widest uppercase block" data-i18n="g12.k">12 · STUDIO</span><span class="text-xs text-white font-semibold truncate block" data-i18n="g12.t">Cinematic studio portrait</span></span>
+                        <span class="absolute bottom-0 inset-x-0 p-2.5"><span class="font-mono text-[9px] text-rose-300 tracking-widest uppercase block" data-i18n="g11.k">10 · CADETS</span><span class="text-xs text-white font-semibold truncate block" data-i18n="g11.t">With fellow cadets</span></span>
                     </button></li>
                 </ul>
             </div>
@@ -2025,7 +2015,7 @@
                 <footer class="mt-20 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 font-mono text-[10px] tracking-[0.22em] uppercase text-zinc-400 reel-reveal" style="--reveal-delay: 0.48s;">
                     <div>&copy; <span id="year">2026</span> SAADMAN KHANDKER &middot; <span data-i18n="footer.tag">BANGLA &amp; ENGLISH TYPING · DHAKA</span></div>
                     <div class="flex flex-wrap items-center gap-6">
-                        <a href="#gallery" class="hover:text-white transition"><span data-i18n="footer.gallery">VISUAL GALLERY (12)</span> &#8599;</a>
+                        <a href="#gallery" class="hover:text-white transition"><span data-i18n="footer.gallery">VISUAL GALLERY (10)</span> &#8599;</a>
                         <a href="#testimonials" class="hover:text-white transition"><span data-i18n="footer.testimonials">TESTIMONIALS</span> &#8599;</a>
                     </div>
                 </footer>

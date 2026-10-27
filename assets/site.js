@@ -130,25 +130,23 @@
         'ach.3t': '৫০+ ডকুমেন্ট ডেলিভারি', 'ach.3d': 'স্ক্যান PDF কনভার্শন, থিসিস ও প্রেজেন্টেশন সময়মতো ডেলিভারি।',
         'ach.4t': 'গ্রাফিক ডিজাইন প্রশিক্ষণ', 'ach.4d': 'সরকারি গ্রাফিক আর্টস ইনস্টিটিউট, ঢাকায় টাইপোগ্রাফি, লেআউট ও প্রিপ্রেস মানদণ্ড।',
 
-        'gal.eyebrow': 'ভিজ্যুয়াল গ্যালারি · মাঠ ও স্টুডিও', 'gal.h1': 'ছবির', 'gal.h2': 'আর্কাইভ।',
-        'gal.intro': 'রেড ক্রিসেন্ট যুব কার্যক্রম ও স্টুডিও পোর্ট্রেট। বড় করে দেখতে যেকোনো ছবিতে ক্লিক করুন; অ্যারো কি দিয়ে পরের ছবিতে যান।',
-        'g1.k': '০১ · পোর্ট্রেট', 'g1.t': 'স্টুডিও পোর্ট্রেট',
-        'g2.k': '০২ · কমিউনিটি', 'g2.t': 'খাদ্য বিতরণ',
-        'g3.k': '০৩ · শোভাযাত্রা', 'g3.t': 'পুষ্পস্তবক নিয়ে শোভাযাত্রা',
-        'g4.k': '০৪ · নেতৃত্ব', 'g4.t': 'শোভাযাত্রার নেতৃত্বে',
-        'g5.k': '০৫ · কুচকাওয়াজ', 'g5.t': 'প্যারেড মাঠে কুচকাওয়াজ',
-        'g6.k': '০৬ · স্বীকৃতি', 'g6.t': 'সম্মাননা ক্রেস্ট গ্রহণ',
-        'g7.k': '০৭ · অনুষ্ঠান', 'g7.t': 'পুরস্কার বিতরণী অনুষ্ঠান',
-        'g8.k': '০৮ · দল', 'g8.t': 'যুব দলের সারি',
-        'g9.k': '০৯ · শোভাযাত্রা', 'g9.t': 'পুষ্পস্তবক অর্পণ',
-        'g10.k': '১০ · দল', 'g10.t': 'ইউনিফর্মে যুব দল',
-        'g11.k': '১১ · ক্যাডেট', 'g11.t': 'সহ-ক্যাডেটদের সঙ্গে',
-        'g12.k': '১২ · স্টুডিও', 'g12.t': 'সিনেমাটিক স্টুডিও পোর্ট্রেট',
+        'gal.eyebrow': 'ভিজ্যুয়াল গ্যালারি · মাঠ ও কমিউনিটি', 'gal.h1': 'ছবির', 'gal.h2': 'আর্কাইভ।',
+        'gal.intro': 'রেড ক্রিসেন্ট যুব দলের মাঠের কাজ ও কমিউনিটি কার্যক্রম। বড় করে দেখতে যেকোনো ছবিতে ক্লিক করুন; অ্যারো কি দিয়ে পরের ছবিতে যান।',
+        'g2.k': '০১ · কমিউনিটি', 'g2.t': 'খাদ্য বিতরণ',
+        'g3.k': '০২ · শোভাযাত্রা', 'g3.t': 'পুষ্পস্তবক নিয়ে শোভাযাত্রা',
+        'g4.k': '০৩ · নেতৃত্ব', 'g4.t': 'শোভাযাত্রার নেতৃত্বে',
+        'g5.k': '০৪ · কুচকাওয়াজ', 'g5.t': 'প্যারেড মাঠে কুচকাওয়াজ',
+        'g6.k': '০৫ · স্বীকৃতি', 'g6.t': 'সম্মাননা ক্রেস্ট গ্রহণ',
+        'g7.k': '০৬ · অনুষ্ঠান', 'g7.t': 'পুরস্কার বিতরণী অনুষ্ঠান',
+        'g8.k': '০৭ · দল', 'g8.t': 'যুব দলের সারি',
+        'g9.k': '০৮ · শোভাযাত্রা', 'g9.t': 'পুষ্পস্তবক অর্পণ',
+        'g10.k': '০৯ · দল', 'g10.t': 'ইউনিফর্মে যুব দল',
+        'g11.k': '১০ · ক্যাডেট', 'g11.t': 'সহ-ক্যাডেটদের সঙ্গে',
 
         'contact.eyebrow': 'যোগাযোগ', 'contact.h1': 'ডকুমেন্ট আছে?', 'contact.h2': 'চলুন সেটিকে', 'contact.h3': 'এডিটযোগ্য করি।',
         'contact.write': 'আমাকে লিখুন', 'contact.direct': 'সরাসরি / WhatsApp:', 'contact.city': 'ঢাকা, বাংলাদেশ',
         'contact.send': 'মেসেজ পাঠান', 'contact.copy': 'ঠিকানা কপি করুন', 'contact.find': 'আমাকে খুঁজে পাবেন',
-        'footer.tag': 'বাংলা ও ইংরেজি টাইপিং · ঢাকা', 'footer.gallery': 'ভিজ্যুয়াল গ্যালারি (১২)',
+        'footer.tag': 'বাংলা ও ইংরেজি টাইপিং · ঢাকা', 'footer.gallery': 'ভিজ্যুয়াল গ্যালারি (১০)',
         'footer.quote': 'তাৎক্ষণিক কোটেশন', 'footer.testimonials': 'মতামত',
 
         'form.eyebrow': 'সরাসরি মেসেজ', 'form.h1': 'একটি', 'form.h2': 'মেসেজ পাঠান',
@@ -884,7 +882,7 @@
     /* ---------- 11. STUDIO VIDEOS & HERO SUBTITLES ---------- */
     (function initVideos() {
         const vHero = $('#portraitVideoHero'), vAbout = $('#portraitVideoAbout'), vBg = $('#portraitVideoBg');
-        const stage = $('#cinematicPortraitStage'), skills = $('#skills'), gallery = $('#gallery');
+        const stage = $('#cinematicPortraitStage'), skills = $('#skills');
 
         // Videos attach their src only when needed; posters show the same first frame meanwhile
         const attach = v => {
@@ -925,17 +923,7 @@
             const vh = window.innerHeight || 1;
             if (!LITE && r.top < vh * 1.6) attach(vBg);
             const k = r.top < vh * 0.75 ? Math.min(1, Math.max(0, (vh * 0.75 - r.top) / (vh * 0.45))) : 0;
-            // Fade the portrait out while the gallery is on screen, so it never sits behind the photos
-            const g = gallery.getBoundingClientRect();
-            const clamp = x => Math.min(1, Math.max(0, x));
-            const inGallery = Math.min(clamp((vh * 0.9 - g.top) / (vh * 0.35)), clamp((g.bottom - vh * 0.1) / (vh * 0.35)));
-            const opacity = k * 0.48 * (1 - inGallery);
-            stage.style.opacity = opacity.toFixed(3);
-            // Don't spend CPU on a video nobody can see
-            if (vBg.src) {
-                if (opacity === 0 && !vBg.paused) vBg.pause();
-                else if (opacity > 0 && vBg.paused) { const p = vBg.play(); if (p && p.catch) p.catch(() => {}); }
-            }
+            stage.style.opacity = (k * 0.48).toFixed(3);
         }
         window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(updateStage); } }, { passive: true });
         window.addEventListener('resize', updateStage);
